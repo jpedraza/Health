@@ -1,4 +1,4 @@
-﻿@model Health.Site.Models.LoginFormModel
+﻿@model Health.Site.Models.AccountViewModel
 
 @{
     ViewBag.Title = "Login";
@@ -8,10 +8,10 @@
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
-    <p>@Html.LabelFor(x => x.Login)</p>
-    <p>@Html.TextBoxFor(x => x.Login)</p>
-    <p>@Html.LabelFor(x => x.Password)</p>
-    <p>@Html.PasswordFor(x => x.Password)</p>
-    <p>@Html.LabelFor(x => x.RememberMe) @Html.CheckBoxFor(x => x.RememberMe) @Html.AntiForgeryToken()</p>
+    <p>@Html.LabelFor(x => x.LoginForm.Login)</p>
+    <p>@Html.TextBoxFor(x => x.LoginForm.Login)</p>
+    <p>@Html.LabelFor(x => x.LoginForm.Password)</p>
+    <p>@Html.PasswordFor(x => x.LoginForm.Password)</p>
+    <p>@Html.LabelFor(x => x.LoginForm.RememberMe) @Html.CheckBoxFor(x => x.LoginForm.RememberMe) @Html.AntiForgeryToken()</p>
     <input type="submit" value="Send" />
 }

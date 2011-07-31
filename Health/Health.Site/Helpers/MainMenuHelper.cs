@@ -38,7 +38,7 @@ namespace Health.Site.Helpers
                 case "Guest":
                     {
                         elements.Add(new MenuElement("Вход", "Login", "Account"));
-                        elements.Add(new MenuElement("Регистрация", "Index", "Registration"));
+                        elements.Add(new MenuElement("Регистрация", "Registration", "Account"));
                         break;
                     }
                 case "Admin":

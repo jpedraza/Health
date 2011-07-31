@@ -46,6 +46,8 @@
     <Compile Include="Entities\ICandidate.cs" />
     <Compile Include="Entities\IDefaultRoles.cs" />
     <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\IMetaData.cs" />
+    <Compile Include="Entities\IParameter.cs" />
     <Compile Include="Entities\IRole.cs" />
     <Compile Include="Entities\IUser.cs" />
     <Compile Include="Entities\IUserCredential.cs" />

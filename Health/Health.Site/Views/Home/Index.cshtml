@@ -9,17 +9,17 @@
 </p>
 <h2>Роли на сервере:</h2>
 @{
-    //var roles = (IEnumerable<IRole>)ViewData["Roles"]; 
+    var roles = (IEnumerable<IRole>)ViewData["Roles"]; 
 }
 <ul>
-    @*@foreach (var role in roles)
+    @foreach (var role in roles)
     {
-        @:<li>@role.Name</li>
-    *@}
+        <li>@role.Name</li>
+    }
 </ul>
 
-<h2>Число кандидатов: @*ViewBag.CountCandidates*@</h2>
+<h2>Число кандидатов: @ViewBag.CountCandidates</h2>
 
-<h2>Новая роль: @*ViewBag.NewRole.Name*@</h2>
+<h2>Новая роль: @ViewBag.NewRole.Name</h2>
 
-<h2>Имя переменной: @*ViewBag.VarName*@</h2>
+<h2>Имя переменной: @ViewBag.VarName</h2>

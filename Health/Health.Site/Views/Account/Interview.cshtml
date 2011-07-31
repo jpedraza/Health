@@ -1,0 +1,22 @@
+﻿@model Health.Site.Models.AccountViewModel
+@using Health.API.Entities
+@using Health.Site.Controllers;
+
+@{
+    ViewBag.Title = "Interview";
+}
+
+<h2>Interview</h2>
+
+@using (Html.BeginForm())
+{
+    for (int i = 0; i < Model.InterviewForm.Parameters.Count; i++) {
+        IParameter param = Model.InterviewForm.Parameters[i];
+        <p>@Html.Label(param.Name)</p>
+        string format = "InterviewForm.Parameters[{0}].{1}";
+        <p>@Html.TextBox(String.Format(format, i, param.PropertyName(x => x.Value)), param.Value)</p>
+        <p>@Html.Hidden(String.Format(format, i,param.PropertyName(x => x.Name)), param.Name)</p>
+    }
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Send" />
+}
