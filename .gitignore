@@ -1,0 +1,9 @@
+Health/_ReSharper.Health
+Health/Health.5.1.ReSharper.user
+[Oo]bj/
+[Bb]in/
+*.suo
+*.user
+/TestResults
+*.vspscc
+*.vssscc

@@ -1,0 +1,17 @@
+﻿@model Health.Site.Models.LoginFormModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    <p>@Html.LabelFor(x => x.Login)</p>
+    <p>@Html.TextBoxFor(x => x.Login)</p>
+    <p>@Html.LabelFor(x => x.Password)</p>
+    <p>@Html.PasswordFor(x => x.Password)</p>
+    <p>@Html.LabelFor(x => x.RememberMe) @Html.CheckBoxFor(x => x.RememberMe) @Html.AntiForgeryToken()</p>
+    <input type="submit" value="Send" />
+}
