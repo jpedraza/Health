@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Health.API;
 using Health.API.Entities;
 using Health.API.Services;
 using Health.Data.Entities;
@@ -14,7 +15,7 @@ namespace Health.Site.Controllers
 {
     public class AccountController : CoreController
     {
-        public AccountController(IKernel di_kernel) : base(di_kernel)
+        public AccountController(IDIKernel di_kernel) : base(di_kernel)
         {
         }
 

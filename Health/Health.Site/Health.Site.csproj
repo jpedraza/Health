@@ -84,6 +84,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DI\DIKernel.cs" />
     <Compile Include="Filters\AuthFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

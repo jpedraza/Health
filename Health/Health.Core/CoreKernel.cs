@@ -4,8 +4,6 @@ using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
 using Health.API.Services;
-using Health.Core.Ninject;
-using Ninject;
 
 namespace Health.Core
 {
@@ -16,9 +14,9 @@ namespace Health.Core
         private ICandidateRepository<ICandidate> _candRepo;
         private IAuthorizationService<IUserCredential> _authServ;
         private IRegistrationService<ICandidate> _regServ;
-        protected IKernel DIKernel { get; set; }
+        protected IDIKernel DIKernel { get; set; }
 
-        public CoreKernel(IKernel di_kernel)
+        public CoreKernel(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
         }
