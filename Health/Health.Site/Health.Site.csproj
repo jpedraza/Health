@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Helpers\MainMenuHelper.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\Binders\InterviewFormBinder.cs" />
     <Compile Include="Models\CoreViewModel.cs" />
     <Compile Include="Models\Forms\AccountFormsModels.cs" />
     <Compile Include="Models\MenuElement.cs" />

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
@@ -11,6 +12,8 @@ using Health.Site.App_Start;
 using Health.Site.Attributes;
 using Health.Site.DI;
 using Health.Site.Filters;
+using Health.Site.Models.Binders;
+using Health.Site.Models.Forms;
 using Health.Site.Repository;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -39,6 +42,7 @@ namespace Health.Site.App_Start
             DynamicModuleUtility.RegisterModule(typeof (OnePerRequestModule));
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
             Bootstrapper.Initialize(CreateKernel);
+            ModelBinders.Binders.Add(typeof (InterviewFormModel), new InterviewFormBinder(Kernel.Get<IDIKernel>()));
         }
 
         /// <summary>
@@ -82,6 +86,8 @@ namespace Health.Site.App_Start
             kernel.Bind<IDefaultRoles>().To<DefaultRoles>();
             kernel.Bind<IUserCredential>().To<UserCredential>();
             kernel.Bind<IDIKernel>().To<DIKernel>();
+            kernel.Bind<IParameter>().To<Parameter>();
+            kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
 
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).

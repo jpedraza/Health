@@ -74,8 +74,12 @@ namespace Health.Site.Models.Forms
     /// <summary>
     /// Форма опроса пользователя при первом входе в систему
     /// </summary>
-    public class InterviewFormModel
+    public class InterviewFormModel : IValidatableObject
     {
-        public List<Parameter> Parameters { get; set; }
+        public IEnumerable<IParameter> Parameters { get; set; }
+        public IEnumerable<ValidationResult> Validate(ValidationContext validation_context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
