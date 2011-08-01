@@ -91,7 +91,7 @@ namespace Health.Site.Controllers
         /// <returns></returns>
         public ActionResult Interview()
         {
-            var form_model = new InterviewFormModel()
+            var form_model = new InterviewFormModel(DIKernel)
                                  {
                                      Parameters = new List<Parameter>()
                                                       {
@@ -118,6 +118,10 @@ namespace Health.Site.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Interview([Bind(Include = "InterviewForm")]AccountViewModel form_model)
         {
+            if (ModelState.IsValid)
+            {
+                
+            }
             return View(form_model);
         }
     }

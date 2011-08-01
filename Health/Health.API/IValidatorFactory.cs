@@ -11,6 +11,11 @@ namespace Health.API
     public interface IValidatorFactory
     {
         /// <summary>
+        /// Сообщение с информацией почему не прошла проверка
+        /// </summary>
+        string Message { get; }
+
+        /// <summary>
         /// Проверяет значение на валидность согласно типу валидатора
         /// </summary>
         /// <param name="validator_type">Тип валидатора</param>

@@ -22,7 +22,7 @@ namespace Health.Site.Models.Binders
 
         protected override object CreateModel(ControllerContext controller_context, ModelBindingContext binding_context, Type model_type)
         {
-            var interview_form = new InterviewFormModel { Parameters = GetValueForParameter(controller_context, binding_context) };
+            var interview_form = new InterviewFormModel(Kernel) { Parameters = GetValueForParameter(controller_context, binding_context) };
             return interview_form;
         }
 

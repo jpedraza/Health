@@ -59,6 +59,8 @@
     <Compile Include="Repository\Fake\FakePermanentCredentialRepository.cs" />
     <Compile Include="Repository\Fake\RolesFakeRepository.cs" />
     <Compile Include="Repository\Fake\UsersFakeRepository.cs" />
+    <Compile Include="Validators\RequiredValidator.cs" />
+    <Compile Include="Validators\ValidatorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Health.API\Health.API.csproj">

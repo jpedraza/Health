@@ -8,6 +8,7 @@ using Health.Core;
 using Health.Core.Services;
 using Health.Data.Entities;
 using Health.Data.Repository.Fake;
+using Health.Data.Validators;
 using Health.Site.App_Start;
 using Health.Site.Attributes;
 using Health.Site.DI;
@@ -88,6 +89,7 @@ namespace Health.Site.App_Start
             kernel.Bind<IDIKernel>().To<DIKernel>();
             kernel.Bind<IParameter>().To<Parameter>();
             kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
+            kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
 
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).

@@ -51,9 +51,11 @@
     <Compile Include="Entities\IRole.cs" />
     <Compile Include="Entities\IUser.cs" />
     <Compile Include="Entities\IUserCredential.cs" />
+    <Compile Include="Entities\IValueValidator.cs" />
     <Compile Include="ICore.cs" />
     <Compile Include="ICoreKernel.cs" />
     <Compile Include="IDIKernel.cs" />
+    <Compile Include="IValidatorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ICandidateRepository.cs" />
     <Compile Include="Repository\ICoreRepository.cs" />

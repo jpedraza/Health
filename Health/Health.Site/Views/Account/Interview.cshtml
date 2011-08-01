@@ -10,6 +10,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.ValidationSummary()
     for (int i = 0; i < Model.InterviewForm.Parameters.Count(); i++) {
         IParameter param = Model.InterviewForm.Parameters.ToList()[i];
         <p>@Html.Label(param.Name)</p>

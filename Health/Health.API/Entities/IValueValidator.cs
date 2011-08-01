@@ -11,6 +11,11 @@ namespace Health.API.Entities
     public interface IValueValidator
     {
         /// <summary>
+        /// Сообщение с информацией почему не прошла проверка
+        /// </summary>
+        string Message { get; }
+
+        /// <summary>
         /// Метод проверяет значение на валидность
         /// </summary>
         /// <param name="value">Значение</param>
