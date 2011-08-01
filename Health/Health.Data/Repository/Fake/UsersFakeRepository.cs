@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
-using Ninject;
 
 namespace Health.Data.Repository.Fake
 {
     public sealed class UsersFakeRepository<TUser> : CoreFakeRepository<TUser, IUser>, IUserRepository<IUser>
         where TUser : class, IUser, new()
     {
+        #region IUserRepository<IUser> Members
+
         public IUser GetByLoginAndPassword(string login, string password)
         {
             TUser required_user = default(TUser);
@@ -43,23 +42,25 @@ namespace Health.Data.Repository.Fake
         public override void InitializeData()
         {
             Save(new TUser
-            {
-                FirstName = "Анатолий",
-                LastName = "Петров",
-                ThirdName = "Витальевич",
-                Login = "admin",
-                Password = "admin",
-                Role = CoreKernel.RoleRepo.GetByName("Admin")
-            });
+                     {
+                         FirstName = "Анатолий",
+                         LastName = "Петров",
+                         ThirdName = "Витальевич",
+                         Login = "admin",
+                         Password = "admin",
+                         Role = CoreKernel.RoleRepo.GetByName("Admin")
+                     });
             Save(new TUser
-            {
-                FirstName = "Максим",
-                LastName = "Васильев",
-                ThirdName = "Александрович",
-                Login = "patient",
-                Password = "patient",
-                Role = CoreKernel.RoleRepo.GetByName("Patient")
-            });
+                     {
+                         FirstName = "Максим",
+                         LastName = "Васильев",
+                         ThirdName = "Александрович",
+                         Login = "patient",
+                         Password = "patient",
+                         Role = CoreKernel.RoleRepo.GetByName("Patient")
+                     });
         }
+
+        #endregion
     }
 }

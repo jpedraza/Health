@@ -1,17 +1,17 @@
 ﻿namespace Health.API.Entities
 {
     /// <summary>
-    /// Роли по умолчанию
+    /// Роли по умолчанию.
     /// </summary>
     public interface IDefaultRoles : IEntity
     {
         /// <summary>
-        /// Все пользователи
+        /// Все пользователи.
         /// </summary>
         IRole All { get; set; }
 
         /// <summary>
-        /// Гости
+        /// Гости.
         /// </summary>
         IRole Guest { get; set; }
     }

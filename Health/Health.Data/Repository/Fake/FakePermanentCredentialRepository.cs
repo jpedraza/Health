@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Health.API.Entities;
 using Health.API.Repository;
 
@@ -13,6 +12,8 @@ namespace Health.Data.Repository.Fake
         {
             _storage = new Dictionary<string, object>();
         }
+
+        #region IPermanentCredentialRepository Members
 
         public void Write(string identifier, IUserCredential credential)
         {
@@ -35,5 +36,7 @@ namespace Health.Data.Repository.Fake
         {
             _storage.Clear();
         }
+
+        #endregion
     }
 }

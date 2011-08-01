@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Health.API;
-using Health.API.Entities;
+﻿using Health.API;
 using Ninject;
 
 namespace Health.Site.DI
 {
     public class DIKernel : IDIKernel
     {
-        protected IKernel Kernel { get; set; }
-
         public DIKernel(IKernel kernel)
         {
             Kernel = kernel;
         }
+
+        protected IKernel Kernel { get; set; }
+
+        #region IDIKernel Members
 
         public TObject Get<TObject>()
         {
@@ -29,5 +26,7 @@ namespace Health.Site.DI
             obj.SetKernelAndCoreService(this, core_kernel);
             return obj;
         }
+
+        #endregion
     }
 }

@@ -1,74 +1,77 @@
 ﻿using Health.API.Entities;
 using Health.API.Repository;
-using Ninject;
 
 namespace Health.API.Services
 {
+    /// <summary>
+    /// Сервис авторизации.
+    /// </summary>
+    /// <typeparam name="TUserCredential"></typeparam>
     public interface IAuthorizationService<TUserCredential> : ICore
         where TUserCredential : IUserCredential
     {
         /// <summary>
-        /// Доступ к актуальному хранлищу сессии пользователя
+        /// Доступ к актуальному хранлищу сессии пользователя.
         /// </summary>
         IActualCredentialRepository ActualDataAccessor { get; set; }
 
         /// <summary>
-        /// Доступ к постоянному хранлищу сессии пользователя
+        /// Доступ к постоянному хранлищу сессии пользователя.
         /// </summary>
         IPermanentCredentialRepository PermanentDataAccessor { get; set; }
 
         /// <summary>
-        /// Дефолтные роли пользователя
+        /// Дефолтные роли пользователя.
         /// </summary>
         IDefaultRoles DefaultRoles { get; set; }
 
         /// <summary>
-        /// Дефолтное имя переменной в сессии куда сохраняется мандат пользователя
+        /// Дефолтное имя переменной в сессии куда сохраняется мандат пользователя.
         /// </summary>
         string DefaultUserCredentialName { get; set; }
 
         /// <summary>
-        /// Дефолтный мандат пользователя
+        /// Дефолтный мандат пользователя.
         /// </summary>
         IUserCredential DefaultUserCredential { get; set; }
 
         /// <summary>
-        /// Актуальный мандат пользователя
+        /// Актуальный мандат пользователя.
         /// </summary>
         IUserCredential UserCredential { get; set; }
 
         /// <summary>
-        /// Стартовать сессию
+        /// Стартовать сессию.
         /// </summary>
         void SessionStartup();
 
         /// <summary>
-        /// Вход пользователя в систему
+        /// Вход пользователя в систему.
         /// </summary>
-        /// <param name="login">Логин</param>
-        /// <param name="password">Пароль</param>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
         /// <param name="remember_me">Запоминать?</param>
-        /// <returns>Результат авторизации</returns>
+        /// <returns>Результат авторизации.</returns>
         bool Login(string login, string password, bool remember_me = false);
 
         /// <summary>
-        /// Сброс сессии для пользователя
+        /// Сброс сессии для пользователя.
         /// </summary>
         void Logout();
 
         /// <summary>
-        /// Запоминаем пользователя
+        /// Запоминаем пользователя.
         /// </summary>
         void RememberMe();
 
         /// <summary>
-        /// Запомнен ли пользователь
+        /// Запомнен ли пользователь.
         /// </summary>
-        /// <returns>Да или нет :)</returns>
+        /// <returns>Да или нет.</returns>
         bool IsRemember();
 
         /// <summary>
-        /// Восстановление запомненной сессии
+        /// Восстановление запомненной сессии.
         /// </summary>
         void RestoreRememberSession();
     }

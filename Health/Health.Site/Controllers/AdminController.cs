@@ -1,8 +1,6 @@
 using System.Web.Mvc;
 using Health.API;
-using Health.API.Services;
 using Health.Site.Attributes;
-using Ninject;
 
 namespace Health.Site.Controllers
 {

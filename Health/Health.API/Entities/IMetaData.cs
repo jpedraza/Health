@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Health.API.Entities
+﻿namespace Health.API.Entities
 {
     /// <summary>
-    /// Мета-данные чего-либо
+    /// Мета-данные чего-либо.
     /// </summary>
     public interface IMetaData
     {
@@ -16,14 +11,14 @@ namespace Health.API.Entities
         string Key { get; set; }
 
         /// <summary>
-        /// Значение данных
+        /// Значение данных.
         /// </summary>
         object Value { get; set; }
 
         /// <summary>
-        /// Создать массив мета-данных из чего-либо
+        /// Создать массив мета-данных из чего-либо.
         /// </summary>
-        /// <returns>Массив мета-данных</returns>
+        /// <returns>Массив мета-данных.</returns>
         IMetaData[] Create();
     }
 }

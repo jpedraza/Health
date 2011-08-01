@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Health.API.Entities
+﻿namespace Health.API.Entities
 {
     /// <summary>
-    /// Интерфейс валидатора
+    /// Интерфейс валидатора.
     /// </summary>
     public interface IValueValidator
     {
         /// <summary>
-        /// Сообщение с информацией почему не прошла проверка
+        /// Сообщение с информацией почему не прошла проверка.
         /// </summary>
         string Message { get; }
 
         /// <summary>
-        /// Метод проверяет значение на валидность
+        /// Метод проверяет значение на валидность.
         /// </summary>
-        /// <param name="value">Значение</param>
-        /// <returns>Результат проверки</returns>
+        /// <param name="value">Значение.</param>
+        /// <returns>Результат проверки.</returns>
         bool IsValid(object value);
     }
 }

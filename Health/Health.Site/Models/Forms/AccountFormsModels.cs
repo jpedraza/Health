@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 using Health.API;
 using Health.API.Entities;
-using Health.Data.Entities;
 using Health.Data.Validators;
 
 namespace Health.Site.Models.Forms
@@ -78,26 +76,31 @@ namespace Health.Site.Models.Forms
     /// </summary>
     public class InterviewFormModel : IValidatableObject
     {
-        public IDIKernel DIKernel { get; protected set; }
-
         public InterviewFormModel(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
         }
 
+        public IDIKernel DIKernel { get; protected set; }
+
         public IEnumerable<IParameter> Parameters { get; set; }
+
+        #region IValidatableObject Members
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validation_context)
         {
             var result = new List<ValidationResult>();
             var validator_factory = DIKernel.Get<IValidatorFactory>();
             if (!validator_factory.IsValid(typeof (RequiredValidator).ToString(), Parameters.ToList()[0].Value))
             {
-                result.Add(new ValidationResult(validator_factory.Message, new List<string>
+                result.Add(new ValidationResult(validator_factory.Message, new[]
                                                                                {
-                                                                                   Parameters.ToList()[0].Name
+                                                                                   "Parameters[0].Value"
                                                                                }));
             }
             return result;
         }
+
+        #endregion
     }
 }

@@ -21,7 +21,9 @@ namespace Health.Site.Repository
         {
             get { return HttpContext.Current.Request; }
         }
-        
+
+        #region IPermanentCredentialRepository Members
+
         public void Write(string identifier, IUserCredential credential)
         {
             if (!Request.Cookies[identifier].Equals(null))
@@ -59,6 +61,8 @@ namespace Health.Site.Repository
             }
         }
 
+        #endregion
+
         protected string Encrypt(string data, string token)
         {
             var ticket = new FormsAuthenticationTicket(1, token, DateTime.Now, DateTime.Now.AddDays(14), true, data);
@@ -84,7 +88,7 @@ namespace Health.Site.Repository
         protected IUserCredential Deserialize(string data)
         {
             byte[] byte_data = Encoding.Default.GetBytes(data);
-            var xml_serializer = new XmlSerializer(typeof(IUserCredential));
+            var xml_serializer = new XmlSerializer(typeof (IUserCredential));
             var memory_stream = new MemoryStream(byte_data);
             return (IUserCredential) xml_serializer.Deserialize(memory_stream);
         }

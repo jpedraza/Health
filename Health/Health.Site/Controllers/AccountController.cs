@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.Security;
 using Health.API;
-using Health.API.Entities;
-using Health.API.Services;
 using Health.Data.Entities;
 using Health.Site.Models;
 using Health.Site.Models.Forms;
-using Ninject;
 
 namespace Health.Site.Controllers
 {
@@ -27,7 +21,7 @@ namespace Health.Site.Controllers
         {
             return View();
         }
-        
+
         /// <summary>
         /// Авторизация пользователя
         /// </summary>
@@ -35,12 +29,12 @@ namespace Health.Site.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "LoginForm")]AccountViewModel login_form_model)
+        public ActionResult Login([Bind(Include = "LoginForm")] AccountViewModel login_form_model)
         {
             if (ModelState.IsValid)
             {
                 if (CoreKernel.AuthServ.Login(login_form_model.LoginForm.Login, login_form_model.LoginForm.Password,
-                                            login_form_model.LoginForm.RememberMe))
+                                              login_form_model.LoginForm.RememberMe))
                 {
                     return RedirectToRoute("Admin");
                 }
@@ -75,7 +69,7 @@ namespace Health.Site.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Registration([Bind(Include = "RegistrationForm")]AccountViewModel form_model)
+        public ActionResult Registration([Bind(Include = "RegistrationForm")] AccountViewModel form_model)
         {
             if (ModelState.IsValid)
             {
@@ -93,21 +87,21 @@ namespace Health.Site.Controllers
         {
             var form_model = new InterviewFormModel(DIKernel)
                                  {
-                                     Parameters = new List<Parameter>()
+                                     Parameters = new List<Parameter>
                                                       {
-                                                          new Parameter()
+                                                          new Parameter
                                                               {
                                                                   Name = "P1",
                                                                   Value = "V1"
                                                               },
-                                                          new Parameter()
+                                                          new Parameter
                                                               {
                                                                   Name = "P2",
                                                                   Value = "V2"
                                                               }
                                                       }
                                  };
-            var acc_view_model = new AccountViewModel()
+            var acc_view_model = new AccountViewModel
                                      {
                                          InterviewForm = form_model
                                      };
@@ -116,11 +110,10 @@ namespace Health.Site.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Interview([Bind(Include = "InterviewForm")]AccountViewModel form_model)
+        public ActionResult Interview([Bind(Include = "InterviewForm")] AccountViewModel form_model)
         {
             if (ModelState.IsValid)
             {
-                
             }
             return View(form_model);
         }

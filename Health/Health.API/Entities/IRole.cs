@@ -1,17 +1,17 @@
 ﻿namespace Health.API.Entities
 {
     /// <summary>
-    /// Базовый интерфейс для сущности Role
+    /// Базовый интерфейс для сущности Role.
     /// </summary>
     public interface IRole : IEntity
     {
         /// <summary>
-        /// Имя роли
+        /// Имя роли.
         /// </summary>
         string Name { get; set; }
 
         /// <summary>
-        /// Код роли
+        /// Код роли.
         /// </summary>
         int Code { get; set; }
     }

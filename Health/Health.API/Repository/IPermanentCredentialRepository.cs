@@ -1,29 +1,28 @@
-﻿using System;
-using Health.API.Entities;
+﻿using Health.API.Entities;
 
 namespace Health.API.Repository
 {
     /// <summary>
-    /// Репозиторий доступа к сохраняемым данным сессии
+    /// Репозиторий доступа к сохраняемым данным сессии.
     /// </summary>
     public interface IPermanentCredentialRepository
     {
         /// <summary>
         /// Запись данных
         /// </summary>
-        /// <param name="identifier">Идентификатор</param>
-        /// <param name="credential">Мандат пользователя</param>
+        /// <param name="identifier">Идентификатор.</param>
+        /// <param name="credential">Мандат пользователя.</param>
         void Write(string identifier, IUserCredential credential);
 
         /// <summary>
-        /// Чтение данных
+        /// Чтение данных.
         /// </summary>
-        /// <param name="identifier">Идентификатор</param>
-        /// <returns>Мандат пользователя</returns>
+        /// <param name="identifier">Идентификатор.</param>
+        /// <returns>Мандат пользователя.</returns>
         IUserCredential Read(string identifier);
 
         /// <summary>
-        /// Очистка 
+        /// Очистка.
         /// </summary>
         void Clear();
     }

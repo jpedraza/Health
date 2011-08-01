@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Specialized;
 using System.Web;
 using Health.API.Entities;
@@ -8,6 +7,8 @@ namespace Health.Site.Repository
 {
     public class SessionDataAccessor : IActualCredentialRepository
     {
+        #region IActualCredentialRepository Members
+
         public void Write(string identifier, IUserCredential credential)
         {
             if (!SessionContainsKey(identifier))
@@ -30,11 +31,13 @@ namespace Health.Site.Repository
             HttpContext.Current.Session.Clear();
         }
 
-        private bool SessionContainsKey(string key)
+        #endregion
+
+        protected bool SessionContainsKey(string key)
         {
             NameObjectCollectionBase.KeysCollection keys_collection = HttpContext.Current.Session.Keys;
 
-            foreach (var keyi in keys_collection)
+            foreach (object keyi in keys_collection)
             {
                 if (keyi.ToString() == key)
                 {

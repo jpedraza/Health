@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Health.API.Entities
+﻿namespace Health.API.Entities
 {
     /// <summary>
-    /// Интерфейс некоторого параметра
+    /// Интерфейс некоторого параметра.
     /// </summary>
     public interface IParameter
     {
         /// <summary>
-        /// Имя параметра
+        /// Имя параметра.
         /// </summary>
         string Name { get; set; }
 
         /// <summary>
-        /// Значение параметра
+        /// Значение параметра.
         /// </summary>
         object Value { get; set; }
 
         /// <summary>
-        /// Мета-данные параметра 
+        /// Мета-данные параметра.
         /// </summary>
         IMetaData[] MetaData { get; set; }
     }

@@ -1,17 +1,17 @@
 ﻿namespace Health.API.Entities
 {
     /// <summary>
-    /// Кандидат на регистрацию
+    /// Кандидат на регистрацию.
     /// </summary>
     public interface ICandidate : IUser
     {
         /// <summary>
-        /// Номер полюса
+        /// Номер полюса.
         /// </summary>
         string Policy { get; set; }
 
         /// <summary>
-        /// Номер больничной карты
+        /// Номер больничной карты.
         /// </summary>
         string Card { get; set; }
     }

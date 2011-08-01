@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
-using Ninject;
 
 namespace Health.Data.Repository.Fake
 {
     public sealed class RolesFakeRepository<TRole> : CoreFakeRepository<TRole, IRole>, IRoleRepository<IRole>
         where TRole : class, IRole, new()
     {
-        public RolesFakeRepository()
-        {
-            
-        }
+        #region IRoleRepository<IRole> Members
 
         public IRole GetByName(string name)
         {
@@ -47,5 +41,7 @@ namespace Health.Data.Repository.Fake
                                     }
                             };
         }
+
+        #endregion
     }
 }

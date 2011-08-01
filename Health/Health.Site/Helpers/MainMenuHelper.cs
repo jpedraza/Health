@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Health.API;
-using Health.API.Services;
 using Health.Site.Models;
 using Microsoft.Practices.ServiceLocation;
 using Ninject;

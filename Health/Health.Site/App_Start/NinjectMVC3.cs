@@ -36,7 +36,7 @@ namespace Health.Site.App_Start
         public static IKernel Kernel { get; private set; }
 
         /// <summary>
-        /// Starts the application
+        /// Запуск приложения.
         /// </summary>
         public static void Start()
         {
@@ -47,7 +47,7 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Stops the application.
+        /// Остановка приложения.
         /// </summary>
         public static void Stop()
         {
@@ -55,9 +55,9 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Creates the kernel that will manage your application.
+        /// Создания ядра.
         /// </summary>
-        /// <returns>The created kernel.</returns>
+        /// <returns>Созданное ядро.</returns>
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
@@ -69,31 +69,36 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Load your modules or register your services here!
+        /// Регистрация компонентов.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
+        /// <param name="kernel">Ядро.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            // Сущности 
             kernel.Bind<IRole>().To<Role>();
             kernel.Bind<IUser>().To<User>();
-            kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
+            kernel.Bind<IDefaultRoles>().To<DefaultRoles>();
+            kernel.Bind<IUserCredential>().To<UserCredential>();
+            kernel.Bind<IParameter>().To<Parameter>();
+            // Репозитории
             kernel.Bind<IRoleRepository<IRole>>().To<RolesFakeRepository<Role>>().InSingletonScope();
             kernel.Bind<IUserRepository<IUser>>().To<UsersFakeRepository<User>>().InSingletonScope();
-            kernel.Bind<IAuthorizationService<IUserCredential>>().To<AuthorizationService<UserCredential>>();
             kernel.Bind<IActualCredentialRepository>().To<SessionDataAccessor>();
             kernel.Bind<IPermanentCredentialRepository>().To<CookieDataAccessor>();
             kernel.Bind<ICandidateRepository<ICandidate>>().To<CandidatesFakeRepository<Candidate>>().InSingletonScope();
+            // Сервисы
+            kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
+            kernel.Bind<IAuthorizationService<IUserCredential>>().To<AuthorizationService<UserCredential>>();
             kernel.Bind<IRegistrationService<ICandidate>>().To<RegistrationService<Candidate>>();
-            kernel.Bind<IDefaultRoles>().To<DefaultRoles>();
-            kernel.Bind<IUserCredential>().To<UserCredential>();
-            kernel.Bind<IDIKernel>().To<DIKernel>();
-            kernel.Bind<IParameter>().To<Parameter>();
-            kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
+            // Фабрики
             kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
-
+            // Фильтры для атрибутов
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
                 WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
+            // Прочее
+            kernel.Bind<IDIKernel>().To<DIKernel>();
+            kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
         }
     }
 }

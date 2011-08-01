@@ -3,47 +3,47 @@
 namespace Health.API.Entities
 {
     /// <summary>
-    /// Базовый интерфейс для сущности User
+    /// Базовый интерфейс для сущности User.
     /// </summary>
     public interface IUser : IEntity
     {
         /// <summary>
-        /// Имя пользователя
+        /// Имя пользователя.
         /// </summary>
         string FirstName { get; set; }
 
         /// <summary>
-        /// Фамилия пользователя
+        /// Фамилия пользователя.
         /// </summary>
         string LastName { get; set; }
 
         /// <summary>
-        /// Отчество пользвателя
+        /// Отчество пользвателя.
         /// </summary>
         string ThirdName { get; set; }
 
         /// <summary>
-        /// Логин пользователя
+        /// Логин пользователя.
         /// </summary>
         string Login { get; set; }
 
         /// <summary>
-        /// Пароль пользователя
+        /// Пароль пользователя.
         /// </summary>
         string Password { get; set; }
 
         /// <summary>
-        /// Роль пользователя
+        /// Роль пользователя.
         /// </summary>
         IRole Role { get; set; }
 
         /// <summary>
-        /// День рождения
+        /// День рождения.
         /// </summary>
         DateTime Birthday { get; set; }
 
         /// <summary>
-        /// Токен пользователя (для верификации запомненной сессии)
+        /// Токен пользователя (для верификации запомненной сессии).
         /// </summary>
         string Token { get; set; }
     }

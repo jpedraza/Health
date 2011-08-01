@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
-using Health.API.Services;
-using Ninject;
 
 namespace Health.Data.Repository.Fake
 {
@@ -19,8 +16,11 @@ namespace Health.Data.Repository.Fake
             _entities = new List<TIEntity>();
         }
 
+        #region ICoreRepository<TIEntity> Members
+
         public IDIKernel DIKernel { get; set; }
         public ICoreKernel CoreKernel { get; set; }
+
         public TInstance Instance<TInstance>()
             where TInstance : IEntity
         {
@@ -34,7 +34,10 @@ namespace Health.Data.Repository.Fake
             InitializeData();
         }
 
-        public virtual void InitializeData() { return; }
+        public virtual void InitializeData()
+        {
+            return;
+        }
 
         public virtual IEnumerable<TIEntity> GetAll()
         {
@@ -52,5 +55,7 @@ namespace Health.Data.Repository.Fake
             _entities.Remove(entity);
             return true;
         }
+
+        #endregion
     }
 }

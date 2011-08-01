@@ -5,32 +5,32 @@ using Health.API.Services;
 namespace Health.API
 {
     /// <summary>
-    /// Базовый сервис, обеспечивающий доступ ко всем репозиториям и другим сервисам
+    /// Базовый сервис, обеспечивающий доступ ко всем репозиториям и другим сервисам.
     /// </summary>
     public interface ICoreKernel
     {
         /// <summary>
-        /// Репозиторий ролей
+        /// Репозиторий ролей.
         /// </summary>
         IRoleRepository<IRole> RoleRepo { get; }
 
         /// <summary>
-        /// Репозиторий пользователей
+        /// Репозиторий пользователей.
         /// </summary>
         IUserRepository<IUser> UserRepo { get; }
 
         /// <summary>
-        /// Репозиторий кандидатов
+        /// Репозиторий кандидатов.
         /// </summary>
         ICandidateRepository<ICandidate> CandRepo { get; }
 
         /// <summary>
-        /// Сервис авторизации
+        /// Сервис авторизации.
         /// </summary>
         IAuthorizationService<IUserCredential> AuthServ { get; }
 
         /// <summary>
-        /// Сервис регистрации
+        /// Сервис регистрации.
         /// </summary>
         IRegistrationService<ICandidate> RegServ { get; }
     }

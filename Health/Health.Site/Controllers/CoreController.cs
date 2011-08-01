@@ -1,22 +1,21 @@
-using System;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
-using Health.API.Services;
-using Ninject;
 
 namespace Health.Site.Controllers
 {
     public abstract class CoreController : Controller
     {
+        protected ICoreKernel _coreKernel;
+
         protected CoreController(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
             ViewData["CoreKernel"] = CoreKernel;
         }
 
-        protected ICoreKernel _coreKernel;
-        public ICoreKernel CoreKernel { 
+        public ICoreKernel CoreKernel
+        {
             get { return _coreKernel ?? (_coreKernel = DIKernel.Get<ICoreKernel>()); }
         }
 

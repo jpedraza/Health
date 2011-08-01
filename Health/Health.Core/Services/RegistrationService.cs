@@ -1,43 +1,43 @@
-using System;
 using Health.API.Entities;
-using Health.API.Repository;
 using Health.API.Services;
-using Ninject;
 
 namespace Health.Core.Services
 {
     /// <summary>
-    /// Сервис регистрации
+    /// Сервис регистрации.
     /// </summary>
-    /// <typeparam name="TCandidate">Тип кандидата</typeparam>
+    /// <typeparam name="TCandidate">Тип кандидата.</typeparam>
     public class RegistrationService<TCandidate> : CoreService, IRegistrationService<ICandidate>
         where TCandidate : class, ICandidate, new()
     {
+        #region IRegistrationService<ICandidate> Members
+
         /// <summary>
-        /// Принять заявку
+        /// Принять заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат</param>
+        /// <param name="candidate">Кандидат.</param>
         public void AcceptBid(ICandidate candidate)
         {
-
         }
 
         /// <summary>
-        /// Сохранить заявку
+        /// Сохранить заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат</param>
+        /// <param name="candidate">Кандидат.</param>
         public void SaveBid(ICandidate candidate)
         {
             CoreKernel.CandRepo.Save(candidate);
         }
 
         /// <summary>
-        /// Отклонить заявку
+        /// Отклонить заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат</param>
+        /// <param name="candidate">Кандидат.</param>
         public void RejectBid(ICandidate candidate)
         {
             CoreKernel.CandRepo.Delete(candidate);
         }
+
+        #endregion
     }
 }

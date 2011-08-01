@@ -9,6 +9,7 @@
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     <p>@Html.LabelFor(x => x.LoginForm.Login)</p>
+    <p>@Html.ValidationMessageFor(x => x.LoginForm.Login)</p>
     <p>@Html.TextBoxFor(x => x.LoginForm.Login)</p>
     <p>@Html.LabelFor(x => x.LoginForm.Password)</p>
     <p>@Html.PasswordFor(x => x.LoginForm.Password)</p>

@@ -1,19 +1,21 @@
-﻿using System;
-using Health.API.Entities;
+﻿using Health.API.Entities;
 using Health.API.Repository;
 using Health.API.Services;
-using Ninject;
 
 namespace Health.Core.Services
 {
+    /// <summary>
+    /// Сервис авторизации.
+    /// </summary>
+    /// <typeparam name="TUserCredential">Тип мандата пользователя.</typeparam>
     public class AuthorizationService<TUserCredential> : CoreService, IAuthorizationService<IUserCredential>
         where TUserCredential : IUserCredential, new()
     {
         /// <summary>
-        /// Инициализация репозиториев доступа к анным сессии
+        /// Инициализация репозиториев доступа к анным сессии.
         /// </summary>
-        /// <param name="actual_data_accessor"></param>
-        /// <param name="permanent_data_accessor"></param>
+        /// <param name="actual_data_accessor">Репозиторий доступа к актуальным данным сессии.</param>
+        /// <param name="permanent_data_accessor">Репозиторий доступа к сохраняемым данным сессии.</param>
         public AuthorizationService(IActualCredentialRepository actual_data_accessor,
                                     IPermanentCredentialRepository permanent_data_accessor)
         {
@@ -21,32 +23,38 @@ namespace Health.Core.Services
             PermanentDataAccessor = permanent_data_accessor;
         }
 
+        #region IAuthorizationService<IUserCredential> Members
+
         /// <summary>
-        /// Доступ к актуальному хранлищу сессии пользователя
+        /// Доступ к актуальному хранлищу сессии пользователя.
         /// </summary>
         public IActualCredentialRepository ActualDataAccessor { get; set; }
 
         /// <summary>
-        /// Доступ к постоянному хранлищу сессии пользователя
+        /// Доступ к постоянному хранлищу сессии пользователя.
         /// </summary>
         public IPermanentCredentialRepository PermanentDataAccessor { get; set; }
 
         /// <summary>
-        /// Дефолтные роли пользователя
+        /// Дефолтные роли пользователя.
         /// </summary>
         public IDefaultRoles DefaultRoles
         {
             get { return Instance<IDefaultRoles>(); }
-            set {}
+            set { }
         }
 
         /// <summary>
-        /// Дефолтное имя переменной в сессии куда сохраняется мандат пользователя
+        /// Дефолтное имя переменной в сессии куда сохраняется мандат пользователя.
         /// </summary>
-        public string DefaultUserCredentialName { get { return "remember"; } set { } }
+        public string DefaultUserCredentialName
+        {
+            get { return "remember"; }
+            set { }
+        }
 
         /// <summary>
-        /// Дефолтный мандат пользователя
+        /// Дефолтный мандат пользователя.
         /// </summary>
         public IUserCredential DefaultUserCredential
         {
@@ -59,11 +67,11 @@ namespace Health.Core.Services
                 default_credential.IsRemember = false;
                 return default_credential;
             }
-            set {}
+            set { }
         }
 
         /// <summary>
-        /// Актуальный мандат пользователя
+        /// Актуальный мандат пользователя.
         /// </summary>
         public virtual IUserCredential UserCredential
         {
@@ -81,7 +89,7 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Стартовать сессию
+        /// Стартовать сессию.
         /// </summary>
         public virtual void SessionStartup()
         {
@@ -96,12 +104,12 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Вход пользователя
+        /// Вход пользователя.
         /// </summary>
-        /// <param name="login">Логин</param>
-        /// <param name="password">Пароль</param>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
         /// <param name="remember_me">Запоминить?</param>
-        /// <returns>Результат авторизации</returns>
+        /// <returns>Результат авторизации.</returns>
         public virtual bool Login(string login, string password, bool remember_me = false)
         {
             IUser user = CoreKernel.UserRepo.GetByLoginAndPassword(login, password);
@@ -125,7 +133,7 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Сброс сессии для пользователя
+        /// Сброс сессии для пользователя.
         /// </summary>
         public virtual void Logout()
         {
@@ -135,7 +143,7 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Запоминаем пользователя
+        /// Запоминаем пользователя.
         /// </summary>
         public virtual void RememberMe()
         {
@@ -143,9 +151,9 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Запомнен ли пользователь
+        /// Запомнен ли пользователь.
         /// </summary>
-        /// <returns>Да или нет :)</returns>
+        /// <returns>Да или нет.</returns>
         public virtual bool IsRemember()
         {
             IUserCredential credential = PermanentDataAccessor.Read("remember");
@@ -158,7 +166,7 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Восстановление запомненной сессии
+        /// Восстановление запомненной сессии.
         /// </summary>
         public virtual void RestoreRememberSession()
         {
@@ -169,5 +177,7 @@ namespace Health.Core.Services
                 ActualDataAccessor.Write(DefaultUserCredentialName, credential);
             }
         }
+
+        #endregion
     }
 }

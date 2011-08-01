@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
-using Health.API.Services;
-using Ninject;
 
 namespace Health.Site.Controllers
 {
@@ -20,7 +17,7 @@ namespace Health.Site.Controllers
         public ActionResult Index()
         {
             IEnumerable<IRole> roles = CoreKernel.RoleRepo.GetAll();
-            
+
             var new_role = Entity<IRole>();
             new_role.Name = "new_role";
             new_role.Code = 4434;
@@ -30,7 +27,7 @@ namespace Health.Site.Controllers
             //ViewBag.VarName1 = new { new_role.Name }.GetName();
             Finder[] roless = GetBy(new[]
                                         {
-                                            new Finder()
+                                            new Finder
                                                 {
                                                     Name = new_role.PropertyName(x => x.Name),
                                                     F = "some string"
@@ -43,12 +40,6 @@ namespace Health.Site.Controllers
 
             ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
             return View();
-        }
-
-        public class Finder
-        {
-            public string Name { get; set; }
-            public string F { get; set; }
         }
 
         public Finder[] GetBy(params Finder[] f)
@@ -79,13 +70,23 @@ namespace Health.Site.Controllers
         {
             return View();
         }
+
+        #region Nested type: Finder
+
+        public class Finder
+        {
+            public string Name { get; set; }
+            public string F { get; set; }
+        }
+
+        #endregion
     }
 
     public static class ObjectExtensions
     {
         public static string PropertyName<T, TOut>(this T source, Expression<Func<T, TOut>> property)
         {
-            var member_expression = (MemberExpression)property.Body;
+            var member_expression = (MemberExpression) property.Body;
             return member_expression.Member.Name;
         }
     }

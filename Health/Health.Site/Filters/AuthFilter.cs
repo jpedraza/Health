@@ -2,7 +2,6 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Health.API;
-using Health.API.Services;
 
 namespace Health.Site.Filters
 {

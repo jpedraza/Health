@@ -1,37 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
-using Health.Data.Entities;
 using Health.Site.Models.Forms;
 
 namespace Health.Site.Models.Binders
 {
+    /// <summary>
+    /// Binder для InterviewForm.
+    /// </summary>
     public class InterviewFormBinder : DefaultModelBinder
     {
-        protected IDIKernel Kernel { get; set; }
-
         public InterviewFormBinder(IDIKernel kernel)
         {
             Kernel = kernel;
         }
 
-        protected override object CreateModel(ControllerContext controller_context, ModelBindingContext binding_context, Type model_type)
+        /// <summary>
+        /// DI ядро.
+        /// </summary>
+        protected IDIKernel Kernel { get; set; }
+
+        /// <summary>
+        /// Создание модели.
+        /// </summary>
+        /// <param name="controller_context">Контекст контроллера.</param>
+        /// <param name="binding_context">Контекст привязки.</param>
+        /// <param name="model_type">Тип модели.</param>
+        /// <returns>Экземпляр модели.</returns>
+        protected override object CreateModel(ControllerContext controller_context, ModelBindingContext binding_context,
+                                              Type model_type)
         {
-            var interview_form = new InterviewFormModel(Kernel) { Parameters = GetValueForParameter(controller_context, binding_context) };
+            var interview_form = new InterviewFormModel(Kernel)
+                                     {Parameters = GetValueForParameter(controller_context, binding_context)};
             return interview_form;
         }
 
-        protected override void BindProperty(ControllerContext controller_context, ModelBindingContext binding_context, System.ComponentModel.PropertyDescriptor property_descriptor)
+        /// <summary>
+        /// Привязка свойств модели.
+        /// </summary>
+        /// <param name="controller_context">Контекст контроллера.</param>
+        /// <param name="binding_context">Контекст привязки.</param>
+        /// <param name="property_descriptor">Дескриптор свойства.</param>
+        protected override void BindProperty(ControllerContext controller_context, ModelBindingContext binding_context,
+                                             PropertyDescriptor property_descriptor)
         {
-            SetProperty(controller_context, binding_context, property_descriptor, GetValueForParameter(controller_context, binding_context));
+            SetProperty(controller_context, binding_context, property_descriptor,
+                        GetValueForParameter(controller_context, binding_context));
         }
 
-        protected IEnumerable<IParameter> GetValueForParameter(ControllerContext controller_context, ModelBindingContext binding_context)
+        /// <summary>
+        /// Получение значений параметров.
+        /// </summary>
+        /// <param name="controller_context">Контекст контроллера.</param>
+        /// <param name="binding_context">Контекст привязки.</param>
+        /// <returns>Перечисление параметров.</returns>
+        protected IEnumerable<IParameter> GetValueForParameter(ControllerContext controller_context,
+                                                               ModelBindingContext binding_context)
         {
             NameValueCollection value_collection = controller_context.HttpContext.Request.Form;
 
@@ -39,7 +68,7 @@ namespace Health.Site.Models.Binders
             List<IParameter> list_parameters = parameters.ToList();
 
             int count = 0;
-            foreach (var key in value_collection)
+            foreach (object key in value_collection)
             {
                 if (key.ToString().Contains("Parameters"))
                 {
@@ -47,7 +76,7 @@ namespace Health.Site.Models.Binders
                 }
             }
             const string format = "InterviewForm.Parameters[{0}].{1}";
-            for (int i = 0; i < count / 2; i++)
+            for (int i = 0; i < count/2; i++)
             {
                 var parameter = Kernel.Get<IParameter>();
                 parameter.Name = value_collection[String.Format(format, i, "Name")];
