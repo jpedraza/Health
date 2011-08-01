@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using Health.API;
 using Health.API.Services;
 using Health.Site.Attributes;
 using Ninject;
@@ -7,7 +8,7 @@ namespace Health.Site.Controllers
 {
     public class AdminController : CoreController
     {
-        public AdminController(IKernel di_kernel) : base(di_kernel)
+        public AdminController(IDIKernel di_kernel) : base(di_kernel)
         {
         }
 

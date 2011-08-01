@@ -42,6 +42,13 @@ namespace Health.API.Services
         /// </summary>
         void SessionStartup();
 
+        /// <summary>
+        /// Вход пользователя в систему
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="remember_me">Запоминать?</param>
+        /// <returns>Результат авторизации</returns>
         bool Login(string login, string password, bool remember_me = false);
 
         /// <summary>

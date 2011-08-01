@@ -15,7 +15,7 @@ namespace Health.Core.Services
         /// <summary>
         /// DI ядро
         /// </summary>
-        public IKernel DIKernel { get; set; }
+        public IDIKernel DIKernel { get; set; }
 
         /// <summary>
         /// Центральное яжро системы
@@ -38,7 +38,7 @@ namespace Health.Core.Services
         /// </summary>
         /// <param name="di_kernel"></param>
         /// <param name="core_kernel"></param>
-        public void SetKernelAndCoreService(IKernel di_kernel, ICoreKernel core_kernel)
+        public void SetKernelAndCoreService(IDIKernel di_kernel, ICoreKernel core_kernel)
         {
             DIKernel = di_kernel;
             CoreKernel = core_kernel;

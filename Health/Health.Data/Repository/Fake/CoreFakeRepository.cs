@@ -19,7 +19,7 @@ namespace Health.Data.Repository.Fake
             _entities = new List<TIEntity>();
         }
 
-        public IKernel DIKernel { get; set; }
+        public IDIKernel DIKernel { get; set; }
         public ICoreKernel CoreKernel { get; set; }
         public TInstance Instance<TInstance>()
             where TInstance : IEntity
@@ -27,7 +27,7 @@ namespace Health.Data.Repository.Fake
             return DIKernel.Get<TInstance>();
         }
 
-        public void SetKernelAndCoreService(IKernel di_kernel, ICoreKernel core_kernel)
+        public void SetKernelAndCoreService(IDIKernel di_kernel, ICoreKernel core_kernel)
         {
             DIKernel = di_kernel;
             CoreKernel = core_kernel;

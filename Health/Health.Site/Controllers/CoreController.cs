@@ -9,7 +9,7 @@ namespace Health.Site.Controllers
 {
     public abstract class CoreController : Controller
     {
-        protected CoreController(IKernel di_kernel)
+        protected CoreController(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
             ViewData["CoreKernel"] = CoreKernel;
@@ -20,7 +20,7 @@ namespace Health.Site.Controllers
             get { return _coreKernel ?? (_coreKernel = DIKernel.Get<ICoreKernel>()); }
         }
 
-        public IKernel DIKernel { get; private set; }
+        public IDIKernel DIKernel { get; private set; }
 
         protected TEntity Entity<TEntity>() where TEntity : IEntity
         {

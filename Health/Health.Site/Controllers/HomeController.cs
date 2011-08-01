@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Mvc;
+using Health.API;
 using Health.API.Entities;
 using Health.API.Services;
 using Ninject;
@@ -12,7 +13,7 @@ namespace Health.Site.Controllers
 {
     public class HomeController : CoreController
     {
-        public HomeController(IKernel di_kernel) : base(di_kernel)
+        public HomeController(IDIKernel di_kernel) : base(di_kernel)
         {
         }
 

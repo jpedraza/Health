@@ -12,7 +12,7 @@ namespace Health.API
         /// <summary>
         /// DI ядро
         /// </summary>
-        IKernel DIKernel { get; set; }
+        IDIKernel DIKernel { get; set; }
 
         /// <summary>
         /// Центральное ядро системы
@@ -32,7 +32,7 @@ namespace Health.API
         /// </summary>
         /// <param name="di_kernel"></param>
         /// <param name="core_kernel"></param>
-        void SetKernelAndCoreService(IKernel di_kernel, ICoreKernel core_kernel);
+        void SetKernelAndCoreService(IDIKernel di_kernel, ICoreKernel core_kernel);
 
         /// <summary>
         /// Этот метод должем вызываться в методе SetKernelAndCoreService и предоставляет возможность начальной инициализации данных

@@ -9,6 +9,7 @@ using Health.Data.Entities;
 using Health.Data.Repository.Fake;
 using Health.Site.App_Start;
 using Health.Site.Attributes;
+using Health.Site.DI;
 using Health.Site.Filters;
 using Health.Site.Repository;
 using Microsoft.Practices.ServiceLocation;
@@ -70,7 +71,7 @@ namespace Health.Site.App_Start
         {
             kernel.Bind<IRole>().To<Role>();
             kernel.Bind<IUser>().To<User>();
-            kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope().WithConstructorArgument("di_kernel", c => c.Kernel);
+            kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IRoleRepository<IRole>>().To<RolesFakeRepository<Role>>().InSingletonScope();
             kernel.Bind<IUserRepository<IUser>>().To<UsersFakeRepository<User>>().InSingletonScope();
             kernel.Bind<IAuthorizationService<IUserCredential>>().To<AuthorizationService<UserCredential>>();
@@ -80,6 +81,7 @@ namespace Health.Site.App_Start
             kernel.Bind<IRegistrationService<ICandidate>>().To<RegistrationService<Candidate>>();
             kernel.Bind<IDefaultRoles>().To<DefaultRoles>();
             kernel.Bind<IUserCredential>().To<UserCredential>();
+            kernel.Bind<IDIKernel>().To<DIKernel>();
 
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
