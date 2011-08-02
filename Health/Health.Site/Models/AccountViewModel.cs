@@ -1,4 +1,5 @@
-﻿using Health.Site.Models.Forms;
+﻿using Health.API;
+using Health.Site.Models.Forms;
 
 namespace Health.Site.Models
 {

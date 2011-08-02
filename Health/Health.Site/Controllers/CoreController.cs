@@ -11,7 +11,8 @@ namespace Health.Site.Controllers
         protected CoreController(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
-            ViewData["CoreKernel"] = CoreKernel;
+            ViewBag.DIKernel = DIKernel;
+            ViewBag.CoreKernel = CoreKernel;
         }
 
         public ICoreKernel CoreKernel

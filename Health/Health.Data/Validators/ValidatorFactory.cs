@@ -1,6 +1,7 @@
 ﻿using System;
 using Health.API;
 using Health.API.Entities;
+using Health.API.Validators;
 
 namespace Health.Data.Validators
 {

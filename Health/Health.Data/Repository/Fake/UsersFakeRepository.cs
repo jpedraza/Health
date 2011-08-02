@@ -14,9 +14,9 @@ namespace Health.Data.Repository.Fake
         {
             TUser required_user = default(TUser);
             IEnumerable<IUser> found_user = from user in _entities
-                                            where user.Login == login &
-                                                  user.Password == password
-                                            select user;
+                                     where user.Login == login &
+                                           user.Password == password
+                                     select user;
 
             if (found_user.Count() == 1)
             {

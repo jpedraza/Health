@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Health.API;
 using Health.API.Entities;
+using Health.API.Validators;
 using Health.Data.Validators;
 
 namespace Health.Site.Models.Forms
@@ -74,16 +75,12 @@ namespace Health.Site.Models.Forms
     /// <summary>
     /// Форма опроса пользователя при первом входе в систему
     /// </summary>
-    public class InterviewFormModel : IValidatableObject
+    public class InterviewFormModel : ParametersFormBase, IValidatableObject
     {
-        public InterviewFormModel(IDIKernel di_kernel)
+        public InterviewFormModel(IDIKernel di_kernel) : base(di_kernel)
         {
-            DIKernel = di_kernel;
+            
         }
-
-        public IDIKernel DIKernel { get; protected set; }
-
-        public IEnumerable<IParameter> Parameters { get; set; }
 
         #region IValidatableObject Members
 
@@ -91,7 +88,7 @@ namespace Health.Site.Models.Forms
         {
             var result = new List<ValidationResult>();
             var validator_factory = DIKernel.Get<IValidatorFactory>();
-            if (!validator_factory.IsValid(typeof (RequiredValidator).ToString(), Parameters.ToList()[0].Value))
+            if (!validator_factory.IsValid("Health.Data.Validators.RequiredValidator, Health.Data", Parameters.ToList()[0].Value))
             {
                 result.Add(new ValidationResult(validator_factory.Message, new[]
                                                                                {
