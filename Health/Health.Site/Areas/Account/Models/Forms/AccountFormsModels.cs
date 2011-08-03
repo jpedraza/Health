@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,30 +9,30 @@ using Health.Data.Validators;
 namespace Health.Site.Areas.Account.Models.Forms
 {
     /// <summary>
-    /// Модель формы авторизации на сайте
+    /// РњРѕРґРµР»СЊ С„РѕСЂРјС‹ Р°РІС‚РѕСЂРёР·Р°С†РёРё РЅР° СЃР°Р№С‚Рµ
     /// </summary>
     public class LoginFormModel
     {
         /// <summary>
-        /// Логин пользователя
+        /// Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
-        [Required(ErrorMessage = "Введите, пожалуйста, логин")]
+        [Required(ErrorMessage = "Р’РІРµРґРёС‚Рµ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, Р»РѕРіРёРЅ")]
         public string Login { get; set; }
 
         /// <summary>
-        /// Пароль пользователя
+        /// РџР°СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
-        [Required(ErrorMessage = "Введите, пожалуйста, пароль")]
+        [Required(ErrorMessage = "Р’РІРµРґРёС‚Рµ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РїР°СЂРѕР»СЊ")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Необходимо запоминать пользователя?
+        /// РќРµРѕР±С…РѕРґРёРјРѕ Р·Р°РїРѕРјРёРЅР°С‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ?
         /// </summary>
         public bool RememberMe { get; set; }
     }
 
     /// <summary>
-    /// Модель формы регистрации кандидатов
+    /// РњРѕРґРµР»СЊ С„РѕСЂРјС‹ СЂРµРіРёСЃС‚СЂР°С†РёРё РєР°РЅРґРёРґР°С‚РѕРІ
     /// </summary>
     public class RegistrationFormModel : ICandidate
     {
@@ -72,7 +72,7 @@ namespace Health.Site.Areas.Account.Models.Forms
     }
 
     /// <summary>
-    /// Форма опроса пользователя при первом входе в систему
+    /// Р¤РѕСЂРјР° РѕРїСЂРѕСЃР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїСЂРё РїРµСЂРІРѕРј РІС…РѕРґРµ РІ СЃРёСЃС‚РµРјСѓ
     /// </summary>
     public class InterviewFormModel : IValidatableObject
     {

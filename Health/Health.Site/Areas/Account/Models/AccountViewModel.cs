@@ -1,25 +1,25 @@
-using Health.Site.Areas.Account.Models.Forms;
+п»їusing Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Models;
 
 namespace Health.Site.Areas.Account.Models
 {
     /// <summary>
-    /// Модель представлений AccountController
+    /// РњРѕРґРµР»СЊ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёР№ AccountController
     /// </summary>
     public class AccountViewModel : CoreViewModel
     {
         /// <summary>
-        /// Форма входа
+        /// Р¤РѕСЂРјР° РІС…РѕРґР°
         /// </summary>
         public LoginFormModel LoginForm { get; set; }
 
         /// <summary>
-        /// Форма регистрации кандидатов
+        /// Р¤РѕСЂРјР° СЂРµРіРёСЃС‚СЂР°С†РёРё РєР°РЅРґРёРґР°С‚РѕРІ
         /// </summary>
         public RegistrationFormModel RegistrationForm { get; set; }
 
         /// <summary>
-        /// Форма опроса пользователя при первом входе в систему
+        /// Р¤РѕСЂРјР° РѕРїСЂРѕСЃР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїСЂРё РїРµСЂРІРѕРј РІС…РѕРґРµ РІ СЃРёСЃС‚РµРјСѓ
         /// </summary>
         public InterviewFormModel InterviewForm { get; set; }
     }
