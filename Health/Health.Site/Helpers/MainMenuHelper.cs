@@ -74,11 +74,13 @@ namespace Health.Site.Helpers
         /// Точка входа в хелпер
         /// </summary>
         /// <param name="helper">Центральный класс хелперов</param>
+        /// <param name="core_kernel"></param>
         /// <returns>Html код для меню</returns>
-        public static MvcHtmlString MainMenu(this HtmlHelper helper)
+        public static MvcHtmlString MainMenu(this HtmlHelper helper, ICoreKernel core_kernel)
         {
             //TODO: Убрать этот костыль
-            CoreServ = ServiceLocator.Current.GetInstance<ICoreKernel>();
+            //CoreServ = ServiceLocator.Current.GetInstance<ICoreKernel>();
+            CoreServ = core_kernel;
             GetMainMenuElements();
             return GetHtmlString(helper);
         }

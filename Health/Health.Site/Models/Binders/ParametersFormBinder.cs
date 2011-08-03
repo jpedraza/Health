@@ -11,11 +11,11 @@ using Health.Site.Areas.Account.Models.Forms;
 namespace Health.Site.Models.Binders
 {
     /// <summary>
-    /// Binder для InterviewForm.
+    /// Binder для форм с набором параметров.
     /// </summary>
-    public class InterviewFormBinder : DefaultModelBinder
+    public class ParametersFormBinder : DefaultModelBinder
     {
-        public InterviewFormBinder(IDIKernel kernel)
+        public ParametersFormBinder(IDIKernel kernel)
         {
             Kernel = kernel;
         }
@@ -35,9 +35,7 @@ namespace Health.Site.Models.Binders
         protected override object CreateModel(ControllerContext controller_context, ModelBindingContext binding_context,
                                               Type model_type)
         {
-            var interview_form = new InterviewFormModel(Kernel)
-                                     {Parameters = GetValueForParameter(controller_context, binding_context)};
-            return interview_form;
+            return Activator.CreateInstance(model_type, new[] { Kernel });
         }
 
         /// <summary>

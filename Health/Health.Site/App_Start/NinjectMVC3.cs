@@ -4,6 +4,7 @@ using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
 using Health.API.Services;
+using Health.API.Validators;
 using Health.Core;
 using Health.Core.Services;
 using Health.Data.Entities;
@@ -43,7 +44,15 @@ namespace Health.Site.App_Start
             DynamicModuleUtility.RegisterModule(typeof (OnePerRequestModule));
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
             Bootstrapper.Initialize(CreateKernel);
-            ModelBinders.Binders.Add(typeof (InterviewFormModel), new InterviewFormBinder(Kernel.Get<IDIKernel>()));
+            ModelToBinder();
+        }
+
+        /// <summary>
+        /// –егистраци€ нестандартных биндеров дл€ моделей
+        /// </summary>
+        public static void ModelToBinder()
+        {
+            ModelBinders.Binders.Add(typeof(InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
         }
 
         /// <summary>
