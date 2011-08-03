@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
-using Health.Site.Models.Forms;
+using Health.Site.Areas.Account.Models.Forms;
 
 namespace Health.Site.Models.Binders
 {

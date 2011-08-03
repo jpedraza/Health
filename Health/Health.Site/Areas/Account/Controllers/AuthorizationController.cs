@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Health.API;
+using Health.Site.Areas.Account.Models;
 using Health.Site.Controllers;
 using Health.Site.Models;
 
@@ -52,7 +53,7 @@ namespace Health.Site.Areas.Account.Controllers
         {
             CoreKernel.AuthServ.Logout();
 
-            return RedirectToRoute("Home");
+            return RedirectToRoute(new { area = "", controller = "Home", action = "Index" });
         }
 
     }

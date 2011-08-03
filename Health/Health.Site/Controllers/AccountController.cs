@@ -2,8 +2,9 @@
 using System.Web.Mvc;
 using Health.API;
 using Health.Data.Entities;
+using Health.Site.Areas.Account.Models;
+using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Models;
-using Health.Site.Models.Forms;
 
 namespace Health.Site.Controllers
 {
