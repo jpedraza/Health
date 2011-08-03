@@ -11,7 +11,7 @@ namespace Health.Site.Filters
         /// Куда переадресуем если запрещен доступ
         /// </summary>
         protected readonly RedirectToRouteResult RedirectResult = new RedirectToRouteResult(
-            new RouteValueDictionary(new {controller = "Account", action = "Login"}));
+            new RouteValueDictionary(new { area = "Account", controller = "Authorization", action = "Login" }));
 
         /// <summary>
         /// Разрешенные роли (Приоритет выше, чем у DenyRoles)

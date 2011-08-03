@@ -36,19 +36,19 @@ namespace Health.Site.Helpers
             {
                 case "Guest":
                     {
-                        elements.Add(new MenuElement("Вход", "Login", "Account"));
-                        elements.Add(new MenuElement("Регистрация", "Registration", "Account"));
+                        elements.Add(new MenuElement("Вход", "Login", "Authorization", "Account"));
+                        elements.Add(new MenuElement("Регистрация", "Registration", "Registration", "Account"));
                         break;
                     }
                 case "Admin":
                     {
-                        elements.Add(new MenuElement("Личный кабинет", "Index", "Admin"));
+                        elements.Add(new MenuElement("Личный кабинет", "Index", "Home", "Admin"));
                         break;
                     }
             }
             if (role != "Guest")
             {
-                elements.Add(new MenuElement("Выход", "Logout", "Account"));
+                elements.Add(new MenuElement("Выход", "Logout", "Authorization", "Account"));
             }
 
             _elements = elements;
@@ -64,7 +64,7 @@ namespace Health.Site.Helpers
             string menu = string.Format("<li>Здраствуй, {0}</li>", CoreServ.AuthServ.UserCredential.Login);
             foreach (MenuElement element in _elements)
             {
-                menu += "<li>" + helper.ActionLink(element.Title, element.Action, element.Controller) + "</li>";
+                menu += "<li>" + helper.ActionLink(element.Title, element.Action, element.Controller, new { area = element.Area }, null) + "</li>";
             }
 
             return MvcHtmlString.Create(menu);
