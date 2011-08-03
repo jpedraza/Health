@@ -99,10 +99,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MainMenuHelper.cs" />
-    <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\Binders\ParametersFormBinder.cs" />
     <Compile Include="Models\CoreViewModel.cs" />
-    <Compile Include="Models\Forms\AccountFormsModels.cs" />
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
     <Compile Include="Models\MenuElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

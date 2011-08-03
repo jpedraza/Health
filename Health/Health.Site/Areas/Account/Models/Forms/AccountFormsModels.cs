@@ -6,6 +6,7 @@ using Health.API;
 using Health.API.Entities;
 using Health.API.Validators;
 using Health.Data.Validators;
+using Health.Site.Models.Forms;
 
 namespace Health.Site.Areas.Account.Models.Forms
 {
