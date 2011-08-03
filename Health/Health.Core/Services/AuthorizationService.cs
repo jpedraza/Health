@@ -1,6 +1,8 @@
-﻿using Health.API.Entities;
+﻿using System;
+using Health.API.Entities;
 using Health.API.Repository;
 using Health.API.Services;
+using NLog;
 
 namespace Health.Core.Services
 {
@@ -101,6 +103,7 @@ namespace Health.Core.Services
             {
                 RestoreRememberSession();
             }
+            Logger.Info(String.Format("Сессия для пользователя {0} запущена.", UserCredential.Login));
         }
 
         /// <summary>
@@ -112,6 +115,9 @@ namespace Health.Core.Services
         /// <returns>Результат авторизации.</returns>
         public virtual bool Login(string login, string password, bool remember_me = false)
         {
+            Logger.Info(String.Format("Попытка авторизации пользователя: Логин - {0}, Пароль - {1}, Запоминать? - {2}.", 
+                login, password, remember_me));
+
             IUser user = CoreKernel.UserRepo.GetByLoginAndPassword(login, password);
 
             if (user != null)
@@ -129,6 +135,7 @@ namespace Health.Core.Services
                 }
             }
 
+            Logger.Info(String.Format("Результат авторизации пользователя {0} - {1} .", login, UserCredential.IsAuthirization));
             return user != null;
         }
 
@@ -137,6 +144,7 @@ namespace Health.Core.Services
         /// </summary>
         public virtual void Logout()
         {
+            Logger.Info(String.Format("Сессия пользователя {0} сброшена.", UserCredential.Login));
             ActualDataAccessor.Clear();
             PermanentDataAccessor.Clear();
             ActualDataAccessor.Write(DefaultUserCredentialName, DefaultUserCredential);
@@ -147,6 +155,7 @@ namespace Health.Core.Services
         /// </summary>
         public virtual void RememberMe()
         {
+            Logger.Info(String.Format("Пользователь {0} был запомнен.", UserCredential.Login));
             PermanentDataAccessor.Write("remember", UserCredential);
         }
 
@@ -176,6 +185,7 @@ namespace Health.Core.Services
             {
                 ActualDataAccessor.Write(DefaultUserCredentialName, credential);
             }
+            Logger.Info(String.Format("Для пользователя {0} была восстановлена запомненная сессия.", UserCredential.Login));
         }
 
         #endregion

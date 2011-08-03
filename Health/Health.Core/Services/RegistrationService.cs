@@ -1,3 +1,4 @@
+using System;
 using Health.API.Entities;
 using Health.API.Services;
 
@@ -18,6 +19,7 @@ namespace Health.Core.Services
         /// <param name="candidate">Кандидат.</param>
         public void AcceptBid(ICandidate candidate)
         {
+            Logger.Info(String.Format("Заявка на регистрацию для {0} - принята.", candidate.Login));
         }
 
         /// <summary>
@@ -27,6 +29,7 @@ namespace Health.Core.Services
         public void SaveBid(ICandidate candidate)
         {
             CoreKernel.CandRepo.Save(candidate);
+            Logger.Info(String.Format("Добавлена заявка на регистрацию - {0}.", candidate.Login));
         }
 
         /// <summary>
@@ -36,6 +39,7 @@ namespace Health.Core.Services
         public void RejectBid(ICandidate candidate)
         {
             CoreKernel.CandRepo.Delete(candidate);
+            Logger.Info(String.Format("Заявка на регистрацию для {0} - отклонена.", candidate.Login));
         }
 
         #endregion

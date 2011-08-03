@@ -2,6 +2,7 @@
 using Health.API.Entities;
 using Health.API.Repository;
 using Health.API.Services;
+using NLog;
 
 namespace Health.Core
 {
@@ -23,6 +24,8 @@ namespace Health.Core
         public CoreKernel(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
+            Logger = DIKernel.Get<ILogger>();
+            Logger.Debug("Центральное ядро приложения инициализировано.");
         }
 
         protected IDIKernel DIKernel { get; set; }
@@ -30,11 +33,24 @@ namespace Health.Core
         #region ICoreKernel Members
 
         /// <summary>
+        /// Логгер.
+        /// </summary>
+        public ILogger Logger { get; set; }
+
+        /// <summary>
         /// Репозиторий ролей.
         /// </summary>
         public IRoleRepository<IRole> RoleRepo
         {
-            get { return _roleRepo ?? (_roleRepo = DIKernel.Get<IRoleRepository<IRole>>(this)); }
+            get
+            {
+                if (_roleRepo == null)
+                {
+                    _roleRepo = DIKernel.Get<IRoleRepository<IRole>>(this);
+                    Logger.Debug("Репозиторий ролей  инициализирован.");
+                }
+                return _roleRepo;
+            }
         }
 
         /// <summary>
@@ -42,7 +58,15 @@ namespace Health.Core
         /// </summary>
         public IUserRepository<IUser> UserRepo
         {
-            get { return _userRepo ?? (_userRepo = DIKernel.Get<IUserRepository<IUser>>(this)); }
+            get
+            {
+                if (_userRepo == null)
+                {
+                    _userRepo = DIKernel.Get<IUserRepository<IUser>>(this);
+                    Logger.Debug("Репозиторий пользователей инициализирован.");
+                }
+                return _userRepo;
+            }
         }
 
         /// <summary>
@@ -50,7 +74,15 @@ namespace Health.Core
         /// </summary>
         public ICandidateRepository<ICandidate> CandRepo
         {
-            get { return _candRepo ?? (_candRepo = DIKernel.Get<ICandidateRepository<ICandidate>>(this)); }
+            get
+            {
+                if (_candRepo == null)
+                {
+                    _candRepo = DIKernel.Get<ICandidateRepository<ICandidate>>(this);
+                    Logger.Debug("Репозиторий кандидатов инициализирован");
+                }
+                return _candRepo;
+            }
         }
 
         /// <summary>
@@ -58,7 +90,15 @@ namespace Health.Core
         /// </summary>
         public IAuthorizationService<IUserCredential> AuthServ
         {
-            get { return _authServ ?? (_authServ = DIKernel.Get<IAuthorizationService<IUserCredential>>(this)); }
+            get
+            {
+                if (_authServ == null)
+                {
+                    _authServ = DIKernel.Get<IAuthorizationService<IUserCredential>>(this);
+                    Logger.Debug("Сервис авторизации запущен.");
+                }
+                return _authServ;
+            }
         }
 
         /// <summary>
@@ -66,7 +106,16 @@ namespace Health.Core
         /// </summary>
         public IRegistrationService<ICandidate> RegServ
         {
-            get { return _regServ ?? (_regServ = DIKernel.Get<IRegistrationService<ICandidate>>(this)); }
+            get
+            {
+                if (_regServ == null)
+                {
+                    _regServ = DIKernel.Get<IRegistrationService<ICandidate>>(this);
+                    Logger.Debug("Сервис регистрации запущен.");
+                }
+                
+                return _regServ;
+            }
         }
 
         #endregion

@@ -18,6 +18,11 @@ namespace Health.Data.Repository.Fake
 
         #region ICoreRepository<TIEntity> Members
 
+        /// <summary>
+        /// Логгер.
+        /// </summary>
+        public ILogger Logger { get; set; }
+
         public IDIKernel DIKernel { get; set; }
         public ICoreKernel CoreKernel { get; set; }
 
@@ -31,6 +36,7 @@ namespace Health.Data.Repository.Fake
         {
             DIKernel = di_kernel;
             CoreKernel = core_kernel;
+            Logger = DIKernel.Get<ILogger>();
             InitializeData();
         }
 

@@ -1,3 +1,4 @@
+using System;
 using Health.API;
 using Health.API.Entities;
 
@@ -9,6 +10,11 @@ namespace Health.Core.Services
     public class CoreService : ICore
     {
         #region ICore Members
+
+        /// <summary>
+        /// Логгер.
+        /// </summary>
+        public ILogger Logger { get; set; }
 
         /// <summary>
         /// DI ядро.
@@ -28,6 +34,7 @@ namespace Health.Core.Services
         public TInstance Instance<TInstance>()
             where TInstance : IEntity
         {
+            Logger.Debug(String.Format("Создается сущность для интерфейса - {0}.", typeof(TInstance).Name));
             return DIKernel.Get<TInstance>();
         }
 
@@ -40,6 +47,7 @@ namespace Health.Core.Services
         {
             DIKernel = di_kernel;
             CoreKernel = core_kernel;
+            Logger = DIKernel.Get<ILogger>();
             InitializeData();
         }
 

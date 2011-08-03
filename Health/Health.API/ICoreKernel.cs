@@ -10,6 +10,11 @@ namespace Health.API
     public interface ICoreKernel
     {
         /// <summary>
+        /// Логгер.
+        /// </summary>
+        ILogger Logger { get; set; }
+
+        /// <summary>
         /// Репозиторий ролей.
         /// </summary>
         IRoleRepository<IRole> RoleRepo { get; }

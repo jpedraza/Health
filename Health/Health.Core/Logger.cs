@@ -2,92 +2,143 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Health.API;
 
-namespace Health.API
+namespace Health.Core
 {
-    /// <summary>
-    /// Интерфейс для логгера.
-    /// </summary>
-    public interface ILogger
+    public class Logger : ILogger
     {
+        private readonly NLog.Logger _logger;
+
+        public Logger(string class_name)
+        {
+            _logger = NLog.LogManager.GetLogger(class_name);
+        }
+
+        #region Implementation of ILogger
+
         /// <summary>
         /// Записать сообщение в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
         /// <param name="level">Уровень.</param>
-        void Log(string message, int level);
+        public void Log(string message, int level)
+        {
+            _logger.Log(NLog.LogLevel.FromOrdinal(level), message);
+        }
 
         /// <summary>
         /// Записать сообщение трассировки в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
-        void Trace(string message);
+        public void Trace(string message)
+        {
+            _logger.Trace(message);
+        }
 
         /// <summary>
         /// Записать сообщение отладки в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
-        void Debug(string message);
+        public void Debug(string message)
+        {
+            _logger.Debug(message);
+        }
 
         /// <summary>
         /// Записать информационное сообщение в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
-        void Info(string message);
+        public void Info(string message)
+        {
+            _logger.Info(message);
+        }
 
         /// <summary>
         /// Записать предупреждающее сообщение в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
-        void Warn(string message);
+        public void Warn(string message)
+        {
+            _logger.Warn(message);
+        }
 
         /// <summary>
         /// Записать сообщение об ошибке в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
-        void Error(string message);
+        public void Error(string message)
+        {
+            _logger.Error(message);
+        }
 
         /// <summary>
         /// Записать критическое сообщение в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
-        void Fatal(string message);
+        public void Fatal(string message)
+        {
+            _logger.Fatal(message);
+        }
 
         /// <summary>
         /// Включено ли логгирование?
         /// </summary>
         /// <param name="level">Уровень.</param>
         /// <returns>Статус.</returns>
-        bool IsEnabled(int level);
+        public bool IsEnabled (int level)
+        {
+            return _logger.IsEnabled(NLog.LogLevel.FromOrdinal(level));
+        }
 
         /// <summary>
         /// Включен ли лог для сообщений трассировки?
         /// </summary>
-        bool IsTraceEnabled { get; }
+        public bool IsTraceEnabled
+        {
+            get { return _logger.IsTraceEnabled; }
+        }
 
         /// <summary>
         /// Включен ли лог для сообщений отладки?
         /// </summary>
-        bool IsDebugEnabled { get; }
+        public bool IsDebugEnabled
+        {
+            get { return _logger.IsDebugEnabled; } 
+        }
 
         /// <summary>
         /// Включен ли лог для информационных сообщений?
         /// </summary>
-        bool IsInfoEnabled { get; }
+        public bool IsInfoEnabled
+        {
+            get { return _logger.IsInfoEnabled; }
+        }
 
         /// <summary>
         /// Включен ли лог для предупреждющих сообщений?
         /// </summary>
-        bool IsWarnEnabled { get; }
+        public bool IsWarnEnabled
+        {
+            get { return _logger.IsWarnEnabled; }
+        }
 
         /// <summary>
         /// Включен ли лог для сообщений об ошибках?
         /// </summary>
-        bool IsErrorEnabled { get; }
+        public bool IsErrorEnabled
+        {
+            get { return _logger.IsErrorEnabled; }
+        }
 
         /// <summary>
         /// Включен ли лог для критических сообщений?
         /// </summary>
-        bool IsFatalEnabled { get; }
+        public bool IsFatalEnabled
+        {
+            get { return _logger.IsFatalEnabled; }
+        }
+
+        #endregion
     }
 }

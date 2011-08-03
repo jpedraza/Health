@@ -99,6 +99,7 @@ namespace Health.Site.App_Start
             // Прочее
             kernel.Bind<IDIKernel>().To<DIKernel>();
             kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
+            kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);
         }
     }
 }
