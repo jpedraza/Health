@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="ea16cbd5-6b9e-41c6-89fa-5a519b223332" name="crash@CRASH-PC 2011-08-02 19:38:09" runUser="crash-pc\crash" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Локальные" id="0f559936-debe-4c34-8ceb-5be85127149a">
+    <Description>Это - параметры по умолчанию для локального тестового запуска.</Description>
+    <Deployment enabled="false" runDeploymentRoot="crash_CRASH-PC 2011-08-02 19_38_09">
+      <DeploymentItem filename="D:\BACKUP\ftp\projects\health\Health\Health.Core\bin\Debug\Health.Core.dll" />
+      <DeploymentItem filename="D:\BACKUP\ftp\projects\health\Health\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll" />
+      <DeploymentItem filename="D:\BACKUP\ftp\projects\health\Health\Health.API\bin\Debug\Health.API.dll" />
+      <DeploymentItem filename="D:\BACKUP\ftp\projects\health\Health\packages\Moq.4.0.10827\lib\NET40\Moq.dll" />
+      <DeploymentItem filename="D:\BACKUP\ftp\projects\health\Health\Health.Data\bin\Debug\Health.Data.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-08-02T19:38:09.0048795+07:00" queuing="2011-08-02T19:38:09.0578826+07:00" start="2011-08-02T19:38:09.0778837+07:00" finish="2011-08-02T19:38:10.3149545+07:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="UserSessionStarted" storage="d:\backup\ftp\projects\health\health\health.core.test\bin\debug\health.core.test.dll" id="1f777003-b005-92a6-e502-cca949edeeb8">
+      <Execution id="2ca07328-783e-4715-9667-a75320a375e1" />
+      <TestMethod codeBase="D:/BACKUP/ftp/projects/health/Health/Health.Core.Test/bin/Debug/Health.Core.Test.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Health.Core.Test.CoreKernelTest, Health.Core.Test, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="UserSessionStarted" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Отсутствующие в списке результаты" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Все загруженные результаты" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="1f777003-b005-92a6-e502-cca949edeeb8" executionId="2ca07328-783e-4715-9667-a75320a375e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="2ca07328-783e-4715-9667-a75320a375e1" testId="1f777003-b005-92a6-e502-cca949edeeb8" testName="UserSessionStarted" computerName="CRASH-PC" duration="00:00:00.3071517" startTime="2011-08-02T19:38:09.1478877+07:00" endTime="2011-08-02T19:38:09.8219263+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2ca07328-783e-4715-9667-a75320a375e1">
+      <Output>
+        <ErrorInfo>
+          <Message>Метод проверки Health.Core.Test.CoreKernelTest.UserSessionStarted выдал исключение: Ninject.ActivationException: Error activating IDefaultRoles
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  1) Request for IDefaultRoles
+
+Suggestions:
+  1) Ensure that you have defined a binding for IDefaultRoles.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+.</Message>
+          <StackTrace>    в Ninject.KernelBase.Resolve(IRequest request) в c:\Projects\Ninject\Maintenance2.2\ninject\src\Ninject\KernelBase.cs:строка 345
+   в Ninject.ResolutionExtensions.GetResolutionIterator(IResolutionRoot root, Type service, Func`2 constraint, IEnumerable`1 parameters, Boolean isOptional, Boolean isUnique) в c:\Projects\Ninject\Maintenance2.2\ninject\src\Ninject\Syntax\ResolutionExtensions.cs:строка 263
+   в Ninject.ResolutionExtensions.Get[T](IResolutionRoot root, IParameter[] parameters) в c:\Projects\Ninject\Maintenance2.2\ninject\src\Ninject\Syntax\ResolutionExtensions.cs:строка 37
+   в Health.Core.Test.DITestKernel.Get[TObject]() в D:\BACKUP\ftp\projects\health\Health\Health.Core.Test\CoreTest.cs:строка 107
+   в Health.Core.Services.CoreService.Instance[TInstance]() в D:\BACKUP\ftp\projects\health\Health\Health.Core\Services\CoreService.cs:строка 35
+   в Health.Core.Services.AuthorizationService`1.get_DefaultRoles() в D:\BACKUP\ftp\projects\health\Health\Health.Core\Services\AuthorizationService.cs:строка 39
+   в Health.Core.Services.AuthorizationService`1.get_DefaultUserCredential() в D:\BACKUP\ftp\projects\health\Health\Health.Core\Services\AuthorizationService.cs:строка 56
+   в Health.Core.Services.AuthorizationService`1.SessionStartup() в D:\BACKUP\ftp\projects\health\Health\Health.Core\Services\AuthorizationService.cs:строка 90
+   в Health.Core.Services.AuthorizationService`1.get_UserCredential() в D:\BACKUP\ftp\projects\health\Health\Health.Core\Services\AuthorizationService.cs:строка 75
+   в Health.Core.Test.CoreKernelTest.UserSessionStarted() в D:\BACKUP\ftp\projects\health\Health\Health.Core.Test\CoreKernelTest.cs:строка 30
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
