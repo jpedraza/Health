@@ -13,6 +13,7 @@ using Health.Data.Validators;
 using Health.Site.App_Start;
 using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
+using Health.Site.Controllers;
 using Health.Site.DI;
 using Health.Site.Filters;
 using Health.Site.Models.Binders;

@@ -25,9 +25,9 @@ namespace Health.Site.Filters
 
         private string _userRole;
 
-        public AuthFilter(ICoreKernel core_service, string allow_roles, string deny_roles)
+        public AuthFilter(ICoreKernel core_kernel, string allow_roles, string deny_roles)
         {
-            CoreServ = core_service;
+            CoreKernel = core_kernel;
             AllowRoles = allow_roles;
             DenyRoles = deny_roles;
         }
@@ -41,7 +41,7 @@ namespace Health.Site.Filters
             {
                 if (String.IsNullOrEmpty(_userRole))
                 {
-                    _userRole = CoreServ.AuthServ.UserCredential.Role;
+                    _userRole = CoreKernel.AuthServ.UserCredential.Role;
                 }
                 return _userRole;
             }
@@ -50,24 +50,24 @@ namespace Health.Site.Filters
         /// <summary>
         /// ÷ентральный сервис
         /// </summary>
-        protected ICoreKernel CoreServ { get; set; }
+        protected ICoreKernel CoreKernel { get; set; }
 
         #region IAuthorizationFilter Members
 
         public void OnAuthorization(AuthorizationContext filter_context)
         {
             // ≈сли у пользовател€ вообще нет роли (никакой ?)
-            if (String.IsNullOrEmpty(CoreServ.AuthServ.UserCredential.Role))
+            if (String.IsNullOrEmpty(CoreKernel.AuthServ.UserCredential.Role))
             {
                 // —брасываем его сессию до гост€
-                CoreServ.AuthServ.Logout();
+                CoreKernel.AuthServ.Logout();
             }
 
             // ≈сли не заданы права доступа
             if (String.IsNullOrEmpty(AllowRoles) & String.IsNullOrEmpty(DenyRoles))
             {
                 // —читаем что всем авторизованным пользовател€м разрешен доступ
-                if (!CoreServ.AuthServ.UserCredential.IsAuthirization)
+                if (!CoreKernel.AuthServ.UserCredential.IsAuthirization)
                 {
                     filter_context.Result = RedirectResult;
                     return;
@@ -109,7 +109,7 @@ namespace Health.Site.Filters
 
             foreach (string role in roles)
             {
-                if (role == UserRole || role == CoreServ.AuthServ.DefaultRoles.All.Name)
+                if (role == UserRole || role == CoreKernel.AuthServ.DefaultRoles.All.Name)
                 {
                     return RedirectResult;
                 }
