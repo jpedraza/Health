@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+
+@model List<Health.Site.Models.MenuElement>
+
+<li>Здраствуй, @ViewBag.Login.</li>
+
+@foreach (var element in Model)
+{
+    <li>
+        @Html.ActionLink(element.Title, element.Action, element.Controller, new { area = element.Area }, null)
+    </li>
+}

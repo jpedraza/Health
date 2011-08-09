@@ -4,7 +4,6 @@ using Health.API;
 using Health.Data.Entities;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Areas.Account.Models.Forms;
-using Health.Site.Models;
 
 namespace Health.Site.Controllers
 {

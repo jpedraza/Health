@@ -17,26 +17,26 @@ namespace Health.API
         /// <summary>
         /// Репозиторий ролей.
         /// </summary>
-        IRoleRepository<IRole> RoleRepo { get; }
+        IRoleRepository RoleRepo { get; }
 
         /// <summary>
         /// Репозиторий пользователей.
         /// </summary>
-        IUserRepository<IUser> UserRepo { get; }
+        IUserRepository UserRepo { get; }
 
         /// <summary>
         /// Репозиторий кандидатов.
         /// </summary>
-        ICandidateRepository<ICandidate> CandRepo { get; }
+        ICandidateRepository CandRepo { get; }
 
         /// <summary>
         /// Сервис авторизации.
         /// </summary>
-        IAuthorizationService<IUserCredential> AuthServ { get; }
+        IAuthorizationService AuthServ { get; }
 
         /// <summary>
         /// Сервис регистрации.
         /// </summary>
-        IRegistrationService<ICandidate> RegServ { get; }
+        IRegistrationService RegServ { get; }
     }
 }

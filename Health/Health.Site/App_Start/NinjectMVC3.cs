@@ -13,7 +13,6 @@ using Health.Data.Validators;
 using Health.Site.App_Start;
 using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
-using Health.Site.Controllers;
 using Health.Site.DI;
 using Health.Site.Filters;
 using Health.Site.Models.Binders;
@@ -53,7 +52,7 @@ namespace Health.Site.App_Start
         /// </summary>
         public static void ModelToBinder()
         {
-            ModelBinders.Binders.Add(typeof(InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
+            ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
         }
 
         /// <summary>
@@ -91,15 +90,15 @@ namespace Health.Site.App_Start
             kernel.Bind<IUserCredential>().To<UserCredential>();
             kernel.Bind<IParameter>().To<Parameter>();
             // Репозитории
-            kernel.Bind<IRoleRepository<IRole>>().To<RolesFakeRepository<Role>>().InSingletonScope();
-            kernel.Bind<IUserRepository<IUser>>().To<UsersFakeRepository<User>>().InSingletonScope();
+            kernel.Bind<IRoleRepository>().To<RolesFakeRepository>().InSingletonScope();
+            kernel.Bind<IUserRepository>().To<UsersFakeRepository>().InSingletonScope();
             kernel.Bind<IActualCredentialRepository>().To<SessionDataAccessor>();
             kernel.Bind<IPermanentCredentialRepository>().To<CookieDataAccessor>();
-            kernel.Bind<ICandidateRepository<ICandidate>>().To<CandidatesFakeRepository<Candidate>>().InSingletonScope();
+            kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
-            kernel.Bind<IAuthorizationService<IUserCredential>>().To<AuthorizationService<UserCredential>>();
-            kernel.Bind<IRegistrationService<ICandidate>>().To<RegistrationService<Candidate>>();
+            kernel.Bind<IAuthorizationService>().To<AuthorizationService>();
+            kernel.Bind<IRegistrationService>().To<RegistrationService<Candidate>>();
             // Фабрики
             kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
             // Фильтры для атрибутов

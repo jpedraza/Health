@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Health.API;
-using Health.Core;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Controllers;
-using Health.Site.Models;
 
 namespace Health.Site.Areas.Account.Controllers
 {
@@ -38,10 +32,9 @@ namespace Health.Site.Areas.Account.Controllers
             if (ModelState.IsValid)
             {
                 CoreKernel.RegServ.SaveBid(form_model.RegistrationForm);
-                return RedirectToRoute(new { area = "", controller = "Home", action = "Index" });
+                return RedirectToRoute(new {area = "", controller = "Home", action = "Index"});
             }
             return View(form_model);
         }
-
     }
 }

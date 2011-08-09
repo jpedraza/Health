@@ -8,13 +8,13 @@ Type.registerNamespace('Sys.Mvc');
 ////////////////////////////////////////////////////////////////////////////////
 // Sys.Mvc.AjaxOptions
 
-Sys.Mvc.$create_AjaxOptions = function Sys_Mvc_AjaxOptions() { return {}; }
-
-
+Sys.Mvc.$create_AjaxOptions = function Sys_Mvc_AjaxOptions() {
+    return { };
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Sys.Mvc.InsertionMode
 
-Sys.Mvc.InsertionMode = function() { 
+Sys.Mvc.InsertionMode = function() {
     /// <field name="replace" type="Number" integer="true" static="true">
     /// </field>
     /// <field name="insertBefore" type="Number" integer="true" static="true">
@@ -23,10 +23,10 @@ Sys.Mvc.InsertionMode = function() {
     /// </field>
 };
 Sys.Mvc.InsertionMode.prototype = {
-    replace: 0, 
-    insertBefore: 1, 
+    replace: 0,
+    insertBefore: 1,
     insertAfter: 2
-}
+};
 Sys.Mvc.InsertionMode.registerEnum('Sys.Mvc.InsertionMode', false);
 
 
@@ -56,40 +56,39 @@ Sys.Mvc.AjaxContext = function Sys_Mvc_AjaxContext(request, updateTarget, loadin
     this._updateTarget = updateTarget;
     this._loadingElement = loadingElement;
     this._insertionMode = insertionMode;
-}
+};
 Sys.Mvc.AjaxContext.prototype = {
     _insertionMode: 0,
     _loadingElement: null,
     _response: null,
     _request: null,
     _updateTarget: null,
-    
+
     get_data: function Sys_Mvc_AjaxContext$get_data() {
         /// <value type="String"></value>
         if (this._response) {
             return this._response.get_responseData();
-        }
-        else {
+        } else {
             return null;
         }
     },
-    
+
     get_insertionMode: function Sys_Mvc_AjaxContext$get_insertionMode() {
         /// <value type="Sys.Mvc.InsertionMode"></value>
         return this._insertionMode;
     },
-    
+
     get_loadingElement: function Sys_Mvc_AjaxContext$get_loadingElement() {
         /// <value type="Object" domElement="true"></value>
         return this._loadingElement;
     },
-    
+
     get_object: function Sys_Mvc_AjaxContext$get_object() {
         /// <value type="Object"></value>
         var executor = this.get_response();
         return (executor) ? executor.get_object() : null;
     },
-    
+
     get_response: function Sys_Mvc_AjaxContext$get_response() {
         /// <value type="Sys.Net.WebRequestExecutor"></value>
         return this._response;
@@ -99,24 +98,22 @@ Sys.Mvc.AjaxContext.prototype = {
         this._response = value;
         return value;
     },
-    
+
     get_request: function Sys_Mvc_AjaxContext$get_request() {
         /// <value type="Sys.Net.WebRequest"></value>
         return this._request;
     },
-    
+
     get_updateTarget: function Sys_Mvc_AjaxContext$get_updateTarget() {
         /// <value type="Object" domElement="true"></value>
         return this._updateTarget;
     }
-}
-
-
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Sys.Mvc.AsyncHyperlink
 
 Sys.Mvc.AsyncHyperlink = function Sys_Mvc_AsyncHyperlink() {
-}
+};
 Sys.Mvc.AsyncHyperlink.handleClick = function Sys_Mvc_AsyncHyperlink$handleClick(anchor, evt, ajaxOptions) {
     /// <param name="anchor" type="Object" domElement="true">
     /// </param>
@@ -126,14 +123,12 @@ Sys.Mvc.AsyncHyperlink.handleClick = function Sys_Mvc_AsyncHyperlink$handleClick
     /// </param>
     evt.preventDefault();
     Sys.Mvc.MvcHelpers._asyncRequest(anchor.href, 'post', '', anchor, ajaxOptions);
-}
-
-
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Sys.Mvc.MvcHelpers
 
 Sys.Mvc.MvcHelpers = function Sys_Mvc_MvcHelpers() {
-}
+};
 Sys.Mvc.MvcHelpers._serializeSubmitButton = function Sys_Mvc_MvcHelpers$_serializeSubmitButton(element, offsetX, offsetY) {
     /// <param name="element" type="Object" domElement="true">
     /// </param>
@@ -154,17 +149,15 @@ Sys.Mvc.MvcHelpers._serializeSubmitButton = function Sys_Mvc_MvcHelpers$_seriali
             var type = inputElement.type;
             if (type === 'submit') {
                 return encodedName + '=' + encodeURIComponent(inputElement.value);
-            }
-            else if (type === 'image') {
+            } else if (type === 'image') {
                 return encodedName + '.x=' + offsetX + '&' + encodedName + '.y=' + offsetY;
             }
-        }
-        else if ((tagName === 'BUTTON') && (name.length) && (inputElement.type === 'submit')) {
+        } else if ((tagName === 'BUTTON') && (name.length) && (inputElement.type === 'submit')) {
             return encodedName + '=' + encodeURIComponent(inputElement.value);
         }
     }
     return null;
-}
+};
 Sys.Mvc.MvcHelpers._serializeForm = function Sys_Mvc_MvcHelpers$_serializeForm(form) {
     /// <param name="form" type="Object" domElement="true">
     /// </param>
@@ -188,8 +181,7 @@ Sys.Mvc.MvcHelpers._serializeForm = function Sys_Mvc_MvcHelpers$_serializeForm(f
                 formBody.append(encodeURIComponent(inputElement.value));
                 formBody.append('&');
             }
-        }
-        else if (tagName === 'SELECT') {
+        } else if (tagName === 'SELECT') {
             var selectElement = element;
             var optionCount = selectElement.options.length;
             for (var j = 0; j < optionCount; j++) {
@@ -201,8 +193,7 @@ Sys.Mvc.MvcHelpers._serializeForm = function Sys_Mvc_MvcHelpers$_serializeForm(f
                     formBody.append('&');
                 }
             }
-        }
-        else if (tagName === 'TEXTAREA') {
+        } else if (tagName === 'TEXTAREA') {
             formBody.append(encodeURIComponent(name));
             formBody.append('=');
             formBody.append(encodeURIComponent((element.value)));
@@ -215,7 +206,7 @@ Sys.Mvc.MvcHelpers._serializeForm = function Sys_Mvc_MvcHelpers$_serializeForm(f
         formBody.append('&');
     }
     return formBody.toString();
-}
+};
 Sys.Mvc.MvcHelpers._asyncRequest = function Sys_Mvc_MvcHelpers$_asyncRequest(url, verb, body, triggerElement, ajaxOptions) {
     /// <param name="url" type="String">
     /// </param>
@@ -255,21 +246,18 @@ Sys.Mvc.MvcHelpers._asyncRequest = function Sys_Mvc_MvcHelpers$_asyncRequest(url
                 url += '&';
             }
             url += body;
-        }
-        else {
+        } else {
             url += '?';
             url += body;
         }
-    }
-    else {
+    } else {
         requestBody = body;
     }
     var request = new Sys.Net.WebRequest();
     request.set_url(url);
     if (isGetOrPost) {
         request.set_httpVerb(verb);
-    }
-    else {
+    } else {
         request.set_httpVerb('POST');
         request.get_headers()['X-HTTP-Method-Override'] = upperCaseVerb;
     }
@@ -300,7 +288,7 @@ Sys.Mvc.MvcHelpers._asyncRequest = function Sys_Mvc_MvcHelpers$_asyncRequest(url
         }));
         request.invoke();
     }
-}
+};
 Sys.Mvc.MvcHelpers._onComplete = function Sys_Mvc_MvcHelpers$_onComplete(request, ajaxOptions, ajaxContext) {
     /// <param name="request" type="Sys.Net.WebRequest">
     /// </param>
@@ -318,16 +306,14 @@ Sys.Mvc.MvcHelpers._onComplete = function Sys_Mvc_MvcHelpers$_onComplete(request
             var contentType = ajaxContext.get_response().getResponseHeader('Content-Type');
             if ((contentType) && (contentType.indexOf('application/x-javascript') !== -1)) {
                 eval(ajaxContext.get_data());
-            }
-            else {
+            } else {
                 Sys.Mvc.MvcHelpers.updateDomElement(ajaxContext.get_updateTarget(), ajaxContext.get_insertionMode(), ajaxContext.get_data());
             }
         }
         if (ajaxOptions.onSuccess) {
             ajaxOptions.onSuccess(ajaxContext);
         }
-    }
-    else {
+    } else {
         if (ajaxOptions.onFailure) {
             ajaxOptions.onFailure(ajaxContext);
         }
@@ -335,7 +321,7 @@ Sys.Mvc.MvcHelpers._onComplete = function Sys_Mvc_MvcHelpers$_onComplete(request
     if (ajaxContext.get_loadingElement()) {
         Sys.UI.DomElement.setVisible(ajaxContext.get_loadingElement(), false);
     }
-}
+};
 Sys.Mvc.MvcHelpers.updateDomElement = function Sys_Mvc_MvcHelpers$updateDomElement(target, insertionMode, content) {
     /// <param name="target" type="Object" domElement="true">
     /// </param>
@@ -345,29 +331,27 @@ Sys.Mvc.MvcHelpers.updateDomElement = function Sys_Mvc_MvcHelpers$updateDomEleme
     /// </param>
     if (target) {
         switch (insertionMode) {
-            case Sys.Mvc.InsertionMode.replace:
-                target.innerHTML = content;
-                break;
-            case Sys.Mvc.InsertionMode.insertBefore:
-                if (content && content.length > 0) {
-                    target.innerHTML = content + target.innerHTML.trimStart();
-                }
-                break;
-            case Sys.Mvc.InsertionMode.insertAfter:
-                if (content && content.length > 0) {
-                    target.innerHTML = target.innerHTML.trimEnd() + content;
-                }
-                break;
+        case Sys.Mvc.InsertionMode.replace:
+            target.innerHTML = content;
+            break;
+        case Sys.Mvc.InsertionMode.insertBefore:
+            if (content && content.length > 0) {
+                target.innerHTML = content + target.innerHTML.trimStart();
+            }
+            break;
+        case Sys.Mvc.InsertionMode.insertAfter:
+            if (content && content.length > 0) {
+                target.innerHTML = target.innerHTML.trimEnd() + content;
+            }
+            break;
         }
     }
-}
-
-
+};
 ////////////////////////////////////////////////////////////////////////////////
 // Sys.Mvc.AsyncForm
 
 Sys.Mvc.AsyncForm = function Sys_Mvc_AsyncForm() {
-}
+};
 Sys.Mvc.AsyncForm.handleClick = function Sys_Mvc_AsyncForm$handleClick(form, evt) {
     /// <param name="form" type="Object" domElement="true">
     /// </param>
@@ -375,7 +359,7 @@ Sys.Mvc.AsyncForm.handleClick = function Sys_Mvc_AsyncForm$handleClick(form, evt
     /// </param>
     var additionalInput = Sys.Mvc.MvcHelpers._serializeSubmitButton(evt.target, evt.offsetX, evt.offsetY);
     form._additionalInput = additionalInput;
-}
+};
 Sys.Mvc.AsyncForm.handleSubmit = function Sys_Mvc_AsyncForm$handleSubmit(form, evt, ajaxOptions) {
     /// <param name="form" type="Object" domElement="true">
     /// </param>
@@ -395,9 +379,7 @@ Sys.Mvc.AsyncForm.handleSubmit = function Sys_Mvc_AsyncForm$handleSubmit(form, e
     }
     var body = Sys.Mvc.MvcHelpers._serializeForm(form);
     Sys.Mvc.MvcHelpers._asyncRequest(form.action, form.method || 'post', body, form, ajaxOptions);
-}
-
-
+};
 Sys.Mvc.AjaxContext.registerClass('Sys.Mvc.AjaxContext');
 Sys.Mvc.AsyncHyperlink.registerClass('Sys.Mvc.AsyncHyperlink');
 Sys.Mvc.MvcHelpers.registerClass('Sys.Mvc.MvcHelpers');

@@ -6,10 +6,7 @@ namespace Health.Site.Areas.Account
     {
         public override string AreaName
         {
-            get
-            {
-                return "Account";
-            }
+            get { return "Account"; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

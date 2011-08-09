@@ -1,18 +1,16 @@
 using System;
+using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
+using Health.Data.Entities;
 
 namespace Health.Data.Repository.Fake
 {
-    public sealed class CandidatesFakeRepository<TCandidate> : CoreFakeRepository<TCandidate, ICandidate>,
-                                                               ICandidateRepository<ICandidate>
-        where TCandidate : class, ICandidate, new()
+    public sealed class CandidatesFakeRepository : CoreFakeRepository<ICandidate>, ICandidateRepository
     {
-        #region ICandidateRepository<ICandidate> Members
-
-        public override void InitializeData()
+        public CandidatesFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
-            Save(new TCandidate
+            Save(new Candidate
                      {
                          Birthday = new DateTime(1980, 12, 2),
                          Card = "some card number",
@@ -21,10 +19,14 @@ namespace Health.Data.Repository.Fake
                          Login = "cand1",
                          Password = "cand1",
                          Policy = "some policy number",
-                         Role = DefaultCandidateRole,
+                         Role = new Role
+                                    {
+                                        Name = "Patient",
+                                        Code = 4234
+                                    },
                          ThirdName = "cand1"
                      });
-            Save(new TCandidate
+            Save(new Candidate
                      {
                          Birthday = new DateTime(1980, 12, 2),
                          Card = "some card number",
@@ -33,29 +35,13 @@ namespace Health.Data.Repository.Fake
                          Login = "cand2",
                          Password = "cand2",
                          Policy = "some policy number",
-                         Role = DefaultCandidateRole,
+                         Role = new Role
+                                    {
+                                        Name = "Patient",
+                                        Code = 4234
+                                    },
                          ThirdName = "cand2"
                      });
         }
-
-        public override bool Save(ICandidate entity)
-        {
-            entity.Role = DefaultCandidateRole;
-            return base.Save(entity);
-        }
-
-        public IRole DefaultCandidateRole
-        {
-            get
-            {
-                var role = Instance<IRole>();
-                role.Name = "Patient";
-                role.Code = 3;
-                return role;
-            }
-            set { }
-        }
-
-        #endregion
     }
 }

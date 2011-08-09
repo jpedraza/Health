@@ -34,9 +34,6 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
@@ -50,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core.cs" />
     <Compile Include="CoreKernel.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,10 +59,6 @@
     <ProjectReference Include="..\Health.API\Health.API.csproj">
       <Project>{B5F28D75-A833-4966-8958-4202D03B8BEC}</Project>
       <Name>Health.API</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Health.Data\Health.Data.csproj">
-      <Project>{A0246A4F-54A6-4F33-8FE7-3537161469F8}</Project>
-      <Name>Health.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

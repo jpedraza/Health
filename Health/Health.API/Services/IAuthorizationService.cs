@@ -6,9 +6,7 @@ namespace Health.API.Services
     /// <summary>
     /// Сервис авторизации.
     /// </summary>
-    /// <typeparam name="TUserCredential"></typeparam>
-    public interface IAuthorizationService<TUserCredential> : ICore
-        where TUserCredential : IUserCredential
+    public interface IAuthorizationService : ICoreService
     {
         /// <summary>
         /// Доступ к актуальному хранлищу сессии пользователя.

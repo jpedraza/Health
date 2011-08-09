@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Health.API;
+using NLog;
 
 namespace Health.Core
 {
@@ -12,7 +10,7 @@ namespace Health.Core
 
         public Logger(string class_name)
         {
-            _logger = NLog.LogManager.GetLogger(class_name);
+            _logger = LogManager.GetLogger(class_name);
         }
 
         #region Implementation of ILogger
@@ -20,11 +18,22 @@ namespace Health.Core
         /// <summary>
         /// Записать сообщение в лог.
         /// </summary>
-        /// <param name="message">Сообщение.</param>
         /// <param name="level">Уровень.</param>
-        public void Log(string message, int level)
+        /// <param name="message">Сообщение.</param>
+        public void Log(int level, string message)
         {
-            _logger.Log(NLog.LogLevel.FromOrdinal(level), message);
+            _logger.Log(LogLevel.FromOrdinal(level), message);
+        }
+
+        /// <summary>
+        /// Записать сообщение в лог.
+        /// </summary>
+        /// <param name="level">Уровень.</param>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Log(int level, string format, params string[] parameters)
+        {
+            _logger.Log(LogLevel.FromOrdinal(level), String.Format(format, parameters));
         }
 
         /// <summary>
@@ -37,12 +46,32 @@ namespace Health.Core
         }
 
         /// <summary>
+        /// Записать сообщение трассировки в лог.
+        /// </summary>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Trace(string format, params string[] parameters)
+        {
+            _logger.Trace(String.Format(format, parameters));
+        }
+
+        /// <summary>
         /// Записать сообщение отладки в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
         public void Debug(string message)
         {
             _logger.Debug(message);
+        }
+
+        /// <summary>
+        /// Записать сообщение отладки в лог.
+        /// </summary>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Debug(string format, params string[] parameters)
+        {
+            _logger.Debug(String.Format(format, parameters));
         }
 
         /// <summary>
@@ -55,12 +84,32 @@ namespace Health.Core
         }
 
         /// <summary>
+        /// Записать информационное сообщение в лог.
+        /// </summary>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Info(string format, params string[] parameters)
+        {
+            _logger.Info(String.Format(format, parameters));
+        }
+
+        /// <summary>
         /// Записать предупреждающее сообщение в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
         public void Warn(string message)
         {
             _logger.Warn(message);
+        }
+
+        /// <summary>
+        /// Записать предупреждающее сообщение в лог.
+        /// </summary>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Warn(string format, params string[] parameters)
+        {
+            _logger.Warn(String.Format(format, parameters));
         }
 
         /// <summary>
@@ -73,6 +122,16 @@ namespace Health.Core
         }
 
         /// <summary>
+        /// Записать сообщение об ошибке в лог.
+        /// </summary>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Error(string format, params string[] parameters)
+        {
+            _logger.Error(String.Format(format, parameters));
+        }
+
+        /// <summary>
         /// Записать критическое сообщение в лог.
         /// </summary>
         /// <param name="message">Сообщение.</param>
@@ -82,13 +141,23 @@ namespace Health.Core
         }
 
         /// <summary>
+        /// Записать критическое сообщение в лог.
+        /// </summary>
+        /// <param name="format">Формат.</param>
+        /// <param name="parameters">Параметры.</param>
+        public void Fatal(string format, params string[] parameters)
+        {
+            _logger.Fatal(String.Format(format, parameters));
+        }
+
+        /// <summary>
         /// Включено ли логгирование?
         /// </summary>
         /// <param name="level">Уровень.</param>
         /// <returns>Статус.</returns>
-        public bool IsEnabled (int level)
+        public bool IsEnabled(int level)
         {
-            return _logger.IsEnabled(NLog.LogLevel.FromOrdinal(level));
+            return _logger.IsEnabled(LogLevel.FromOrdinal(level));
         }
 
         /// <summary>
@@ -104,7 +173,7 @@ namespace Health.Core
         /// </summary>
         public bool IsDebugEnabled
         {
-            get { return _logger.IsDebugEnabled; } 
+            get { return _logger.IsDebugEnabled; }
         }
 
         /// <summary>

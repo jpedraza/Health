@@ -5,9 +5,7 @@ namespace Health.API.Services
     /// <summary>
     /// Сервис регистрации.
     /// </summary>
-    /// <typeparam name="TCandidate">Сущность кандидат.</typeparam>
-    public interface IRegistrationService<TCandidate> : ICore
-        where TCandidate : ICandidate
+    public interface IRegistrationService : ICoreService
     {
         /// <summary>
         /// Принять заявку.

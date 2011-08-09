@@ -5,45 +5,17 @@ using Health.API.Repository;
 
 namespace Health.Data.Repository.Fake
 {
-    public abstract class CoreFakeRepository<TEntity, TIEntity> : ICoreRepository<TIEntity>
-        where TEntity : class, TIEntity, new()
+    public abstract class CoreFakeRepository<TIEntity> : Core, ICoreRepository<TIEntity>
         where TIEntity : IEntity
     {
-        protected static IList<TIEntity> _entities;
+        protected IList<TIEntity> _entities;
 
-        protected CoreFakeRepository()
+        protected CoreFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
             _entities = new List<TIEntity>();
         }
 
         #region ICoreRepository<TIEntity> Members
-
-        /// <summary>
-        /// Логгер.
-        /// </summary>
-        public ILogger Logger { get; set; }
-
-        public IDIKernel DIKernel { get; set; }
-        public ICoreKernel CoreKernel { get; set; }
-
-        public TInstance Instance<TInstance>()
-            where TInstance : IEntity
-        {
-            return DIKernel.Get<TInstance>();
-        }
-
-        public void SetKernelAndCoreService(IDIKernel di_kernel, ICoreKernel core_kernel)
-        {
-            DIKernel = di_kernel;
-            CoreKernel = core_kernel;
-            Logger = DIKernel.Get<ILogger>();
-            InitializeData();
-        }
-
-        public virtual void InitializeData()
-        {
-            return;
-        }
 
         public virtual IEnumerable<TIEntity> GetAll()
         {

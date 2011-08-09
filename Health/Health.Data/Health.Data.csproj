@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ninject">
-      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\NotNullable.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="Entities\AltRole.cs" />
     <Compile Include="Entities\Candidate.cs" />
     <Compile Include="Entities\DefaultRoles.cs" />

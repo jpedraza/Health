@@ -21,8 +21,8 @@ namespace Health.Site
             routes.MapRoute(
                 "Default", // Имя маршрута
                 "{controller}/{action}/{id}", // URL-адрес с параметрами
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional}, // Параметры по умолчанию
-                new[] { "Health.Site.Controllers" }
+                new {controller = "Home", action = "Index", id = UrlParameter.Optional}, // Параметры по умолчанию
+                new[] {"Health.Site.Controllers"}
                 );
 
             routes.MapRoute(

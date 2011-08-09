@@ -1,47 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
+using Health.Data.Entities;
 
 namespace Health.Data.Repository.Fake
 {
-    public sealed class UsersFakeRepository<TUser> : CoreFakeRepository<TUser, IUser>, IUserRepository<IUser>
-        where TUser : class, IUser, new()
+    public sealed class UsersFakeRepository : CoreFakeRepository<IUser>, IUserRepository
     {
-        #region IUserRepository<IUser> Members
-
-        public IUser GetByLoginAndPassword(string login, string password)
+        public UsersFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
-            TUser required_user = default(TUser);
-            IEnumerable<IUser> found_user = from user in _entities
-                                     where user.Login == login &
-                                           user.Password == password
-                                     select user;
-
-            if (found_user.Count() == 1)
-            {
-                required_user = found_user.First() as TUser;
-            }
-            return required_user;
-        }
-
-        public IUser GetByLogin(string login)
-        {
-            TUser required_user = default(TUser);
-            IEnumerable<IUser> found_user = from user in _entities
-                                            where user.Login == login
-                                            select user;
-
-            if (found_user.Count() == 1)
-            {
-                required_user = found_user.First() as TUser;
-            }
-            return required_user;
-        }
-
-        public override void InitializeData()
-        {
-            Save(new TUser
+            Save(new User
                      {
                          FirstName = "Анатолий",
                          LastName = "Петров",
@@ -50,7 +21,7 @@ namespace Health.Data.Repository.Fake
                          Password = "admin",
                          Role = CoreKernel.RoleRepo.GetByName("Admin")
                      });
-            Save(new TUser
+            Save(new User
                      {
                          FirstName = "Максим",
                          LastName = "Васильев",
@@ -59,6 +30,37 @@ namespace Health.Data.Repository.Fake
                          Password = "patient",
                          Role = CoreKernel.RoleRepo.GetByName("Patient")
                      });
+        }
+
+        #region IUserRepository<IUser> Members
+
+        public IUser GetByLoginAndPassword(string login, string password)
+        {
+            User required_user = default(User);
+            IEnumerable<IUser> found_user = (from user in _entities
+                                             where user.Login == login &
+                                                   user.Password == password
+                                             select user).ToList();
+
+            if (found_user.Count() == 1)
+            {
+                required_user = found_user.First() as User;
+            }
+            return required_user;
+        }
+
+        public IUser GetByLogin(string login)
+        {
+            User required_user = default(User);
+            IEnumerable<IUser> found_user = (from user in _entities
+                                             where user.Login == login
+                                             select user).ToList();
+
+            if (found_user.Count() == 1)
+            {
+                required_user = found_user.First() as User;
+            }
+            return required_user;
         }
 
         #endregion

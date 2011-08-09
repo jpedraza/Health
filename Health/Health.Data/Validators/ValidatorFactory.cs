@@ -1,6 +1,4 @@
 ﻿using System;
-using Health.API;
-using Health.API.Entities;
 using Health.API.Validators;
 
 namespace Health.Data.Validators
@@ -25,7 +23,12 @@ namespace Health.Data.Validators
         /// <returns>Результат валидации</returns>
         public bool IsValid(string validator_type, object value)
         {
-            var validator = (IValueValidator) Activator.CreateInstance(Type.GetType(validator_type));
+            Type v_type = Type.GetType(validator_type);
+            if (v_type == null)
+            {
+                return false;
+            }
+            var validator = (IValueValidator)Activator.CreateInstance(v_type);
             if (validator.Equals(null))
             {
                 return false;
@@ -35,7 +38,7 @@ namespace Health.Data.Validators
             {
                 Message = validator.Message;
             }
-            return result;
+            return result;   
         }
 
         #endregion

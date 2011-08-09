@@ -1,5 +1,6 @@
-﻿@model Health.Site.Models.CoreViewModel
-@using Health.API.Entities
+﻿@using Health.API.Entities
+@using Health.Site.Models
+@model CoreViewModel
 @{
     ViewBag.Title = "Домашняя страница";
 }
@@ -10,10 +11,10 @@
 </p>
 <h2>Роли на сервере:</h2>
 @{
-    var roles = (IEnumerable<IRole>)ViewData["Roles"]; 
+    var roles = (IEnumerable<IRole>) ViewData["Roles"];
 }
 <ul>
-    @foreach (var role in roles)
+    @foreach (IRole role in roles)
     {
         <li>@role.Name</li>
     }

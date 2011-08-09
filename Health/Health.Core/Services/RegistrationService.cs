@@ -1,4 +1,5 @@
 using System;
+using Health.API;
 using Health.API.Entities;
 using Health.API.Services;
 
@@ -8,9 +9,20 @@ namespace Health.Core.Services
     /// Сервис регистрации.
     /// </summary>
     /// <typeparam name="TCandidate">Тип кандидата.</typeparam>
-    public class RegistrationService<TCandidate> : CoreService, IRegistrationService<ICandidate>
+    public class RegistrationService<TCandidate> : CoreService, IRegistrationService
         where TCandidate : class, ICandidate, new()
     {
+        protected RegistrationService(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        {
+            DefaultCandidateRole = Instance<IRole>(o =>
+                                                       {
+                                                           o.Name = "Patient";
+                                                           o.Code = 4;
+                                                       });
+        }
+
+        protected IRole DefaultCandidateRole;
+
         #region IRegistrationService<ICandidate> Members
 
         /// <summary>
@@ -28,6 +40,7 @@ namespace Health.Core.Services
         /// <param name="candidate">Кандидат.</param>
         public void SaveBid(ICandidate candidate)
         {
+            candidate.Role = DefaultCandidateRole;
             CoreKernel.CandRepo.Save(candidate);
             Logger.Info(String.Format("Добавлена заявка на регистрацию - {0}.", candidate.Login));
         }

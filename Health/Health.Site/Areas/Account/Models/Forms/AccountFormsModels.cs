@@ -5,7 +5,6 @@ using System.Linq;
 using Health.API;
 using Health.API.Entities;
 using Health.API.Validators;
-using Health.Data.Validators;
 using Health.Site.Models.Forms;
 
 namespace Health.Site.Areas.Account.Models.Forms
@@ -80,7 +79,6 @@ namespace Health.Site.Areas.Account.Models.Forms
     {
         public InterviewFormModel(IDIKernel di_kernel) : base(di_kernel)
         {
-            
         }
 
         #region IValidatableObject Members
@@ -89,7 +87,9 @@ namespace Health.Site.Areas.Account.Models.Forms
         {
             var result = new List<ValidationResult>();
             var validator_factory = DIKernel.Get<IValidatorFactory>();
-            if (!validator_factory.IsValid("Health.Data.Validators.RequiredValidator, Health.Data", Parameters.ToList()[0].Value))
+            if (
+                !validator_factory.IsValid("Health.Data.Validators.RequiredValidator, Health.Data",
+                                           Parameters.ToList()[0].Value))
             {
                 result.Add(new ValidationResult(validator_factory.Message, new[]
                                                                                {

@@ -1,25 +1,26 @@
 ﻿using System;
+using Health.API;
 using Health.API.Entities;
 using Health.API.Repository;
 using Health.API.Services;
-using NLog;
 
 namespace Health.Core.Services
 {
     /// <summary>
     /// Сервис авторизации.
     /// </summary>
-    /// <typeparam name="TUserCredential">Тип мандата пользователя.</typeparam>
-    public class AuthorizationService<TUserCredential> : CoreService, IAuthorizationService<IUserCredential>
-        where TUserCredential : IUserCredential, new()
+    public class AuthorizationService : CoreService, IAuthorizationService
     {
         /// <summary>
         /// Инициализация репозиториев доступа к анным сессии.
         /// </summary>
         /// <param name="actual_data_accessor">Репозиторий доступа к актуальным данным сессии.</param>
         /// <param name="permanent_data_accessor">Репозиторий доступа к сохраняемым данным сессии.</param>
+        /// <param name="di_kernel"></param>
+        /// <param name="core_kernel"></param>
         public AuthorizationService(IActualCredentialRepository actual_data_accessor,
-                                    IPermanentCredentialRepository permanent_data_accessor)
+                                    IPermanentCredentialRepository permanent_data_accessor, IDIKernel di_kernel,
+                                    ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
             ActualDataAccessor = actual_data_accessor;
             PermanentDataAccessor = permanent_data_accessor;
@@ -115,27 +116,32 @@ namespace Health.Core.Services
         /// <returns>Результат авторизации.</returns>
         public virtual bool Login(string login, string password, bool remember_me = false)
         {
-            Logger.Info(String.Format("Попытка авторизации пользователя: Логин - {0}, Пароль - {1}, Запоминать? - {2}.", 
-                login, password, remember_me));
+            Logger.Info(String.Format("Попытка авторизации пользователя: Логин - {0}, Пароль - {1}, Запоминать? - {2}.",
+                                      login, password, remember_me));
 
             IUser user = CoreKernel.UserRepo.GetByLoginAndPassword(login, password);
 
             if (user != null)
             {
-                ActualDataAccessor.Write(DefaultUserCredentialName, new TUserCredential
-                                                                        {
-                                                                            Login = user.Login,
-                                                                            Role = user.Role.Name,
-                                                                            IsAuthirization = true,
-                                                                            IsRemember = remember_me
-                                                                        });
+                ActualDataAccessor.Write(DefaultUserCredentialName, Instance<IUserCredential>(o =>
+                                                                                                  {
+                                                                                                      o.Login =
+                                                                                                          user.Login;
+                                                                                                      o.Role =
+                                                                                                          user.Role.Name;
+                                                                                                      o.IsAuthirization
+                                                                                                          = true;
+                                                                                                      o.IsRemember =
+                                                                                                          remember_me;
+                                                                                                  }));
                 if (remember_me)
                 {
                     RememberMe();
                 }
             }
 
-            Logger.Info(String.Format("Результат авторизации пользователя {0} - {1} .", login, UserCredential.IsAuthirization));
+            Logger.Info(String.Format("Результат авторизации пользователя {0} - {1} .", login,
+                                      UserCredential.IsAuthirization));
             return user != null;
         }
 
@@ -185,7 +191,8 @@ namespace Health.Core.Services
             {
                 ActualDataAccessor.Write(DefaultUserCredentialName, credential);
             }
-            Logger.Info(String.Format("Для пользователя {0} была восстановлена запомненная сессия.", UserCredential.Login));
+            Logger.Info(String.Format("Для пользователя {0} была восстановлена запомненная сессия.",
+                                      UserCredential.Login));
         }
 
         #endregion

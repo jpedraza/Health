@@ -63,6 +63,7 @@
     <Compile Include="Repository\IActualCredentialRepository.cs" />
     <Compile Include="Repository\IPermanentCredentialRepository.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
+    <Compile Include="Services\ICoreService.cs" />
     <Compile Include="Services\IRegistrationService.cs" />
     <Compile Include="Validators\IValidatorFactory.cs" />
     <Compile Include="Validators\IValueValidator.cs" />

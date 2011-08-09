@@ -5,15 +5,14 @@ namespace Health.API.Repository
     /// <summary>
     /// Базовый интерфейс репозитория сущности User.
     /// </summary>
-    public interface IUserRepository<TUser> : ICoreRepository<TUser>
-        where TUser : class, IUser
+    public interface IUserRepository : ICoreRepository<IUser>
     {
         /// <summary>
         /// Получить пользователя по логину.
         /// </summary>
         /// <param name="login">Логин пользователя.</param>
         /// <returns>Пользователь с заданным логином.</returns>
-        TUser GetByLogin(string login);
+        IUser GetByLogin(string login);
 
         /// <summary>
         /// Получить пользователя по логину и паролю.
@@ -21,6 +20,6 @@ namespace Health.API.Repository
         /// <param name="login">Логин пользователя.</param>
         /// <param name="password">Пароль пользователя.</param>
         /// <returns>Пользователь с заданным логином и паролем.</returns>
-        TUser GetByLoginAndPassword(string login, string password);
+        IUser GetByLoginAndPassword(string login, string password);
     }
 }

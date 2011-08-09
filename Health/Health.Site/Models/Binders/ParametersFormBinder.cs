@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
-using Health.Site.Areas.Account.Models.Forms;
 
 namespace Health.Site.Models.Binders
 {
@@ -35,7 +34,7 @@ namespace Health.Site.Models.Binders
         protected override object CreateModel(ControllerContext controller_context, ModelBindingContext binding_context,
                                               Type model_type)
         {
-            return Activator.CreateInstance(model_type, new[] { Kernel });
+            return Activator.CreateInstance(model_type, new[] {Kernel});
         }
 
         /// <summary>
@@ -65,14 +64,7 @@ namespace Health.Site.Models.Binders
             var parameters = Kernel.Get<IEnumerable<IParameter>>();
             List<IParameter> list_parameters = parameters.ToList();
 
-            int count = 0;
-            foreach (object key in value_collection)
-            {
-                if (key.ToString().Contains("Parameters"))
-                {
-                    count++;
-                }
-            }
+            int count = value_collection.Cast<object>().Count(key => key.ToString().Contains("Parameters"));
             const string format = "InterviewForm.Parameters[{0}].{1}";
             for (int i = 0; i < count/2; i++)
             {
