@@ -11,7 +11,7 @@ namespace Health.Site.Models.Forms
             DIKernel = di_kernel;
         }
 
-        public IDIKernel DIKernel { get; protected set; }
+        protected IDIKernel DIKernel { get; set; }
 
         public IEnumerable<IParameter> Parameters { get; set; }
     }

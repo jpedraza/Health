@@ -60,21 +60,26 @@ namespace Health.Site.Models.Binders
                                                                ModelBindingContext binding_context)
         {
             NameValueCollection value_collection = controller_context.HttpContext.Request.Form;
-
-            var parameters = Kernel.Get<IEnumerable<IParameter>>();
-            List<IParameter> list_parameters = parameters.ToList();
-
-            int count = value_collection.Cast<object>().Count(key => key.ToString().Contains("Parameters"));
-            const string format = "InterviewForm.Parameters[{0}].{1}";
-            for (int i = 0; i < count/2; i++)
+            var parameters = Kernel.Get<IEnumerable<IParameter>>().ToList();
+            if (value_collection.Count != 0)
             {
-                var parameter = Kernel.Get<IParameter>();
-                parameter.Name = value_collection[String.Format(format, i, "Name")];
-                parameter.Value = value_collection[String.Format(format, i, "Value")];
-                list_parameters.Add(parameter);
-            }
+                int count = value_collection.Cast<object>().Count(key => key.ToString().Contains("Parameters"));
+                string format = binding_context.ModelName + ".Parameters[{0}].{1}";
 
-            return list_parameters;
+                for (int i = 0; i < count/2; i++)
+                {
+                    parameters.Add(Kernel.Instance<IParameter>(o =>
+                                                                   {
+                                                                       o.Name =
+                                                                           value_collection[
+                                                                               String.Format(format, i, "Name")];
+                                                                       o.Value =
+                                                                           value_collection[
+                                                                               String.Format(format, i, "Value")];
+                                                                   }));
+                }
+            }
+            return parameters;
         }
     }
 }

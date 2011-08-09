@@ -84,13 +84,14 @@
     <Compile Include="App_Start\NinjectMVC3.cs" />
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\AuthorizationController.cs" />
+    <Compile Include="Areas\Account\Controllers\InterviewController.cs" />
     <Compile Include="Areas\Account\Controllers\RegistrationController.cs" />
     <Compile Include="Areas\Account\Models\AccountViewModel.cs" />
     <Compile Include="Areas\Account\Models\Forms\AccountFormsModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Attributes\Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Attributes\PRGAttributes.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
@@ -197,7 +198,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\Interview.cshtml" />
+    <Content Include="Areas\Account\Views\Interview\Interview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="nlog.config">

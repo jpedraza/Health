@@ -3,7 +3,7 @@
     /// <summary>
     /// Интерфейс некоторого параметра.
     /// </summary>
-    public interface IParameter
+    public interface IParameter : IEntity
     {
         /// <summary>
         /// Имя параметра.

@@ -32,54 +32,19 @@ namespace Health.Site.Controllers
             return DIKernel.Get<TEntity>();
         }
 
-        protected override void OnResultExecuting(ResultExecutingContext filter_context)
+        protected ActionResult RedirectTo<T>(Expression<Action<T>> action)
+            where T : IController
         {
-            //InjectDIKernelAndCoreKernelIntoModel(filter_context);
-            base.OnResultExecuting(filter_context);
+            var act = (MethodCallExpression) action.Body;
+            string name = act.Method.Name;
+            return RedirectToAction(name);
         }
 
-        /// <summary>
-        /// Инъекция DI ядра и центрального ядра в модель.
-        /// </summary>
-        /// <param name="filter_context"></param>
-        public void InjectDIKernelAndCoreKernelIntoModel(ResultExecutingContext filter_context)
+        protected ActionResult RedirectTo<T>(Expression<Action<T>> action, object model)
+            where T : IController
         {
-            Type controller_type = filter_context.Controller.GetType();
-            if (controller_type.Namespace != null)
-            {
-                string name_space =
-                    new StringBuilder(controller_type.Namespace).Replace("Controllers", "").Append("Models").ToString();
-                if (filter_context.Result.GetType() == typeof (ViewResult))
-                {
-                    if (filter_context.Result != null)
-                    {
-                        var result = (ViewResult) filter_context.Result;
-                        if (result.Model != null)
-                        {
-                            var model = (CoreViewModel) result.Model;
-                            model.DIKernel = DIKernel;
-                            model.CoreKernel = CoreKernel;
-                        }
-                        else
-                        {
-                            Type[] types = Assembly.GetExecutingAssembly().GetTypes();
-                            foreach (Type type in types)
-                            {
-                                if (type.Namespace != null && type.Namespace.Contains(name_space))
-                                {
-                                    if (type.IsSubclassOf(typeof (CoreViewModel)) || type == typeof (CoreViewModel))
-                                    {
-                                        var model = (CoreViewModel) Activator.CreateInstance(type);
-                                        model.DIKernel = DIKernel;
-                                        model.CoreKernel = CoreKernel;
-                                        filter_context.Result = View(result.View, model);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            TempData["model"] = model;
+            return RedirectTo(action);
         }
     }
 }
