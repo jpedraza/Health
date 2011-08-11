@@ -13,6 +13,6 @@ namespace Health.Site.Models.Forms
 
         protected IDIKernel DIKernel { get; set; }
 
-        public IEnumerable<IParameter> Parameters { get; set; }
+        public IList<IParameter> Parameters { get; set; }
     }
 }

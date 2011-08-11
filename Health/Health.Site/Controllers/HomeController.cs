@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
@@ -18,9 +19,11 @@ namespace Health.Site.Controllers
         {
             IEnumerable<IRole> roles = CoreKernel.RoleRepo.GetAll();
 
-            var new_role = Entity<IRole>();
-            new_role.Name = "new_role";
-            new_role.Code = 4434;
+            var new_role = Instance<IRole>(o =>
+                                               {
+                                                   o.Name = "new_role";
+                                                   o.Code = 4323;
+                                               });
             ViewBag.NewRole = new_role;
 
             ViewBag.VarName = new_role.PropertyName(x => x.Code);
@@ -37,6 +40,8 @@ namespace Health.Site.Controllers
             ViewData["Roles"] = roles;
 
             ViewBag.CountCandidates = CoreKernel.CandRepo.GetAll().Count();
+
+            ViewBag.PName = new_role.PName(n => n.Name);
 
             ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
             return View();
@@ -66,11 +71,6 @@ namespace Health.Site.Controllers
             return property_infos[0].Name;
         }*/
 
-        public ActionResult About()
-        {
-            return View();
-        }
-
         #region Nested type: Finder
 
         public class Finder
@@ -88,6 +88,12 @@ namespace Health.Site.Controllers
         {
             var member_expression = (MemberExpression) property.Body;
             return member_expression.Member.Name;
+        }
+
+        public static string PName<T, TOut>(this T source, Expression<Func<T, TOut>> action)
+        {
+            var binary_expression = action.Body as BinaryExpression;
+            return "";
         }
     }
 }

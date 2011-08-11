@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Health.API;
+using Health.API.Entities;
 using Health.Data.Entities;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Areas.Account.Models.Forms;
@@ -27,27 +28,26 @@ namespace Health.Site.Areas.Account.Controllers
         public ActionResult Interview()
         {
             var form_model = TempData["model"] as InterviewFormModel ?? new InterviewFormModel(DIKernel)
-                                                                            {
-                                                                                Parameters = new List<Parameter>
-                                                                                                 {
-                                                                                                     new Parameter
-                                                                                                         {
-                                                                                                             Name = "P1",
-                                                                                                             Value =
-                                                                                                                 "V1"
-                                                                                                         },
-                                                                                                     new Parameter
-                                                                                                         {
-                                                                                                             Name = "P2",
-                                                                                                             Value =
-                                                                                                                 "V2"
-                                                                                                         }
-                                                                                                 }
-                                                                            };
+                                                {
+                                                    Parameters = new List<IParameter>
+                                                                        {
+                                                                            Instance<IParameter>(o =>
+                                                                                        {
+                                                                                            o.Name = "P1";
+                                                                                            o.Value = "V1";
+                                                                                        }),
+                                                                            Instance<IParameter>(o =>
+                                                                                        {
+                                                                                            o.Name = "P2";
+                                                                                            o.Value = "V2";
+                                                                                        })
+                                                                        }
+                                                };
             var acc_view_model = new AccountViewModel
                                      {
                                          InterviewForm = form_model
                                      };
+            ViewBag.PName = form_model.PName(n => n.Parameters[0].Name);
             return View(acc_view_model);
         }
 
@@ -65,6 +65,5 @@ namespace Health.Site.Areas.Account.Controllers
         {
             return "Confirm";
         }
-
     }
 }

@@ -6,6 +6,7 @@ using Health.API;
 using Health.API.Entities;
 using Health.API.Validators;
 using Health.Site.Models.Forms;
+using Health.Site.Controllers;
 
 namespace Health.Site.Areas.Account.Models.Forms
 {
@@ -85,16 +86,25 @@ namespace Health.Site.Areas.Account.Models.Forms
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validation_context)
         {
+            List<IParameter> param = Parameters.ToList();
             var result = new List<ValidationResult>();
-            var validator_factory = DIKernel.Get<IValidatorFactory>();
-            if (
-                !validator_factory.IsValid("Health.Data.Validators.RequiredValidator, Health.Data",
-                                           Parameters.ToList()[0].Value))
+            for (int i = 0; i < param.Count; i++)
             {
-                result.Add(new ValidationResult(validator_factory.Message, new[]
-                                                                               {
-                                                                                   "Parameters[0].Value"
-                                                                               }));
+                var data_type_attr = new DataTypeAttribute(DataType.EmailAddress);
+                var v_result = new RequiredAttribute
+                {
+                    ErrorMessage = "Значение параметра не может быть пустым."
+                };
+                if (!v_result.IsValid(Parameters.ElementAt(i).Value))
+                {
+                    result.Add(new ValidationResult(
+                                   v_result.ErrorMessage,
+                                   new[]
+                                       {
+                                           String.Format("Parameters[{0}].Value", i)
+                                       }
+                                   ));
+                }
             }
             return result;
         }
