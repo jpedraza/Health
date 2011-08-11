@@ -113,7 +113,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DI\DIKernel.cs" />
-    <Compile Include="Exceptions\ServiceException.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Filters\AuthFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -126,8 +126,8 @@
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
     <Compile Include="Models\MenuElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\CookieDataAccessor.cs" />
-    <Compile Include="Repository\SessionDataAccessor.cs" />
+    <Compile Include="Repository\CookieRepository.cs" />
+    <Compile Include="Repository\SessionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Glimpse.Elmah.Readme.txt" />

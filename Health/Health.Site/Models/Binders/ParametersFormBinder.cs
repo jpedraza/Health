@@ -10,7 +10,7 @@ using Health.API.Entities;
 namespace Health.Site.Models.Binders
 {
     /// <summary>
-    /// Binder для форм с набором параметров.
+    /// Binder для параметрических форм.
     /// </summary>
     public class ParametersFormBinder : DefaultModelBinder
     {

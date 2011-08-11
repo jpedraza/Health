@@ -1,6 +1,7 @@
 ﻿@using Health.API.Entities
 @using Health.Site.Controllers
 @using Health.Site.Areas.Account.Models
+@using Health.Site.Extensions
 @using Health.Site.Helpers
 @model AccountViewModel
 
@@ -16,5 +17,3 @@
     @Html.AntiForgeryToken()
     <input type="submit" value="Send" />
 }
-
-<h2>PName: @ViewBag.PName</h2>

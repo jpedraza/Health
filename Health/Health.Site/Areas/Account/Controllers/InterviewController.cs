@@ -47,7 +47,6 @@ namespace Health.Site.Areas.Account.Controllers
                                      {
                                          InterviewForm = form_model
                                      };
-            ViewBag.PName = form_model.PName(n => n.Parameters[0].Name);
             return View(acc_view_model);
         }
 

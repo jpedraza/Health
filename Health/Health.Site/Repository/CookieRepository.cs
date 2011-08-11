@@ -10,7 +10,7 @@ using Health.API.Repository;
 namespace Health.Site.Repository
 {
     //TODO: ƒобавить поведение не случай если не разрешены cookie
-    public class CookieDataAccessor : IPermanentCredentialRepository
+    public class CookieRepository : IPermanentCredentialRepository
     {
         protected HttpResponse Response
         {
@@ -26,7 +26,8 @@ namespace Health.Site.Repository
 
         public void Write(string identifier, IUserCredential credential)
         {
-            if (!Request.Cookies[identifier].Equals(null))
+            HttpCookie http_cookie = Request.Cookies[identifier];
+            if (http_cookie != null && !http_cookie.Equals(null))
             {
                 Response.Cookies.Add(new HttpCookie(identifier, Encrypt(Serialize(credential), credential.Login))
                                          {
@@ -44,9 +45,10 @@ namespace Health.Site.Repository
 
         public IUserCredential Read(string identifier)
         {
-            if (Request.Cookies[identifier] != null)
+            HttpCookie http_cookie = Request.Cookies[identifier];
+            if (http_cookie != null)
             {
-                return Deserialize(Decrypt(Request.Cookies[identifier].Value));
+                return Deserialize(Decrypt(http_cookie.Value));
             }
             return null;
         }
@@ -56,8 +58,12 @@ namespace Health.Site.Repository
             string[] keys = Request.Cookies.AllKeys;
             foreach (string key in keys)
             {
-                Response.Cookies[key].Value = null;
-                Response.Cookies[key].Expires = DateTime.Now.AddYears(-2);
+                HttpCookie http_cookie = Response.Cookies[key];
+                if (http_cookie != null)
+                {
+                    http_cookie.Value = null;
+                    http_cookie.Expires = DateTime.Now.AddYears(-2);
+                }
             }
         }
 
