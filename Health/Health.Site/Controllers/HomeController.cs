@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
@@ -34,6 +35,8 @@ namespace Health.Site.Controllers
             ViewBag.CountCandidates = CoreKernel.CandRepo.GetAll().Count();
 
             ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
+            //throw new Exception("dsasd");
+            throw new HttpException(404, "Not found");
             return View();
         }
     }

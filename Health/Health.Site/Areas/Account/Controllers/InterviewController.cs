@@ -11,13 +11,17 @@ using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
 using Health.Site.DI;
+using MvcContrib;
+using MvcContrib.Filters;
 
 namespace Health.Site.Areas.Account.Controllers
 {
+    [PassParametersDuringRedirect]
     public class InterviewController : CoreController
     {
         public InterviewController(IDIKernel di_kernel) : base(di_kernel)
         {
+            
         }
 
         /// <summary>
@@ -25,39 +29,41 @@ namespace Health.Site.Areas.Account.Controllers
         /// </summary>
         /// <returns></returns>
         [PRGImport]
-        public ActionResult Interview()
+        public ActionResult Interview([Bind(Include = "InterviewForm")] AccountViewModel form_model)
         {
-            var form_model = TempData["model"] as InterviewFormModel ?? new InterviewFormModel(DIKernel)
-                                                {
-                                                    Parameters = new List<IParameter>
-                                                                        {
-                                                                            Instance<IParameter>(o =>
-                                                                                        {
-                                                                                            o.Name = "P1";
-                                                                                            o.Value = "V1";
-                                                                                        }),
-                                                                            Instance<IParameter>(o =>
-                                                                                        {
-                                                                                            o.Name = "P2";
-                                                                                            o.Value = "V2";
-                                                                                        })
-                                                                        }
-                                                };
-            var acc_view_model = new AccountViewModel
-                                     {
-                                         InterviewForm = form_model
-                                     };
-            return View(acc_view_model);
+            if (form_model != null && form_model.InterviewForm != null)
+            {
+                return View(form_model);
+            }
+            return View(new AccountViewModel
+                            {
+                                InterviewForm = new InterviewFormModel(DIKernel)
+                                                    {
+                                                        Parameters = new List<IParameter>
+                                                                         {
+                                                                             Instance<IParameter>(o =>
+                                                                                                      {
+                                                                                                          o.Name = "P1";
+                                                                                                          o.Value = "V1";
+                                                                                                      }),
+                                                                             Instance<IParameter>(o =>
+                                                                                                      {
+                                                                                                          o.Name = "P2";
+                                                                                                          o.Value = "V2";
+                                                                                                      })
+                                                                         }
+                                                    }
+                            });
         }
 
         [HttpPost, ValidateAntiForgeryToken, PRGExport]
-        public ActionResult Interview([Bind(Include = "InterviewForm")] AccountViewModel form_model)
+        public ActionResult InterviewSubmit([Bind(Include = "InterviewForm")] AccountViewModel form_model)
         {
             if (ModelState.IsValid)
             {
-                return RedirectTo<InterviewController>(a => a.Confirm());
+                return this.RedirectToAction(a => a.Confirm());
             }
-            return RedirectTo<InterviewController>(a => a.Interview(), form_model.InterviewForm);
+            return this.RedirectToAction(a => a.Interview(form_model));
         }
 
         public string Confirm()

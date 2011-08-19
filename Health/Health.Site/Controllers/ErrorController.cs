@@ -4,19 +4,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Health.Site.Models;
 
 namespace Health.Site.Controllers
 {
+    /// <summary>
+    /// Контроллер обрабатывает все ошибки в приложении.
+    /// </summary>
     public class ErrorController : Controller
     {
-        //
-        // GET: /Error/
-
-        public ActionResult NotFound()
+        public ActionResult Index([Bind(Include = "ErrorModel")]ErrorViewModel form_model)
         {
-            Response.TrySkipIisCustomErrors = true;
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            return View("Error");
+            return View(form_model);
         }
     }
 }

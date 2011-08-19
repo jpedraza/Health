@@ -11,7 +11,7 @@
 
 <h2>Interview</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { area = "Account", controller = "Interview", action = "InterviewSubmit" }))
 {
     @Html.RenderParameters(Model.InterviewForm, Model.PropertyName(p => p.InterviewForm))
     @Html.AntiForgeryToken()

@@ -25,42 +25,45 @@ namespace Health.Site.Helpers
         {
             var params_string = new StringBuilder();
             string format = prefix + ".Parameters[{0}].{1}";
-            for (int i = 0; i < form.Parameters.Count(); i++)
+            if (form != null && form.Parameters != null)
             {
-                // <input> - имя параметра.
-                var input_tag_name = new TagBuilder("input");
-                input_tag_name.MergeAttribute("type", "hidden");
-                input_tag_name.MergeAttribute("id", String.Format(format, i, "Name"));
-                input_tag_name.MergeAttribute("name", String.Format(format, i, "Name"));
-                input_tag_name.MergeAttribute("value", form.Parameters.ElementAt(i).Name);
-                // </input>
+                for (int i = 0; i < form.Parameters.Count(); i++)
+                {
+                    // <input> - имя параметра.
+                    var input_tag_name = new TagBuilder("input");
+                    input_tag_name.MergeAttribute("type", "hidden");
+                    input_tag_name.MergeAttribute("id", String.Format(format, i, "Name"));
+                    input_tag_name.MergeAttribute("name", String.Format(format, i, "Name"));
+                    input_tag_name.MergeAttribute("value", form.Parameters.ElementAt(i).Name);
+                    // </input>
 
-                // <label> - метка для параметра.
-                var label_tag_name = new TagBuilder("label");
-                label_tag_name.MergeAttribute("for", String.Format(format, i, "Value"));
-                label_tag_name.SetInnerText(form.Parameters.ElementAt(i).Name);
-                // </label>
+                    // <label> - метка для параметра.
+                    var label_tag_name = new TagBuilder("label");
+                    label_tag_name.MergeAttribute("for", String.Format(format, i, "Value"));
+                    label_tag_name.SetInnerText(form.Parameters.ElementAt(i).Name);
+                    // </label>
 
-                // <input> - значение параметра.
-                var input_tag_value = new TagBuilder("input");
-                input_tag_value.MergeAttribute("id", String.Format(format, i, "Value"));
-                input_tag_value.MergeAttribute("name", String.Format(format, i, "Value"));
-                input_tag_value.MergeAttribute("value", form.Parameters.ElementAt(i).Value.ToString());
-                // </input>
+                    // <input> - значение параметра.
+                    var input_tag_value = new TagBuilder("input");
+                    input_tag_value.MergeAttribute("id", String.Format(format, i, "Value"));
+                    input_tag_value.MergeAttribute("name", String.Format(format, i, "Value"));
+                    input_tag_value.MergeAttribute("value", form.Parameters.ElementAt(i).Value.ToString());
+                    // </input>
 
-                // <p> - оборачиваем все в абзац.
-                var p_tag = new TagBuilder("p")
-                                {
-                                    InnerHtml = input_tag_name.ToString(TagRenderMode.SelfClosing) +
-                                                label_tag_name.ToString(TagRenderMode.Normal) +
-                                                input_tag_value.ToString(TagRenderMode.SelfClosing) +
-                                                helper.ValidationMessage(String.Format(format, i, "Value"))
-                                };
-                // </p>
+                    // <p> - оборачиваем все в абзац.
+                    var p_tag = new TagBuilder("p")
+                                    {
+                                        InnerHtml = input_tag_name.ToString(TagRenderMode.SelfClosing) +
+                                                    label_tag_name.ToString(TagRenderMode.Normal) +
+                                                    input_tag_value.ToString(TagRenderMode.SelfClosing) +
+                                                    helper.ValidationMessage(String.Format(format, i, "Value"))
+                                    };
+                    // </p>
 
-                params_string.Append(p_tag);
+                    params_string.Append(p_tag);
+                }
             }
-            
+
             return new HtmlString(params_string.ToString());
         }
     }
