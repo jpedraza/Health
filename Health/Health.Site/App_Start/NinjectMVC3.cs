@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using System.Web.Mvc;
 using Health.API;
 using Health.API.Entities;
@@ -37,7 +37,7 @@ namespace Health.Site.App_Start
         public static IKernel Kernel { get; private set; }
 
         /// <summary>
-        /// Запуск приложения.
+        /// Р—Р°РїСѓСЃРє РїСЂРёР»РѕР¶РµРЅРёСЏ.
         /// </summary>
         public static void Start()
         {
@@ -48,7 +48,7 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Регистрация нестандартных биндеров для моделей
+        /// Р РµРіРёСЃС‚СЂР°С†РёСЏ РЅРµСЃС‚Р°РЅРґР°СЂС‚РЅС‹С… Р±РёРЅРґРµСЂРѕРІ РґР»СЏ РјРѕРґРµР»РµР№
         /// </summary>
         public static void ModelToBinder()
         {
@@ -56,7 +56,7 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Остановка приложения.
+        /// РћСЃС‚Р°РЅРѕРІРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ.
         /// </summary>
         public static void Stop()
         {
@@ -64,9 +64,9 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Создания ядра.
+        /// РЎРѕР·РґР°РЅРёСЏ СЏРґСЂР°.
         /// </summary>
-        /// <returns>Созданное ядро.</returns>
+        /// <returns>РЎРѕР·РґР°РЅРЅРѕРµ СЏРґСЂРѕ.</returns>
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
@@ -78,34 +78,34 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Регистрация компонентов.
+        /// Р РµРіРёСЃС‚СЂР°С†РёСЏ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ.
         /// </summary>
-        /// <param name="kernel">Ядро.</param>
+        /// <param name="kernel">РЇРґСЂРѕ.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            // Сущности 
+            // РЎСѓС‰РЅРѕСЃС‚Рё 
             kernel.Bind<IRole>().To<Role>();
             kernel.Bind<IUser>().To<User>();
             kernel.Bind<IDefaultRoles>().To<DefaultRoles>();
             kernel.Bind<IUserCredential>().To<UserCredential>();
             kernel.Bind<IParameter>().To<Parameter>();
-            // Репозитории
+            // Р РµРїРѕР·РёС‚РѕСЂРёРё
             kernel.Bind<IRoleRepository>().To<RolesFakeRepository>().InSingletonScope();
             kernel.Bind<IUserRepository>().To<UsersFakeRepository>().InSingletonScope();
             kernel.Bind<IActualCredentialRepository>().To<SessionRepository>();
             kernel.Bind<IPermanentCredentialRepository>().To<CookieRepository>();
             kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
-            // Сервисы
+            // РЎРµСЂРІРёСЃС‹
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>();
             kernel.Bind<IRegistrationService>().To<RegistrationService>();
-            // Фабрики
+            // Р¤Р°Р±СЂРёРєРё
             kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
-            // Фильтры для атрибутов
+            // Р¤РёР»СЊС‚СЂС‹ РґР»СЏ Р°С‚СЂРёР±СѓС‚РѕРІ
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
                 WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
-            // Прочее
+            // РџСЂРѕС‡РµРµ
             kernel.Bind<IDIKernel>().To<DIKernel>();
             kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
             kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);

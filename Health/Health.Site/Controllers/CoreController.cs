@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -15,14 +15,14 @@ using Health.Site.Models;
 namespace Health.Site.Controllers
 {
     /// <summary>
-    /// Главный класс контроллеров.
+    /// Р“Р»Р°РІРЅС‹Р№ РєР»Р°СЃСЃ РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРІ.
     /// </summary>
     public abstract class CoreController : Controller
     {
         protected ICoreKernel _coreKernel;
 
         /// <summary>
-        /// Центральное ядро системы.
+        /// Р¦РµРЅС‚СЂР°Р»СЊРЅРѕРµ СЏРґСЂРѕ СЃРёСЃС‚РµРјС‹.
         /// </summary>
         public ICoreKernel CoreKernel
         {
@@ -30,12 +30,12 @@ namespace Health.Site.Controllers
         }
 
         /// <summary>
-        /// DI ядро системы.
+        /// DI СЏРґСЂРѕ СЃРёСЃС‚РµРјС‹.
         /// </summary>
         public IDIKernel DIKernel { get; private set; }
 
         /// <summary>
-        /// Логгер.
+        /// Р›РѕРіРіРµСЂ.
         /// </summary>
         protected ILogger Logger { get; set; }
 
@@ -46,27 +46,27 @@ namespace Health.Site.Controllers
         }
 
         /// <summary>
-        /// Создать экземпляр сущности по интерфейсу.
+        /// РЎРѕР·РґР°С‚СЊ СЌРєР·РµРјРїР»СЏСЂ СЃСѓС‰РЅРѕСЃС‚Рё РїРѕ РёРЅС‚РµСЂС„РµР№СЃСѓ.
         /// </summary>
-        /// <typeparam name="TInstance">Интерфейс сущности.</typeparam>
-        /// <returns>Экземпляр сущности.</returns>
+        /// <typeparam name="TInstance">РРЅС‚РµСЂС„РµР№СЃ СЃСѓС‰РЅРѕСЃС‚Рё.</typeparam>
+        /// <returns>Р­РєР·РµРјРїР»СЏСЂ СЃСѓС‰РЅРѕСЃС‚Рё.</returns>
         public TInstance Instance<TInstance>()
             where TInstance : IEntity
         {
-            Logger.Debug(String.Format("Создается сущность для интерфейса - {0}.", typeof(TInstance).Name));
+            Logger.Debug(String.Format("РЎРѕР·РґР°РµС‚СЃСЏ СЃСѓС‰РЅРѕСЃС‚СЊ РґР»СЏ РёРЅС‚РµСЂС„РµР№СЃР° - {0}.", typeof(TInstance).Name));
             return DIKernel.Get<TInstance>();
         }
 
         /// <summary>
-        /// Создать экземпляр сущности по интерфейсу.
+        /// РЎРѕР·РґР°С‚СЊ СЌРєР·РµРјРїР»СЏСЂ СЃСѓС‰РЅРѕСЃС‚Рё РїРѕ РёРЅС‚РµСЂС„РµР№СЃСѓ.
         /// </summary>
-        /// <typeparam name="TInstance">Интерфейс сущности.</typeparam>
-        /// <param name="init">Инициализатор сущности.</param>
-        /// <returns>Экземпляр сущности.</returns>
+        /// <typeparam name="TInstance">РРЅС‚РµСЂС„РµР№СЃ СЃСѓС‰РЅРѕСЃС‚Рё.</typeparam>
+        /// <param name="init">РРЅРёС†РёР°Р»РёР·Р°С‚РѕСЂ СЃСѓС‰РЅРѕСЃС‚Рё.</param>
+        /// <returns>Р­РєР·РµРјРїР»СЏСЂ СЃСѓС‰РЅРѕСЃС‚Рё.</returns>
         public TInstance Instance<TInstance>(Action<TInstance> init) 
             where TInstance : IEntity
         {
-            Logger.Debug(String.Format("Создается сущность для интерфейса - {0}.", typeof(TInstance).Name));
+            Logger.Debug(String.Format("РЎРѕР·РґР°РµС‚СЃСЏ СЃСѓС‰РЅРѕСЃС‚СЊ РґР»СЏ РёРЅС‚РµСЂС„РµР№СЃР° - {0}.", typeof(TInstance).Name));
             var obj = DIKernel.Get<TInstance>();
             init.Invoke(obj);
             return obj;

@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using Health.API;
 using Health.API.Entities;
 using Health.API.Services;
@@ -6,7 +6,7 @@ using Health.API.Services;
 namespace Health.Core.Services
 {
     /// <summary>
-    /// Сервис регистрации.
+    /// РЎРµСЂРІРёСЃ СЂРµРіРёСЃС‚СЂР°С†РёРё.
     /// </summary>
     public class RegistrationService : CoreService, IRegistrationService
     {
@@ -24,33 +24,33 @@ namespace Health.Core.Services
         #region IRegistrationService<ICandidate> Members
 
         /// <summary>
-        /// Принять заявку.
+        /// РџСЂРёРЅСЏС‚СЊ Р·Р°СЏРІРєСѓ.
         /// </summary>
-        /// <param name="candidate">Кандидат.</param>
+        /// <param name="candidate">РљР°РЅРґРёРґР°С‚.</param>
         public void AcceptBid(ICandidate candidate)
         {
-            Logger.Info(String.Format("Заявка на регистрацию для {0} - принята.", candidate.Login));
+            Logger.Info(String.Format("Р—Р°СЏРІРєР° РЅР° СЂРµРіРёСЃС‚СЂР°С†РёСЋ РґР»СЏ {0} - РїСЂРёРЅСЏС‚Р°.", candidate.Login));
         }
 
         /// <summary>
-        /// Сохранить заявку.
+        /// РЎРѕС…СЂР°РЅРёС‚СЊ Р·Р°СЏРІРєСѓ.
         /// </summary>
-        /// <param name="candidate">Кандидат.</param>
+        /// <param name="candidate">РљР°РЅРґРёРґР°С‚.</param>
         public void SaveBid(ICandidate candidate)
         {
             candidate.Role = DefaultCandidateRole;
             CoreKernel.CandRepo.Save(candidate);
-            Logger.Info(String.Format("Добавлена заявка на регистрацию - {0}.", candidate.Login));
+            Logger.Info(String.Format("Р”РѕР±Р°РІР»РµРЅР° Р·Р°СЏРІРєР° РЅР° СЂРµРіРёСЃС‚СЂР°С†РёСЋ - {0}.", candidate.Login));
         }
 
         /// <summary>
-        /// Отклонить заявку.
+        /// РћС‚РєР»РѕРЅРёС‚СЊ Р·Р°СЏРІРєСѓ.
         /// </summary>
-        /// <param name="candidate">Кандидат.</param>
+        /// <param name="candidate">РљР°РЅРґРёРґР°С‚.</param>
         public void RejectBid(ICandidate candidate)
         {
             CoreKernel.CandRepo.Delete(candidate);
-            Logger.Info(String.Format("Заявка на регистрацию для {0} - отклонена.", candidate.Login));
+            Logger.Info(String.Format("Р—Р°СЏРІРєР° РЅР° СЂРµРіРёСЃС‚СЂР°С†РёСЋ РґР»СЏ {0} - РѕС‚РєР»РѕРЅРµРЅР°.", candidate.Login));
         }
 
         #endregion
