@@ -40,13 +40,16 @@ namespace Health.Site.Attributes
         public IList<PRGParameter> GetExportModel<T>(Expression<Action<T>> action)
         {
             IList<PRGParameter> prg_parameters = new List<PRGParameter>();
+            // Если выствлена передача параметров и тело имеет нужный тип...
             if (ParametersHook && action.Body.NodeType == ExpressionType.Call)
             {
                 var action_as_call = action.Body as MethodCallExpression;
                 if (action_as_call != null && action_as_call.Arguments.Count > 0)
                 {
+                    // получаем имя метода...
                     string action_name = action_as_call.Method.Name;
                     ReadOnlyCollection<Expression> arguments = action_as_call.Arguments;
+                    // перебираем параметры...
                     foreach (var argument in arguments)
                     {
                         if (argument.NodeType == ExpressionType.MemberAccess)
@@ -54,23 +57,25 @@ namespace Health.Site.Attributes
                             var member = argument as MemberExpression;
                             if (member != null)
                             {
+                                // получаем имя параметра...
                                 string member_name = member.Member.Name;
                                 var property_info = member.Member as FieldInfo;
                                 if (property_info != null)
                                 {
-                                    Type member_type = member.Type;
                                     if (member.Expression.NodeType == ExpressionType.Constant)
                                     {
                                         var member_value_exp = member.Expression as ConstantExpression;
                                         if (member_value_exp != null)
                                         {
+                                            // получаем значение параметра...
                                             object value = property_info.GetValue(member_value_exp.Value);
-                                            object member_value = member_value_exp.Value;
                                             Type controller_type = member_value_exp.Type.ReflectedType;
                                             if (controller_type != null)
                                             {
+                                                // формируем ключ для сохранения...
                                                 PRGParametersKey = PRGParametersKeyPrefix + action_name +
                                                                    controller_type.Name.Replace("Controller", "");
+                                                // добавляем параметр.
                                                 prg_parameters.Add(new PRGParameter
                                                                        {
                                                                            Name = member_name,

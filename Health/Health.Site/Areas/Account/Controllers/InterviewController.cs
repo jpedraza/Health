@@ -66,9 +66,9 @@ namespace Health.Site.Areas.Account.Controllers
             return RedirectTo<InterviewController>(a => a.Interview(form_model));
         }
 
-        public string Confirm()
+        public ActionResult Confirm()
         {
-            return "Confirm";
+            return View();
         }
     }
 }
