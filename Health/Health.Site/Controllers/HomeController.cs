@@ -35,8 +35,6 @@ namespace Health.Site.Controllers
             ViewBag.CountCandidates = CoreKernel.CandRepo.GetAll().Count();
 
             ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
-            //throw new Exception("dsasd");
-            throw new HttpException(404, "Not found");
             return View();
         }
     }

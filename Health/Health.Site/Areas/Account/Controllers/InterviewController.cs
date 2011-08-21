@@ -13,10 +13,10 @@ using Health.Site.Controllers;
 using Health.Site.DI;
 using MvcContrib;
 using MvcContrib.Filters;
+using Health.Site.Extensions;
 
 namespace Health.Site.Areas.Account.Controllers
 {
-    [PassParametersDuringRedirect]
     public class InterviewController : CoreController
     {
         public InterviewController(IDIKernel di_kernel) : base(di_kernel)
@@ -61,9 +61,9 @@ namespace Health.Site.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                return this.RedirectToAction(a => a.Confirm());
+                return this.RedirectTo<InterviewController>(a => a.Confirm());
             }
-            return this.RedirectToAction(a => a.Interview(form_model));
+            return this.RedirectTo<InterviewController>(a => a.Interview(form_model));
         }
 
         public string Confirm()

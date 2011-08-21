@@ -98,7 +98,7 @@ namespace Health.Site.App_Start
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>();
-            kernel.Bind<IRegistrationService>().To<RegistrationService<Candidate>>();
+            kernel.Bind<IRegistrationService>().To<RegistrationService>();
             // Фабрики
             kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
             // Фильтры для атрибутов

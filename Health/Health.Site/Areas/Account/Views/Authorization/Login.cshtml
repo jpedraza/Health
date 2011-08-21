@@ -7,7 +7,7 @@
 
 <h2>Login</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("LoginSubmit", "Authorization", new { area = "Account" }))
 {
     <p>@Html.LabelFor(x => x.LoginForm.Login)</p>
     <p>@Html.ValidationMessageFor(x => x.LoginForm.Login)</p>

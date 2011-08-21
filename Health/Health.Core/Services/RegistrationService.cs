@@ -8,11 +8,9 @@ namespace Health.Core.Services
     /// <summary>
     /// Сервис регистрации.
     /// </summary>
-    /// <typeparam name="TCandidate">Тип кандидата.</typeparam>
-    public class RegistrationService<TCandidate> : CoreService, IRegistrationService
-        where TCandidate : class, ICandidate, new()
+    public class RegistrationService : CoreService, IRegistrationService
     {
-        protected RegistrationService(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public RegistrationService(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
             DefaultCandidateRole = Instance<IRole>(o =>
                                                        {
