@@ -13,12 +13,5 @@ namespace Health.Site.Extensions
 {
     public static class ControllerExtensions
     {
-        public static ActionResult RedirectTo<T>(this Controller controller, Expression<Action<T>> action)
-            where T : Controller
-        {
-            IList<PRGParameter> prg_parameters = PRGModelState.GetExportModel(action);
-            controller.TempData[PRGModelState.PRGParametersKey] = prg_parameters;
-            return controller.RedirectToAction(action);
-        }
     }
 }

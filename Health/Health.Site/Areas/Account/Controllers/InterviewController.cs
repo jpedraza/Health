@@ -28,7 +28,7 @@ namespace Health.Site.Areas.Account.Controllers
         /// Отображение формы опроса
         /// </summary>
         /// <returns></returns>
-        [PRGImport]
+        [PRGImport(ParametersHook = true)]
         public ActionResult Interview([Bind(Include = "InterviewForm")] AccountViewModel form_model)
         {
             if (form_model != null && form_model.InterviewForm != null)
@@ -56,14 +56,14 @@ namespace Health.Site.Areas.Account.Controllers
                             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken, PRGExport]
+        [HttpPost, ValidateAntiForgeryToken, PRGExport(ParametersHook = true)]
         public ActionResult InterviewSubmit([Bind(Include = "InterviewForm")] AccountViewModel form_model)
         {
             if (ModelState.IsValid)
             {
-                return this.RedirectTo<InterviewController>(a => a.Confirm());
+                return RedirectTo<InterviewController>(a => a.Confirm());
             }
-            return this.RedirectTo<InterviewController>(a => a.Interview(form_model));
+            return RedirectTo<InterviewController>(a => a.Interview(form_model));
         }
 
         public string Confirm()

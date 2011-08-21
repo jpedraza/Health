@@ -13,32 +13,34 @@ namespace Health.Site.Attributes
     /// <summary>
     /// Абстрактный класс для работы с PRG - pattern.
     /// </summary>
-    public abstract class PRGModelState : ActionFilterAttribute
+    public class PRGModelState : ActionFilterAttribute
     {
+        public bool ParametersHook { get; set; }
+
         /// <summary>
         /// Ключ состояния модели в хранилище.
         /// </summary>
-        public static string ModelStateKey { get; set; }
+        public string ModelStateKey { get; set; }
 
         /// <summary>
         /// Ключ параметров действия в хранилище. 
         /// </summary>
-        public static string PRGParametersKey { get; set; }
+        public string PRGParametersKey { get; set; }
 
         /// <summary>
         /// Префикс для ключа состояния модели.
         /// </summary>
-        protected static readonly string ModelStateKeyPrefix = "ModelState_";
+        protected readonly string ModelStateKeyPrefix = "ModelState_";
 
         /// <summary>
         /// Префикс для ключа параметров.
         /// </summary>
-        protected static readonly string PRGParametersKeyPrefix = "PRGParameters_";
+        protected readonly string PRGParametersKeyPrefix = "PRGParameters_";
 
-        public static IList<PRGParameter> GetExportModel<T>(Expression<Action<T>> action)
+        public IList<PRGParameter> GetExportModel<T>(Expression<Action<T>> action)
         {
             IList<PRGParameter> prg_parameters = new List<PRGParameter>();
-            if (action.Body.NodeType == ExpressionType.Call)
+            if (ParametersHook && action.Body.NodeType == ExpressionType.Call)
             {
                 var action_as_call = action.Body as MethodCallExpression;
                 if (action_as_call != null && action_as_call.Arguments.Count > 0)
@@ -100,23 +102,26 @@ namespace Health.Site.Attributes
         public override void OnActionExecuting(ActionExecutingContext filter_context)
         {
             base.OnActionExecuting(filter_context);
-            // Если есть параметры...
-            if (filter_context.ActionParameters.Count > 0)
+            if (ParametersHook)
             {
-                IList<PRGParameter> prg_parameters = new List<PRGParameter>();
-                IDictionary<string, object> action_parameters = filter_context.ActionParameters;
-                // перебираем их...
-                foreach (var action_parameter in action_parameters)
+                // Если есть параметры...
+                if (filter_context.ActionParameters.Count > 0)
                 {
-                    var prg_parameter = new PRGParameter
-                                            {
-                                                Name = action_parameter.Key,
-                                                Value = action_parameter.Value
-                                            };
-                    prg_parameters.Add(prg_parameter);
+                    IList<PRGParameter> prg_parameters = new List<PRGParameter>();
+                    IDictionary<string, object> action_parameters = filter_context.ActionParameters;
+                    // перебираем их...
+                    foreach (var action_parameter in action_parameters)
+                    {
+                        var prg_parameter = new PRGParameter
+                                                {
+                                                    Name = action_parameter.Key,
+                                                    Value = action_parameter.Value
+                                                };
+                        prg_parameters.Add(prg_parameter);
+                    }
+                    // и сохраняем во временное хранилище.
+                    filter_context.Controller.TempData[TempPRGParametersKey] = prg_parameters;
                 }
-                // и сохраняем во временное хранилище.
-                filter_context.Controller.TempData[TempPRGParametersKey] = prg_parameters;
             }
         }
 
@@ -135,7 +140,11 @@ namespace Health.Site.Attributes
                 PRGParametersKey = PRGParametersKeyPrefix + result.RouteValues["action"] + result.RouteValues["controller"];
                 // Сохраняем состояние модели в хранилище.
                 filter_context.Controller.TempData[ModelStateKey] = filter_context.Controller.ViewData.ModelState;
-                filter_context.Controller.TempData[PRGParametersKey] = filter_context.Controller.TempData[TempPRGParametersKey];
+                if (ParametersHook)
+                {
+                    filter_context.Controller.TempData[PRGParametersKey] =
+                        filter_context.Controller.TempData[TempPRGParametersKey];
+                }
             }
         }
     }
@@ -151,37 +160,43 @@ namespace Health.Site.Attributes
         public override void OnActionExecuting(ActionExecutingContext filter_context)
         {
             base.OnActionExecuting(filter_context);
-            // Формируем ключи для доступа к данных...
-            PRGParametersKey = PRGParametersKeyPrefix +
-                filter_context.ActionDescriptor.ActionName +
-                filter_context.ActionDescriptor.ControllerDescriptor.ControllerName;
             ModelStateKey = ModelStateKeyPrefix +
-                filter_context.ActionDescriptor.ActionName + 
-                filter_context.ActionDescriptor.ControllerDescriptor.ControllerName;
-            TempDataDictionary temp_data = filter_context.Controller.TempData;
-            // если в хранилище есть данные...
-            if (temp_data.ContainsKey(PRGParametersKey) && temp_data[PRGParametersKey] != null)
+                            filter_context.ActionDescriptor.ActionName +
+                            filter_context.ActionDescriptor.ControllerDescriptor.ControllerName;
+            if (ParametersHook)
             {
-                // забираем данные как тип...
-                var prg_parameters = temp_data[PRGParametersKey] as IList<PRGParameter>;
-                // если данные нужного типа...
-                if (prg_parameters != null)
+                // Формируем ключи для доступа к данных...
+                PRGParametersKey = PRGParametersKeyPrefix +
+                                   filter_context.ActionDescriptor.ActionName +
+                                   filter_context.ActionDescriptor.ControllerDescriptor.ControllerName;
+                TempDataDictionary temp_data = filter_context.Controller.TempData;
+                // если в хранилище есть данные...
+                if (temp_data.ContainsKey(PRGParametersKey) && temp_data[PRGParametersKey] != null)
                 {
-                    // берем список параметров метода...
-                    ParameterDescriptor[] parameter_descriptors = filter_context.ActionDescriptor.GetParameters();
-                    // перебираем их...
-                    foreach (var prg_parameter in prg_parameters)
+                    // забираем данные как тип...
+                    var prg_parameters = temp_data[PRGParametersKey] as IList<PRGParameter>;
+                    // если данные нужного типа...
+                    if (prg_parameters != null)
                     {
-                        if (parameter_descriptors.Any(p => p.ParameterName == prg_parameter.Name
-                                && (p.ParameterType.IsAssignableFrom(prg_parameter.Value.GetType()) || p.ParameterType == prg_parameter.Value.GetType())))
+                        // берем список параметров метода...
+                        ParameterDescriptor[] parameter_descriptors = filter_context.ActionDescriptor.GetParameters();
+                        // перебираем их...
+                        foreach (var prg_parameter in prg_parameters)
                         {
-                            // внедряем параметр в метод.
-                            filter_context.ActionParameters[prg_parameter.Name] = prg_parameter.Value;
+                            if (parameter_descriptors.Any(p => p.ParameterName == prg_parameter.Name
+                                                               &&
+                                                               (p.ParameterType.IsAssignableFrom(
+                                                                   prg_parameter.Value.GetType()) ||
+                                                                p.ParameterType == prg_parameter.Value.GetType())))
+                            {
+                                // внедряем параметр в метод.
+                                filter_context.ActionParameters[prg_parameter.Name] = prg_parameter.Value;
+                            }
                         }
                     }
                 }
+                temp_data.Remove(PRGParametersKey);
             }
-            temp_data.Remove(PRGParametersKey);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -10,7 +11,9 @@ using Health.API.Entities;
 using Health.Core;
 using Health.Site.Areas.Account.Controllers;
 using Health.Site.Areas.Account.Models;
+using Health.Site.Attributes;
 using Health.Site.Models;
+using Microsoft.Web.Mvc;
 
 namespace Health.Site.Controllers
 {
@@ -55,6 +58,22 @@ namespace Health.Site.Controllers
         {
             Logger.Debug(String.Format("Создается сущность для интерфейса - {0}.", typeof(TInstance).Name));
             return DIKernel.Get<TInstance>();
+        }
+
+        public ActionResult RedirectTo<T>(Expression<Action<T>> action, bool parameters_hook = false)
+            where T : Controller
+        {
+            if (parameters_hook)
+            {
+                var prg_model_state = new PRGModelState
+                                          {
+                                              ParametersHook = true
+                                          };
+                IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
+                TempData[prg_model_state.PRGParametersKey] = prg_parameters;
+            }
+            var act = (MethodCallExpression)action.Body;
+            return RedirectToAction(act.Method.Name);
         }
 
         /// <summary>
