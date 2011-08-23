@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Health.API.Entities;
-using Health.API.Repository;
+using Health.Core.API.Repository;
+using Health.Core.Entities;
 
 namespace Health.Data.Repository.Fake
 {
@@ -15,7 +15,7 @@ namespace Health.Data.Repository.Fake
 
         #region IActualCredentialRepository Members
 
-        public void Write(string identifier, IUserCredential credential)
+        public void Write(string identifier, UserCredential credential)
         {
             if (!_storage.ContainsKey(identifier))
             {
@@ -27,9 +27,9 @@ namespace Health.Data.Repository.Fake
             }
         }
 
-        public IUserCredential Read(string identifier)
+        public UserCredential Read(string identifier)
         {
-            return (IUserCredential) _storage[identifier];
+            return (UserCredential) _storage[identifier];
         }
 
         public void Clear()

@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Health.API", "Health.API\Health.API.csproj", "{B5F28D75-A833-4966-8958-4202D03B8BEC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Health.Core", "Health.Core\Health.Core.csproj", "{005180DD-4D3E-492E-8ECE-4DB5615F06CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Health.Data", "Health.Data\Health.Data.csproj", "{A0246A4F-54A6-4F33-8FE7-3537161469F8}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B5F28D75-A833-4966-8958-4202D03B8BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5F28D75-A833-4966-8958-4202D03B8BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5F28D75-A833-4966-8958-4202D03B8BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5F28D75-A833-4966-8958-4202D03B8BEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{005180DD-4D3E-492E-8ECE-4DB5615F06CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{005180DD-4D3E-492E-8ECE-4DB5615F06CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{005180DD-4D3E-492E-8ECE-4DB5615F06CD}.Release|Any CPU.ActiveCfg = Release|Any CPU

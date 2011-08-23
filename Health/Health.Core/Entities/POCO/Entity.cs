@@ -1,11 +1,9 @@
-﻿using Health.API.Entities;
-
-namespace Health.Data.Entities
+﻿namespace Health.Core.Entities.POCO
 {
     /// <summary>
     /// Базовый класс сущностей
     /// </summary>
-    public class Entity : IEntity
+    public class Entity
     {
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Health.API;
-using Health.API.Entities;
-using Health.API.Repository;
-using Health.Data.Entities;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 
 namespace Health.Data.Repository.Fake
 {
-    public sealed class RolesFakeRepository : CoreFakeRepository<IRole>, IRoleRepository
+    public sealed class RolesFakeRepository : CoreFakeRepository<Role>, IRoleRepository
     {
         public RolesFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
-            _entities = new List<IRole>
+            _entities = new List<Role>
                             {
                                 new Role
                                     {
@@ -36,9 +36,9 @@ namespace Health.Data.Repository.Fake
                             };
         }
 
-        #region IRoleRepository<IRole> Members
+        #region IRoleRepository Members
 
-        public IRole GetByName(string name)
+        public Role GetByName(string name)
         {
             return _entities.Where(x => x.Name == name).FirstOrDefault();
         }

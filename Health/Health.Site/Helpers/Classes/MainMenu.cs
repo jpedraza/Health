@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Health.API;
+using Health.Core.API;
 using Health.Site.Models;
 
 namespace Health.Site.Helpers.Classes
@@ -9,8 +9,6 @@ namespace Health.Site.Helpers.Classes
     /// </summary>
     public class MainMenu
     {
-        protected ICoreKernel CoreKernel { get; set; }
-
         /// <summary>
         /// Точка входа в хелпер
         /// </summary>
@@ -20,6 +18,8 @@ namespace Health.Site.Helpers.Classes
         {
             CoreKernel = core_kernel;
         }
+
+        protected ICoreKernel CoreKernel { get; set; }
 
         /// <summary>
         /// Получить элементы меню

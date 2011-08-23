@@ -1,5 +1,5 @@
-using Health.API;
-using Health.API.Services;
+using Health.Core.API;
+using Health.Core.API.Services;
 
 namespace Health.Core.Services
 {

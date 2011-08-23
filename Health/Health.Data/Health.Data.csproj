@@ -41,29 +41,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\NotNullable.cs" />
-    <Compile Include="Core.cs" />
-    <Compile Include="Entities\AltRole.cs" />
-    <Compile Include="Entities\Candidate.cs" />
-    <Compile Include="Entities\DefaultRoles.cs" />
-    <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Parameter.cs" />
-    <Compile Include="Entities\Role.cs" />
-    <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserCredential.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Fake\CoreFakeRepository.cs" />
     <Compile Include="Repository\Fake\CandidatesFakeRepository.cs" />
     <Compile Include="Repository\Fake\FakeActualCredentialRepository.cs" />
     <Compile Include="Repository\Fake\FakePermanentCredentialRepository.cs" />
+    <Compile Include="Repository\Fake\ParametersFakeRepository.cs" />
     <Compile Include="Repository\Fake\RolesFakeRepository.cs" />
     <Compile Include="Repository\Fake\UsersFakeRepository.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\ValidatorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Health.API\Health.API.csproj">
-      <Project>{B5F28D75-A833-4966-8958-4202D03B8BEC}</Project>
-      <Name>Health.API</Name>
+    <ProjectReference Include="..\Health.Core\Health.Core.csproj">
+      <Project>{005180DD-4D3E-492E-8ECE-4DB5615F06CD}</Project>
+      <Name>Health.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

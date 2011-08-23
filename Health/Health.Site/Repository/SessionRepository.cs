@@ -1,8 +1,8 @@
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.SessionState;
-using Health.API.Entities;
-using Health.API.Repository;
+using Health.Core.API.Repository;
+using Health.Core.Entities;
 
 namespace Health.Site.Repository
 {
@@ -15,7 +15,7 @@ namespace Health.Site.Repository
 
         #region IActualCredentialRepository Members
 
-        public void Write(string identifier, IUserCredential credential)
+        public void Write(string identifier, UserCredential credential)
         {
             if (!SessionContainsKey(identifier))
             {
@@ -27,9 +27,9 @@ namespace Health.Site.Repository
             }
         }
 
-        public IUserCredential Read(string identifier)
+        public UserCredential Read(string identifier)
         {
-            return (IUserCredential) Session[identifier];
+            return (UserCredential) Session[identifier];
         }
 
         public void Clear()

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Health.Site.Attributes
@@ -15,6 +13,19 @@ namespace Health.Site.Attributes
     /// </summary>
     public class PRGModelState : ActionFilterAttribute
     {
+        /// <summary>
+        /// Префикс для ключа состояния модели.
+        /// </summary>
+        protected readonly string ModelStateKeyPrefix = "ModelState_";
+
+        /// <summary>
+        /// Префикс для ключа параметров.
+        /// </summary>
+        protected readonly string PRGParametersKeyPrefix = "PRGParameters_";
+
+        /// <summary>
+        /// Указывает нужно ли передавать параметры.
+        /// </summary>
         public bool ParametersHook { get; set; }
 
         /// <summary>
@@ -27,16 +38,6 @@ namespace Health.Site.Attributes
         /// </summary>
         public string PRGParametersKey { get; set; }
 
-        /// <summary>
-        /// Префикс для ключа состояния модели.
-        /// </summary>
-        protected readonly string ModelStateKeyPrefix = "ModelState_";
-
-        /// <summary>
-        /// Префикс для ключа параметров.
-        /// </summary>
-        protected readonly string PRGParametersKeyPrefix = "PRGParameters_";
-
         public IList<PRGParameter> GetExportModel<T>(Expression<Action<T>> action)
         {
             IList<PRGParameter> prg_parameters = new List<PRGParameter>();
@@ -48,30 +49,30 @@ namespace Health.Site.Attributes
                 {
                     // получаем имя метода...
                     string action_name = action_as_call.Method.Name;
-                    ReadOnlyCollection<Expression> arguments = action_as_call.Arguments;
-                    // перебираем параметры...
-                    foreach (var argument in arguments)
+                    if (action_as_call.Object != null)
                     {
-                        if (argument.NodeType == ExpressionType.MemberAccess)
+                        Type controller_type = action_as_call.Object.Type;
+                        ReadOnlyCollection<Expression> arguments = action_as_call.Arguments;
+                        // перебираем параметры...
+                        foreach (Expression argument in arguments)
                         {
-                            var member = argument as MemberExpression;
-                            if (member != null)
+                            if (argument.NodeType == ExpressionType.MemberAccess)
                             {
-                                // получаем имя параметра...
-                                string member_name = member.Member.Name;
-                                var property_info = member.Member as FieldInfo;
-                                if (property_info != null)
+                                var member = argument as MemberExpression;
+                                if (member != null)
                                 {
-                                    if (member.Expression.NodeType == ExpressionType.Constant)
+                                    // получаем имя параметра...
+                                    string member_name = member.Member.Name;
+                                    var property_info = member.Member as FieldInfo;
+                                    if (property_info != null)
                                     {
-                                        var member_value_exp = member.Expression as ConstantExpression;
-                                        if (member_value_exp != null)
+                                        if (member.Expression.NodeType == ExpressionType.Constant)
                                         {
-                                            // получаем значение параметра...
-                                            object value = property_info.GetValue(member_value_exp.Value);
-                                            Type controller_type = member_value_exp.Type.ReflectedType;
-                                            if (controller_type != null)
+                                            var member_value_exp = member.Expression as ConstantExpression;
+                                            if (member_value_exp != null)
                                             {
+                                                // получаем значение параметра...
+                                                object value = property_info.GetValue(member_value_exp.Value);
                                                 // формируем ключ для сохранения...
                                                 PRGParametersKey = PRGParametersKeyPrefix + action_name +
                                                                    controller_type.Name.Replace("Controller", "");
@@ -142,7 +143,8 @@ namespace Health.Site.Attributes
                 var result = filter_context.Result as RedirectToRouteResult;
                 // формируем ключи для получения данных их постоянного хранилища.
                 ModelStateKey = ModelStateKeyPrefix + result.RouteValues["action"] + result.RouteValues["controller"];
-                PRGParametersKey = PRGParametersKeyPrefix + result.RouteValues["action"] + result.RouteValues["controller"];
+                PRGParametersKey = PRGParametersKeyPrefix + result.RouteValues["action"] +
+                                   result.RouteValues["controller"];
                 // Сохраняем состояние модели в хранилище.
                 filter_context.Controller.TempData[ModelStateKey] = filter_context.Controller.ViewData.ModelState;
                 if (ParametersHook)
@@ -186,7 +188,7 @@ namespace Health.Site.Attributes
                         // берем список параметров метода...
                         ParameterDescriptor[] parameter_descriptors = filter_context.ActionDescriptor.GetParameters();
                         // перебираем их...
-                        foreach (var prg_parameter in prg_parameters)
+                        foreach (PRGParameter prg_parameter in prg_parameters)
                         {
                             if (parameter_descriptors.Any(p => p.ParameterName == prg_parameter.Name
                                                                &&

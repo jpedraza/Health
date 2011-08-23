@@ -1,6 +1,4 @@
-﻿@using Health.API.Entities
-@using Health.Site.Controllers
-@using Health.Site.Areas.Account.Models
+﻿@using Health.Site.Areas.Account.Models
 @using Health.Site.Extensions
 @using Health.Site.Helpers
 @model AccountViewModel
@@ -11,7 +9,7 @@
 
 <h2>Interview</h2>
 
-@using (Html.BeginForm(new { area = "Account", controller = "Interview", action = "InterviewSubmit" }))
+@using (Html.BeginForm(new {area = "Account", controller = "Interview", action = "InterviewSubmit"}))
 {
     @Html.RenderParameters(Model.InterviewForm, Model.PropertyName(p => p.InterviewForm))
     @Html.AntiForgeryToken()

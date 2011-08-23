@@ -4,8 +4,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.Mvc;
-using Health.API;
-using Health.API.Entities;
+using Health.Core.API;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 
 namespace Health.Site.Models.Binders
 {
@@ -56,11 +57,11 @@ namespace Health.Site.Models.Binders
         /// <param name="controller_context">Контекст контроллера.</param>
         /// <param name="binding_context">Контекст привязки.</param>
         /// <returns>Перечисление параметров.</returns>
-        protected IEnumerable<IParameter> GetValueForParameter(ControllerContext controller_context,
-                                                               ModelBindingContext binding_context)
+        protected IEnumerable<Parameter> GetValueForParameter(ControllerContext controller_context,
+                                                              ModelBindingContext binding_context)
         {
             NameValueCollection value_collection = controller_context.HttpContext.Request.Form;
-            var parameters = Kernel.Get<IEnumerable<IParameter>>().ToList();
+            List<Parameter> parameters = Kernel.Get<IEnumerable<Parameter>>().ToList();
             if (value_collection.Count != 0)
             {
                 int count = value_collection.Cast<object>().Count(key => key.ToString().Contains("Parameters"));
@@ -68,15 +69,15 @@ namespace Health.Site.Models.Binders
 
                 for (int i = 0; i < count/2; i++)
                 {
-                    parameters.Add(Kernel.Instance<IParameter>(o =>
-                                                                   {
-                                                                       o.Name =
-                                                                           value_collection[
-                                                                               String.Format(format, i, "Name")];
-                                                                       o.Value =
-                                                                           value_collection[
-                                                                               String.Format(format, i, "Value")];
-                                                                   }));
+                    parameters.Add(new Parameter
+                                       {
+                                           Name =
+                                               value_collection[
+                                                   String.Format(format, i, "Name")],
+                                           Value =
+                                               value_collection[
+                                                   String.Format(format, i, "Value")]
+                                       });
                 }
             }
             return parameters;

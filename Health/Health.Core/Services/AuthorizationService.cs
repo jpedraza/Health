@@ -1,8 +1,9 @@
 ﻿using System;
-using Health.API;
-using Health.API.Entities;
-using Health.API.Repository;
-using Health.API.Services;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.API.Services;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 
 namespace Health.Core.Services
 {
@@ -26,7 +27,7 @@ namespace Health.Core.Services
             PermanentDataAccessor = permanent_data_accessor;
         }
 
-        #region IAuthorizationService<IUserCredential> Members
+        #region IAuthorizationService Members
 
         /// <summary>
         /// Доступ к актуальному хранлищу сессии пользователя.
@@ -41,9 +42,9 @@ namespace Health.Core.Services
         /// <summary>
         /// Дефолтные роли пользователя.
         /// </summary>
-        public IDefaultRoles DefaultRoles
+        public DefaultRoles DefaultRoles
         {
-            get { return Instance<IDefaultRoles>(); }
+            get { return new DefaultRoles(); }
             set { }
         }
 
@@ -59,15 +60,17 @@ namespace Health.Core.Services
         /// <summary>
         /// Дефолтный мандат пользователя.
         /// </summary>
-        public IUserCredential DefaultUserCredential
+        public UserCredential DefaultUserCredential
         {
             get
             {
-                var default_credential = Instance<IUserCredential>();
-                default_credential.Login = DefaultRoles.Guest.Name;
-                default_credential.Role = DefaultRoles.Guest.Name;
-                default_credential.IsAuthirization = false;
-                default_credential.IsRemember = false;
+                var default_credential = new UserCredential
+                                             {
+                                                 Login = DefaultRoles.Guest.Name,
+                                                 Role = DefaultRoles.Guest.Name,
+                                                 IsAuthirization = false,
+                                                 IsRemember = false
+                                             };
                 return default_credential;
             }
             set { }
@@ -76,11 +79,11 @@ namespace Health.Core.Services
         /// <summary>
         /// Актуальный мандат пользователя.
         /// </summary>
-        public virtual IUserCredential UserCredential
+        public virtual UserCredential UserCredential
         {
             get
             {
-                IUserCredential user_session_info = ActualDataAccessor.Read(DefaultUserCredentialName);
+                UserCredential user_session_info = ActualDataAccessor.Read(DefaultUserCredentialName);
                 if (user_session_info == null)
                 {
                     SessionStartup();
@@ -119,21 +122,21 @@ namespace Health.Core.Services
             Logger.Info(String.Format("Попытка авторизации пользователя: Логин - {0}, Пароль - {1}, Запоминать? - {2}.",
                                       login, password, remember_me));
 
-            IUser user = CoreKernel.UserRepo.GetByLoginAndPassword(login, password);
+            User user = CoreKernel.UserRepo.GetByLoginAndPassword(login, password);
 
             if (user != null)
             {
-                ActualDataAccessor.Write(DefaultUserCredentialName, Instance<IUserCredential>(o =>
-                                                                                                  {
-                                                                                                      o.Login =
-                                                                                                          user.Login;
-                                                                                                      o.Role =
-                                                                                                          user.Role.Name;
-                                                                                                      o.IsAuthirization
-                                                                                                          = true;
-                                                                                                      o.IsRemember =
-                                                                                                          remember_me;
-                                                                                                  }));
+                ActualDataAccessor.Write(DefaultUserCredentialName, new UserCredential
+                                                                        {
+                                                                            Login =
+                                                                                user.Login,
+                                                                            Role =
+                                                                                user.Role.Name,
+                                                                            IsAuthirization
+                                                                                = true,
+                                                                            IsRemember =
+                                                                                remember_me
+                                                                        });
                 if (remember_me)
                 {
                     RememberMe();
@@ -171,7 +174,7 @@ namespace Health.Core.Services
         /// <returns>Да или нет.</returns>
         public virtual bool IsRemember()
         {
-            IUserCredential credential = PermanentDataAccessor.Read("remember");
+            UserCredential credential = PermanentDataAccessor.Read("remember");
             if (credential == null)
             {
                 return false;
@@ -185,8 +188,8 @@ namespace Health.Core.Services
         /// </summary>
         public virtual void RestoreRememberSession()
         {
-            IUserCredential credential = PermanentDataAccessor.Read("remember");
-            IUser user = CoreKernel.UserRepo.GetByLogin(credential.Login);
+            UserCredential credential = PermanentDataAccessor.Read("remember");
+            User user = CoreKernel.UserRepo.GetByLogin(credential.Login);
             if (user != null)
             {
                 ActualDataAccessor.Write(DefaultUserCredentialName, credential);

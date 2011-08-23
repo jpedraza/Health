@@ -1,5 +1,6 @@
 ﻿using System;
 using Health.API.Validators;
+using Health.Core.API.Validators;
 
 namespace Health.Data.Validators
 {
@@ -28,7 +29,7 @@ namespace Health.Data.Validators
             {
                 return false;
             }
-            var validator = (IValueValidator)Activator.CreateInstance(v_type);
+            var validator = (IValueValidator) Activator.CreateInstance(v_type);
             if (validator.Equals(null))
             {
                 return false;
@@ -38,7 +39,7 @@ namespace Health.Data.Validators
             {
                 Message = validator.Message;
             }
-            return result;   
+            return result;
         }
 
         #endregion

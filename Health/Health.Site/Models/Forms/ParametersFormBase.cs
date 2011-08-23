@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Health.API;
-using Health.API.Entities;
+using Health.Core.API;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 
 namespace Health.Site.Models.Forms
 {
@@ -22,6 +23,6 @@ namespace Health.Site.Models.Forms
         /// <summary>
         /// Список параметров.
         /// </summary>
-        public IList<IParameter> Parameters { get; set; }
+        public IList<Parameter> Parameters { get; set; }
     }
 }

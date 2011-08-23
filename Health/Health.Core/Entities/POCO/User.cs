@@ -1,15 +1,12 @@
 ﻿using System;
-using Health.API.Entities;
 
-namespace Health.Data.Entities
+namespace Health.Core.Entities.POCO
 {
     /// <summary>
     /// Пользователь
     /// </summary>
-    public class User : Entity, IUser
+    public class User : Entity
     {
-        #region IUser Members
-
         /// <summary>
         /// Имя пользователя
         /// </summary>
@@ -38,7 +35,7 @@ namespace Health.Data.Entities
         /// <summary>
         /// Роль пользователя
         /// </summary>
-        public IRole Role { get; set; }
+        public Role Role { get; set; }
 
         /// <summary>
         /// День рождения
@@ -49,7 +46,5 @@ namespace Health.Data.Entities
         /// Токен для сессии в куках
         /// </summary>
         public string Token { get; set; }
-
-        #endregion
     }
 }

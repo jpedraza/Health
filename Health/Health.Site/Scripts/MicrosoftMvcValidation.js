@@ -104,7 +104,14 @@ Sys.Mvc.FormContext.$12 = function($p0) {
     return $2;
 };
 Sys.Mvc.FormContext.prototype = {
-    $3: null, $4: null, $6: null, $7: null, $8: null, $9: null, replaceValidationSummary: false, addError: function(message) { this.addErrors([message]); },
+    $3: null,
+    $4: null,
+    $6: null,
+    $7: null,
+    $8: null,
+    $9: null,
+    replaceValidationSummary: false,
+    addError: function(message) { this.addErrors([message]); },
     addErrors: function(messages) {
         if (!Sys.Mvc._ValidationUtil.$0(messages)) {
             Array.addRange(this.$5, messages);
@@ -209,7 +216,15 @@ Sys.Mvc.FieldContext = function(formContext) {
     this.$9 = Function.createDelegate(this, this.$10);
 };
 Sys.Mvc.FieldContext.prototype = {
-    $6: null, $7: null, $8: null, $9: null, defaultErrorMessage: null, formContext: null, replaceValidationMessageContents: false, validationMessageElement: null, addError: function(message) { this.addErrors([message]); },
+    $6: null,
+    $7: null,
+    $8: null,
+    $9: null,
+    defaultErrorMessage: null,
+    formContext: null,
+    replaceValidationMessageContents: false,
+    validationMessageElement: null,
+    addError: function(message) { this.addErrors([message]); },
     addErrors: function(messages) {
         if (!Sys.Mvc._ValidationUtil.$0(messages)) {
             Array.addRange(this.$A, messages);
@@ -348,7 +363,8 @@ Sys.Mvc.RangeValidator.create = function(rule) {
     return Function.createDelegate(new Sys.Mvc.RangeValidator($0, $1), new Sys.Mvc.RangeValidator($0, $1).validate);
 };
 Sys.Mvc.RangeValidator.prototype = {
-    $0: null, $1: null,
+    $0: null,
+    $1: null,
     validate: function(value, context) {
         if (Sys.Mvc._ValidationUtil.$1(value)) {
             return true;
@@ -456,7 +472,8 @@ Sys.Mvc.StringLengthValidator.create = function(rule) {
     return Function.createDelegate(new Sys.Mvc.StringLengthValidator($0, $1), new Sys.Mvc.StringLengthValidator($0, $1).validate);
 };
 Sys.Mvc.StringLengthValidator.prototype = {
-    $0: 0, $1: 0,
+    $0: 0,
+    $1: 0,
     validate: function(value, context) {
         if (Sys.Mvc._ValidationUtil.$1(value)) {
             return true;

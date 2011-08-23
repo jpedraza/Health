@@ -1,16 +1,14 @@
-﻿using Health.API.Entities;
+﻿using Health.Core.Entities.POCO;
 
-namespace Health.Data.Entities
+namespace Health.Core.Entities
 {
-    public class DefaultRoles : IDefaultRoles
+    public class DefaultRoles
     {
-        private IRole _all;
+        private Role _all;
 
-        private IRole _guest;
+        private Role _guest;
 
-        #region IDefaultRoles Members
-
-        public IRole All
+        public Role All
         {
             get
             {
@@ -23,7 +21,7 @@ namespace Health.Data.Entities
             set { _all = value; }
         }
 
-        public IRole Guest
+        public Role Guest
         {
             get
             {
@@ -35,7 +33,5 @@ namespace Health.Data.Entities
             }
             set { _guest = value; }
         }
-
-        #endregion
     }
 }

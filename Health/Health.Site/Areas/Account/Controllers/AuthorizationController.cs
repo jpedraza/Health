@@ -1,10 +1,9 @@
 ﻿using System.Web.Mvc;
-using Health.API;
+using Health.Core.API;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
 using MvcContrib;
-using MvcContrib.Filters;
 
 namespace Health.Site.Areas.Account.Controllers
 {

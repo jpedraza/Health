@@ -47,7 +47,7 @@ Sys.Mvc.NumberValidator.create = function Sys_Mvc_NumberValidator$create(rule) {
     /// <returns type="Sys.Mvc.Validator"></returns>
     return Function.createDelegate(new Sys.Mvc.NumberValidator(), new Sys.Mvc.NumberValidator().validate);
 };
-Sys.Mvc.NumberValidator.prototype = {    
+Sys.Mvc.NumberValidator.prototype = {
     validate: function Sys_Mvc_NumberValidator$validate(value, context) {
         /// <param name="value" type="String">
         /// </param>
@@ -706,7 +706,7 @@ Sys.Mvc.RequiredValidator._validateTextualInput = function Sys_Mvc_RequiredValid
     /// <returns type="Object"></returns>
     return (!Sys.Mvc._validationUtil.stringIsNullOrEmpty(element.value));
 };
-Sys.Mvc.RequiredValidator.prototype = {    
+Sys.Mvc.RequiredValidator.prototype = {
     validate: function Sys_Mvc_RequiredValidator$validate(value, context) {
         /// <param name="value" type="String">
         /// </param>

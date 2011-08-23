@@ -4,8 +4,8 @@ using System.Text;
 using System.Web;
 using System.Web.Security;
 using System.Xml.Serialization;
-using Health.API.Entities;
-using Health.API.Repository;
+using Health.Core.API.Repository;
+using Health.Core.Entities;
 
 namespace Health.Site.Repository
 {
@@ -24,7 +24,7 @@ namespace Health.Site.Repository
 
         #region IPermanentCredentialRepository Members
 
-        public void Write(string identifier, IUserCredential credential)
+        public void Write(string identifier, UserCredential credential)
         {
             HttpCookie http_cookie = Request.Cookies[identifier];
             if (http_cookie != null && !http_cookie.Equals(null))
@@ -43,7 +43,7 @@ namespace Health.Site.Repository
             }
         }
 
-        public IUserCredential Read(string identifier)
+        public UserCredential Read(string identifier)
         {
             HttpCookie http_cookie = Request.Cookies[identifier];
             if (http_cookie != null)
@@ -83,7 +83,7 @@ namespace Health.Site.Repository
             return user_data;
         }
 
-        protected string Serialize(IUserCredential credential)
+        protected string Serialize(UserCredential credential)
         {
             var memory_stream = new MemoryStream();
             var xml_serializer = new XmlSerializer(credential.GetType());
@@ -91,12 +91,12 @@ namespace Health.Site.Repository
             return Encoding.UTF8.GetString(memory_stream.ToArray());
         }
 
-        protected IUserCredential Deserialize(string data)
+        protected UserCredential Deserialize(string data)
         {
             byte[] byte_data = Encoding.Default.GetBytes(data);
-            var xml_serializer = new XmlSerializer(typeof (IUserCredential));
+            var xml_serializer = new XmlSerializer(typeof (UserCredential));
             var memory_stream = new MemoryStream(byte_data);
-            return (IUserCredential) xml_serializer.Deserialize(memory_stream);
+            return (UserCredential) xml_serializer.Deserialize(memory_stream);
         }
     }
 }

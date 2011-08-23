@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Health.API;
-using Health.API.Entities;
+using Health.Core.API;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 using Health.Site.Extensions;
 
 namespace Health.Site.Controllers
@@ -19,13 +17,13 @@ namespace Health.Site.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<IRole> roles = CoreKernel.RoleRepo.GetAll();
+            IEnumerable<Role> roles = CoreKernel.RoleRepo.GetAll();
 
-            var new_role = Instance<IRole>(o =>
-                                               {
-                                                   o.Name = "new_role";
-                                                   o.Code = 4323;
-                                               });
+            var new_role = new Role
+                               {
+                                   Name = "new_role",
+                                   Code = 4323
+                               };
             ViewBag.NewRole = new_role;
 
             ViewBag.VarName = new_role.PropertyName(x => x.Code);
@@ -33,7 +31,6 @@ namespace Health.Site.Controllers
             ViewData["Roles"] = roles;
 
             ViewBag.CountCandidates = CoreKernel.CandRepo.GetAll().Count();
-
             ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
             return View();
         }

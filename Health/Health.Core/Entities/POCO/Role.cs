@@ -1,14 +1,10 @@
-﻿using Health.API.Entities;
-
-namespace Health.Data.Entities
+﻿namespace Health.Core.Entities.POCO
 {
     /// <summary>
     /// Роль пользователя
     /// </summary>
-    public class Role : Entity, IRole
+    public class Role : Entity
     {
-        #region IRole Members
-
         /// <summary>
         /// Имя роли
         /// </summary>
@@ -18,7 +14,5 @@ namespace Health.Data.Entities
         /// Код роли
         /// </summary>
         public int Code { get; set; }
-
-        #endregion
     }
 }

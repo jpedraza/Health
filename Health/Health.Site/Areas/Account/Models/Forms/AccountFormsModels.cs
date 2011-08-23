@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Health.API;
-using Health.API.Entities;
-using Health.API.Validators;
+using Health.Core.API;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 using Health.Site.Models.Forms;
-using Health.Site.Controllers;
 
 namespace Health.Site.Areas.Account.Models.Forms
 {
@@ -36,10 +35,8 @@ namespace Health.Site.Areas.Account.Models.Forms
     /// <summary>
     /// Модель формы регистрации кандидатов
     /// </summary>
-    public class RegistrationFormModel : ICandidate
+    public class RegistrationFormModel : Candidate
     {
-        #region ICandidate Members
-
         [Required]
         public string FirstName { get; set; }
 
@@ -56,7 +53,7 @@ namespace Health.Site.Areas.Account.Models.Forms
         public string Password { get; set; }
 
         [NotMapped]
-        public IRole Role { get; set; }
+        public Role Role { get; set; }
 
         [Required]
         public DateTime Birthday { get; set; }
@@ -69,8 +66,6 @@ namespace Health.Site.Areas.Account.Models.Forms
 
         [Required]
         public string Card { get; set; }
-
-        #endregion
     }
 
     /// <summary>
@@ -86,15 +81,15 @@ namespace Health.Site.Areas.Account.Models.Forms
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validation_context)
         {
-            List<IParameter> param = Parameters.ToList();
+            List<Parameter> param = Parameters.ToList();
             var result = new List<ValidationResult>();
             for (int i = 0; i < param.Count; i++)
             {
                 var data_type_attr = new DataTypeAttribute(DataType.EmailAddress);
                 var v_result = new RequiredAttribute
-                {
-                    ErrorMessage = "Значение параметра не может быть пустым."
-                };
+                                   {
+                                       ErrorMessage = "Значение параметра не может быть пустым."
+                                   };
                 if (!v_result.IsValid(Parameters.ElementAt(i).Value))
                 {
                     result.Add(new ValidationResult(

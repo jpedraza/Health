@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Health.API;
-using Health.API.Entities;
-using Health.API.Repository;
-using Health.API.Services;
 using Health.API.Validators;
 using Health.Core;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.API.Services;
 using Health.Core.Services;
-using Health.Data.Entities;
 using Health.Data.Repository.Fake;
 using Health.Data.Validators;
 using Health.Site.App_Start;
@@ -83,12 +81,6 @@ namespace Health.Site.App_Start
         /// <param name="kernel">Ядро.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            // Сущности 
-            kernel.Bind<IRole>().To<Role>();
-            kernel.Bind<IUser>().To<User>();
-            kernel.Bind<IDefaultRoles>().To<DefaultRoles>();
-            kernel.Bind<IUserCredential>().To<UserCredential>();
-            kernel.Bind<IParameter>().To<Parameter>();
             // Репозитории
             kernel.Bind<IRoleRepository>().To<RolesFakeRepository>().InSingletonScope();
             kernel.Bind<IUserRepository>().To<UsersFakeRepository>().InSingletonScope();
@@ -107,7 +99,6 @@ namespace Health.Site.App_Start
                 WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
             // Прочее
             kernel.Bind<IDIKernel>().To<DIKernel>();
-            kernel.Bind<IEnumerable<IParameter>>().To<List<Parameter>>();
             kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);
         }
     }

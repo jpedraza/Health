@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using Health.API;
-using Health.API.Entities;
-using Health.Core;
-using Health.Site.Areas.Account.Controllers;
-using Health.Site.Areas.Account.Models;
+using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
-using Microsoft.Web.Mvc;
 
 namespace Health.Site.Controllers
 {
@@ -23,6 +16,12 @@ namespace Health.Site.Controllers
     public abstract class CoreController : Controller
     {
         protected ICoreKernel _coreKernel;
+
+        protected CoreController(IDIKernel di_kernel)
+        {
+            DIKernel = di_kernel;
+            Logger = DIKernel.Get<ILogger>();
+        }
 
         /// <summary>
         /// Центральное ядро системы.
@@ -42,24 +41,13 @@ namespace Health.Site.Controllers
         /// </summary>
         protected ILogger Logger { get; set; }
 
-        protected CoreController(IDIKernel di_kernel)
-        {
-            DIKernel = di_kernel;
-            Logger = DIKernel.Get<ILogger>();
-        }
-
         /// <summary>
-        /// Создать экземпляр сущности по интерфейсу.
+        /// Строготипизированный редирект.
         /// </summary>
-        /// <typeparam name="TInstance">Интерфейс сущности.</typeparam>
-        /// <returns>Экземпляр сущности.</returns>
-        public TInstance Instance<TInstance>()
-            where TInstance : IEntity
-        {
-            Logger.Debug(String.Format("Создается сущность для интерфейса - {0}.", typeof(TInstance).Name));
-            return DIKernel.Get<TInstance>();
-        }
-
+        /// <typeparam name="T">Тип контроллера.</typeparam>
+        /// <param name="action">Действие контроллера.</param>
+        /// <param name="parameters_hook">Передача параметров метода при редиректе.</param>
+        /// <returns>Результат редиректа.</returns>
         public ActionResult RedirectTo<T>(Expression<Action<T>> action, bool parameters_hook = false)
             where T : Controller
         {
@@ -72,23 +60,54 @@ namespace Health.Site.Controllers
                 IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
                 TempData[prg_model_state.PRGParametersKey] = prg_parameters;
             }
-            var act = (MethodCallExpression)action.Body;
+            var act = (MethodCallExpression) action.Body;
             return RedirectToAction(act.Method.Name);
         }
 
         /// <summary>
-        /// Создать экземпляр сущности по интерфейсу.
+        /// Обрабатывает исключения в контроллерах.
         /// </summary>
-        /// <typeparam name="TInstance">Интерфейс сущности.</typeparam>
-        /// <param name="init">Инициализатор сущности.</param>
-        /// <returns>Экземпляр сущности.</returns>
-        public TInstance Instance<TInstance>(Action<TInstance> init) 
-            where TInstance : IEntity
+        /// <param name="filter_context">Контекст ошибки.</param>
+        protected override void OnException(ExceptionContext filter_context)
         {
-            Logger.Debug(String.Format("Создается сущность для интерфейса - {0}.", typeof(TInstance).Name));
-            var obj = DIKernel.Get<TInstance>();
-            init.Invoke(obj);
-            return obj;
+            base.OnException(filter_context);
+
+            // Код ошибки по-умолчанию.
+            int code_error = 500;
+            string message;
+
+            try
+            {
+                // Получаем последнюю ошибку
+                Exception exception = filter_context.Exception;
+                if (exception is HttpException)
+                {
+                    code_error = (exception as HttpException).GetHttpCode();
+                }
+                message = exception.Message;
+                var error_model = new ErrorViewModel
+                                      {
+                                          ErrorModel = new ErrorModel
+                                                           {
+                                                               Code = code_error,
+                                                               Message = message
+                                                           }
+                                      };
+                var prg_model_state = new PRGModelState {ParametersHook = true};
+                IList<PRGParameter> prg_parameters =
+                    prg_model_state.GetExportModel<ErrorController>(a => a.Index(error_model));
+                TempData[prg_model_state.PRGParametersKey] = prg_parameters;
+            }
+            catch (Exception exception)
+            {
+                code_error = 500;
+                message = exception.Message;
+            }
+            finally
+            {
+                Server.ClearError();
+                filter_context.HttpContext.Response.Redirect("~/Error");
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using Health.API;
-using Health.API.Entities;
+﻿using Health.Core.API;
 using Ninject;
 using Ninject.Parameters;
 
@@ -40,19 +38,6 @@ namespace Health.Site.DI
                                                   new Parameter("di_kernel", this, true),
                                                   new Parameter("core_kernel", core_kernel, true)
                                               });
-            return obj;
-        }
-
-        /// <summary>
-        /// Получить экземпляр объекта, зная его интерфейс и инициализатор.
-        /// </summary>
-        /// <typeparam name="TObject">Интерфейс сущности.</typeparam>
-        /// <param name="init">Инициализатор объекта.</param>
-        /// <returns>Сущность.</returns>
-        public TObject Instance<TObject>(Action<TObject> init) where TObject : IEntity
-        {
-            var obj = Get<TObject>();
-            init.Invoke(obj);
             return obj;
         }
 

@@ -38,7 +38,7 @@
 window.Modernizr = (function(window, document, undefined) {
 
     var version = '1.7',
-    ret = { },
+        ret = { },
     /**
      * !! DEPRECATED !!
      * 
@@ -55,10 +55,8 @@ window.Modernizr = (function(window, document, undefined) {
      */
                                                            
 
-        enableHTML5 = true,    
+        enableHTML5 = true,
     docElement = document.documentElement,
-                                                           
-
         docHead = document.head || document.getElementsByTagName('head')[0],
     /**
      * Create our "modernizr" element that we do most feature tests on.
@@ -66,20 +64,16 @@ window.Modernizr = (function(window, document, undefined) {
                                                            
 
         mod = 'modernizr',
-                                                           
-
         modElem = document.createElement(mod),
-                                                           
-
         m_style = modElem.style,
     /**
      * Create the input element for various Web Forms feature tests.
      */
                                                            
 
-        inputElem = document.createElement('input'),    
-    smile = ':)',    
-    tostring = Object.prototype.toString,    
+        inputElem = document.createElement('input'),
+    smile = ':)',
+    tostring = Object.prototype.toString,
     // List of property values to set for css tests. See ticket #21
                                                            
 
@@ -97,15 +91,11 @@ window.Modernizr = (function(window, document, undefined) {
                                                            
 
         domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-    ns = { 'svg': 'http://www.w3.org/2000/svg' },
-    tests = { },
-                                                           
-
+        ns = { 'svg': 'http://www.w3.org/2000/svg' },
+        tests = { },
         inputs = { },
-                                                           
-
-        attrs = { },    
-    classes = [],    
+        attrs = { },
+    classes = [],
     featurename, // used in testing loop
     
     
@@ -114,48 +104,38 @@ window.Modernizr = (function(window, document, undefined) {
                                                            
 
         testMediaQuery = function(mq) {
-
                                                            
 
             var st = document.createElement('style'),
-                                                           
-
                 div = document.createElement('div'),
-                                                           
-
                 ret;
-
                                                            
 
             st.textContent = mq + '{#modernizr{height:3px}}';
-                                                           
+
 
             docHead.appendChild(st);
-                                                           
+
 
             div.id = 'modernizr';
-                                                           
+
 
             docElement.appendChild(div);
-
                                                            
 
             ret = div.offsetHeight === 3;
-
                                                            
 
             st.parentNode.removeChild(st);
-                                                           
+
 
             div.parentNode.removeChild(div);
-
                                                            
 
             return !!ret;
-
                                                            
 
-        },    
+        },
     /**
       * isEventSupported determines if a given element supports the given event
       * function from http://yura.thinkweb2.com/isEventSupported/
@@ -163,114 +143,103 @@ window.Modernizr = (function(window, document, undefined) {
                                                            
 
         isEventSupported = (function() {
-
                                                            
 
             var TAGNAMES = {
-                                                           
+                'select': 'input',                                                           
 
-                'select': 'input',
-                                                           
+                'change': 'input',                                                           
 
-                'change': 'input',
-                                                           
+                'submit': 'form',                                                           
 
-                'submit': 'form',
-                                                           
+                'reset': 'form',                                                           
 
-                'reset': 'form',
-                                                           
+                'error': 'img',                                                           
 
-                'error': 'img',
-                                                           
-
-                'load': 'img',
-                                                           
+                'load': 'img',                                                           
 
                 'abort': 'img'
-                                                           
-
             };
-
                                                            
 
             function isEventSupported(eventName, element) {
-
                                                            
 
                 element = element || document.createElement(TAGNAMES[eventName] || 'div');
-                                                           
+
 
                 eventName = 'on' + eventName;
-
                                                            
 
                 // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
-                                                           
-
-                var isSupported = (eventName in element);
-
+            var isSupported = (eventName in element);
                                                            
 
                 if (!isSupported) {
-                                                           
+
 
                     // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
+                                                     
                                                            
 
                     if (!element.setAttribute) {
-                                                           
+
 
                         element = document.createElement('div');
-                                                           
+
 
                     }
-                                                           
+
 
                     if (element.setAttribute && element.removeAttribute) {
-                                                           
+
 
                         element.setAttribute(eventName, '');
-                                                           
+
 
                         isSupported = is(element[eventName], 'function');
-
                                                            
 
                         // If property was created, "remove it" (by setting value to `undefined`)
+                                                     
                                                            
+
+                                                
+
+
+                                                                
+
+
+                     
+
 
                         if (!is(element[eventName], undefined)) {
-                                                           
+
 
                             element[eventName] = undefined;
-                                                           
+
 
                         }
-                                                           
+
 
                         element.removeAttribute(eventName);
-                                                           
+
 
                     }
-                                                           
+
 
                 }
-
                                                            
 
                 element = null;
-                                                           
+
 
                 return isSupported;
-                                                           
+
 
             }
-
-                                                           
-
             return isEventSupported;
-                                                           
+
 
         })();
 
@@ -343,8 +312,6 @@ window.Modernizr = (function(window, document, undefined) {
     function test_props_all(prop, callback) {
 
         var uc_prop = prop.charAt(0).toUpperCase() + prop.substr(1),
-                                             
-
             props = (prop + ' ' + domPrefixes.join(uc_prop + ' ') + uc_prop).split(' ');
 
         return !!test_props(props, callback);
@@ -492,11 +459,11 @@ window.Modernizr = (function(window, document, undefined) {
     // We test both styles.
     tests['indexedDB'] = function() {
         for (var i = -1, len = domPrefixes.length; ++i < len;) {
-        var prefix = domPrefixes[i].toLowerCase();
+            var prefix = domPrefixes[i].toLowerCase();
             if (window[prefix + '_indexedDB'] || window[prefix + 'IndexedDB']) {
                 return true;
             }
-      }
+        }
         return false;
     };
 
@@ -621,16 +588,10 @@ window.Modernizr = (function(window, document, undefined) {
          */
 
         var str1 = 'background-image:',
-                                                                                                                                                                                                                                                                                                                                              
-
             str2 = 'gradient(linear,left top,right bottom,from(#9f9),to(white));',
-                                                                                                                                                                                                                                                                                                                                              
-
             str3 = 'linear-gradient(left top,#9f9, white);';
 
         set_css(
-                                                                                                                                                                                                                                                                                                                                              
-
                 (str1 + prefixes.join(str2 + str1) + prefixes.join(str3 + str1)).slice(0, -str1.length)
         );
 
@@ -658,7 +619,7 @@ window.Modernizr = (function(window, document, undefined) {
         //   will sometimes throw a false positive, thus we must do a more thorough check:
         if (ret && 'webkitPerspective' in docElement.style) {
 
-          // Webkit allows this media query to succeed only if the feature is enabled.    
+            // Webkit allows this media query to succeed only if the feature is enabled.    
             // `@media (transform-3d),(-o-transform-3d),(-moz-transform-3d),(-ms-transform-3d),(-webkit-transform-3d),(modernizr){ ... }`    
             ret = testMediaQuery('@media (' + prefixes.join('transform-3d),(') + 'modernizr)');
         }
@@ -700,7 +661,7 @@ window.Modernizr = (function(window, document, undefined) {
                 if (!(sheet && rule)) return false;
                 sheet.cssText = rule;
 
-                    return sheet.cssText.length !== 0 && ( /src/i ).test(sheet.cssText) &&
+                return sheet.cssText.length !== 0 && ( /src/i ).test(sheet.cssText) &&
                     sheet.cssText
                         .replace( /\r+|\n+/g , '')
                         .indexOf(rule.split(' ')[0]) === 0;
@@ -732,18 +693,14 @@ window.Modernizr = (function(window, document, undefined) {
             bool.ogg = elem.canPlayType('video/ogg; codecs="theora"');
 
             // Workaround required for IE9, which doesn't report video support without audio codec specified.
-                                      
-
             //   bug 599718 @ msft connect
-                                      
-
             var h264 = 'video/mp4; codecs="avc1.42E01E';
-                                      
+
 
             bool.h264 = elem.canPlayType(h264 + '"') || elem.canPlayType(h264 + ', mp4a.40.2"');
 
             bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"');
-                                      
+
 
         }
         return bool;
@@ -756,24 +713,18 @@ window.Modernizr = (function(window, document, undefined) {
         if (bool) {
             bool = new Boolean(bool);
             bool.ogg = elem.canPlayType('audio/ogg; codecs="vorbis"');
-                                      
+
 
             bool.mp3 = elem.canPlayType('audio/mpeg;');
 
             // Mimetypes accepted: 
-                                      
-
             //   https://developer.mozilla.org/En/Media_formats_supported_by_the_audio_and_video_elements
-                                      
-
             //   http://bit.ly/iphoneoscodecs
-                                      
-
             bool.wav = elem.canPlayType('audio/wav; codecs="1"');
-                                      
+
 
             bool.m4a = elem.canPlayType('audio/x-m4a;') || elem.canPlayType('audio/aac;');
-                                      
+
 
         }
         return bool;
@@ -876,147 +827,86 @@ window.Modernizr = (function(window, document, undefined) {
             for (var i = 0, bool, inputElemType, defaultView, len = props.length; i < len; i++) {
 
                 inputElem.setAttribute('type', inputElemType = props[i]);
-                                              
+
 
                 bool = inputElem.type !== 'text';
 
                 // We first check to see if the type we give it sticks.. 
-                                              
-
                 // If the type does, we feed it a textual value, which shouldn't be valid.
-                                              
-
                 // If the value doesn't stick, we know there's input sanitization which infers a custom UI
-                                              
-
                 if (bool) {
 
                     inputElem.value = smile;
-                                              
+
 
                     inputElem.style.cssText = 'position:absolute;visibility:hidden;';
 
                     if ( /^range$/ .test(inputElemType) && inputElem.style.WebkitAppearance !== undefined) {
 
-                      docElement.appendChild(inputElem);
-                                              
-
+                        docElement.appendChild(inputElem);
                                                                                      
 
                         defaultView = document.defaultView;
 
-                      // Safari 2-4 allows the smiley as a value, despite making a slider
-                                              
-
-                                                                                     
-
+                        // Safari 2-4 allows the smiley as a value, despite making a slider
                         bool = defaultView.getComputedStyle &&
-                              defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
-                              // Mobile android web browser has false positive, so must
+                            defaultView.getComputedStyle(inputElem, null).WebkitAppearance !== 'textfield' &&
+                                // Mobile android web browser has false positive, so must
                                                   
 
                                                                                      
 
-                        // check the height to see if the widget is actually there.
+                                // check the height to see if the widget is actually there.
                                                   
 
                                                                                      
 
-                        (inputElem.offsetHeight !== 0);
+                                (inputElem.offsetHeight !== 0);
 
-                      docElement.removeChild(inputElem);
+                        docElement.removeChild(inputElem);
 
                     } else if ( /^(search|tel)$/ .test(inputElemType)) {
-                                              
-
                                                                                      
 
                         // Spec doesnt define any special parsing or detectable UI 
-                                              
-
-                                                                                     
-
                         //   behaviors so we pass these through as true
-                                              
-
-                                                                                     
-
                         // Interestingly, opera fails the earlier test, so it doesn't
-                                              
-
-                                                                                     
-
                         //  even make it here.
-                                              
-
-                                                                                     
-
                     } else if ( /^(url|email)$/ .test(inputElemType)) {
-                                              
-
                                                                                      
 
                         // Real url and email support comes with prebaked validation.
-                                              
-
-                                                                                     
-
                         bool = inputElem.checkValidity && inputElem.checkValidity() === false;
 
                     } else if ( /^color$/ .test(inputElemType)) {
-                                              
-
                                                                                      
 
                         // chuck into DOM and force reflow for Opera bug in 11.00
-                                              
-
-                                                                                     
-
                         // github.com/Modernizr/Modernizr/issues#issue/159
-                                              
-
-                                                                                     
-
                         docElement.appendChild(inputElem);
-                                              
-
                                                                                      
 
                         docElement.offsetWidth;
                         bool = inputElem.value != smile;
-                                              
-
                                                                                      
 
                         docElement.removeChild(inputElem);
-
-                                              
-
                                                                                      
 
                     } else {
-                                              
-
                                                                                      
 
                         // If the upgraded input compontent rejects the :) text, we got a winner
-                                              
-
-                                                                                     
-
                         bool = inputElem.value != smile;
-                                              
-
                                                                                      
 
                     }
-                                              
+
 
                 }
 
                 inputs[props[i]] = !!bool;
-                                              
+
 
             }
             return inputs;
@@ -1042,9 +932,9 @@ window.Modernizr = (function(window, document, undefined) {
     }
 
     // input tests need to run.
-    if (!ret.input) webforms();    
+    if (!ret.input) webforms();
 
-   
+
     // Per 1.6: deprecated API is still accesible for now:
     ret.crosswindowmessaging = ret.postmessage;
     ret.historymanagement = ret.history;
@@ -1061,16 +951,14 @@ window.Modernizr = (function(window, document, undefined) {
     ret.addTest = function(feature, test) {
         feature = feature.toLowerCase();
 
-      if (ret[feature]) {
-                                        
+        if (ret[feature]) {
+
 
           return; // quit if you're trying to overwrite an existing test
-                                        
-
-      }
-      test = !!(test());
+        }
+        test = !!(test());
         docElement.className += ' ' + (test ? '' : 'no-') + feature;
-      ret[feature] = test;
+        ret[feature] = test;
         return ret; // allow chaining.
     };
 
@@ -1095,7 +983,7 @@ window.Modernizr = (function(window, document, undefined) {
                 elemsArr = elems.split('|'),
                 elemsArrLen = elemsArr.length,
                 elemRegExp = new RegExp('(^|\\s)(' + elems + ')', 'gi'),
-            tagRegExp = new RegExp('<(\/*)(' + elems + ')', 'gi'),
+                tagRegExp = new RegExp('<(\/*)(' + elems + ')', 'gi'),
                 ruleRegExp = new RegExp('(^|[^\\n]*?\\s)(' + elems + ')([^\\n]*)({[\\n\\w\\W]*?})', 'gi'),
                 docFrag = doc.createDocumentFragment(),
                 html = doc.documentElement,
@@ -1181,10 +1069,10 @@ window.Modernizr = (function(window, document, undefined) {
 
     // Remove "no-js" class from <html> element, if it exists:
     docElement.className = docElement.className.replace( /\bno-js\b/ , '')
-                            + ' js '
+        + ' js '
 
-        // Add the new classes to the <html> element.
-        + classes.join(' ');
+            // Add the new classes to the <html> element.
+            + classes.join(' ');
 
     return ret;
 

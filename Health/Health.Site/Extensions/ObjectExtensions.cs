@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 
 namespace Health.Site.Extensions
 {
@@ -21,7 +18,7 @@ namespace Health.Site.Extensions
         /// <returns>Имя свойства.</returns>
         public static string PropertyName<T, TOut>(this T source, Expression<Func<T, TOut>> property)
         {
-            var member_expression = (MemberExpression)property.Body;
+            var member_expression = (MemberExpression) property.Body;
             return member_expression.Member.Name;
         }
     }

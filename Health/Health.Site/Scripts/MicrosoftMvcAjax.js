@@ -16,7 +16,11 @@ Sys.Mvc.AjaxContext = function(request, updateTarget, loadingElement, insertionM
     this.$0 = insertionMode;
 };
 Sys.Mvc.AjaxContext.prototype = {
-    $0: 0, $1: null, $2: null, $3: null, $4: null,
+    $0: 0,
+    $1: null,
+    $2: null,
+    $3: null,
+    $4: null,
     get_data: function() {
         if (this.$2) {
             return this.$2.get_responseData();

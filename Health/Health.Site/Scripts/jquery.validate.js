@@ -200,53 +200,53 @@
     };
 
     $.extend($.validator, {
-	defaults: {
-        messages: { },
-        groups: { },
-        rules: { },
-        errorClass: "error",
-        validClass: "valid",
-        errorElement: "label",
-        focusInvalid: true,
-        errorContainer: $([]),
-        errorLabelContainer: $([]),
-        onsubmit: true,
-        ignore: [],
-        ignoreTitle: false,
-        onfocusin: function(element) {
-            this.lastActive = element;
+        defaults: {
+            messages: { },
+            groups: { },
+            rules: { },
+            errorClass: "error",
+            validClass: "valid",
+            errorElement: "label",
+            focusInvalid: true,
+            errorContainer: $([]),
+            errorLabelContainer: $([]),
+            onsubmit: true,
+            ignore: [],
+            ignoreTitle: false,
+            onfocusin: function(element) {
+                this.lastActive = element;
 
-            // hide error label and remove error class on focus if enabled
-            if (this.settings.focusCleanup && !this.blockFocusCleanup) {
-                this.settings.unhighlight && this.settings.unhighlight.call(this, element, this.settings.errorClass, this.settings.validClass);
-                this.addWrapper(this.errorsFor(element)).hide();
+                // hide error label and remove error class on focus if enabled
+                if (this.settings.focusCleanup && !this.blockFocusCleanup) {
+                    this.settings.unhighlight && this.settings.unhighlight.call(this, element, this.settings.errorClass, this.settings.validClass);
+                    this.addWrapper(this.errorsFor(element)).hide();
+                }
+            },
+            onfocusout: function(element) {
+                if (!this.checkable(element) && (element.name in this.submitted || !this.optional(element))) {
+                    this.element(element);
+                }
+            },
+            onkeyup: function(element) {
+                if (element.name in this.submitted || element == this.lastElement) {
+                    this.element(element);
+                }
+            },
+            onclick: function(element) {
+                // click on selects, radiobuttons and checkboxes
+                if (element.name in this.submitted)
+                    this.element(element);
+                    // or option elements, check parent select in that case
+                else if (element.parentNode.name in this.submitted)
+                    this.element(element.parentNode);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass(errorClass).addClass(validClass);
             }
         },
-        onfocusout: function(element) {
-            if (!this.checkable(element) && (element.name in this.submitted || !this.optional(element))) {
-                this.element(element);
-            }
-        },
-        onkeyup: function(element) {
-            if (element.name in this.submitted || element == this.lastElement) {
-                this.element(element);
-            }
-        },
-        onclick: function(element) {
-            // click on selects, radiobuttons and checkboxes
-            if (element.name in this.submitted)
-                this.element(element);
-                // or option elements, check parent select in that case
-            else if (element.parentNode.name in this.submitted)
-                this.element(element.parentNode);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass(errorClass).removeClass(validClass);
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass(errorClass).addClass(validClass);
-        }
-    },
 
 	// http://docs.jquery.com/Plugins/Validation/Validator/setDefaults
         setDefaults: function(settings) {
@@ -276,41 +276,41 @@
         autoCreateRanges: false,
 
         prototype: {
-		init: function() {
-            this.labelContainer = $(this.settings.errorLabelContainer);
-            this.errorContext = this.labelContainer.length && this.labelContainer || $(this.currentForm);
-            this.containers = $(this.settings.errorContainer).add(this.settings.errorLabelContainer);
-            this.submitted = { };
-            this.valueCache = { };
-            this.pendingRequest = 0;
-            this.pending = { };
-            this.invalid = { };
-            this.reset();
+            init: function() {
+                this.labelContainer = $(this.settings.errorLabelContainer);
+                this.errorContext = this.labelContainer.length && this.labelContainer || $(this.currentForm);
+                this.containers = $(this.settings.errorContainer).add(this.settings.errorLabelContainer);
+                this.submitted = { };
+                this.valueCache = { };
+                this.pendingRequest = 0;
+                this.pending = { };
+                this.invalid = { };
+                this.reset();
 
-            var groups = (this.groups = { });
-            $.each(this.settings.groups, function(key, value) {
-                $.each(value.split( /\s/ ), function(index, name) {
-                    groups[name] = key;
+                var groups = (this.groups = { });
+                $.each(this.settings.groups, function(key, value) {
+                    $.each(value.split( /\s/ ), function(index, name) {
+                        groups[name] = key;
+                    });
                 });
-            });
-            var rules = this.settings.rules;
-            $.each(rules, function(key, value) {
-                rules[key] = $.validator.normalizeRule(value);
-            });
+                var rules = this.settings.rules;
+                $.each(rules, function(key, value) {
+                    rules[key] = $.validator.normalizeRule(value);
+                });
 
-            function delegate(event) {
-                var validator = $.data(this[0].form, "validator"),
-                    eventType = "on" + event.type.replace( /^validate/ , "");
-                validator.settings[eventType] && validator.settings[eventType].call(validator, this[0]);
-            }
+                function delegate(event) {
+                    var validator = $.data(this[0].form, "validator"),
+                        eventType = "on" + event.type.replace( /^validate/ , "");
+                    validator.settings[eventType] && validator.settings[eventType].call(validator, this[0]);
+                }
 
-            $(this.currentForm)
-                .validateDelegate(":text, :password, :file, select, textarea", "focusin focusout keyup", delegate)
-                .validateDelegate(":radio, :checkbox, select, option", "click", delegate);
+                $(this.currentForm)
+                    .validateDelegate(":text, :password, :file, select, textarea", "focusin focusout keyup", delegate)
+                    .validateDelegate(":radio, :checkbox, select, option", "click", delegate);
 
-            if (this.settings.invalidHandler)
-                $(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
-        },
+                if (this.settings.invalidHandler)
+                    $(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler);
+            },
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/form
             form: function() {
@@ -737,7 +737,7 @@
                     message: this.defaultMessage(element, "remote")
                 });
             }
-	},
+        },
 
         classRuleSettings: {
             required: { required: true },
@@ -893,7 +893,7 @@
         },
 
         methods: {
-		// http://docs.jquery.com/Plugins/Validation/Methods/required
+            // http://docs.jquery.com/Plugins/Validation/Methods/required
             required: function(value, element, param) {
                 // check if dependency is met
                 if (!this.depend(param, element))
@@ -1070,7 +1070,7 @@
                 });
                 return value == target.val();
             }
-	}
+        }
     });
 
 // deprecated, use $.validator.format instead

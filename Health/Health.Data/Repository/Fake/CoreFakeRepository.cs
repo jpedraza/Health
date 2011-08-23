@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using Health.API;
-using Health.API.Entities;
-using Health.API.Repository;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 
 namespace Health.Data.Repository.Fake
 {
-    public abstract class CoreFakeRepository<TIEntity> : Core, ICoreRepository<TIEntity>
-        where TIEntity : IEntity
+    public abstract class CoreFakeRepository<TIEntity> : Core.Core, ICoreRepository<TIEntity>
+        where TIEntity : Entity
     {
         protected IList<TIEntity> _entities;
 

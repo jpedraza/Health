@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Health.API;
-using Health.API.Entities;
-using Health.API.Repository;
-using Health.Data.Entities;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.Entities;
+using Health.Core.Entities.POCO;
 
 namespace Health.Data.Repository.Fake
 {
-    public sealed class UsersFakeRepository : CoreFakeRepository<IUser>, IUserRepository
+    public sealed class UsersFakeRepository : CoreFakeRepository<User>, IUserRepository
     {
         public UsersFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
         {
@@ -32,33 +31,33 @@ namespace Health.Data.Repository.Fake
                      });
         }
 
-        #region IUserRepository<IUser> Members
+        #region IUserRepository Members
 
-        public IUser GetByLoginAndPassword(string login, string password)
+        public User GetByLoginAndPassword(string login, string password)
         {
             User required_user = default(User);
-            IEnumerable<IUser> found_user = (from user in _entities
-                                             where user.Login == login &
-                                                   user.Password == password
-                                             select user).ToList();
+            IEnumerable<User> found_user = (from user in _entities
+                                            where user.Login == login &
+                                                  user.Password == password
+                                            select user).ToList();
 
             if (found_user.Count() == 1)
             {
-                required_user = found_user.First() as User;
+                required_user = found_user.First();
             }
             return required_user;
         }
 
-        public IUser GetByLogin(string login)
+        public User GetByLogin(string login)
         {
             User required_user = default(User);
-            IEnumerable<IUser> found_user = (from user in _entities
-                                             where user.Login == login
-                                             select user).ToList();
+            IEnumerable<User> found_user = (from user in _entities
+                                            where user.Login == login
+                                            select user).ToList();
 
             if (found_user.Count() == 1)
             {
-                required_user = found_user.First() as User;
+                required_user = found_user.First();
             }
             return required_user;
         }

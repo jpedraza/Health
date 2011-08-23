@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Health.Site.Attributes;
 using Health.Site.Models;
 
 namespace Health.Site.Controllers
@@ -13,9 +9,14 @@ namespace Health.Site.Controllers
     /// </summary>
     public class ErrorController : Controller
     {
-        public ActionResult Index([Bind(Include = "ErrorModel")]ErrorViewModel form_model)
+        [PRGImport(ParametersHook = true)]
+        public ActionResult Index([Bind(Include = "ErrorModel")] ErrorViewModel error_model)
         {
-            return View(form_model);
+            if (error_model != null)
+            {
+                return View(error_model);
+            }
+            return View();
         }
     }
 }

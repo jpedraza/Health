@@ -133,6 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Classes\MainMenu.cs" />
+    <Compile Include="Helpers\RenderParameters.cs" />
     <Compile Include="Helpers\RenderParametersForm.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="Models\Binders\ParametersFormBinder.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CookieRepository.cs" />
     <Compile Include="Repository\SessionRepository.cs" />
+    <Compile Include="Factory\RenderingFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Glimpse.Elmah.Readme.txt" />
@@ -250,10 +252,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Health.API\Health.API.csproj">
-      <Project>{B5F28D75-A833-4966-8958-4202D03B8BEC}</Project>
-      <Name>Health.API</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Health.Core\Health.Core.csproj">
       <Project>{005180DD-4D3E-492E-8ECE-4DB5615F06CD}</Project>
       <Name>Health.Core</Name>

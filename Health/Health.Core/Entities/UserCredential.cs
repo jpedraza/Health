@@ -1,16 +1,14 @@
 using System;
-using Health.API.Entities;
+using Health.Core.Entities.POCO;
 
-namespace Health.Data.Entities
+namespace Health.Core.Entities
 {
     /// <summary>
     /// Мандат пользователя
     /// </summary>
     [Serializable]
-    public class UserCredential : IUserCredential
+    public class UserCredential : Entity
     {
-        #region IUserCredential Members
-
         /// <summary>
         /// Логин пользователя
         /// </summary>
@@ -30,7 +28,5 @@ namespace Health.Data.Entities
         /// Запомнен ли пользователь
         /// </summary>
         public bool IsRemember { get; set; }
-
-        #endregion
     }
 }

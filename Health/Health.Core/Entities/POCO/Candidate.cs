@@ -1,15 +1,12 @@
 using System;
-using Health.API.Entities;
 
-namespace Health.Data.Entities
+namespace Health.Core.Entities.POCO
 {
     /// <summary>
     /// 
     /// </summary>
-    public class Candidate : ICandidate
+    public class Candidate : Entity
     {
-        #region ICandidate Members
-
         /// <summary>
         /// Имя пользователя.
         /// </summary>
@@ -38,7 +35,7 @@ namespace Health.Data.Entities
         /// <summary>
         /// Роль пользователя.
         /// </summary>
-        public IRole Role { get; set; }
+        public Role Role { get; set; }
 
         /// <summary>
         /// День рождения.
@@ -59,7 +56,5 @@ namespace Health.Data.Entities
         /// Номер больничной карты.
         /// </summary>
         public string Card { get; set; }
-
-        #endregion
     }
 }

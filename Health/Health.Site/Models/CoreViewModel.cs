@@ -1,4 +1,4 @@
-﻿using Health.API;
+﻿using Health.Core.API;
 
 namespace Health.Site.Models
 {

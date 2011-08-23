@@ -1,7 +1,7 @@
 ﻿using Health.API;
-using Health.API.Entities;
-using Health.API.Repository;
-using Health.API.Services;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.API.Services;
 
 namespace Health.Core
 {

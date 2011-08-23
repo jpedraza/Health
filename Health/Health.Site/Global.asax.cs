@@ -1,10 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Health.Site.Controllers;
-using Health.Site.Models;
 
 namespace Health.Site
 {
@@ -51,41 +47,7 @@ namespace Health.Site
         /// </summary>
         protected void Application_Error()
         {
-            try
-            {
-                // Получаем последнюю ошибку
-                Exception exception = Server.GetLastError();
-                Response.Clear();
-
-                // Код ошибки по-умолчанию.
-                int code_error = 500;
-
-                if (exception is HttpException)
-                {
-                    code_error = (exception as HttpException).GetHttpCode();
-                }
-                var controller = new ErrorController();
-                ActionResult result = controller.Index(new ErrorViewModel
-                                                           {
-                                                               ErrorModel = new ErrorModel
-                                                                                {
-                                                                                    Code = code_error,
-                                                                                    Message = "Some message"
-                                                                                }
-                                                           });
-                var route_data = new RouteData();
-                route_data.Values.Add("area", "");
-                route_data.Values.Add("controller", "Error");
-                route_data.Values.Add("action", "Index");
-                result.ExecuteResult(
-                    new ControllerContext(new RequestContext(new HttpContextWrapper(Context), route_data), controller));
-                Server.ClearError();
-            }
-            catch (Exception exception)
-            {
-                HttpContext.Current.Response.StatusCode = 500;
-                HttpContext.Current.Response.Write(exception.Message);
-            }
+            Response.Redirect(@"~/Error");
         }
 
         protected void Application_Start()

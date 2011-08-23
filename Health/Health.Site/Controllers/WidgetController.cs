@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using Health.API;
-using Health.Site.Attributes;
-using Health.Site.Helpers;
+using Health.Core.API;
 using Health.Site.Helpers.Classes;
 using Health.Site.Models;
 
