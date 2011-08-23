@@ -1,21 +1,21 @@
-namespace Health.API.Validators
+п»їnamespace Health.Core.API.Validators
 {
     /// <summary>
-    /// Фабрика валидаторов.
+    /// Р¤Р°Р±СЂРёРєР° РІР°Р»РёРґР°С‚РѕСЂРѕРІ.
     /// </summary>
     public interface IValidatorFactory
     {
         /// <summary>
-        /// Сообщение с информацией почему не прошла проверка.
+        /// РЎРѕРѕР±С‰РµРЅРёРµ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РїРѕС‡РµРјСѓ РЅРµ РїСЂРѕС€Р»Р° РїСЂРѕРІРµСЂРєР°.
         /// </summary>
         string Message { get; }
 
         /// <summary>
-        /// Проверяет значение на валидность согласно типу валидатора.
+        /// РџСЂРѕРІРµСЂСЏРµС‚ Р·РЅР°С‡РµРЅРёРµ РЅР° РІР°Р»РёРґРЅРѕСЃС‚СЊ СЃРѕРіР»Р°СЃРЅРѕ С‚РёРїСѓ РІР°Р»РёРґР°С‚РѕСЂР°.
         /// </summary>
-        /// <param name="validator_type">Тип валидатора.</param>
-        /// <param name="value">Значение.</param>
-        /// <returns>Результата проверки.</returns>
+        /// <param name="validator_type">РўРёРї РІР°Р»РёРґР°С‚РѕСЂР°.</param>
+        /// <param name="value">Р—РЅР°С‡РµРЅРёРµ.</param>
+        /// <returns>Р РµР·СѓР»СЊС‚Р°С‚Р° РїСЂРѕРІРµСЂРєРё.</returns>
         bool IsValid(string validator_type, object value);
     }
 }

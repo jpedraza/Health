@@ -1,31 +1,31 @@
-using System;
+п»їusing System;
 using Health.Core.Entities.POCO;
 
 namespace Health.Core.Entities
 {
     /// <summary>
-    /// Мандат пользователя
+    /// РњР°РЅРґР°С‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
     /// </summary>
     [Serializable]
     public class UserCredential : Entity
     {
         /// <summary>
-        /// Логин пользователя
+        /// Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
         public string Login { get; set; }
 
         /// <summary>
-        /// Роль пользователя
+        /// Р РѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         /// </summary>
         public string Role { get; set; }
 
         /// <summary>
-        /// Авторизован ли пользователь
+        /// РђРІС‚РѕСЂРёР·РѕРІР°РЅ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
         /// </summary>
         public bool IsAuthirization { get; set; }
 
         /// <summary>
-        /// Запомнен ли пользователь
+        /// Р—Р°РїРѕРјРЅРµРЅ Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
         /// </summary>
         public bool IsRemember { get; set; }
     }

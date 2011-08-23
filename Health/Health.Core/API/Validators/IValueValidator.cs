@@ -1,20 +1,20 @@
-namespace Health.Core.API.Validators
+п»їnamespace Health.Core.API.Validators
 {
     /// <summary>
-    /// Интерфейс валидатора.
+    /// РРЅС‚РµСЂС„РµР№СЃ РІР°Р»РёРґР°С‚РѕСЂР°.
     /// </summary>
     public interface IValueValidator
     {
         /// <summary>
-        /// Сообщение с информацией почему не прошла проверка.
+        /// РЎРѕРѕР±С‰РµРЅРёРµ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РїРѕС‡РµРјСѓ РЅРµ РїСЂРѕС€Р»Р° РїСЂРѕРІРµСЂРєР°.
         /// </summary>
         string Message { get; }
 
         /// <summary>
-        /// Метод проверяет значение на валидность.
+        /// РњРµС‚РѕРґ РїСЂРѕРІРµСЂСЏРµС‚ Р·РЅР°С‡РµРЅРёРµ РЅР° РІР°Р»РёРґРЅРѕСЃС‚СЊ.
         /// </summary>
-        /// <param name="value">Значение.</param>
-        /// <returns>Результат проверки.</returns>
+        /// <param name="value">Р—РЅР°С‡РµРЅРёРµ.</param>
+        /// <returns>Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕРІРµСЂРєРё.</returns>
         bool IsValid(object value);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Web.Mvc;
 using Health.API;
-using Health.API.Validators;
 using Health.Core;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.API.Services;
+using Health.Core.API.Validators;
 using Health.Core.Services;
 using Health.Data.Repository.Fake;
 using Health.Data.Validators;

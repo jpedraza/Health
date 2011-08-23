@@ -1,19 +1,19 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using Health.Core.API;
 using Health.Site.Models;
 
 namespace Health.Site.Helpers.Classes
 {
     /// <summary>
-    /// Хелпер для вывода главного меню сайта
+    /// РҐРµР»РїРµСЂ РґР»СЏ РІС‹РІРѕРґР° РіР»Р°РІРЅРѕРіРѕ РјРµРЅСЋ СЃР°Р№С‚Р°
     /// </summary>
     public class MainMenu
     {
         /// <summary>
-        /// Точка входа в хелпер
+        /// РўРѕС‡РєР° РІС…РѕРґР° РІ С…РµР»РїРµСЂ
         /// </summary>
         /// <param name="core_kernel"></param>
-        /// <returns>Html код для меню</returns>
+        /// <returns>Html РєРѕРґ РґР»СЏ РјРµРЅСЋ</returns>
         public MainMenu(ICoreKernel core_kernel)
         {
             CoreKernel = core_kernel;
@@ -22,30 +22,30 @@ namespace Health.Site.Helpers.Classes
         protected ICoreKernel CoreKernel { get; set; }
 
         /// <summary>
-        /// Получить элементы меню
+        /// РџРѕР»СѓС‡РёС‚СЊ СЌР»РµРјРµРЅС‚С‹ РјРµРЅСЋ
         /// </summary>
         public List<MenuElement> GetMainMenuElements()
         {
-            // По-умолчанию ссылка на гланую страницу
-            var elements = new List<MenuElement> {new MenuElement("Главная", "Index", "Home")};
+            // РџРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ СЃСЃС‹Р»РєР° РЅР° РіР»Р°РЅСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ
+            var elements = new List<MenuElement> {new MenuElement("Р“Р»Р°РІРЅР°СЏ", "Index", "Home")};
             string role = CoreKernel.AuthServ.UserCredential.Role;
             switch (role)
             {
                 case "Guest":
                     {
-                        elements.Add(new MenuElement("Вход", "Login", "Authorization", "Account"));
-                        elements.Add(new MenuElement("Регистрация", "Registration", "Registration", "Account"));
+                        elements.Add(new MenuElement("Р’С…РѕРґ", "Login", "Authorization", "Account"));
+                        elements.Add(new MenuElement("Р РµРіРёСЃС‚СЂР°С†РёСЏ", "Registration", "Registration", "Account"));
                         break;
                     }
                 case "Admin":
                     {
-                        elements.Add(new MenuElement("Личный кабинет", "Index", "Home", "Admin"));
+                        elements.Add(new MenuElement("Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚", "Index", "Home", "Admin"));
                         break;
                     }
             }
             if (role != "Guest")
             {
-                elements.Add(new MenuElement("Выход", "Logout", "Authorization", "Account"));
+                elements.Add(new MenuElement("Р’С‹С…РѕРґ", "Logout", "Authorization", "Account"));
             }
             return elements;
         }

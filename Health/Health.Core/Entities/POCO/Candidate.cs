@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 
 namespace Health.Core.Entities.POCO
 {
@@ -8,52 +8,52 @@ namespace Health.Core.Entities.POCO
     public class Candidate : Entity
     {
         /// <summary>
-        /// Имя пользователя.
+        /// РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         /// </summary>
         public string FirstName { get; set; }
 
         /// <summary>
-        /// Фамилия пользователя.
+        /// Р¤Р°РјРёР»РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         /// </summary>
         public string LastName { get; set; }
 
         /// <summary>
-        /// Отчество пользвателя.
+        /// РћС‚С‡РµСЃС‚РІРѕ РїРѕР»СЊР·РІР°С‚РµР»СЏ.
         /// </summary>
         public string ThirdName { get; set; }
 
         /// <summary>
-        /// Логин пользователя.
+        /// Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         /// </summary>
         public string Login { get; set; }
 
         /// <summary>
-        /// Пароль пользователя.
+        /// РџР°СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// Роль пользователя.
+        /// Р РѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
         /// </summary>
         public Role Role { get; set; }
 
         /// <summary>
-        /// День рождения.
+        /// Р”РµРЅСЊ СЂРѕР¶РґРµРЅРёСЏ.
         /// </summary>
         public DateTime Birthday { get; set; }
 
         /// <summary>
-        /// Токен пользователя (для верификации запомненной сессии).
+        /// РўРѕРєРµРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РґР»СЏ РІРµСЂРёС„РёРєР°С†РёРё Р·Р°РїРѕРјРЅРµРЅРЅРѕР№ СЃРµСЃСЃРёРё).
         /// </summary>
         public string Token { get; set; }
 
         /// <summary>
-        /// Номер полюса.
+        /// РќРѕРјРµСЂ РїРѕР»СЋСЃР°.
         /// </summary>
         public string Policy { get; set; }
 
         /// <summary>
-        /// Номер больничной карты.
+        /// РќРѕРјРµСЂ Р±РѕР»СЊРЅРёС‡РЅРѕР№ РєР°СЂС‚С‹.
         /// </summary>
         public string Card { get; set; }
     }
