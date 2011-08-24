@@ -1,9 +1,9 @@
-﻿namespace Health.Core.Entities.POCO
+﻿namespace Health.Core.Entities.POCO.Abstract
 {
     /// <summary>
     /// Базовый класс сущностей
     /// </summary>
-    public class Entity
+    public abstract class Entity
     {
     }
 }

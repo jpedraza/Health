@@ -7,14 +7,14 @@ namespace Health.Core.Entities.Virtual
     {
         private static readonly Dictionary<int, Day> _days = new Dictionary<int, Day>
                                                                  {
-                                                                     {1, new Day {Name = "Понедельник", Number = 1}},
-                                                                     {2, new Day {Name = "Вторник", Number = 2}},
-                                                                     {3, new Day {Name = "Среда", Number = 3}},
-                                                                     {4, new Day {Name = "Четверг", Number = 4}},
-                                                                     {5, new Day {Name = "Пятница", Number = 5}},
-                                                                     {6, new Day {Name = "Суббота", Number = 6}},
-                                                                     {7, new Day {Name = "Воскресенье", Number = 7}},
-                                                                     {8, new Day {Name = "Все", Number = 8}}
+                                                                     {1, new Day {Name = "Понедельник", InWeek = 1}},
+                                                                     {2, new Day {Name = "Вторник", InWeek = 2}},
+                                                                     {3, new Day {Name = "Среда", InWeek = 3}},
+                                                                     {4, new Day {Name = "Четверг", InWeek = 4}},
+                                                                     {5, new Day {Name = "Пятница", InWeek = 5}},
+                                                                     {6, new Day {Name = "Суббота", InWeek = 6}},
+                                                                     {7, new Day {Name = "Воскресенье", InWeek = 7}},
+                                                                     {8, new Day {Name = "Все", InWeek = 8}}
                                                                  };
 
         public static readonly Day Month = _days[1];

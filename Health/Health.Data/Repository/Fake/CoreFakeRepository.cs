@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Health.Core.API;
 using Health.Core.API.Repository;
-using Health.Core.Entities;
-using Health.Core.Entities.POCO;
+using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Data.Repository.Fake
 {

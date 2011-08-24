@@ -4,6 +4,8 @@
     {
         public string Name { get; set; }
 
-        public int Number { get; set; }
+        public int InWeek { get; set; }
+
+        public int InMonth { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Health.Core.Entities;
 using Health.Core.Entities.POCO;
+using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Core.API.Repository
 {
