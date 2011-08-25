@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Health.API;
 using Health.Core;
 using Health.Core.API;
 using Health.Core.API.Repository;
@@ -30,7 +29,7 @@ namespace Health.Site.App_Start
 {
     public static class NinjectMVC3
     {
-        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper _bootstrapper = new Bootstrapper();
 
         public static IKernel Kernel { get; private set; }
 
@@ -41,7 +40,7 @@ namespace Health.Site.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof (OnePerRequestModule));
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
-            Bootstrapper.Initialize(CreateKernel);
+            _bootstrapper.Initialize(CreateKernel);
             ModelToBinder();
         }
 
@@ -58,7 +57,7 @@ namespace Health.Site.App_Start
         /// </summary>
         public static void Stop()
         {
-            Bootstrapper.ShutDown();
+            _bootstrapper.ShutDown();
         }
 
         /// <summary>

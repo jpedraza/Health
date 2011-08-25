@@ -6,7 +6,7 @@ namespace Health.Core.Entities.POCO
     /// <summary>
     /// Пользователь
     /// </summary>
-    public class User : Entity
+    public class User : IEntity
     {
         /// <summary>
         /// Имя пользователя

@@ -5,7 +5,7 @@ namespace Health.Core.Entities.POCO
     /// <summary>
     /// Роль пользователя
     /// </summary>
-    public class Role : Entity
+    public class Role : IEntity
     {
         /// <summary>
         /// Имя роли

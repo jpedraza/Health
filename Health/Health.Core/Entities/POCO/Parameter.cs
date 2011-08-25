@@ -2,7 +2,7 @@
 
 namespace Health.Core.Entities.POCO
 {
-    public class Parameter : Entity
+    public class Parameter : IEntity
     {
         public string Name { get; set; }
 

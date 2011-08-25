@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,7 +30,6 @@ namespace Health.Site.Controllers
             ViewBag.VarName = new_role.PropertyName(x => x.Code);
 
             ViewData["Roles"] = roles;
-
             ViewBag.CountCandidates = CoreKernel.CandRepo.GetAll().Count();
             ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
             return View();

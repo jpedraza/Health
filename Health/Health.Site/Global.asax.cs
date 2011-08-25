@@ -1,6 +1,11 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Health.Site.Attributes;
+using Health.Site.Controllers;
+using Health.Site.Models;
 
 namespace Health.Site
 {
@@ -47,6 +52,7 @@ namespace Health.Site
         /// </summary>
         protected void Application_Error()
         {
+            Server.ClearError();
             Response.Redirect(@"~/Error");
         }
 

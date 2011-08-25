@@ -1,4 +1,4 @@
-﻿namespace Health.Site.Models
+﻿namespace Health.Site.Helpers.Classes
 {
     /// <summary>
     /// Элемент меню

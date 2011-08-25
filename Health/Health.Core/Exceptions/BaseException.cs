@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using Health.API;
+using Health.Core.API;
 
 namespace Health.Core.Exceptions
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Health.API.Extensions
+namespace Health.Core.API.Extensions
 {
     public static class Aliases
     {

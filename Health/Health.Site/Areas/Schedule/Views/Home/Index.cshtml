@@ -1,0 +1,12 @@
+﻿@using Health.Site.Models
+@model CoreViewModel
+
+@{
+    ViewBag.Title = "Управление расписаниями.";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>@Html.RouteLink("Дефолтные рассписания для параметров...", new { area = "Schedule", controller = "Default", action = "Index" })</p>
+
+<p>@Html.RouteLink("Персональные рассписания для параметров...", new { area = "Schedule", controller = "Personal", action = "Index" })</p>

@@ -1,5 +1,5 @@
 ﻿using System;
-using Health.API;
+using Health.Core.API;
 using NLog;
 
 namespace Health.Core

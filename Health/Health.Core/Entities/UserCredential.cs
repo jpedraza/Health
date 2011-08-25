@@ -8,7 +8,7 @@ namespace Health.Core.Entities
     /// Мандат пользователя
     /// </summary>
     [Serializable]
-    public class UserCredential : Entity
+    public class UserCredential : IEntity
     {
         /// <summary>
         /// Логин пользователя

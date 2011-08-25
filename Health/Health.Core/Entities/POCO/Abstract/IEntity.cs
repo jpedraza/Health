@@ -1,9 +1,9 @@
 ﻿namespace Health.Core.Entities.POCO.Abstract
 {
     /// <summary>
-    /// Базовый класс сущностей
+    /// Базовый интерфейс сущностей.
     /// </summary>
-    public abstract class Entity
+    public interface IEntity
     {
     }
 }

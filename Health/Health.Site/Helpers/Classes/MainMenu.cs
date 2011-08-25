@@ -40,6 +40,7 @@ namespace Health.Site.Helpers.Classes
                 case "Admin":
                     {
                         elements.Add(new MenuElement("Личный кабинет", "Index", "Home", "Admin"));
+                        elements.Add(new MenuElement("Расписание", "Index", "Home", "Schedule"));
                         break;
                     }
             }

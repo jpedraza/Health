@@ -1,4 +1,4 @@
-﻿namespace Health.API
+﻿namespace Health.Core.API
 {
     /// <summary>
     /// Интерфейс для логгера.

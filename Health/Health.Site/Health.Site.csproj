@@ -120,6 +120,13 @@
     <Compile Include="Areas\Account\Models\Forms\AccountFormsModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\AdminViewModel.cs" />
+    <Compile Include="Areas\Schedule\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Schedule\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Schedule\Controllers\PersonalController.cs" />
+    <Compile Include="Areas\Schedule\Models\Forms\DefaultScheduleForm.cs" />
+    <Compile Include="Areas\Schedule\Models\ScheduleViewModel.cs" />
+    <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Attributes\Auth.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
     <Compile Include="Controllers\CoreController.cs" />
@@ -133,6 +140,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Classes\MainMenu.cs" />
+    <Compile Include="Helpers\HtmlElementsHelpers.cs" />
     <Compile Include="Helpers\RenderParameters.cs" />
     <Compile Include="Helpers\RenderParametersForm.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />
@@ -141,7 +149,7 @@
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
-    <Compile Include="Models\MenuElement.cs" />
+    <Compile Include="Helpers\Classes\MenuElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CookieRepository.cs" />
     <Compile Include="Repository\SessionRepository.cs" />
@@ -244,9 +252,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Account\Views\Shared\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Services\" />
+    <Folder Include="Areas\Schedule\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -276,6 +283,11 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Account\Views\Interview\Confirm.cshtml" />
+    <Content Include="Areas\Schedule\Views\Web.config" />
+    <Content Include="Areas\Schedule\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Schedule\Views\Default\Index.cshtml" />
+    <Content Include="Areas\Schedule\Views\Personal\Index.cshtml" />
+    <Content Include="Areas\Schedule\Views\_ViewStart.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

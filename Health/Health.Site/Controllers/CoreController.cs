@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Net.Mime;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
-using Health.API;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
@@ -61,7 +62,17 @@ namespace Health.Site.Controllers
                 TempData[prg_model_state.PRGParametersKey] = prg_parameters;
             }
             var act = (MethodCallExpression) action.Body;
-            return RedirectToAction(act.Method.Name);
+            string action_name = act.Method.Name;
+            string controller_name = typeof (T).Name.Replace("Controller", "");
+            string full_name = typeof (T).FullName;
+            string area_name = String.Empty;
+            if (full_name != null)
+            {
+                area_name =
+                    full_name.Replace("Health.Site", "").Replace("Areas", "").Replace("Controllers", "").Replace(controller_name, "").
+                        Replace(".", "").Replace("Controller", "");
+            }
+            return RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
         }
 
         /// <summary>
@@ -70,12 +81,10 @@ namespace Health.Site.Controllers
         /// <param name="filter_context">Контекст ошибки.</param>
         protected override void OnException(ExceptionContext filter_context)
         {
-            base.OnException(filter_context);
 
             // Код ошибки по-умолчанию.
             int code_error = 500;
             string message;
-
             try
             {
                 // Получаем последнюю ошибку
@@ -93,7 +102,7 @@ namespace Health.Site.Controllers
                                                                Message = message
                                                            }
                                       };
-                var prg_model_state = new PRGModelState {ParametersHook = true};
+                var prg_model_state = new PRGModelState { ParametersHook = true };
                 IList<PRGParameter> prg_parameters =
                     prg_model_state.GetExportModel<ErrorController>(a => a.Index(error_model));
                 TempData[prg_model_state.PRGParametersKey] = prg_parameters;
@@ -103,11 +112,7 @@ namespace Health.Site.Controllers
                 code_error = 500;
                 message = exception.Message;
             }
-            finally
-            {
-                Server.ClearError();
-                filter_context.HttpContext.Response.Redirect("~/Error");
-            }
+            base.OnException(filter_context);
         }
     }
 }

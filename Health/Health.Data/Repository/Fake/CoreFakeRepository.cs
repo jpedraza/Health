@@ -6,7 +6,7 @@ using Health.Core.Entities.POCO.Abstract;
 namespace Health.Data.Repository.Fake
 {
     public abstract class CoreFakeRepository<TIEntity> : Core.Core, ICoreRepository<TIEntity>
-        where TIEntity : Entity
+        where TIEntity : IEntity
     {
         protected IList<TIEntity> _entities;
 

@@ -7,9 +7,21 @@ namespace Health.Core.Entities.Virtual
     {
         private static readonly Dictionary<int, Week> _weeks = new Dictionary<int, Week>
                                                                    {
-                                                                       {1, new Week {Name = "Нечетная"}},
-                                                                       {2, new Week {Name = "Четная"}},
-                                                                       {3, new Week {Name = "Все"}}
+                                                                       {1, new Week
+                                                                               {
+                                                                                   Name = "Нечетная",
+                                                                                   Parity = ParityOfWeek.Odd
+                                                                               }},
+                                                                       {2, new Week
+                                                                               {
+                                                                                   Name = "Четная",
+                                                                                   Parity = ParityOfWeek.Even
+                                                                               }},
+                                                                       {3, new Week
+                                                                               {
+                                                                                   Name = "Все",
+                                                                                   Parity = ParityOfWeek.All
+                                                                               }}
                                                                    };
 
         public static readonly Week Odd = _weeks[1];

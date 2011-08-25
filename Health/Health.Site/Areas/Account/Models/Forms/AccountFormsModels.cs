@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Health.Core.API;
-using Health.Core.Entities;
 using Health.Core.Entities.POCO;
 using Health.Site.Models.Forms;
 
@@ -38,34 +37,34 @@ namespace Health.Site.Areas.Account.Models.Forms
     public class RegistrationFormModel : Candidate
     {
         [Required]
-        public string FirstName { get; set; }
+        public new string FirstName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public new string LastName { get; set; }
 
         [Required]
-        public string ThirdName { get; set; }
+        public new string ThirdName { get; set; }
 
         [Required]
-        public string Login { get; set; }
+        public new string Login { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public new string Password { get; set; }
 
         [NotMapped]
-        public Role Role { get; set; }
+        public new Role Role { get; set; }
 
         [Required]
-        public DateTime Birthday { get; set; }
+        public new DateTime Birthday { get; set; }
 
         [NotMapped]
-        public string Token { get; set; }
+        public new string Token { get; set; }
 
         [Required]
-        public string Policy { get; set; }
+        public new string Policy { get; set; }
 
         [Required]
-        public string Card { get; set; }
+        public new string Card { get; set; }
     }
 
     /// <summary>

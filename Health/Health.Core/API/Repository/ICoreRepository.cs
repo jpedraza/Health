@@ -10,7 +10,7 @@ namespace Health.Core.API.Repository
     /// </summary>
     /// <typeparam name="TEntity">Реализует интерфейс IEntity.</typeparam>
     public interface ICoreRepository<TEntity> : ICore
-        where TEntity : Entity
+        where TEntity : IEntity
     {
         /// <summary>
         /// Получает все сущности из источника данных.

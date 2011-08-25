@@ -3,7 +3,6 @@ using Health.Core.API;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
-using MvcContrib;
 
 namespace Health.Site.Areas.Account.Controllers
 {
@@ -40,10 +39,10 @@ namespace Health.Site.Areas.Account.Controllers
                 if (CoreKernel.AuthServ.Login(form_model.LoginForm.Login, form_model.LoginForm.Password,
                                               form_model.LoginForm.RememberMe))
                 {
-                    return RedirectToRoute(new {area = "Admin", controller = "Home", action = "Index"});
+                    return RedirectTo<Admin.Controllers.HomeController>(a => a.Index());
                 }
             }
-            return this.RedirectToAction(a => a.Login(form_model));
+            return RedirectTo<AuthorizationController>(a => a.Login(form_model));
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace Health.Site.Areas.Account.Controllers
         {
             CoreKernel.AuthServ.Logout();
 
-            return RedirectToRoute(new {area = "", controller = "Home", action = "Index"});
+            return RedirectTo<HomeController>(a => a.Index());
         }
     }
 }

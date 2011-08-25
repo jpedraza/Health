@@ -1,6 +1,4 @@
-﻿using Health.API;
-
-namespace Health.Core.API
+﻿namespace Health.Core.API
 {
     /// <summary>
     /// Интерфейс регламентирует оющий функционал для сервисов и репозиториев.

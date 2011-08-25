@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Health.Core.API;
-using Health.Core.Entities;
 using Health.Core.Entities.POCO;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Areas.Account.Models.Forms;

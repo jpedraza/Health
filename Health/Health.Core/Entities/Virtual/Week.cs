@@ -1,13 +1,20 @@
 ﻿namespace Health.Core.Entities.Virtual
 {
+    public enum ParityOfWeek
+    {
+        Odd = 1,
+        Even = 2,
+        All = 3
+    }
+
     public class Week
     {
-        public bool Parity { get; set; }
+        public ParityOfWeek Parity { get; set; }
 
         public string Name { get; set; }
 
-        public int InYear { get; set; }
+        public int? InYear { get; set; }
 
-        public int InMonth { get; set; }
+        public int? InMonth { get; set; }
     }
 }
