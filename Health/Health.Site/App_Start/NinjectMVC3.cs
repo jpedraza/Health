@@ -86,6 +86,7 @@ namespace Health.Site.App_Start
             kernel.Bind<IActualCredentialRepository>().To<SessionRepository>();
             kernel.Bind<IPermanentCredentialRepository>().To<CookieRepository>();
             kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
+            kernel.Bind<IParameterRepository>().To<ParametersFakeRepository>().InSingletonScope();
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>();

@@ -37,5 +37,10 @@ namespace Health.Core.API
         /// Сервис регистрации.
         /// </summary>
         IRegistrationService RegServ { get; }
+
+        /// <summary>
+        /// Репозиторий параметров здоровья человека
+        /// </summary>
+        IParameterRepository ParamRepo { get; set; }
     }
 }
