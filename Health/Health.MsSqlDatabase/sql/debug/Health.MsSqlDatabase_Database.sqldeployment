@@ -2,7 +2,7 @@
 <DeploymentConfigurationSettings xmlns="urn:Microsoft.VisualStudio.Data.Schema.Package.DeploymentConfigurationSettings">
   <Version>1.0</Version>
   <Properties>
-    <AlwaysCreateNewDatabase>False</AlwaysCreateNewDatabase>
+    <AlwaysCreateNewDatabase>True</AlwaysCreateNewDatabase>
     <BlockIncrementalDeploymentIfDataLoss>True</BlockIncrementalDeploymentIfDataLoss>
     <DeployDatabaseProperties>True</DeployDatabaseProperties>
     <DeploymentCollationPreference>UseSourceModelCollation</DeploymentCollationPreference>
