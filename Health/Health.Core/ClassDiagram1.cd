@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Health.Core.API.Extensions.Aliases" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAIA=</HashCode>
+      <FileName>API\Extensions\Aliases.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Core" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Health.Core.CoreKernel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAIAIgAIAAAAAAAAAIAgAAAgAAgAAAAAgAMAA=</HashCode>
+      <FileName>CoreKernel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Logger" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAbAAAAEAAAgAYCgAABEAAAAAAEAEAAA=</HashCode>
+      <FileName>Logger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.DefaultRoles" Collapsed="true">
+    <Position X="29.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAIAAAAAAAAg=</HashCode>
+      <FileName>Entities\DefaultRoles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.UserCredential" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAACAQAAAAAAA=</HashCode>
+      <FileName>Entities\UserCredential.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.Candidate" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\Candidate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.DefaultSchedule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAIAAAAAAAAAAAAAAAAAAQAAAEAAQAAIAAAAI=</HashCode>
+      <FileName>Entities\POCO\DefaultSchedule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.Diagnosis" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\Diagnosis.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.MetaData" Collapsed="true">
+    <Position X="27.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\MetaData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.Parameter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\Parameter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.Patient" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\Patient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.PersonalSchedule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAKAAAIAAAABAAAAAAAAAAAAAQAAAEAAQAAIAACAA=</HashCode>
+      <FileName>Entities\POCO\PersonalSchedule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.Role" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\Role.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Health.Core.Entities.POCO.User" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAEABAAAAAAAAIAAACAAAQAAABAAg=</HashCode>
+      <FileName>Entities\POCO\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.Day" Collapsed="true">
+    <Position X="25.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Entities\Virtual\Day.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.DaysInWeek" Collapsed="true">
+    <Position X="27.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAIAIAAAAAAAAAAAACAAIACAIAAEAIAAIAAAAAA=</HashCode>
+      <FileName>Entities\Virtual\DaysInWeek.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.Month" Collapsed="true">
+    <Position X="29.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Virtual\Month.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.MonthsInYear" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAEgAAABRAAAAAAQAwgAAAAAAQAAAEAIAIAAAEAAA=</HashCode>
+      <FileName>Entities\Virtual\MonthsInYear.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.Period" Collapsed="true">
+    <Position X="25.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAQAAAAAAAAAAAIAAEQAAAAAAAAAE=</HashCode>
+      <FileName>Entities\Virtual\Period.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.Week" Collapsed="true">
+    <Position X="25.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Entities\Virtual\Week.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Entities.Virtual.WeeksInMonth" Collapsed="true">
+    <Position X="27.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAIAAAAA=</HashCode>
+      <FileName>Entities\Virtual\WeeksInMonth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Exceptions.BaseException" Collapsed="true">
+    <Position X="6.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\BaseException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Exceptions.RepositoryException" Collapsed="true">
+    <Position X="5.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\RepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Exceptions.ServiceException" Collapsed="true">
+    <Position X="7.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ServiceException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Health.Core.Services.AuthorizationService" Collapsed="true">
+    <Position X="2.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAACAAAAAAAAAAAAAAAABIKAAAAAABAACAQAAIgAIA=</HashCode>
+      <FileName>Services\AuthorizationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Health.Core.Services.CoreService" Collapsed="true">
+    <Position X="1.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CoreService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Health.Core.Services.RegistrationService" Collapsed="true">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAgAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RegistrationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Health.Core.Services.RenderingService" Collapsed="true">
+    <Position X="29.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RenderingService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Health.Core.API.ICore" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>API\ICore.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.ICoreKernel" Collapsed="true">
+    <Position X="24" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAIAAIAAAAAAAAAIAgAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>API\ICoreKernel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.IDIKernel" Collapsed="true">
+    <Position X="25.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\IDIKernel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.ILogger" Collapsed="true">
+    <Position X="27.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAbAAAAEAAAgAQCgAABEAAAAAAEAEAAA=</HashCode>
+      <FileName>API\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.Abstract.IScheduleRepository" Collapsed="true">
+    <Position X="2.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\Abstract\IScheduleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IActualCredentialRepository" Collapsed="true">
+    <Position X="22.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAFAAAA=</HashCode>
+      <FileName>API\Repository\IActualCredentialRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.ICandidateRepository" Collapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\ICandidateRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.ICoreRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\ICoreRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IDefaultScheduleRepository" Collapsed="true">
+    <Position X="6.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\IDefaultScheduleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IParameterRepository" Collapsed="true">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\IParameterRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IPermanentCredentialRepository" Collapsed="true">
+    <Position X="29.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAFAAAA=</HashCode>
+      <FileName>API\Repository\IPermanentCredentialRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IPersonalScheduleRepository" Collapsed="true">
+    <Position X="3.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\IPersonalScheduleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IRoleRepository" Collapsed="true">
+    <Position X="10.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>API\Repository\IRoleRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Repository.IUserRepository" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Repository\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Services.IAuthorizationService" Collapsed="true">
+    <Position X="19.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAACAAAAAAAAAAAAAAAABIKAAAAAABAACAQAAIgAIA=</HashCode>
+      <FileName>API\Services\IAuthorizationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Services.ICoreService" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Services\ICoreService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Services.IRegistrationService" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\Services\IRegistrationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Validators.IValidatorFactory" Collapsed="true">
+    <Position X="22.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>API\Validators\IValidatorFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.API.Validators.IValueValidator" Collapsed="true">
+    <Position X="24" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>API\Validators\IValueValidator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.Entities.POCO.Abstract.IEntity" Collapsed="true">
+    <Position X="5.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\POCO\Abstract\IEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Health.Core.Entities.POCO.Abstract.ISchedule" Collapsed="true">
+    <Position X="5.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAIAAAAAAAAAAAAAAAAAAQAAAEAAQAAIAAAAA=</HashCode>
+      <FileName>Entities\POCO\Abstract\ISchedule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Health.Core.Entities.Virtual.ParityOfWeek" Collapsed="true">
+    <Position X="22.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Entities\Virtual\Week.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

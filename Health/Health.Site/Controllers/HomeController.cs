@@ -31,7 +31,8 @@ namespace Health.Site.Controllers
 
             ViewData["Roles"] = roles;
             ViewBag.CountCandidates = CoreKernel.CandRepo.GetAll().Count();
-            ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
+            //ViewBag.Message = "Добро пожаловать в ASP.NET MVC!";
+            ViewBag.Message = "Проект сайта для пациентов с диагнозом ДЦП";
             return View();
         }
     }
