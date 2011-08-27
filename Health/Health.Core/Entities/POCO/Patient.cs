@@ -1,6 +1,6 @@
 ﻿namespace Health.Core.Entities.POCO
 {
-    public class Patient : User
+    public class Patient : Candidate
     {
     }
 }

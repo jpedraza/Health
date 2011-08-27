@@ -13,8 +13,6 @@
 
         public string Name { get; set; }
 
-        public int? InYear { get; set; }
-
         public int? InMonth { get; set; }
     }
 }

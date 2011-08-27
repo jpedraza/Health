@@ -8,6 +8,8 @@ namespace Health.Core.Entities.POCO
 
         public object Value { get; set; }
 
+        public object DefaultValue { get; set; }
+
         //public MetaData[] MetaData { get; set; }
     }
 }

@@ -183,11 +183,148 @@ DROP ROUTE [AutoCreatedLocal];
 
 
 GO
-PRINT N'Выполняется создание [dbo].[User]...';
+PRINT N'Выполняется создание [dbo].[Candidates]...';
 
 
 GO
-CREATE TABLE [dbo].[User] (
+CREATE TABLE [dbo].[Candidates] (
+    [CandidateId] INT            IDENTITY (1, 1) NOT NULL,
+    [FirstName]   NVARCHAR (MAX) NOT NULL,
+    [LastName]    NVARCHAR (MAX) NOT NULL,
+    [ThirdName]   NVARCHAR (MAX) NOT NULL,
+    [Login]       NVARCHAR (MAX) NOT NULL,
+    [Password]    NVARCHAR (MAX) NOT NULL,
+    [RoleId]      INT            NOT NULL,
+    [Birthday]    DATETIME       NOT NULL,
+    [Token]       NVARCHAR (MAX) NOT NULL,
+    [Policy]      NVARCHAR (MAX) NOT NULL,
+    [Card]        NVARCHAR (MAX) NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание CandiadtesPK...';
+
+
+GO
+ALTER TABLE [dbo].[Candidates]
+    ADD CONSTRAINT [CandiadtesPK] PRIMARY KEY CLUSTERED ([CandidateId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[DefaultSchedule]...';
+
+
+GO
+CREATE TABLE [dbo].[DefaultSchedule] (
+    [ParameterId] INT      NULL,
+    [DiagnosesId] INT      NULL,
+    [Years]       INT      NULL,
+    [Months]      INT      NULL,
+    [Weeks]       INT      NULL,
+    [Days]        INT      NULL,
+    [Hours]       INT      NULL,
+    [Minutes]     INT      NULL,
+    [TimeStart]   TIME (7) NULL,
+    [TimeEnd]     TIME (7) NULL,
+    [DayOfWeek]   INT      NULL,
+    [DayOfMonth]  INT      NULL,
+    [MonthOfYear] INT      NULL,
+    [WeekOfMonth] INT      NULL,
+    [WeekParity]  INT      NULL
+);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[Parameters]...';
+
+
+GO
+CREATE TABLE [dbo].[Parameters] (
+    [ParameterId]  INT            IDENTITY (1, 1) NOT NULL,
+    [Name]         NVARCHAR (MAX) NULL,
+    [DefaultValue] VARBINARY (1)  NULL
+);
+
+
+GO
+PRINT N'Выполняется создание ParametersPK...';
+
+
+GO
+ALTER TABLE [dbo].[Parameters]
+    ADD CONSTRAINT [ParametersPK] PRIMARY KEY CLUSTERED ([ParameterId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[Patients]...';
+
+
+GO
+CREATE TABLE [dbo].[Patients] (
+    [PatientId] INT            NOT NULL,
+    [Policy]    NVARCHAR (MAX) NOT NULL,
+    [Card]      NVARCHAR (MAX) NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание PatientsPK...';
+
+
+GO
+ALTER TABLE [dbo].[Patients]
+    ADD CONSTRAINT [PatientsPK] PRIMARY KEY CLUSTERED ([PatientId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[PersonalSchedule]...';
+
+
+GO
+CREATE TABLE [dbo].[PersonalSchedule] (
+    [PatientId]   INT      NULL,
+    [ParameterId] INT      NULL,
+    [DiagnosesId] INT      NULL,
+    [DateStart]   DATETIME NULL,
+    [DateEnd]     DATETIME NULL,
+    [TimeStart]   TIME (7) NULL,
+    [TimeEnd]     TIME (7) NULL,
+    [DayOfWeek]   INT      NULL,
+    [DayOfMonth]  INT      NULL,
+    [MonthOfYear] INT      NULL,
+    [WeekOfMonth] INT      NULL,
+    [WeekParity]  INT      NULL
+);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[Roles]...';
+
+
+GO
+CREATE TABLE [dbo].[Roles] (
+    [RoleId] INT            IDENTITY (1, 1) NOT NULL,
+    [Name]   NVARCHAR (MAX) NOT NULL,
+    [Code]   INT            NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание RolesPK...';
+
+
+GO
+ALTER TABLE [dbo].[Roles]
+    ADD CONSTRAINT [RolesPK] PRIMARY KEY CLUSTERED ([RoleId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[Users]...';
+
+
+GO
+CREATE TABLE [dbo].[Users] (
     [UserId]    INT            IDENTITY (1, 1) NOT NULL,
     [FirstName] NVARCHAR (MAX) NOT NULL,
     [LastName]  NVARCHAR (MAX) NOT NULL,
@@ -196,9 +333,71 @@ CREATE TABLE [dbo].[User] (
     [Password]  NVARCHAR (MAX) NOT NULL,
     [RoleId]    INT            NOT NULL,
     [Birthday]  DATETIME       NOT NULL,
-    [Token]     NVARCHAR (MAX) NOT NULL,
-    PRIMARY KEY CLUSTERED ([UserId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF)
+    [Token]     NVARCHAR (MAX) NOT NULL
 );
+
+
+GO
+PRINT N'Выполняется создание UsersPK...';
+
+
+GO
+ALTER TABLE [dbo].[Users]
+    ADD CONSTRAINT [UsersPK] PRIMARY KEY CLUSTERED ([UserId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание CandidatesMTORoles...';
+
+
+GO
+ALTER TABLE [dbo].[Candidates] WITH NOCHECK
+    ADD CONSTRAINT [CandidatesMTORoles] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[Roles] ([RoleId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание DefaultScheduleMTOParameters...';
+
+
+GO
+ALTER TABLE [dbo].[DefaultSchedule] WITH NOCHECK
+    ADD CONSTRAINT [DefaultScheduleMTOParameters] FOREIGN KEY ([ParameterId]) REFERENCES [dbo].[Parameters] ([ParameterId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание PatientsOTOUsers...';
+
+
+GO
+ALTER TABLE [dbo].[Patients] WITH NOCHECK
+    ADD CONSTRAINT [PatientsOTOUsers] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Users] ([UserId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание PersonalScheduleMTOParameters...';
+
+
+GO
+ALTER TABLE [dbo].[PersonalSchedule] WITH NOCHECK
+    ADD CONSTRAINT [PersonalScheduleMTOParameters] FOREIGN KEY ([ParameterId]) REFERENCES [dbo].[Parameters] ([ParameterId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание PersonalScheduleMTOPatients...';
+
+
+GO
+ALTER TABLE [dbo].[PersonalSchedule] WITH NOCHECK
+    ADD CONSTRAINT [PersonalScheduleMTOPatients] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Patients] ([PatientId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание UsersMTORoles...';
+
+
+GO
+ALTER TABLE [dbo].[Users] WITH NOCHECK
+    ADD CONSTRAINT [UsersMTORoles] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[Roles] ([RoleId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -258,6 +457,28 @@ GO
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+GO
+PRINT N'Существующие данные проверяются относительно вновь созданных ограничений';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[Candidates] WITH CHECK CHECK CONSTRAINT [CandidatesMTORoles];
+
+ALTER TABLE [dbo].[DefaultSchedule] WITH CHECK CHECK CONSTRAINT [DefaultScheduleMTOParameters];
+
+ALTER TABLE [dbo].[Patients] WITH CHECK CHECK CONSTRAINT [PatientsOTOUsers];
+
+ALTER TABLE [dbo].[PersonalSchedule] WITH CHECK CHECK CONSTRAINT [PersonalScheduleMTOParameters];
+
+ALTER TABLE [dbo].[PersonalSchedule] WITH CHECK CHECK CONSTRAINT [PersonalScheduleMTOPatients];
+
+ALTER TABLE [dbo].[Users] WITH CHECK CHECK CONSTRAINT [UsersMTORoles];
+
 
 GO
 IF EXISTS (SELECT 1
