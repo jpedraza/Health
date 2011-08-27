@@ -6,5 +6,6 @@ Health/Health.5.1.ReSharper.user
 *.user
 *.vspscc
 *.vssscc
+*.dbmdl
 Health/TestResults
 Health/Health.Site/Log
