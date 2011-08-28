@@ -33,7 +33,6 @@ namespace Health.Data.Repository.Fake
             _entities.Remove(entity);
             return true;
         }
-
         #endregion
     }
 }

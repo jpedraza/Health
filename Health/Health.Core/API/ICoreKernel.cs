@@ -41,6 +41,6 @@ namespace Health.Core.API
         /// <summary>
         /// Репозиторий параметров здоровья человека
         /// </summary>
-        IParameterRepository ParamRepo { get; set; }
+        IParameterRepository ParamRepo { get; }
     }
 }

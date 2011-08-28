@@ -122,6 +122,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\AdminViewModel.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Parameters\Models\ParametersFormsModel.cs" />
     <Compile Include="Areas\Parameters\Models\PatametersViewModel.cs" />
     <Compile Include="Areas\Parameters\ParametersAreaRegistration.cs" />
     <Compile Include="Areas\Parameters___\Controllers\HomeController.cs" />

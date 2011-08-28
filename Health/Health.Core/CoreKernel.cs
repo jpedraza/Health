@@ -14,6 +14,7 @@ namespace Health.Core
         private IRegistrationService _regServ;
         private IRoleRepository _roleRepo;
         private IUserRepository _userRepo;
+        private IParameterRepository _paramRepo;
 
         /// <summary>
         /// Создает экземпляр центральное сервиса.
@@ -50,7 +51,21 @@ namespace Health.Core
                 return _roleRepo;
             }
         }
-
+        /// <summary>
+        /// Репозиторий параметров.
+        /// </summary>
+        public IParameterRepository ParamRepo
+        {
+            get
+            {
+                if (_paramRepo == null)
+                {
+                    _paramRepo = DIKernel.Get<IParameterRepository>(this);
+                    Logger.Debug("Репозиторий параметров инициализирован.");
+                }
+                return _paramRepo;
+            }
+        }
         /// <summary>
         /// Репозиторий пользователей.
         /// </summary>

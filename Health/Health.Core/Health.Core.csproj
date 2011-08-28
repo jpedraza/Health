@@ -78,6 +78,7 @@
     <Compile Include="Entities\POCO\PersonalSchedule.cs" />
     <Compile Include="Entities\POCO\Role.cs" />
     <Compile Include="Entities\POCO\User.cs" />
+    <Compile Include="Entities\POCO\Variant.cs" />
     <Compile Include="Entities\UserCredential.cs" />
     <Compile Include="Entities\Virtual\Day.cs" />
     <Compile Include="Entities\Virtual\DaysInWeek.cs" />
