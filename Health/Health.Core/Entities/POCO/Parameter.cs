@@ -4,6 +4,8 @@ namespace Health.Core.Entities.POCO
 {
     public class Parameter : IEntity
     {
+        public int ParameterId { get; set; }
+
         public string Name { get; set; }
 
         public object Value { get; set; }

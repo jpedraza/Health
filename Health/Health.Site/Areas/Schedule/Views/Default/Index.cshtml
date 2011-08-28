@@ -1,4 +1,4 @@
-﻿@model ScheduleViewModel
+﻿@model DefaultScheduleList
 
 @using System.Collections
 @using Health.Core.Entities.POCO
@@ -12,18 +12,4 @@
 <h2>@ViewBag.Title</h2>
 
 
-@{IEnumerable<DefaultSchedule> default_schedules = Model.DefaultScheduleForm.DefaultSchedules;}
-<table>
-    @foreach (DefaultSchedule default_schedule in default_schedules)
-    {
-        <tr>
-            <td>@default_schedule.Parameter.Name</td>
-            <td>@default_schedule.Period.Years</td>
-            <td>@default_schedule.TimeStart</td>
-            <td>@default_schedule.TimeEnd</td>
-        </tr>
-    }
-</table> 
-
-
-@Html.Table(Model.DefaultScheduleForm.DefaultSchedules, typeof(DefaultSchedule))
+@Html.Partial("_DefaultTableControl", Model.DefaultSchedules)

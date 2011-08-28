@@ -4,7 +4,7 @@
     {
         Odd = 1,
         Even = 2,
-        All = 3
+        All = 0
     }
 
     public class Week
@@ -13,6 +13,6 @@
 
         public string Name { get; set; }
 
-        public int? InMonth { get; set; }
+        public int InMonth { get; set; }
     }
 }

@@ -1,0 +1,148 @@
+﻿@using System.ComponentModel
+@using Health.Core.Entities.POCO
+@using Health.Core.Entities.Virtual
+@using Health.Site.Areas.Schedule.Models
+@model DefaultScheduleFormModel
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"> </script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"> </script>
+           
+<fieldset>
+    <legend>@Model.DefaultSchedule.Parameter.Name</legend>
+    @using (Html.BeginForm("EditSubmit", "Default"))
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.DefaultSchedule.Parameter.Name)
+        @Html.HiddenFor(m => m.DefaultSchedule.Parameter.ParameterId)
+        <fieldset>
+            <legend>Период</legend>
+            @Html.ValidationMessageFor(m => m.DefaultSchedule.Period)
+            @Html.EditorFor(m => m.DefaultSchedule.Period)
+        </fieldset>
+
+        <fieldset>
+            <legend>Промежуток времени</legend>
+            <p>Начало @Html.EditorFor(m => m.DefaultSchedule.TimeStart)</p>
+            <p>Окончание @Html.EditorFor(m => m.DefaultSchedule.TimeEnd)</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>День</legend>
+            @{
+                var all_days = new BindingList<SelectListItem>
+                                   {
+                                       new SelectListItem
+                                           {
+                                               Text = "Любой",
+                                               Value = "0"
+                                           }
+                                   };
+                for (int i = 1; i <= 31; i++)
+                {
+                    var item = new SelectListItem();
+                    if (Model.DefaultSchedule.Day.InMonth == i)
+                    {
+                        item.Selected = true;
+                    }
+                    item.Text = i.ToString();
+                    item.Value = i.ToString();
+                    all_days.Add(item);
+                }
+            }
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Day.InMonth)
+                @Html.DropDownListFor(m => m.DefaultSchedule.Day.InMonth, all_days)
+                @Html.ValidationMessageFor(m => m.DefaultSchedule.Day.InMonth)</p>
+
+            @{
+                var days_in_week = new BindingList<SelectListItem>
+                                       {
+                                           new SelectListItem
+                                               {
+                                                   Text = "Любой",
+                                                   Value = "0"
+                                               }
+                                       };
+                for (int i = 1; i <= 7; i++)
+                {
+                    var item = new SelectListItem();
+                    if (Model.DefaultSchedule.Day.InWeek == i)
+                    {
+                        item.Selected = true;
+                    }
+                    item.Text = i.ToString();
+                    item.Value = i.ToString();
+                    days_in_week.Add(item);
+                }
+            }
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Day.InWeek)
+                @Html.DropDownListFor(m => m.DefaultSchedule.Day.InWeek, days_in_week)
+                @Html.ValidationMessageFor(m => m.DefaultSchedule.Day.InWeek)</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Неделя</legend>
+            <p>@Html.EditorFor(m => m.DefaultSchedule.Week.InMonth) @Html.ValidationMessageFor(m => m.DefaultSchedule.Week.InMonth)</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Week.Parity)
+                @{
+                    var week_parity = new BindingList<SelectListItem>
+                                          {
+                                              new SelectListItem
+                                                  {
+                                                      Selected = true,
+                                                      Text = "Любая",
+                                                      Value = ParityOfWeek.All.ToString()
+                                                  },
+                                              new SelectListItem
+                                                  {
+                                                      Text = "Нечетная",
+                                                      Value = ParityOfWeek.Odd.ToString()
+                                                  },
+                                              new SelectListItem
+                                                  {
+                                                      Text = "Четная",
+                                                      Value = ParityOfWeek.Even.ToString()
+                                                  }
+                                          };
+                    foreach (SelectListItem select_list_item in week_parity)
+                    {
+                        if (Model.DefaultSchedule.Week.Parity.ToString() == select_list_item.Value)
+                        {
+                            select_list_item.Selected = true;
+                        }
+                    }
+                }
+                @Html.DropDownListFor(m => m.DefaultSchedule.Week.Parity, week_parity)
+                @Html.ValidationMessageFor(m => m.DefaultSchedule.Week.Parity)</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Месяц</legend>
+            @{
+                var all_months = new BindingList<SelectListItem>
+                                     {
+                                         new SelectListItem
+                                             {
+                                                 Text = "Любой",
+                                                 Value = "0"
+                                             }
+                                     };
+                for (int i = 1; i <= 12; i++)
+                {
+                    var item = new SelectListItem();
+                    if (Model.DefaultSchedule.Month.InYear == i)
+                    {
+                        item.Selected = true;
+                    }
+                    item.Text = i.ToString();
+                    item.Value = i.ToString();
+                    all_months.Add(item);
+                }
+            }
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Month.InYear)
+                @Html.DropDownListFor(m => m.DefaultSchedule.Month.InYear, all_months)
+                @Html.ValidationMessageFor(m => m.DefaultSchedule.Month.InYear)</p>
+        </fieldset>
+
+        <p><input type="submit" value="Submit"/></p>
+    }
+</fieldset>   

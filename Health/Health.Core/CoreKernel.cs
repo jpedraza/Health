@@ -14,6 +14,8 @@ namespace Health.Core
         private IRegistrationService _regServ;
         private IRoleRepository _roleRepo;
         private IUserRepository _userRepo;
+        private IDefaultScheduleRepository _defaultScheduleRepo;
+        private IPersonalScheduleRepository _personalScheduleRepo;
 
         /// <summary>
         /// Создает экземпляр центральное сервиса.
@@ -81,6 +83,40 @@ namespace Health.Core
                 }
                 return _candRepo;
             }
+        }
+
+        /// <summary>
+        /// Дефолтный репозиторий расписаний.
+        /// </summary>
+        public IDefaultScheduleRepository DefaultScheduleRepo
+        {
+            get
+            {
+                if (_defaultScheduleRepo == null)
+                {
+                    _defaultScheduleRepo = DIKernel.Get<IDefaultScheduleRepository>(this);
+                    Logger.Debug("Репозиторий дефолтных расписаний создан.");
+                }
+                return _defaultScheduleRepo;
+            }
+            set { _defaultScheduleRepo = value; }
+        }
+
+        /// <summary>
+        /// Персональный репозиторий расписаний.
+        /// </summary>
+        public IPersonalScheduleRepository PersonalScheduleRepo
+        {
+            get
+            {
+                if (_personalScheduleRepo == null)
+                {
+                    _personalScheduleRepo = DIKernel.Get<IPersonalScheduleRepository>(this);
+                    Logger.Debug("Репозиторий персональных расписаний создан.");
+                }
+                return _personalScheduleRepo;
+            }
+            set { _personalScheduleRepo = value; }
         }
 
         /// <summary>

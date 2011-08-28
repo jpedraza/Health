@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Health.Site.Attributes;
 
 namespace Health.Site.Areas.Schedule.Controllers
 {
+    [Auth(AllowRoles = "Admin")]
     public class PersonalController : Controller
     {
-        //
-        // GET: /Schedule/PersonalSchedule/
-
         public ActionResult Index()
         {
             return View();
         }
-
     }
 }

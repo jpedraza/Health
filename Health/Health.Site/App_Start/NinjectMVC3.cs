@@ -12,6 +12,7 @@ using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
 using Health.Site.DI;
 using Health.Site.Filters;
+using Health.Site.Models;
 using Health.Site.Models.Binders;
 using Health.Site.Repository;
 using Microsoft.Practices.ServiceLocation;
@@ -19,6 +20,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Mvc;
 using Ninject.Web.Mvc.FilterBindingSyntax;
+using Ninject.Web.Mvc.Validation;
 using NinjectAdapter;
 using WebActivator;
 
@@ -86,6 +88,7 @@ namespace Health.Site.App_Start
             kernel.Bind<IActualCredentialRepository>().To<SessionRepository>();
             kernel.Bind<IPermanentCredentialRepository>().To<CookieRepository>();
             kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
+            kernel.Bind<IDefaultScheduleRepository>().To<DefaultScheduleFakeRepository>().InSingletonScope();
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>();

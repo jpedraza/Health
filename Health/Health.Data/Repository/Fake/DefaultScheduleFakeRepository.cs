@@ -24,6 +24,7 @@ namespace Health.Data.Repository.Fake
                                         Month = MonthsInYear.All,
                                         Parameter = new Parameter
                                                         {
+                                                            ParameterId = 1,
                                                             Name = "давление"
                                                         },
                                         Period = new Period
@@ -40,6 +41,7 @@ namespace Health.Data.Repository.Fake
                                         Month = MonthsInYear.May,
                                         Parameter = new Parameter
                                                         {
+                                                            ParameterId = 2,
                                                             Name = "температура"
                                                         },
                                         Period = new Period
@@ -50,6 +52,27 @@ namespace Health.Data.Repository.Fake
                                         TimeEnd = new TimeSpan(22, 0, 0)
                                     }
                             };
+        }
+
+        public DefaultSchedule GetById(int parameter_id)
+        {
+            return (from default_schedule in _entities
+                   where default_schedule.Parameter.ParameterId == parameter_id
+                   select default_schedule).FirstOrDefault();
+        }
+
+        public override bool Save(DefaultSchedule entity)
+        {
+            foreach (DefaultSchedule default_schedule in _entities)
+            {
+                if (default_schedule.Parameter.ParameterId == entity.Parameter.ParameterId)
+                {
+                    _entities.Remove(default_schedule);
+                    _entities.Add(entity);
+                    return true;
+                }
+            }
+            throw new Exception("Переданное для обновления дефолтное расписание отсутствует в репозитории.");
         }
     }
 }

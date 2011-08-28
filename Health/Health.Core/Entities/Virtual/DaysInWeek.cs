@@ -14,7 +14,7 @@ namespace Health.Core.Entities.Virtual
                                                                      {5, new Day {Name = "Пятница", InWeek = 5}},
                                                                      {6, new Day {Name = "Суббота", InWeek = 6}},
                                                                      {7, new Day {Name = "Воскресенье", InWeek = 7}},
-                                                                     {8, new Day {Name = "Все", InWeek = 8}}
+                                                                     {8, new Day {Name = "Все"}}
                                                                  };
 
         public static readonly Day Month = _days[1];

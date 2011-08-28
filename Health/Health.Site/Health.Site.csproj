@@ -124,8 +124,8 @@
     <Compile Include="Areas\Schedule\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Schedule\Controllers\HomeController.cs" />
     <Compile Include="Areas\Schedule\Controllers\PersonalController.cs" />
-    <Compile Include="Areas\Schedule\Models\Forms\DefaultScheduleForm.cs" />
-    <Compile Include="Areas\Schedule\Models\ScheduleViewModel.cs" />
+    <Compile Include="Areas\Schedule\Models\DefaultScheduleForm.cs" />
+    <Compile Include="Areas\Schedule\Models\DefaultScheduleList.cs" />
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Attributes\Auth.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
@@ -288,6 +288,10 @@
     <Content Include="Areas\Schedule\Views\Default\Index.cshtml" />
     <Content Include="Areas\Schedule\Views\Personal\Index.cshtml" />
     <Content Include="Areas\Schedule\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Schedule\Views\Default\_DefaultTableControl.cshtml" />
+    <Content Include="Areas\Schedule\Views\Default\Edit.cshtml" />
+    <Content Include="Areas\Schedule\Views\Default\_DefaultEditFormControl.cshtml" />
+    <Content Include="Areas\Schedule\Views\Default\ViewPage1.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
