@@ -1,4 +1,5 @@
-﻿using Health.Core.API;
+﻿using System.ComponentModel.DataAnnotations;
+using Health.Core.API;
 
 namespace Health.Site.Models
 {
@@ -10,11 +11,13 @@ namespace Health.Site.Models
         /// <summary>
         /// DI ядро.
         /// </summary>
-        public IDIKernel DIKernel { get; set; }
+        [NotMapped]
+        protected IDIKernel DIKernel { get; set; }
 
         /// <summary>
         /// Центральное ядро приложения.
         /// </summary>
-        public ICoreKernel CoreKernel { get; set; }
+        [NotMapped]
+        protected ICoreKernel CoreKernel { get; set; }
     }
 }
