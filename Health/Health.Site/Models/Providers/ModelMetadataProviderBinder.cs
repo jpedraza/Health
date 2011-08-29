@@ -156,8 +156,25 @@ namespace Health.Site.Models.Providers
                             return provider_cache.Provider;
                         }
                     }
-                    var configuration_provider = (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
-                    var provider = Activator.CreateInstance(binding_model.ProviderType, configuration_provider, this) as AssociatedMetadataProvider;
+                    IMetadataConfigurationProvider configuration_provider;
+                    AssociatedMetadataProvider provider;
+                    foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
+                    {
+                        if (configuration_cache.ConfigurationType == binding_model.ConfigurationType)
+                        {
+                            configuration_provider = configuration_cache.ConfigurationProvider;
+                            provider = Activator.CreateInstance(binding_model.ProviderType, configuration_provider, this) as AssociatedMetadataProvider;
+                            ProviderCache.Add(new MetadataProviderCache
+                                                  {
+                                                      ConfigurationType = binding_model.ConfigurationType,
+                                                      ProviderType = binding_model.ProviderType,
+                                                      Provider = provider
+                                                  });
+                            return provider;
+                        }
+                    }
+                    configuration_provider = (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
+                    provider = Activator.CreateInstance(binding_model.ProviderType, configuration_provider, this) as AssociatedMetadataProvider;
                     return provider;
                 }
             }
@@ -231,6 +248,20 @@ namespace Health.Site.Models.Providers
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Добавляет новый провайдер конфигурации в кэш.
+        /// Использовать в том случае, если провайдер конфигурации не имеет стандартного конструктора.
+        /// </summary>
+        /// <param name="configuration_provider">Провайдер конфигурации.</param>
+        public void AddConfigurationProvider(IMetadataConfigurationProvider configuration_provider)
+        {
+            ConfigurationCache.Add(new MetadataConfigurationCache
+                                       {
+                                           ConfigurationType = configuration_provider.GetType(),
+                                           ConfigurationProvider = configuration_provider
+                                       });
         }
     }
 }

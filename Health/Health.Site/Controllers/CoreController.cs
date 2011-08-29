@@ -16,7 +16,7 @@ namespace Health.Site.Controllers
     /// </summary>
     public abstract class CoreController : Controller
     {
-        protected ICoreKernel _coreKernel;
+        private ICoreKernel _coreKernel;
 
         protected CoreController(IDIKernel di_kernel)
         {

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<model>
+  <property name="Name">
+    <metadata name="DisplayName" value="Some name for popety name" />
+    <metadata name="ShowForEdit" value="true" />
+    <rule type="Health.Site.Models.Rules.RangeValidatorConfig, Health.Site">
+      <config name="Min" value="-100" />
+      <config name="Max" value="100" />
+      <config name="Message" value="Значение параметра должно умещаться в диапазон" />
+    </rule>
+  </property>
+</model>

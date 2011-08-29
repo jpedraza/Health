@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Health.Core.Entities.POCO;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
 using Health.Site.Models;
+using Health.Site.Models.Configuration;
+using Health.Site.Models.Configuration.Providers;
+using Health.Site.Models.Providers;
 
 namespace Health.Site
 {
@@ -61,6 +65,25 @@ namespace Health.Site
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            ModelProvider();
+        }
+
+        /// <summary>
+        /// Регистрация провайдеров метаданных.
+        /// </summary>
+        public void ModelProvider()
+        {
+            var binder = new ModelMetadataProviderBinder();
+            
+            binder.AddConfigurationProvider(new XmlMetadataConfigurationProvider(Server.MapPath("~/App_Data/ModelMetadata/")));
+
+            binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, XmlMetadataConfigurationProvider>();
+            binder.Bind<Patient>().To<ModelMetadataProviderAdapter, SubClassMetadataConfigurationProvider>();
+
+            var manager = new ModelMetadataProviderManager(binder);
+            ModelMetadataProviders.Current = manager;
+            ModelValidatorProviders.Providers.Clear();
+            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(binder));
         }
     }
 }

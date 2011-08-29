@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
 using Health.Core.Entities.POCO;
 using Health.Site.Models.Rules;
 
-namespace Health.Site.Models.Configuration
+namespace Health.Site.Models.Configuration.Providers
 {
     /// <summary>
     /// Поставщик метаданных модели напрямую из класса.

@@ -165,8 +165,9 @@
     <Compile Include="Models\Configuration\ModelMetadataPropertyConfiguration.cs" />
     <Compile Include="Models\Configuration\IMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\ModelMetadataConfiguration.cs" />
-    <Compile Include="Models\Configuration\ClassMetadataConfigurationProvider.cs" />
-    <Compile Include="Models\Configuration\SubClassMetadataConfigurationProvider.cs" />
+    <Compile Include="Models\Configuration\Providers\ClassMetadataConfigurationProvider.cs" />
+    <Compile Include="Models\Configuration\Providers\SubClassMetadataConfigurationProvider.cs" />
+    <Compile Include="Models\Configuration\Providers\XmlMetadataConfigurationProvider.cs" />
     <Compile Include="Models\CoreViewModel.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\ErrorViewModel.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Factory\RenderingFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ModelMetadata\TestModel.Model.xml" />
     <Content Include="App_Readme\Glimpse.Elmah.Readme.txt" />
     <Content Include="App_Readme\glimpse.mvc3.readme.txt" />
     <Content Include="App_Readme\glimpse.readme.txt" />
@@ -280,7 +282,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Schedule\Views\Shared\" />

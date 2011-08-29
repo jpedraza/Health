@@ -16,6 +16,7 @@ using Health.Site.Filters;
 using Health.Site.Models;
 using Health.Site.Models.Binders;
 using Health.Site.Models.Configuration;
+using Health.Site.Models.Configuration.Providers;
 using Health.Site.Models.Providers;
 using Health.Site.Repository;
 using Microsoft.Practices.ServiceLocation;
@@ -47,7 +48,6 @@ namespace Health.Site.App_Start
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
             _bootstrapper.Initialize(CreateKernel);
             ModelToBinder();
-            ModelProvider();
         }
 
         /// <summary>
@@ -56,21 +56,6 @@ namespace Health.Site.App_Start
         public static void ModelToBinder()
         {
             ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
-        }
-
-        /// <summary>
-        /// Регистрация провайдеров метаданных.
-        /// </summary>
-        public static void ModelProvider()
-        {
-            var binder = new ModelMetadataProviderBinder();
-
-            binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, ClassMetadataConfigurationProvider>();
-            binder.Bind<Patient>().To<ModelMetadataProviderAdapter, SubClassMetadataConfigurationProvider>();
-
-            var manager = new ModelMetadataProviderManager(binder);
-            ModelMetadataProviders.Current = manager;
-            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(binder));
         }
 
         /// <summary>

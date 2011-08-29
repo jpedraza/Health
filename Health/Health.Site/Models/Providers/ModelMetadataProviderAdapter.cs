@@ -118,7 +118,7 @@ namespace Health.Site.Models.Providers
                     else
                     {
                         // создаем провайдер потипу модели...
-                        AssociatedMetadataProvider provider = Binder.ResolveProvider(meta.Type) ?? this;
+                        AssociatedMetadataProvider provider = Binder.ResolveProvider(meta.Type) ?? new EmptyModelMetadataProvider();
                         // создаем метаданные...
                         model_metadata = new ModelMetadata(provider, container_type, null, meta.Type, property_name);    
                     }

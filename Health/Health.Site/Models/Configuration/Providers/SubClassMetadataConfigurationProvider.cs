@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using Health.Core.Entities.POCO;
 using Health.Site.Models.Rules;
 
-namespace Health.Site.Models.Configuration
+namespace Health.Site.Models.Configuration.Providers
 {
     public class SubClassMetadataConfigurationProvider : IMetadataConfigurationProvider
     {
@@ -45,6 +43,7 @@ namespace Health.Site.Models.Configuration
                                                             "Card", new ModelMetadataPropertyConfiguration
                                                                         {
                                                                             DisplayName = "some name for card",
+                                                                            ShowForEdit = true,
                                                                             IsRequired = true,
                                                                             DataTypeName =
                                                                                 DataType.EmailAddress.ToString(),
