@@ -18,6 +18,9 @@ namespace Health.Site.Models.Providers
         /// </summary>
         protected IMetadataConfigurationProvider ConfigurationProvider { get; set; }
 
+        /// <summary>
+        /// Биндер.
+        /// </summary>
         protected ModelMetadataProviderBinder Binder { get; set; }
 
         public ModelMetadataProviderAdapter(IMetadataConfigurationProvider configuration_provider, ModelMetadataProviderBinder binder)
@@ -54,7 +57,7 @@ namespace Health.Site.Models.Providers
                 // если есть метаданные...
                 if (meta != null)
                 {
-                    // если метаданные имеют родительский тип...
+                    // если метаданные не имеют родительского типа...
                     if (meta.ParentType == null)
                     {
                         // получаем все свойства конйигурационной модели...
@@ -114,9 +117,12 @@ namespace Health.Site.Models.Providers
                             }
                         }
                     }
+                    // если метаданные имеют родительский тип...
                     else
                     {
+                        // создаем провайдер потипу модели...
                         AssociatedMetadataProvider provider = Binder.ResolveProvider(meta.ParentType) ?? this;
+                        // создаем метаданные...
                         model_metadata = new ModelMetadata(provider, container_type, null, meta.ParentType, property_name);    
                     }
                 }

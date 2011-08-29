@@ -10,8 +10,14 @@ using Health.Site.Models.Rules;
 
 namespace Health.Site.Models.Providers
 {
+    /// <summary>
+    /// Провайдер валидации моделей.
+    /// </summary>
     public class ModelValidatorProviderAdapter : AssociatedValidatorProvider
     {
+        /// <summary>
+        /// Биндер.
+        /// </summary>
         protected ModelMetadataProviderBinder Binder { get; set; }
 
         public ModelValidatorProviderAdapter(ModelMetadataProviderBinder binder)
