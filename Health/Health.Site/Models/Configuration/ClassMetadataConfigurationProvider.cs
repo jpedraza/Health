@@ -49,6 +49,8 @@ namespace Health.Site.Models.Configuration
                                                             "Name", new ModelMetadataPropertyConfiguration
                                                                         {
                                                                             DisplayName = "some name",
+                                                                            ShowForDisplay = true,
+                                                                            ShowForEdit = true,
                                                                             IsRequired = true,
                                                                             DataTypeName =
                                                                                 DataType.EmailAddress.ToString(),
@@ -72,8 +74,7 @@ namespace Health.Site.Models.Configuration
                                                             },
                                                             {"Patient", new ModelMetadataPropertyConfiguration
                                                                             {
-                                                                                ConfType = typeof(SubClassMetadataConfigurationProvider),
-                                                                                ParentType = typeof(Patient)
+                                                                                Type = typeof(Patient)
                                                                             }}
                                                     }
                                };

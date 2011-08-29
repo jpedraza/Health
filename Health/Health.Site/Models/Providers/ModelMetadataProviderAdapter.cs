@@ -58,7 +58,7 @@ namespace Health.Site.Models.Providers
                 if (meta != null)
                 {
                     // если метаданные не имеют родительского типа...
-                    if (meta.ParentType == null)
+                    if (meta.Type == null)
                     {
                         // получаем все свойства конйигурационной модели...
                         PropertyInfo[] property_infos = typeof (ModelMetadataPropertyConfiguration).GetProperties();
@@ -66,51 +66,48 @@ namespace Health.Site.Models.Providers
                         // обходим свойства...
                         foreach (PropertyInfo property_info in property_infos)
                         {
-                            if (property_info.Name != "ParentType" && property_info.Name != "ConfType")
+                            // получаем соответствующее свойство из класса метаданных модели...
+                            var metadata_property = typeof (ModelMetadata).GetProperty(property_info.Name);
+
+                            if (metadata_property != null)
                             {
-                                // получаем соответствующее свойство из класса метаданных модели...
-                                var metadata_property = typeof (ModelMetadata).GetProperty(property_info.Name);
-
-                                if (!String.IsNullOrEmpty(property_info.Name) && property_info.Name != "ValidatorRule")
+                                // если это не словарь дополнительных параметров...
+                                if (property_info.PropertyType != typeof (Dictionary<string, object>))
                                 {
-                                    // если это не словарь дополнительных параметров...
-                                    if (property_info.PropertyType != typeof (Dictionary<string, object>))
-                                    {
-                                        // получаем значение свойства из провайдера конфигурации...
-                                        object value = Convert.ChangeType(
-                                            typeof (ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
-                                                GetValue
-                                                (meta, null),
-                                            metadata_property.PropertyType);
+                                    // получаем значение свойства из провайдера конфигурации...
+                                    object value = Convert.ChangeType(
+                                        typeof (ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
+                                            GetValue
+                                            (meta, null),
+                                        metadata_property.PropertyType);
 
-                                        // заносим значение в иетаданные модели.
-                                        metadata_property.SetValue(model_metadata, value, null);
-                                    }
-                                        // в ином случае...
-                                    else
+                                    // заносим значение в иетаданные модели.
+                                    metadata_property.SetValue(model_metadata, value, null);
+                                }
+                                    // в ином случае...
+                                else
+                                {
+                                    // получаем словарь дополнительных метаданных из провайдера конфигурации...
+                                    var additional_val =
+                                        typeof (ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
+                                            GetValue
+                                            (meta, null)
+                                        as
+                                        Dictionary<string, object>;
+
+                                    if (additional_val != null)
                                     {
-                                        // получаем словарь дополнительных метаданных из провайдера конфигурации...
-                                        var additional_val =
-                                            typeof (ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
-                                                GetValue
-                                                (meta, null)
-                                            as
+                                        // получаем словарь дополнительных метаданных из метаданных модели...
+                                        var values =
+                                            metadata_property.GetValue(model_metadata, null) as
                                             Dictionary<string, object>;
 
-                                        if (additional_val != null)
+                                        // обходим...
+                                        foreach (KeyValuePair<string, object> key_value_pair in additional_val)
                                         {
-                                            // получаем словарь дополнительных метаданных из метаданных модели...
-                                            var values =
-                                                metadata_property.GetValue(model_metadata, null) as
-                                                Dictionary<string, object>;
-
-                                            // обходим...
-                                            foreach (KeyValuePair<string, object> key_value_pair in additional_val)
-                                            {
-                                                // заносим в словарь.
-                                                if (values != null)
-                                                    values.Add(key_value_pair.Key, key_value_pair.Value);
-                                            }
+                                            // заносим в словарь.
+                                            if (values != null)
+                                                values.Add(key_value_pair.Key, key_value_pair.Value);
                                         }
                                     }
                                 }
@@ -121,9 +118,9 @@ namespace Health.Site.Models.Providers
                     else
                     {
                         // создаем провайдер потипу модели...
-                        AssociatedMetadataProvider provider = Binder.ResolveProvider(meta.ParentType) ?? this;
+                        AssociatedMetadataProvider provider = Binder.ResolveProvider(meta.Type) ?? this;
                         // создаем метаданные...
-                        model_metadata = new ModelMetadata(provider, container_type, null, meta.ParentType, property_name);    
+                        model_metadata = new ModelMetadata(provider, container_type, null, meta.Type, property_name);    
                     }
                 }
             }

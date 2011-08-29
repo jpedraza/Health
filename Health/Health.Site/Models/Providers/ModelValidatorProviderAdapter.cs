@@ -40,7 +40,7 @@ namespace Health.Site.Models.Providers
             {
                 var config = Binder.ResolveConfiguration(metadata.ContainerType).GetMetadata(metadata.ContainerType,
                                                                                              metadata.PropertyName);
-                if (config != null)
+                if (config != null && config.ValidatorRule != null && config.ValidatorRule.Count > 0)
                 {
                     var model_validator =
                         new RangeValidatorRule().Create(

@@ -86,6 +86,8 @@ namespace Health.Site.Models.Providers
         public ModelMetadataProviderBinder()
         {
             Binding = new List<MetadataProviderBindingModel>();
+            ProviderCache = new List<MetadataProviderCache>();
+            ConfigurationCache = new List<MetadataConfigurationCache>();
         }
 
         /// <summary>
