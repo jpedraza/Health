@@ -69,6 +69,7 @@
     <Compile Include="Entities\POCO\Abstract\ISchedule.cs" />
     <Compile Include="Entities\POCO\Candidate.cs" />
     <Compile Include="Entities\DefaultRoles.cs" />
+    <Compile Include="Entities\POCO\CustomMeta.cs" />
     <Compile Include="Entities\POCO\DefaultSchedule.cs" />
     <Compile Include="Entities\POCO\Diagnosis.cs" />
     <Compile Include="Entities\POCO\Abstract\IEntity.cs" />

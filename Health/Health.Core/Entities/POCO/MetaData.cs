@@ -1,10 +1,13 @@
-﻿namespace Health.Core.Entities.POCO
+﻿using System.Collections.Generic;
+using System;
+namespace Health.Core.Entities.POCO
 {
     /// <summary>
     /// Описывает мета-данные параметра (характеристики параметра здоровья)
     /// </summary>
     public class MetaData
     {
+        //Dictionary<string, CustomMeta> metadata;
         /// <summary>
         /// Показывает, есть ли на данный параметр варианты ответа
         /// </summary>
@@ -18,7 +21,7 @@
         /// <summary>
         /// Номер категории 
         /// </summary>
-        public int Id_cat { get; set; }
+        public Nullable<int> Id_cat { get; set; }
 
         /// <summary>
         /// Обязательно или нет заполнять данный параметр, подавать или нет его в первичной анкете
@@ -28,7 +31,7 @@
         /// <summary>
         /// Частота, с которой  необходимо заполнять данный параметр
         /// </summary>
-        public double period { get; set; }
+        public Nullable<double> period { get; set; }
 
         /// <summary>
         /// Есть ли подпараметр?
@@ -38,10 +41,11 @@
         /// <summary>
         /// Показывает для данного параметра, параметр-родитель. В случае если это есть самостоятельный параметр, равно null.
         /// </summary>
-        public int Id_parent { get; set; }
+        public Nullable<int> Id_parent { get; set; }
         /// <summary>
         /// Хранит варианты ответа на вопросы. Если Is_var == false, равно 0
         /// </summary>
         public Variant[] Variants { get; set; }
+
     }
 }

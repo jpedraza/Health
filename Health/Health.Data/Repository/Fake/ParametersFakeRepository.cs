@@ -5,6 +5,7 @@ using Health.Core.API.Repository;
 using Health.Core.Entities;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.POCO.Abstract;
+using System;
 
 namespace Health.Data.Repository.Fake
 {
@@ -24,10 +25,10 @@ namespace Health.Data.Repository.Fake
                     Id_cat = 1,
                     Is_var = false,
                     Obligation = true,
-                    period = 0,
+                    period = null,
                     Is_childs = true,
                     Age = 0,
-                    Id_parent = 0,
+                    Id_parent = null,
                     Variants = null
                 }
             });
@@ -39,10 +40,10 @@ namespace Health.Data.Repository.Fake
                 Id = 2,
                 MetaData = new MetaData
                 {
-                    Id_cat = 0,
+                    Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = 0,
+                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -79,10 +80,10 @@ namespace Health.Data.Repository.Fake
                 Id = 3,
                 MetaData = new MetaData
                 {
-                    Id_cat = 0,
+                    Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = 0,
+                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -119,10 +120,10 @@ namespace Health.Data.Repository.Fake
                 Id = 4,
                 MetaData = new MetaData
                 {
-                    Id_cat = 0,
+                    Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = 0,
+                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -159,10 +160,10 @@ namespace Health.Data.Repository.Fake
                 Id = 5,
                 MetaData = new MetaData
                 {
-                    Id_cat = 0,
+                    Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = 0,
+                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -195,18 +196,18 @@ namespace Health.Data.Repository.Fake
 
         #region Members
 
-            public Parameter[] GetAllParam()
+        public IList<Parameter> GetAllParam()
             {
-                Parameter[] requieredParameters;
+                IList<Parameter> requieredParameters;
                 IEnumerable<Parameter> found_parameter = (from parameter in _entities
                                                            select parameter).ToList();
                 if (found_parameter.Count() != 0)
                 {
-                    requieredParameters = new Parameter[found_parameter.Count()];
-                    for (int i = 0; i < found_parameter.Count(); i++)
+                    requieredParameters = found_parameter.ToList<Parameter>();
+                    /*for (int i = 0; i < found_parameter.Count(); i++)
                     {
                         requieredParameters[i] = found_parameter.ElementAt(i);
-                    }
+                    }*/
                 }
                 else
                 {
@@ -270,7 +271,7 @@ namespace Health.Data.Repository.Fake
                 var res = false;
                 try
                 {
-                    this.Delete(Param.Id);
+                    this.DeleteParam(Param.Id);
                     res = Save(Param);
                 }
                 catch (System.Exception)
@@ -281,7 +282,7 @@ namespace Health.Data.Repository.Fake
             }
             
             //Этот метод удаления параметра через его Id необходим для нормальной реализации метода редактирования. По возможности от него избавится.
-            public bool Delete(int Id)
+            public bool DeleteParam(int Id)
             {
                 Parameter requieredParameter = default(Parameter);
                 var res = false;
@@ -300,7 +301,7 @@ namespace Health.Data.Repository.Fake
                 return res;
             }
 
-            public bool Delete(Parameter Param)
+            public bool DeleteParam(Parameter Param)
             {
                 var res = false;
                 try

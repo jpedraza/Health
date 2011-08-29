@@ -1,5 +1,7 @@
 ﻿using Health.Core.Entities;
 using Health.Core.Entities.POCO;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Health.Core.API.Repository
 {
@@ -26,7 +28,7 @@ namespace Health.Core.API.Repository
         /// Получить все параметры здоровья
         /// </summary>
         /// <returns>Все параметры здоровья человека/</returns>
-        Parameter[] GetAllParam();
+        IList<Parameter> GetAllParam();
 
         /// <summary>
         /// Добавить новый параметр здоровья человека
@@ -40,7 +42,8 @@ namespace Health.Core.API.Repository
         /// </summary>
         /// /// <param name="Id">Id параметра.</param>
         /// <returns>Результат удаления нового параметра</returns>
-        bool Delete(int Id);
+        bool DeleteParam(int Id);
+        bool DeleteParam(Parameter param);
 
         /// <summary>
         /// Редактировать параметр здоровья человека
