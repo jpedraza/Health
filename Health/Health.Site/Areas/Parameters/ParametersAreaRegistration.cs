@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Linq;
 
 namespace Health.Site.Areas.Parameters
 {
@@ -16,10 +17,10 @@ namespace Health.Site.Areas.Parameters
         {
             context.MapRoute(
                 "Parameters_default",
-                "Parameters/{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                new[] { "Health.Site.Areas.Parameters.Controllers" }
+                "Parameters/{controller}/{action}",
+                new { controller = "Home", action = "Index"}
             );
+
         }
     }
 }
