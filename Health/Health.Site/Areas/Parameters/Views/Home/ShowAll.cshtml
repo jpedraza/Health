@@ -1,48 +1,107 @@
 ﻿@model Health.Site.Areas.Parameters.Models.ParametersViewModel
 
 @{
-    ViewBag.Title = "ShowAll";
-    
+    ViewBag.Title = "ShowAll";    
 }
 
-<h2>Таблица просмотра всех параметров</h2>
-<table border="1" cellspacing="1">
+@helper ShowParameter (Health.Core.Entities.POCO.Parameter parameter)
+{
+   <td>
+   <p>Id = 
+   @parameter.Id</p>
 
-    @foreach (var item in Model.parameters)
+   <p>Name: 
+   @parameter.Name</p>
+
+   <p>DefaultValue = 
+   @parameter.DefaultValue</p>
+
+   <p>Value = 
+   @parameter.Value</p>
+   </td>
+    @ShowMetaData(parameter.MetaData)
+}
+
+@helper ShowMetaData(Health.Core.Entities.POCO.MetaData metadata)
+{
+    <td>
+    @if(metadata.Id_parent == null)
     {
-        <tr><td style='font-weight: bold; font-size: 16pt;'>
+        <p>Категория: 
+        @metadata.Id_cat</p>
+
+        <p>Возраст: 
+        @metadata.Age</p>
+
+        <p>Обязат. : 
+        @metadata.Obligation.ToString()</p>
+
+        <p>Период: 
+        @if(metadata.period == null)
+        {
+            __razor_helper_writer.WriteLine("Нет");           
+        }
+        else
+        {
+            @metadata.period            
+        }
+            </p>
+        <p>Варианты: 
+        @if(metadata.Is_var)
+        {
+            __razor_helper_writer.WriteLine("Есть");
+        }
+        else
+        {
+            __razor_helper_writer.WriteLine("Нет");
+        }
+        </p>
         
-        @Html.DisplayFor(i => item.Name);
-        </td></tr><tr><td>
-        Meta-data: 
-         @if (item.MetaData.Id_parent == null)
-         {
-             <p>Категория</p>
-             @Html.DisplayFor(j => item.MetaData.Id_cat)
-             <br/>
-             
-             <p>Обязательность</p>
-             @Html.DisplayFor(с => item.MetaData.Obligation)
-             <br/>
-             
-             <p>Период -</p>
-             if (item.MetaData.period == null)
-             {
-                <p>Нет</p>
-             }
-             else
-             {
-                 @Html.DisplayFor(d => item.MetaData.period)
-             }
-             <br /></td>
-             
-         }
-       </tr>
+        <p>Подпараметры: 
+        @if(metadata.Is_childs)
+        {
+            __razor_helper_writer.WriteLine("Есть");
+        }
+        else
+        {
+            __razor_helper_writer.WriteLine("Нет");
+        }
+        </p>
+    }
+    else
+    {
+        __razor_helper_writer.WriteLine("Является подпараметром.");
+    }
+    </td>
+     <td>
+        @if(metadata.Is_var)
+        {
+            __razor_helper_writer.WriteLine("Варианты ответа: ");
+            @ShowVariant(metadata.Variants)
+        }
+        </td> 
+    
+}
+@helper ShowVariant(Health.Core.Entities.POCO.Variant[] vars)
+{
+    foreach(var item2 in vars)
+    {
+        <p>@item2.Value
+         - 
+        @item2.Ball
+         баллов
+        </p>
     }
     
-
-
-    
-
-    
+}
+<h2>Таблица просмотра всех параметров</h2>
+<table border="1" cellspacing="1">
+@foreach (var item in Model.parameters)
+{
+   
+   <tr> 
+   @ShowParameter(item)
+   Helper
+   </tr>
+}
 </table>
