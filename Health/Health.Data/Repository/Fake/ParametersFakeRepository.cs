@@ -204,10 +204,6 @@ namespace Health.Data.Repository.Fake
                 if (found_parameter.Count() != 0)
                 {
                     requieredParameters = found_parameter.ToList<Parameter>();
-                    /*for (int i = 0; i < found_parameter.Count(); i++)
-                    {
-                        requieredParameters[i] = found_parameter.ElementAt(i);
-                    }*/
                 }
                 else
                 {
@@ -233,11 +229,11 @@ namespace Health.Data.Repository.Fake
                 return requieredParameter;
             }
 
-            public Parameter GetByValue(string value)
+            public Parameter GetByValue(string Name)
             {
                 Parameter requieredParameter = default(Parameter);
                 IEnumerable<Parameter> found_parameter = (from parameter in _entities
-                                                          where parameter.Name == value
+                                                          where parameter.Name == Name
                                                           select parameter).ToList();
                 if (found_parameter.Count() == 1)
                 {

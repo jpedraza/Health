@@ -13,9 +13,9 @@ namespace Health.Core.API.Repository
         /// <summary>
         /// Получить параметр по его названию.
         /// </summary>
-        /// <param name="value">Название параметра/</param>
+        /// <param name="Name">Название параметра/</param>
         /// <returns>Параметр здоровья с заданным названием/</returns>
-        Parameter GetByValue(string value);
+        Parameter GetByValue(string Name);
 
         /// <summary>
         /// Получить параметр по его Id.

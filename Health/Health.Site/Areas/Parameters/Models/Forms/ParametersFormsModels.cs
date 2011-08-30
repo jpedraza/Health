@@ -32,11 +32,55 @@ namespace Health.Site.Areas.Parameters.Models.Forms
         /// <summary>
         /// Есть ли подпараметры
         /// </summary>
+        public bool Is_param { get; set; }
+
+        /// <summary>
+        /// Является ли подпараметром
+        /// </summary>
         public bool Is_childs { get; set; }
 
         /// <summary>
         /// Есть ли варианты ответа
         /// </summary>
         public bool Is_var { get; set; }
+    }
+
+    /// <summary>
+    /// Вторая стадия добавления нового параметра
+    /// </summary>
+    public class NextAddFormModel
+    {
+        /// <summary>
+        /// Возраст
+        /// </summary>
+        [Required(ErrorMessage = "Введите, пожалуйста, возраст")]
+        public string Age { get; set; }
+
+        /// <summary>
+        /// Обязателен ли к заполнению?
+        /// </summary>
+        public bool Obligation { get; set; }
+
+        /// <summary>
+        /// Период заполнения
+        /// </summary>
+        [Required(ErrorMessage = "Введите, пожалуйста, период")]
+        public string Period { get; set; }
+
+        /// <summary>
+        /// Число вариантов (если есть)
+        /// </summary>
+        public int NumVariant { get; set; }
+    }
+
+    /// <summary>
+    /// Форма для добавления вариантов ответа на вопросы
+    /// </summary>
+    public class VarFormModel
+    {
+        /// <summary>
+        /// Возраст
+        /// </summary>
+        public IList<string> variants { get; set; }
     }
 }

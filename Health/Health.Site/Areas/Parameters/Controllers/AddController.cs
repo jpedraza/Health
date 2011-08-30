@@ -32,5 +32,25 @@ namespace Health.Site.Areas.Parameters.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult NextAdd([Bind(Include = "StartAddForm")] ParametersViewModel form_model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                if (form_model != null && form_model.StartAddForm != null)
+                {
+                    var Model =  form_model.StartAddParameter(form_model.StartAddForm.Name, form_model.StartAddForm.Value, form_model.StartAddForm.DefaultValue, form_model.StartAddForm.Is_childs, form_model.StartAddForm.Is_var, form_model.StartAddForm.Is_param, CoreKernel.ParamRepo);
+                    return View(new ParametersViewModel { 
+                    parameters = Model.parameters,
+                    NewParam = Model.NewParam
+                    });
+                }
+                else
+                    RedirectTo<AddController>(a => a.Index(form_model));
+            }
+
+            return View();
+        }
     }
 }
