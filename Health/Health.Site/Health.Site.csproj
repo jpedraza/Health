@@ -121,7 +121,9 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\AdminViewModel.cs" />
+    <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Parameters\Models\Forms\ParametersFormsModels.cs" />
     <Compile Include="Areas\Parameters\Models\ParametersViewModel.cs" />
     <Compile Include="Areas\Parameters\ParametersAreaRegistration.cs" />
     <Compile Include="Areas\Schedule\Controllers\DefaultController.cs" />
@@ -256,7 +258,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Parameters\Models\Forms\" />
     <Folder Include="Areas\Parameters\Views\Shared\" />
     <Folder Include="Areas\Schedule\Views\Shared\" />
   </ItemGroup>
@@ -297,6 +298,7 @@
     <Content Include="Areas\Parameters\Views\Home\Index.cshtml" />
     <Content Include="Areas\Parameters\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Parameters\Views\Home\ShowAll.cshtml" />
+    <Content Include="Areas\Parameters\Views\Add\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

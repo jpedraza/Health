@@ -5,6 +5,6 @@
 <h2>Проект редактирования параметров здоровья человека</h2>
 <p>Здесь можно создать новые параметры, редактировать и удалять существующие.</p>
 @{
-    @Html.RouteLink("Просмотреть все параметры", new { area = "Parameters", controller = "Home", action = "ShowAll" });
-
+    <p>@Html.RouteLink("Просмотреть все параметры", new { area = "Parameters", controller = "Home", action = "ShowAll" }) </p>
+    <p>@Html.RouteLink("Добавить новый параметр", new { area = "Parameters", controller = "Add", action = "Index" })</p>
 }
