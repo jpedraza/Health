@@ -165,22 +165,30 @@
     <Compile Include="Models\Configuration\ModelMetadataPropertyConfiguration.cs" />
     <Compile Include="Models\Configuration\IMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\ModelMetadataConfiguration.cs" />
+    <Compile Include="Models\Configuration\Providers\BinaryMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\Providers\ClassMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\Providers\SubClassMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\Providers\XmlMetadataConfigurationProvider.cs" />
+    <Compile Include="Models\Configuration\Providers\SimpleClassMetadataConfigurationProvider.cs" />
     <Compile Include="Models\CoreViewModel.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
     <Compile Include="Helpers\Classes\MenuElement.cs" />
+    <Compile Include="Models\Metadata\TestModelMetadata.cs" />
     <Compile Include="Models\Providers\ModelMetadataProviderAdapter.cs" />
     <Compile Include="Models\Providers\ModelMetadataProviderManager.cs" />
     <Compile Include="Models\Providers\ModelMetadataProviderBinder.cs" />
     <Compile Include="Models\Providers\ModelValidatorProviderAdapter.cs" />
+    <Compile Include="Models\Rules\CustomValidatorRule.cs" />
     <Compile Include="Models\Rules\IModelValidatorRule.cs" />
     <Compile Include="Models\Rules\IValidatorRuleConfig.cs" />
+    <Compile Include="Models\Rules\ModelValidatorRule.cs" />
     <Compile Include="Models\Rules\RangeValidatorRule.cs" />
+    <Compile Include="Models\Rules\RegularExpressionRule.cs" />
+    <Compile Include="Models\Rules\StringLengthValidatorRule.cs" />
     <Compile Include="Models\TestModel.cs" />
+    <Compile Include="Models\Validators\TestModelValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CookieRepository.cs" />
     <Compile Include="Repository\SessionRepository.cs" />
@@ -322,7 +330,6 @@
     <Content Include="Areas\Schedule\Views\Default\_DefaultTableControl.cshtml" />
     <Content Include="Areas\Schedule\Views\Default\Edit.cshtml" />
     <Content Include="Areas\Schedule\Views\Default\_DefaultEditFormControl.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\ViewPage1.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

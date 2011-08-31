@@ -77,7 +77,7 @@ namespace Health.Site
             
             binder.AddConfigurationProvider(new XmlMetadataConfigurationProvider(Server.MapPath("~/App_Data/ModelMetadata/")));
 
-            binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, XmlMetadataConfigurationProvider>();
+            binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, ClassMetadataConfigurationProvider>();
             binder.Bind<Patient>().To<ModelMetadataProviderAdapter, SubClassMetadataConfigurationProvider>();
 
             var manager = new ModelMetadataProviderManager(binder);

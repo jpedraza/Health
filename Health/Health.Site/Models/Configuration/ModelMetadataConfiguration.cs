@@ -9,6 +9,7 @@ namespace Health.Site.Models.Configuration
     /// <summary>
     /// Класс конфигурации метаданных для каждого свойства модели.
     /// </summary>
+    [Serializable]
     public class ModelMetadataConfiguration
     {
         /// <summary>

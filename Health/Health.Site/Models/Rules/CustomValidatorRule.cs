@@ -8,11 +8,11 @@ using System.Web.Mvc;
 namespace Health.Site.Models.Rules
 {
     [Serializable]
-    public class RangeValidatorConfig : IValidatorRuleConfig
+    public class CustomValidatorConfig : IValidatorRuleConfig
     {
-        public double Min { get; set; }
+        public Type ClassType { get; set; }
 
-        public double Max { get; set; }
+        public string MethodName { get; set; }
 
         #region Implementation of IValidatorRuleConfig
 
@@ -21,23 +21,23 @@ namespace Health.Site.Models.Rules
         #endregion
     }
 
-    public class RangeValidatorRule : ModelValidatorRule, IModelValidatorRule
+    public class CustomValidatorRule : ModelValidatorRule, IModelValidatorRule
     {
         #region Implementation of IModelValidatorRule
 
         public ModelValidator Create(IValidatorRuleConfig rule_config, ModelMetadata model_metadata, ControllerContext controller_context)
         {
-            if (rule_config is RangeValidatorConfig)
+            if (rule_config is CustomValidatorConfig)
             {
-                var config = rule_config as RangeValidatorConfig;
-                var attribute = new RangeAttribute(config.Min, config.Max)
+                var config = rule_config as CustomValidatorConfig;
+                var attribute = new CustomValidationAttribute(config.ClassType, config.MethodName)
                                     {
                                         ErrorMessage = config.ErrorMessage
                                     };
-                var adapter = new RangeAttributeAdapter(model_metadata, controller_context, attribute);
-                return adapter;
+                return new DataAnnotationsModelValidator<CustomValidationAttribute>(model_metadata, controller_context,
+                                                                                    attribute);
             }
-            throw GenerateConfigException(GetType(), typeof (RangeValidatorConfig), rule_config.GetType());
+            throw GenerateConfigException(GetType(), typeof (CustomValidatorConfig), rule_config.GetType());
         }
 
         #endregion

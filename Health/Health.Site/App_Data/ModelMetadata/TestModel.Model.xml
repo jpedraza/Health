@@ -1,12 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <model>
   <property name="Name">
-    <metadata name="DisplayName" value="Some name for popety name" />
-    <metadata name="ShowForEdit" value="true" />
+    <metadata name="DisplayName" value="Имя" />
     <rule type="Health.Site.Models.Rules.RangeValidatorConfig, Health.Site">
-      <config name="Min" value="-100" />
-      <config name="Max" value="100" />
-      <config name="Message" value="Значение параметра должно умещаться в диапазон" />
+      <param name="Min" value="-100" />
+      <param name="Max" value="100" />
+      <param name="ErrorMessage" value="Значение параметра должно умещаться в диапазон" />
     </rule>
+    <rule type="Health.Site.Models.Rules.StringLengthValidatorConfig, Health.Site">
+      <param name="MaximumLength" value="3" />
+      <param name="ErrorMessage" value="Длина больше чем нужно." />
+    </rule>
+    <rule type="Health.Site.Models.Rules.CustomValidatorConfig, Health.Site">
+      <param name="ClassType" value="Health.Site.Models.Validators.TestModelValidator" />
+      <param name="MethodName" value="ContainsA" />
+      <param name="ErrorMessage" value="В слове должно быть А." />
+    </rule>
+  </property>
+  <property name="Code">
+    <metadata name="DisplayName" value="Код" />
   </property>
 </model>

@@ -6,7 +6,10 @@ using Health.Site.Models.Rules;
 
 namespace Health.Site.Models.Configuration.Providers
 {
-    public class SubClassMetadataConfigurationProvider : IMetadataConfigurationProvider
+    /// <summary>
+    /// Поставщик метаданных модели напрямую из класса.
+    /// </summary>
+    public class SimpleClassMetadataConfigurationProvider : IMetadataConfigurationProvider
     {
         #region Implementation of IMetadataConfigurationProvider
 
@@ -18,7 +21,7 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Результат.</returns>
         public bool IsHaveMetadata(Type model_type, string property_name)
         {
-            if (model_type == typeof(Patient))
+            if (model_type == typeof (TestModel))
             {
                 return true;
             }
@@ -33,18 +36,19 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Метаданные для свойства.</returns>
         public ModelMetadataPropertyConfiguration GetMetadata(Type model_type, string property_name)
         {
-            if (model_type == typeof(Patient))
+            if (model_type == typeof(TestModel))
             {
                 var meta = new ModelMetadataConfiguration
-                {
-                    Properties = new Dictionary<string, ModelMetadataPropertyConfiguration>
+                               {
+                                   Properties = new Dictionary<string, ModelMetadataPropertyConfiguration>
                                                     {
                                                         {
-                                                            "Card", new ModelMetadataPropertyConfiguration
+                                                            "Name", new ModelMetadataPropertyConfiguration
                                                                         {
-                                                                            DisplayName = "some name for card",
+                                                                            DisplayName = "some name",
+                                                                            ShowForDisplay = true,
                                                                             ShowForEdit = true,
-                                                                            //IsRequired = true,
+                                                                            IsRequired = true,
                                                                             DataTypeName =
                                                                                 DataType.EmailAddress.ToString(),
                                                                             AdditionalValues =
@@ -66,7 +70,7 @@ namespace Health.Site.Models.Configuration.Providers
                                                                         }
                                                             }
                                                     }
-                };
+                               };
                 return meta.Properties.ContainsKey(property_name) ? meta.Properties[property_name] : null;
             }
             return null;

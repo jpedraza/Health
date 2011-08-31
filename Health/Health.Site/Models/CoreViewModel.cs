@@ -8,16 +8,5 @@ namespace Health.Site.Models
     /// </summary>
     public class CoreViewModel
     {
-        /// <summary>
-        /// DI ядро.
-        /// </summary>
-        [NotMapped]
-        protected IDIKernel DIKernel { get; set; }
-
-        /// <summary>
-        /// Центральное ядро приложения.
-        /// </summary>
-        [NotMapped]
-        protected ICoreKernel CoreKernel { get; set; }
     }
 }

@@ -81,7 +81,6 @@ namespace Health.Site.Controllers
         /// <param name="filter_context">Контекст ошибки.</param>
         protected override void OnException(ExceptionContext filter_context)
         {
-
             // Код ошибки по-умолчанию.
             int code_error = 500;
             string message;

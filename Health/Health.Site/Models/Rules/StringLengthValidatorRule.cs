@@ -8,11 +8,9 @@ using System.Web.Mvc;
 namespace Health.Site.Models.Rules
 {
     [Serializable]
-    public class RangeValidatorConfig : IValidatorRuleConfig
+    public class StringLengthValidatorConfig : IValidatorRuleConfig
     {
-        public double Min { get; set; }
-
-        public double Max { get; set; }
+        public int MaximumLength { get; set; }
 
         #region Implementation of IValidatorRuleConfig
 
@@ -21,23 +19,23 @@ namespace Health.Site.Models.Rules
         #endregion
     }
 
-    public class RangeValidatorRule : ModelValidatorRule, IModelValidatorRule
+    public class StringLengthValidatorRule : ModelValidatorRule, IModelValidatorRule
     {
         #region Implementation of IModelValidatorRule
 
         public ModelValidator Create(IValidatorRuleConfig rule_config, ModelMetadata model_metadata, ControllerContext controller_context)
         {
-            if (rule_config is RangeValidatorConfig)
+            if (rule_config is StringLengthValidatorConfig)
             {
-                var config = rule_config as RangeValidatorConfig;
-                var attribute = new RangeAttribute(config.Min, config.Max)
+                var config = rule_config as StringLengthValidatorConfig;
+                var attribute = new StringLengthAttribute(config.MaximumLength)
                                     {
                                         ErrorMessage = config.ErrorMessage
                                     };
-                var adapter = new RangeAttributeAdapter(model_metadata, controller_context, attribute);
+                var adapter = new StringLengthAttributeAdapter(model_metadata, controller_context, attribute);
                 return adapter;
             }
-            throw GenerateConfigException(GetType(), typeof (RangeValidatorConfig), rule_config.GetType());
+            throw GenerateConfigException(GetType(), typeof (StringLengthValidatorConfig), rule_config.GetType());
         }
 
         #endregion

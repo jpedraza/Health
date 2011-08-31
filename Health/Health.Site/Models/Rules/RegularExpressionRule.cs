@@ -8,11 +8,9 @@ using System.Web.Mvc;
 namespace Health.Site.Models.Rules
 {
     [Serializable]
-    public class RangeValidatorConfig : IValidatorRuleConfig
+    public class RegularExpressionValidatorConfig : IValidatorRuleConfig
     {
-        public double Min { get; set; }
-
-        public double Max { get; set; }
+        public string Pattern { get; set; }
 
         #region Implementation of IValidatorRuleConfig
 
@@ -21,23 +19,23 @@ namespace Health.Site.Models.Rules
         #endregion
     }
 
-    public class RangeValidatorRule : ModelValidatorRule, IModelValidatorRule
+    public class RegularExpressionValidatorRule : ModelValidatorRule, IModelValidatorRule
     {
-        #region Implementation of IModelValidatorRule
+        #region Implementation of IModelValidatorRule<in RegularExpressionValidatorConfig>
 
         public ModelValidator Create(IValidatorRuleConfig rule_config, ModelMetadata model_metadata, ControllerContext controller_context)
         {
-            if (rule_config is RangeValidatorConfig)
+            if (rule_config is RegularExpressionValidatorConfig)
             {
-                var config = rule_config as RangeValidatorConfig;
-                var attribute = new RangeAttribute(config.Min, config.Max)
+                var config = rule_config as RegularExpressionValidatorConfig;
+                var attribute = new RegularExpressionAttribute(config.Pattern)
                                     {
                                         ErrorMessage = config.ErrorMessage
                                     };
-                var adapter = new RangeAttributeAdapter(model_metadata, controller_context, attribute);
+                var adapter = new RegularExpressionAttributeAdapter(model_metadata, controller_context, attribute);
                 return adapter;
             }
-            throw GenerateConfigException(GetType(), typeof (RangeValidatorConfig), rule_config.GetType());
+            throw GenerateConfigException(GetType(), typeof (RegularExpressionValidatorConfig), rule_config.GetType());
         }
 
         #endregion

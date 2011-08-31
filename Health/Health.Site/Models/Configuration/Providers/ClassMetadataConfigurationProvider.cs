@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Web.Mvc;
 using Health.Core.Entities.POCO;
 using Health.Site.Models.Rules;
 
@@ -21,11 +24,7 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Результат.</returns>
         public bool IsHaveMetadata(Type model_type, string property_name)
         {
-            if (model_type == typeof (TestModel))
-            {
-                return true;
-            }
-            return false;
+            return model_type == typeof (TestModel);
         }
 
         /// <summary>
@@ -36,48 +35,30 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Метаданные для свойства.</returns>
         public ModelMetadataPropertyConfiguration GetMetadata(Type model_type, string property_name)
         {
-            if (model_type == typeof (TestModel))
+            string metadata_model_type_name = String.Format("Health.Site.Models.Metadata.{0}Metadata, Health.Site",
+                                                       model_type.Name);
+            Type metadata_model_type = Type.GetType(metadata_model_type_name);
+            var model_metadata = new ModelMetadataPropertyConfiguration();
+            if (metadata_model_type == null)
             {
-                var meta = new ModelMetadataConfiguration
-                               {
-                                   Properties = new Dictionary<string, ModelMetadataPropertyConfiguration>
-                                                    {
-                                                        {
-                                                            "Name", new ModelMetadataPropertyConfiguration
-                                                                        {
-                                                                            DisplayName = "some name",
-                                                                            ShowForDisplay = true,
-                                                                            ShowForEdit = true,
-                                                                            IsRequired = true,
-                                                                            DataTypeName =
-                                                                                DataType.EmailAddress.ToString(),
-                                                                            AdditionalValues =
-                                                                                new Dictionary<string, object>
-                                                                                    {
-                                                                                        {"some", 0}
-                                                                                    },
-                                                                            ValidatorRule =
-                                                                                new List<IValidatorRuleConfig>
-                                                                                    {
-                                                                                        new RangeValidatorConfig
-                                                                                            {
-                                                                                                Min = 0,
-                                                                                                Max = 100,
-                                                                                                Message =
-                                                                                                    "Значение должно умещаться в диапазон."
-                                                                                            }
-                                                                                    }
-                                                                        }
-                                                            },
-                                                            {"Patient", new ModelMetadataPropertyConfiguration
-                                                                            {
-                                                                                Type = typeof(Patient)
-                                                                            }}
-                                                    }
-                               };
-                return meta.Properties.ContainsKey(property_name) ? meta.Properties[property_name] : null;
+                return model_metadata;
             }
-            return null;
+            PropertyInfo[] properties = metadata_model_type.GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.Name != property_name)
+                {
+                    continue;
+                }
+                IList<Attribute> custom_attributes = new BindingList<Attribute>();
+                object[] attributes = property.GetCustomAttributes(true);
+                foreach (object attribute in attributes)
+                {
+                    custom_attributes.Add(attribute as Attribute);
+                }
+                model_metadata.Attributes = custom_attributes;
+            }
+            return model_metadata;
         }
 
         #endregion

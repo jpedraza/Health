@@ -10,17 +10,13 @@ namespace Health.Site.Models.Configuration
     /// <summary>
     /// Метаданные для конкретного свойства модели.
     /// </summary>
+    [Serializable]
     public class ModelMetadataPropertyConfiguration
     {
         /// <summary>
-        /// Родительский тип модели.
-        /// </summary>
-        public Type Type { get; set; }
-
-        /// <summary>
         /// Если от формы получена пустая строка она преобразуется в null.
         /// </summary>
-        public bool ConvertEmptyStringToNull { get; set; }
+        public bool ConvertEmptyStringToNull = true;
 
         /// <summary>
         /// Описание объекта.
@@ -60,12 +56,12 @@ namespace Health.Site.Models.Configuration
         /// <summary>
         /// Необходимо ли отображать объект.
         /// </summary>
-        public bool ShowForDisplay { get; set; }
+        public bool ShowForDisplay = true;
 
         /// <summary>
         /// Необходимо ли отображать объект в формах редактирования.
         /// </summary>
-        public bool ShowForEdit { get; set; }
+        public bool ShowForEdit = true;
 
         /// <summary>
         /// Текст который выводится вместо комплексного значения объекта.
@@ -106,6 +102,8 @@ namespace Health.Site.Models.Configuration
         /// Правила валидации для свойства.
         /// </summary>
         public IList<IValidatorRuleConfig> ValidatorRule { get; set; }
+
+        public IList<Attribute> Attributes { get; set; }
     }
 }
 

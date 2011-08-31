@@ -7,5 +7,6 @@ namespace Health.Site.Models.Rules
 {
     public interface IValidatorRuleConfig
     {
+        string ErrorMessage { get; set; }
     }
 }
