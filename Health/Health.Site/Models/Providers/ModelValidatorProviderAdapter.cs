@@ -37,8 +37,7 @@ namespace Health.Site.Models.Providers
         {
             if (context.Controller.GetType() != typeof(ErrorController) && Binder.IsHaveConfiguration(metadata.ContainerType))
             {
-                var config = Binder.ResolveConfiguration(metadata.ContainerType).GetMetadata(metadata.ContainerType,
-                                                                                             metadata.PropertyName);
+                var config = Binder.ResolveConfiguration(metadata.ContainerType).GetMetadata(null, null, metadata.ContainerType, metadata.PropertyName);
 
                 if (config != null && config.Attributes != null && config.Attributes.Count > 0)
                 {

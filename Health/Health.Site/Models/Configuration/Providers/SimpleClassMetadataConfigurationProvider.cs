@@ -16,10 +16,12 @@ namespace Health.Site.Models.Configuration.Providers
         /// <summary>
         /// Существуют ли метаданные для свойства модели.
         /// </summary>
+        /// <param name="container_type"></param>
+        /// <param name="model_accessor"></param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Свойство.</param>
         /// <returns>Результат.</returns>
-        public bool IsHaveMetadata(Type model_type, string property_name)
+        public bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name)
         {
             if (model_type == typeof (TestModel))
             {
@@ -31,10 +33,12 @@ namespace Health.Site.Models.Configuration.Providers
         /// <summary>
         /// Получить метаданные для свойства модели.
         /// </summary>
+        /// <param name="container_type"></param>
+        /// <param name="model_accessor"></param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Имя свойства.</param>
         /// <returns>Метаданные для свойства.</returns>
-        public ModelMetadataPropertyConfiguration GetMetadata(Type model_type, string property_name)
+        public ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name)
         {
             if (model_type == typeof(TestModel))
             {

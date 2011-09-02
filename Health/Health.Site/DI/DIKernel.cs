@@ -1,4 +1,6 @@
-﻿using Health.Core.API;
+﻿using System;
+using System.Collections.Generic;
+using Health.Core.API;
 using Ninject;
 using Ninject.Parameters;
 
@@ -25,6 +27,11 @@ namespace Health.Site.DI
             return Kernel.Get<TObject>();
         }
 
+        public object Get(Type type)
+        {
+            return Kernel.Get(type);
+        }
+
         /// <summary>
         /// Инициализировать объект заданного интерфейса и передать ему DI ядро и центральный сервис.
         /// </summary>
@@ -40,6 +47,19 @@ namespace Health.Site.DI
                                               });
             return obj;
         }
+
+        public IEnumerable<object> GetServices(Type service_type)
+        {
+            try
+            {
+                return Kernel.GetAll(service_type);
+            }
+            catch (Exception)
+            {
+                return new List<object>();
+            }
+        }
+
 
         #endregion
     }

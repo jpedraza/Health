@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Mvc;
+using Health.Core.Entities.POCO;
 using Health.Site.Models.Configuration;
 using Health.Site.Models.Rules;
 
@@ -36,7 +39,7 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <param name="attributes">Атрибуты свойства.</param>
         /// <param name="container_type">Тип контейнера.</param>
-        /// <param name="model_accessor"></param>
+        /// <param name="model_accessor">Функция доступа к модели.</param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Имя свойства.</param>
         /// <returns>Метаданные для свойства модели.</returns>
@@ -52,10 +55,10 @@ namespace Health.Site.Models.Providers
             if (model_type.Namespace == typeof(int).Namespace)
             {
                 // если в поставщике метаданных есть метаданные для типа модели с заданным свойством...
-                if (ConfigurationProvider.IsHaveMetadata(container_type, property_name))
+                if (ConfigurationProvider.IsHaveMetadata(container_type, model_accessor, container_type, property_name))
                 {
                     // получить метаданные для свойства...
-                    ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type, property_name);
+                    ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type, model_accessor, container_type, property_name);
 
                     if (meta != null)
                     {
@@ -63,7 +66,6 @@ namespace Health.Site.Models.Providers
                         {
                             model_metadata = base.CreateMetadata(meta.Attributes, container_type, model_accessor,
                                                                  model_type, property_name);
-                            return model_metadata;
                         }
 
                         // получаем все свойства конйигурационной модели...

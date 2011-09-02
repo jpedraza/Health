@@ -7,7 +7,7 @@ namespace Health.Site.Models.Providers
     /// <summary>
     /// Менеджер провайдеров метаданных.
     /// </summary>
-    public class ModelMetadataProviderManager : ModelMetadataProvider
+    public class ModelMetadataProviderManager : DataAnnotationsModelMetadataProvider
     {
         public ModelMetadataProviderBinder Binder { get; set; }
 

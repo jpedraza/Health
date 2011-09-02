@@ -1,4 +1,4 @@
-﻿using System.Web.Mvc;
+﻿/*using System.Web.Mvc;
 using Health.Core;
 using Health.Core.API;
 using Health.Core.API.Repository;
@@ -108,4 +108,4 @@ namespace Health.Site.App_Start
             kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);
         }
     }
-}
+}*/

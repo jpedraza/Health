@@ -12,6 +12,11 @@
 {
     @Html.ValidationSummary()
     @Html.EditorFor(m => m)
-    @Html.EditorFor(m => m.Patient)
+    @*Html.EditorFor(m => m.Patient)*@
+    for (int i = 0; i < Model.Enother.Count; i++)
+    {
+        <p>Token @i</p>
+        <p>@Html.EditorFor(m => m.Enother[i].Token)</p>
+    }
     <input type="submit" value="Submit"/>
 }

@@ -18,5 +18,7 @@ namespace Health.Site.Models
         public int Code { get; set; }
 
         public DateTime Date { get; set; }
+
+        public IList<Patient> Enother { get; set; }
     }
 }
