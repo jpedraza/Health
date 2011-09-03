@@ -214,7 +214,7 @@ namespace Health.Data.Repository.Fake
 
             public Parameter GetById(int Id)
             {
-                Parameter requieredParameter = default(Parameter);
+                Parameter requieredParameter = new Parameter();
                 IEnumerable<Parameter> found_parameter = (from parameter in _entities
                                                           where parameter.Id == Id
                                                           select parameter).ToList();
@@ -231,7 +231,7 @@ namespace Health.Data.Repository.Fake
 
             public Parameter GetByValue(string Name)
             {
-                Parameter requieredParameter = default(Parameter);
+                Parameter requieredParameter = new Parameter();
                 IEnumerable<Parameter> found_parameter = (from parameter in _entities
                                                           where parameter.Name == Name
                                                           select parameter).ToList();
@@ -277,10 +277,17 @@ namespace Health.Data.Repository.Fake
                 return res;
             }
             
-            //Этот метод удаления параметра через его Id необходим для нормальной реализации метода редактирования. По возможности от него избавится.
-            public bool DeleteParam(int Id)
+        /// <summary>
+        /// Служебный метод
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        //TODO: По возможности избавиться от метода удаления параметра через его ID
+        public bool DeleteParam(int Id)
             {
-                Parameter requieredParameter = default(Parameter);
+                Parameter requieredParameter = new Parameter();
                 var res = false;
                 IEnumerable<Parameter> found_parameter = (from parameter in _entities
                                                           where parameter.Id == Id
@@ -289,10 +296,6 @@ namespace Health.Data.Repository.Fake
                 {
                     requieredParameter = found_parameter.First();
                     res = Delete(requieredParameter);                  
-                }
-                else
-                {
-                    res = false;
                 }
                 return res;
             }

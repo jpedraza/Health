@@ -21,21 +21,21 @@ namespace Health.Site.Areas.Parameters.Models.Forms
         /// Значение нового параметра
         /// </summary>
         [Required(ErrorMessage = "Введите, пожалуйста, значение нового параметра")]
-        public object Value { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// Значение по-умолчанию нового параметра
         /// </summary>
         [Required(ErrorMessage = "Введите, пожалуйста, значение по умолчанию")]
-        public object DefaultValue { get; set; }
+        public string DefaultValue { get; set; }
 
         /// <summary>
-        /// Есть ли подпараметры
+        /// Является ли подпараметром?
         /// </summary>
         public bool Is_param { get; set; }
 
         /// <summary>
-        /// Является ли подпараметром
+        /// Есть ли подпараметры?
         /// </summary>
         public bool Is_childs { get; set; }
 
@@ -65,12 +65,17 @@ namespace Health.Site.Areas.Parameters.Models.Forms
         /// Период заполнения
         /// </summary>
         [Required(ErrorMessage = "Введите, пожалуйста, период")]
-        public string Period { get; set; }
+        public Nullable<double> Period { get; set; }
 
         /// <summary>
         /// Число вариантов (если есть)
         /// </summary>
-        public int NumVariant { get; set; }
+        public Nullable<int> NumVariant { get; set; }
+
+        /// <summary>
+        /// Выбрать родителя
+        /// </summary>
+        public Nullable<int> Parents { get; set; }
     }
 
     /// <summary>
@@ -79,8 +84,15 @@ namespace Health.Site.Areas.Parameters.Models.Forms
     public class VarFormModel
     {
         /// <summary>
-        /// Возраст
+        /// Варианты ответов на вопросы
         /// </summary>
+        [Required(ErrorMessage = "Введите, пожалуйста, вариант")]
         public IList<string> variants { get; set; }
+
+        /// <summary>
+        /// Баллы за определенный ответ
+        /// </summary>
+        [Required(ErrorMessage = "Введите, пожалуйста, вариант")]
+        public IList<Nullable<double>>balls { get; set; }
     }
 }

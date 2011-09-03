@@ -17,6 +17,10 @@ namespace Health.Site.Areas.Parameters.Models
         public IList<Parameter> parameters { get; set; }
 
         /// <summary>
+        ///Служебная переменная
+        /// </summary>
+        public Nullable<int> display_for { get; set; }
+        /// <summary>
         /// Новый параметр здоровья
         /// </summary>
         public Parameter NewParam { get; set; }
@@ -53,7 +57,7 @@ namespace Health.Site.Areas.Parameters.Models
                 if (item.MetaData.Id_cat != null)
                     j = (int)item.MetaData.Id_cat;
             }
-            NewParam.Id = i;
+            NewParam.Id = i + 1;
             NewParam.MetaData = new MetaData { Is_childs = Is_childs, Is_var = Is_var };
             if (Is_param)
             {
@@ -66,13 +70,46 @@ namespace Health.Site.Areas.Parameters.Models
             else
             {
                 res = 1;
-                NewParam.MetaData.Id_cat = j;
+                NewParam.MetaData.Id_cat = j + 1;
+                NewParam.MetaData.Id_parent = null;
                 this.parameters = ParamRepo.GetAllParam();
             }
 
             return this;
         }
 
+        /// <summary>
+        /// Вторя стадия добавления параметра
+        /// </summary>
+        /// /// <param name="last_model_state">Преидущее состояние модели.</param>
+        /// <returns>Обновленная модель</returns>
+        public virtual ParametersViewModel NextAddParameter(ParametersViewModel last_model_state)
+        {
+            this.NewParam = last_model_state.NewParam;
+            this.NewParam.MetaData.Age = last_model_state.NextAddForm.Age;
+            this.NewParam.MetaData.Obligation = last_model_state.NextAddForm.Obligation;
+            this.NewParam.MetaData.period = last_model_state.NextAddForm.Period;
+            return this;
+        }
+        /// <summary>
+        /// Данный метод оконочательно "досоздает" новый параметр (в виде поля NewParam)
+        /// возвращает обновленное состояние модели. Окончательная запись в источник даннных
+        /// происходит в контроллере.
+        /// </summary>
+        /// <param name="last_model_state">Последнее состояние модели</param>
+        /// <returns></returns>
+        public virtual ParametersViewModel AddParameter(ParametersViewModel last_model_state)
+        {
+            this.NewParam = last_model_state.NewParam;
+            this.NewParam.MetaData.Variants = new Variant[last_model_state.VarForm.variants.Count];
+            for (int i = 0; i < this.NewParam.MetaData.Variants.Length; i++)
+            {
+                this.NewParam.MetaData.Variants[i] = new Variant(last_model_state.VarForm.variants[i], last_model_state.VarForm.balls[i]);
+                this.NewParam.MetaData.Variants[i].Value = last_model_state.VarForm.variants[i];
+                this.NewParam.MetaData.Variants[i].Ball = last_model_state.VarForm.balls[i];
+            }
+            return this;
+        }
         /// <summary>
         /// Стартовая форма добавления параметров
         /// </summary>
@@ -83,6 +120,9 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         public NextAddFormModel NextAddForm { get; set; }
 
+        /// <summary>
+        /// Форма для добавления вариантов ответа
+        /// </summary>
         public VarFormModel VarForm { get; set; }
 
     }

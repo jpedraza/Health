@@ -8,16 +8,16 @@
 {
    <td>
    <p>Id = 
-   @parameter.Id</p>
+   @Html.Encode(parameter.Id)</p>
 
    <p>Name: 
-   @parameter.Name</p>
+   @Html.Encode(parameter.Name)</p>
 
    <p>DefaultValue = 
-   @parameter.DefaultValue</p>
+   @Html.Encode(parameter.DefaultValue) </p>
 
    <p>Value = 
-   @parameter.Value</p>
+   @Html.Encode(parameter.Value)</p>
    </td>
     @ShowMetaData(parameter.MetaData)
 }
@@ -98,9 +98,9 @@
 <table border="1" cellspacing="1">
 @foreach (var item in Model.parameters)
 {
+   <tr>
+    @ShowParameter(item)
    
-   <tr> 
-   @ShowParameter(item)
    </tr>
 }
 </table>

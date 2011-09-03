@@ -17,6 +17,23 @@ namespace Health.Core.Entities.POCO
         /// <summary>
         /// Балл, соответствующий ответу на вопрос
         /// </summary>
-        public double Ball { get; set; }
+        public Nullable<double> Ball { get; set; }
+
+        /// <summary>
+        /// Конструктор класса
+        /// </summary>
+        /// <param name="value">Значение варианта</param>
+        /// <param name="ball">Значение балла за ответ</param>
+        public Variant(string value, Nullable<double> ball)
+        {
+            this.Value = value;
+            this.Ball = ball;
+        }
+
+        /// <summary>
+        /// Конструктор класса без параметров
+        /// </summary>
+        public Variant()
+        { ;}
     }
 }
