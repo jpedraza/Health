@@ -1,4 +1,5 @@
-﻿/*using System.Web.Mvc;
+﻿using System.Web.Hosting;
+using System.Web.Mvc;
 using Health.Core;
 using Health.Core.API;
 using Health.Core.API.Repository;
@@ -35,6 +36,11 @@ namespace Health.Site.App_Start
 {
     public static class NinjectMVC3
     {
+        /// <summary>
+        /// DI ядро приложения.
+        /// </summary>
+        private static IDIKernel _diKernel;
+
         private static readonly Bootstrapper _bootstrapper = new Bootstrapper();
 
         public static IKernel Kernel { get; private set; }
@@ -48,6 +54,7 @@ namespace Health.Site.App_Start
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
             _bootstrapper.Initialize(CreateKernel);
             ModelToBinder();
+            ModelProvider();
         }
 
         /// <summary>
@@ -106,6 +113,31 @@ namespace Health.Site.App_Start
             // Прочее
             kernel.Bind<IDIKernel>().To<DIKernel>();
             kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);
+            // Провайдеры метаданных
+            kernel.Bind<BinaryMetadataConfigurationProvider>().ToSelf().InRequestScope();
+            kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope();
+        }
+
+
+
+        /// <summary>
+        /// Регистрация провайдеров метаданных.
+        /// </summary>
+        private static void ModelProvider()
+        {
+            var binder = new ModelMetadataProviderBinder();
+
+            binder.AddConfigurationProvider(new XmlMetadataConfigurationProvider(HostingEnvironment.MapPath("~/App_Data/ModelMetadata/")));
+            binder.AddConfigurationProvider(new XmlABMetadataConfigurationProvider(HostingEnvironment.MapPath("~/App_Data/ModelMetadata/")));
+            //binder.AddConfigurationProvider(new BinaryMetadataConfigurationProvider(_diKernel));
+
+            //binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, BinaryMetadataConfigurationProvider>();
+            binder.Bind<Patient>().To<ModelMetadataProviderAdapter, BinaryMetadataConfigurationProvider>();
+
+            var manager = new ModelMetadataProviderManager(binder);
+            ModelMetadataProviders.Current = manager;
+            ModelValidatorProviders.Providers.Clear();
+            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(binder));
         }
     }
-}*/
+}

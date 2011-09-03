@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Health.Core;
@@ -29,13 +31,8 @@ namespace Health.Site
     // Примечание: Инструкции по включению классического режима IIS6 или IIS7 
     // см. по ссылке http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : NinjectHttpApplication
+    public class MvcApplication : HttpApplication
     {
-        /// <summary>
-        /// DI ядро приложения.
-        /// </summary>
-        protected IDIKernel _diKernel;
-
         /// <summary>
         /// Регистрация глобальных фильтров.
         /// </summary>
@@ -86,90 +83,11 @@ namespace Health.Site
             Response.Redirect(@"~/Error");
         }
 
-        /// <summary>
-        /// При старте приложения.
-        /// </summary>
-        protected override void OnApplicationStarted()
+        protected void Application_Start()
         {
-            base.OnApplicationStarted();
-            _diKernel = new DIKernel(Kernel);
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestModule));
-            DynamicModuleUtility.RegisterModule(typeof(HttpApplicationInitializationModule));
-            ModelProvider();
-            ModelToBinder();
-        }
-
-        /// <summary>
-        /// Регистрация нестандартных биндеров для моделей
-        /// </summary>
-        protected void ModelToBinder()
-        {
-            ModelBinders.Binders.Add(typeof(InterviewFormModel), new ParametersFormBinder(_diKernel));
-        }
-
-        /// <summary>
-        /// Creates the kernel.
-        /// </summary>
-        /// <returns>
-        /// The kernel.
-        /// </returns>
-        protected override IKernel CreateKernel()
-        {
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            RegisterServices(kernel);
-            return kernel;
-        }
-
-        /// <summary>
-        /// Регистрация компонентов.
-        /// </summary>
-        /// <param name="kernel">Ядро.</param>
-        protected void RegisterServices(IKernel kernel)
-        {
-            // Репозитории
-            kernel.Bind<IRoleRepository>().To<RolesFakeRepository>().InSingletonScope();
-            kernel.Bind<IUserRepository>().To<UsersFakeRepository>().InSingletonScope();
-            kernel.Bind<IActualCredentialRepository>().To<SessionRepository>();
-            kernel.Bind<IPermanentCredentialRepository>().To<CookieRepository>();
-            kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
-            kernel.Bind<IDefaultScheduleRepository>().To<DefaultScheduleFakeRepository>().InSingletonScope();
-            // Сервисы
-            kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
-            kernel.Bind<IAuthorizationService>().To<AuthorizationService>();
-            kernel.Bind<IRegistrationService>().To<RegistrationService>();
-            // Фабрики
-            kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
-            // Фильтры для атрибутов
-            kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
-                WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
-                WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
-            // Прочее
-            kernel.Bind<IDIKernel>().To<DIKernel>();
-            kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);
-        }
-
-        /// <summary>
-        /// Регистрация провайдеров метаданных.
-        /// </summary>
-        protected void ModelProvider()
-        {
-            var binder = new ModelMetadataProviderBinder();
-            
-            binder.AddConfigurationProvider(new XmlMetadataConfigurationProvider(Server.MapPath("~/App_Data/ModelMetadata/")));
-            binder.AddConfigurationProvider(new XmlABMetadataConfigurationProvider(Server.MapPath("~/App_Data/ModelMetadata/")));
-            binder.AddConfigurationProvider(new BinaryMetadataConfigurationProvider(_diKernel));
-
-            binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, XmlABMetadataConfigurationProvider>();
-            binder.Bind<Patient>().To<ModelMetadataProviderAdapter, SubClassMetadataConfigurationProvider>();
-
-            var manager = new ModelMetadataProviderManager(binder);
-            ModelMetadataProviders.Current = manager;
-            ModelValidatorProviders.Providers.Clear();
-            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(binder));
         }
     }
 }

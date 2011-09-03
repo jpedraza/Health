@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Web;
 using Health.Core.API;
+using Health.Core.Entities.POCO;
 
 namespace Health.Site.Models.Configuration.Providers
 {
@@ -15,12 +16,16 @@ namespace Health.Site.Models.Configuration.Providers
     {
         private readonly IDIKernel _diKernel;
 
+        private Patient PatientModel { get; set; }
+
+        public BinaryMetadataConfigurationProvider() {}
+
         public BinaryMetadataConfigurationProvider(IDIKernel di_kernel)
         {
             _diKernel = di_kernel;
         }
 
-        private object GetParentObjectInstance(string property_name, Func<object> model_accessor)
+        private object GetParentObjectContainer(string property_name, Func<object> model_accessor)
         {
             object value = null;
             if (property_name == null ||
@@ -100,7 +105,8 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Результат.</returns>
         public bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name)
         {
-            throw new NotImplementedException();
+            if (model_type == typeof(Patient) && property_name == "Token") return true;
+            return false;
         }
 
         /// <summary>
@@ -113,7 +119,13 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Метаданные для свойства.</returns>
         public ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name)
         {
-            throw new NotImplementedException();
+            if (model_accessor != null)
+            {
+                object property_value = model_accessor();
+                object parent_container = GetParentObjectContainer(property_name, model_accessor);
+                PatientModel = parent_container as Patient;
+            }
+            return null;
         }
 
         #endregion

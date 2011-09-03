@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Health.Core.API;
 using Health.Site.Models.Configuration;
 
 namespace Health.Site.Models.Providers
@@ -82,6 +83,13 @@ namespace Health.Site.Models.Providers
         /// Текущий тип модели.
         /// </summary>
         private Type CurrentModelType { get; set; }
+
+        private readonly IDIKernel _diKernel;
+
+        public ModelMetadataProviderBinder(IDIKernel di_kernel)
+        {
+            _diKernel = di_kernel;
+        }
 
         public ModelMetadataProviderBinder()
         {
