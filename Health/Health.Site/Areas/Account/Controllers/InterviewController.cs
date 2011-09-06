@@ -28,7 +28,7 @@ namespace Health.Site.Areas.Account.Controllers
             }
             return View(new AccountViewModel
                             {
-                                InterviewForm = new InterviewFormModel(DIKernel)
+                                InterviewForm = new InterviewFormModel()
                                                     {
                                                         Parameters = new List<Parameter>
                                                                          {

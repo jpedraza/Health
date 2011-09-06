@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Health.Site.Models.Configuration
 {
@@ -28,6 +26,12 @@ namespace Health.Site.Models.Configuration
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Имя свойства.</param>
         /// <returns>Метаданные для свойства.</returns>
-        ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name);
+        ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor, Type model_type,
+                                                       string property_name);
+
+        /// <summary>
+        /// Кэш-контейнеров в которых определены свойства модели.
+        /// </summary>
+        IDictionary<string, object> ContainerCache { get; set; }
     }
 }

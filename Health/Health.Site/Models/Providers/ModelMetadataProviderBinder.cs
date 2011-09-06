@@ -25,6 +25,11 @@ namespace Health.Site.Models.Providers
         /// Тип конфигурации.
         /// </summary>
         public Type ConfigurationType { get; set; }
+
+        /// <summary>
+        /// Параеметры конструктора, используемые при инициализации экземпляра провайдера конфигурации.
+        /// </summary>
+        public object[] ConfigurationParameters { get; set; }
     }
 
     /// <summary>
@@ -67,36 +72,32 @@ namespace Health.Site.Models.Providers
         /// <summary>
         /// Список биндов.
         /// </summary>
-        protected List<MetadataProviderBindingModel> Binding { get; set; }
-
-        /// <summary>
-        /// Кэш провайдеров метаданных.
-        /// </summary>
-        protected List<MetadataProviderCache> ProviderCache { get; set; }
+        protected readonly List<MetadataProviderBindingModel> Binding;
 
         /// <summary>
         /// Кэш провайдеров конфигурации.
         /// </summary>
-        protected List<MetadataConfigurationCache> ConfigurationCache { get; set; }
+        protected readonly List<MetadataConfigurationCache> ConfigurationCache;
 
         /// <summary>
-        /// Текущий тип модели.
+        /// Кэш провайдеров метаданных.
         /// </summary>
-        private Type CurrentModelType { get; set; }
+        protected readonly List<MetadataProviderCache> ProviderCache;
 
         private readonly IDIKernel _diKernel;
 
         public ModelMetadataProviderBinder(IDIKernel di_kernel)
         {
             _diKernel = di_kernel;
-        }
-
-        public ModelMetadataProviderBinder()
-        {
             Binding = new List<MetadataProviderBindingModel>();
             ProviderCache = new List<MetadataProviderCache>();
             ConfigurationCache = new List<MetadataConfigurationCache>();
         }
+
+        /// <summary>
+        /// Текущий тип модели.
+        /// </summary>
+        private Type CurrentModelType { get; set; }
 
         /// <summary>
         /// Начинает процесс биндинга типа модели.
@@ -116,7 +117,7 @@ namespace Health.Site.Models.Providers
         /// <returns></returns>
         public ModelMetadataProviderBinder Bind<TModel>()
         {
-            return Bind(typeof(TModel));
+            return Bind(typeof (TModel));
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <param name="provider_type">Тип провайдера.</param>
         /// <param name="configuration_type">Тип провайдера конйигурации.</param>
-        public void To(Type provider_type, Type configuration_type)
+        public ModelMetadataProviderBinder To(Type provider_type, Type configuration_type)
         {
             Binding.Add(new MetadataProviderBindingModel
                             {
@@ -132,6 +133,7 @@ namespace Health.Site.Models.Providers
                                 ProviderType = provider_type,
                                 ConfigurationType = configuration_type
                             });
+            return this;
         }
 
         /// <summary>
@@ -139,11 +141,11 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <typeparam name="TProvider">Тип провайдера.</typeparam>
         /// <typeparam name="TConfiguration">Тип провайдера конйигурации.</typeparam>
-        public void To<TProvider, TConfiguration>()
+        public ModelMetadataProviderBinder To<TProvider, TConfiguration>()
             where TProvider : AssociatedMetadataProvider
             where TConfiguration : IMetadataConfigurationProvider
         {
-            To(typeof(TProvider), typeof(TConfiguration));
+            return To(typeof (TProvider), typeof (TConfiguration));
         }
 
         /// <summary>
@@ -153,25 +155,25 @@ namespace Health.Site.Models.Providers
         /// <returns>Экземпляр провайдера метаданных.</returns>
         public AssociatedMetadataProvider ResolveProvider(Type model_type)
         {
-            foreach (var binding_model in Binding)
+            foreach (MetadataProviderBindingModel binding_model in Binding)
             {
                 if (binding_model.ModelType == model_type)
                 {
-                    foreach (MetadataProviderCache provider_cache in ProviderCache)
+                    /*foreach (MetadataProviderCache provider_cache in ProviderCache)
                     {
                         if (binding_model.ProviderType == provider_cache.ProviderType && binding_model.ConfigurationType == provider_cache.ConfigurationType)
                         {
                             return provider_cache.Provider;
                         }
-                    }
+                    }*/
                     IMetadataConfigurationProvider configuration_provider;
                     AssociatedMetadataProvider provider;
-                    foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
+                    /*foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
                     {
                         if (configuration_cache.ConfigurationType == binding_model.ConfigurationType)
                         {
                             configuration_provider = configuration_cache.ConfigurationProvider;
-                            provider = Activator.CreateInstance(binding_model.ProviderType, configuration_provider, this) as AssociatedMetadataProvider;
+                            provider = _diKernel.Get(binding_model.ProviderType, _diKernel, configuration_provider) as AssociatedMetadataProvider;
                             ProviderCache.Add(new MetadataProviderCache
                                                   {
                                                       ConfigurationType = binding_model.ConfigurationType,
@@ -180,9 +182,14 @@ namespace Health.Site.Models.Providers
                                                   });
                             return provider;
                         }
-                    }
-                    configuration_provider = (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
-                    provider = Activator.CreateInstance(binding_model.ProviderType, configuration_provider, this) as AssociatedMetadataProvider;
+                    }*/
+                    //configuration_provider = (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
+                    configuration_provider =
+                        (IMetadataConfigurationProvider) _diKernel.Get(binding_model.ConfigurationType, 
+                        binding_model.ConfigurationParameters);
+                    provider =
+                        _diKernel.Get(binding_model.ProviderType, _diKernel, configuration_provider) as
+                        AssociatedMetadataProvider;
                     return provider;
                 }
             }
@@ -207,18 +214,20 @@ namespace Health.Site.Models.Providers
         /// <returns>Экземпляр провайдера конйигурации.</returns>
         public IMetadataConfigurationProvider ResolveConfiguration(Type model_type)
         {
-            foreach (var binding_model in Binding)
+            foreach (MetadataProviderBindingModel binding_model in Binding)
             {
                 if (binding_model.ModelType == model_type)
                 {
-                    foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
+                    /*foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
                     {
                         if (binding_model.ConfigurationType == configuration_cache.ConfigurationType)
                         {
                             return configuration_cache.ConfigurationProvider;
                         }
-                    }
-                    return (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
+                    }*/
+                    //return (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
+                    return (IMetadataConfigurationProvider)_diKernel.Get(binding_model.ConfigurationType, 
+                        binding_model.ConfigurationParameters);
                 }
             }
             return null;
@@ -231,7 +240,7 @@ namespace Health.Site.Models.Providers
         /// <returns>Результат.</returns>
         public bool IsHaveConfiguration(Type model_type)
         {
-            foreach (var type in Binding)
+            foreach (MetadataProviderBindingModel type in Binding)
             {
                 if (type.ModelType == model_type && type.ConfigurationType != null)
                 {
@@ -248,7 +257,7 @@ namespace Health.Site.Models.Providers
         /// <returns>Результат.</returns>
         public bool IsHaveMetadataProvider(Type model_type)
         {
-            foreach (var type in Binding)
+            foreach (MetadataProviderBindingModel type in Binding)
             {
                 if (type.ModelType == model_type && type.ProviderType != null)
                 {
@@ -259,17 +268,18 @@ namespace Health.Site.Models.Providers
         }
 
         /// <summary>
-        /// Добавляет новый провайдер конфигурации в кэш.
-        /// Использовать в том случае, если провайдер конфигурации не имеет стандартного конструктора.
+        /// Задать параметры конструктора провайдера конфигурации.
         /// </summary>
-        /// <param name="configuration_provider">Провайдер конфигурации.</param>
-        public void AddConfigurationProvider(IMetadataConfigurationProvider configuration_provider)
+        /// <param name="configuration_parameters">Массив параметров.</param>
+        public void WithConfigurationParameters(params object[] configuration_parameters) 
         {
-            ConfigurationCache.Add(new MetadataConfigurationCache
-                                       {
-                                           ConfigurationType = configuration_provider.GetType(),
-                                           ConfigurationProvider = configuration_provider
-                                       });
+            foreach (MetadataProviderBindingModel binding_model in Binding)
+            {
+                if (binding_model.ModelType == CurrentModelType)
+                {
+                    binding_model.ConfigurationParameters = configuration_parameters;
+                }
+            }
         }
     }
 }

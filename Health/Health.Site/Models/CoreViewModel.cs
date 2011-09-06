@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Health.Core.API;
-
-namespace Health.Site.Models
+﻿namespace Health.Site.Models
 {
     /// <summary>
     /// Центральный класс моделей представлений

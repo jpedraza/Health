@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Health.Core.API;
-using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
 using Health.Site.Models;
-using Health.Site.Models.Configuration;
-using Health.Site.Models.Configuration.Providers;
-using Health.Site.Models.Rules;
 
 namespace Health.Site.Controllers
 {

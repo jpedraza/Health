@@ -37,5 +37,7 @@ namespace Health.Core.API
         /// <param name="service_type"></param>
         /// <returns></returns>
         IEnumerable<object> GetServices(Type service_type);
+
+        object Get(Type type, params object[] constructor_parameters);
     }
 }

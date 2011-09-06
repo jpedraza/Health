@@ -70,15 +70,17 @@ namespace Health.Site.Areas.Account.Models.Forms
     /// <summary>
     /// Форма опроса пользователя при первом входе в систему
     /// </summary>
-    public class InterviewFormModel : ParametersFormBase, IValidatableObject
+    public class InterviewFormModel //: ParametersFormBase, IValidatableObject
     {
-        public InterviewFormModel(IDIKernel di_kernel) : base(di_kernel)
+        /*public InterviewFormModel(IDIKernel di_kernel) : base(di_kernel)
         {
-        }
+        }*/
+
+        public IList<Parameter> Parameters { get; set; }
 
         #region IValidatableObject Members
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validation_context)
+        /*public IEnumerable<ValidationResult> Validate(ValidationContext validation_context)
         {
             List<Parameter> param = Parameters.ToList();
             var result = new List<ValidationResult>();
@@ -101,7 +103,7 @@ namespace Health.Site.Areas.Account.Models.Forms
                 }
             }
             return result;
-        }
+        }*/
 
         #endregion
     }

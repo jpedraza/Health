@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Health.Core.API;
+using Health.Core.Entities.POCO;
+using Health.Core.Entities.Virtual;
+using Health.Site.Models.Configuration.Providers;
+using Health.Site.Models.Metadata;
 
 namespace Health.Site.Models.Providers
 {
@@ -9,13 +14,15 @@ namespace Health.Site.Models.Providers
     /// </summary>
     public class ModelMetadataProviderManager : DataAnnotationsModelMetadataProvider
     {
+        private readonly IDIKernel _diKernel;
+
         public ModelMetadataProviderBinder Binder { get; set; }
 
         protected ModelMetadataProvider DefaultProvider { get; set; }
 
-        public ModelMetadataProviderManager(ModelMetadataProviderBinder binder)
+        public ModelMetadataProviderManager(IDIKernel di_kernel)
         {
-            Binder = binder;
+            _diKernel = di_kernel;
             DefaultProvider = new EmptyModelMetadataProvider();
         }
 
@@ -30,6 +37,7 @@ namespace Health.Site.Models.Providers
         /// <param name="container">Контейнер.</param><param name="container_type">Тип контейнера.</param>
         public override IEnumerable<ModelMetadata> GetMetadataForProperties(object container, Type container_type)
         {
+            Binder = _diKernel.Get<ModelMetadataProviderBinder>();
             if (Binder.IsHaveMetadataProvider(container_type))
             {
                 return Binder.ResolveProvider(container_type).GetMetadataForProperties(container, container_type);
@@ -38,12 +46,14 @@ namespace Health.Site.Models.Providers
             return DefaultProvider.GetMetadataForProperties(container, container_type);
         }
 
-        public override ModelMetadata GetMetadataForProperty(Func<object> model_accessor, Type container_type, string property_name)
+        public override ModelMetadata GetMetadataForProperty(Func<object> model_accessor, Type container_type,
+                                                             string property_name)
         {
+            Binder = _diKernel.Get<ModelMetadataProviderBinder>();
             if (Binder.IsHaveMetadataProvider(container_type))
             {
                 return Binder.ResolveProvider(container_type).GetMetadataForProperty(model_accessor, container_type,
-                                                                             property_name);
+                                                                                     property_name);
             }
 
             return DefaultProvider.GetMetadataForProperty(model_accessor, container_type, property_name);
@@ -51,6 +61,7 @@ namespace Health.Site.Models.Providers
 
         public override ModelMetadata GetMetadataForType(Func<object> model_accessor, Type model_type)
         {
+            Binder = _diKernel.Get<ModelMetadataProviderBinder>();
             if (Binder.IsHaveMetadataProvider(model_type))
             {
                 return Binder.ResolveProvider(model_type).GetMetadataForType(model_accessor, model_type);

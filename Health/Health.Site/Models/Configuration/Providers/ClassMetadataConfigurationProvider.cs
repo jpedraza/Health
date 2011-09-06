@@ -1,28 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 using System.Reflection;
-using System.Web.Mvc;
-using Health.Core.Entities.POCO;
-using Health.Site.Models.Rules;
+using System.ComponentModel.DataAnnotations;
 
 namespace Health.Site.Models.Configuration.Providers
 {
     /// <summary>
     /// Поставщик метаданных модели напрямую из класса.
     /// </summary>
-    public class ClassMetadataConfigurationProvider : IMetadataConfigurationProvider
+    public class ClassMetadataConfigurationProvider : MetadataConfigurationProvider
     {
+        /// <summary>
+        /// Текущий тип метаданных модели.
+        /// </summary>
+        protected Type MetadataModelType { get; set; }
+
         /// <summary>
         /// Кэш-конфигураций.
         /// </summary>
         private IDictionary<Type, ModelMetadataConfiguration> ConfigurationCache { get; set; }
 
+        /// <summary>
+        /// Базовый конструктор.
+        /// </summary>
         public ClassMetadataConfigurationProvider()
         {
             ConfigurationCache = new Dictionary<Type, ModelMetadataConfiguration>();
+            ContainerCache = new Dictionary<string, object>();
         }
+
+        /// <summary>
+        /// Конструктор с возможностью указать конкретный тип метаданных для модели.
+        /// </summary>
+        /// <param name="metadata_model_type">Тип метаданных модели.</param>
+        public ClassMetadataConfigurationProvider(Type metadata_model_type) : this() 
+        {
+            MetadataModelType = metadata_model_type;
+        }
+
+        /// <summary>
+        /// Создать тип  метаданных для типа модели.
+        /// </summary>
+        /// <param name="model_type">Тип модели.</param>
+        /// <returns>Тип метаданных.</returns>
+        private Type CreateMetadataModelType(Type model_type)
+        {
+            if (MetadataModelType != null) return MetadataModelType;
+            string metadata_model_type_name = String.Format("{0}Metadata", model_type.Name);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type[] assembly_types = assembly.GetTypes();
+            foreach (Type assembly_type in assembly_types)
+            {
+                if (assembly_type.Name == metadata_model_type_name)
+                {
+                    return assembly_type;
+                }
+            }
+            return null;
+        }        
 
         /// <summary>
         /// Получить метаданные для модели и попутно занести их в кэш.
@@ -38,23 +75,21 @@ namespace Health.Site.Models.Configuration.Providers
                     return configuration.Value;
                 }
             }
-            string metadata_model_type_name = String.Format("Health.Site.Models.Metadata.{0}Metadata, Health.Site",
-                                                       model_type.Name);
-            Type metadata_model_type = Type.GetType(metadata_model_type_name);
             var model_metadata = new ModelMetadataConfiguration
                                      {
                                          Properties = new Dictionary<string, ModelMetadataPropertyConfiguration>()
                                      };
-            if (metadata_model_type == null)
+            MetadataModelType = CreateMetadataModelType(model_type);
+            if (MetadataModelType == null)
             {
                 return model_metadata;
             }
-            PropertyInfo[] properties = metadata_model_type.GetProperties();
+            PropertyInfo[] properties = MetadataModelType.GetProperties();
             foreach (PropertyInfo property in properties)
             {
                 var property_metadata = new ModelMetadataPropertyConfiguration();
                 IList<Attribute> custom_attributes = new BindingList<Attribute>();
-                object[] attributes = property.GetCustomAttributes(true);
+                object[] attributes = property.GetCustomAttributes(false);
                 foreach (object attribute in attributes)
                 {
                     custom_attributes.Add(attribute as Attribute);
@@ -66,20 +101,46 @@ namespace Health.Site.Models.Configuration.Providers
             return model_metadata;
         }
 
+        /// <summary>
+        /// Кэш-контейнеров для свойств модели.
+        /// </summary>
+        /// <param name="container_type">Тип контейнера.</param>
+        /// <param name="model_accessor">Делегат доступа к модели.</param>
+        /// <param name="model_type">Тип модели.</param>
+        /// <param name="property_name">Имя свойства.</param>
+        protected void AddToContainerCache(Type container_type, Func<object> model_accessor, Type model_type,
+                                           string property_name)
+        {
+            string key = String.Format("{0}{1}{2}", container_type == null ? "" : container_type.Name, model_type.Name, property_name);
+            object value = GetParentObjectContainer(property_name, model_accessor);
+            if (value == null) return;
+            if (ContainerCache.ContainsKey(key))
+            {
+                ContainerCache[key] = value;
+            }
+            else
+            {
+                ContainerCache.Add(key, value);
+            }
+        }
+
         #region Implementation of IMetadataConfigurationProvider
 
         /// <summary>
         /// Существуют ли метаданные для свойства модели.
         /// </summary>
-        /// <param name="container_type"></param>
-        /// <param name="model_accessor"></param>
+        /// <param name="container_type">Тип контейнера.</param>
+        /// <param name="model_accessor">Делегат доступа к модели.</param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Свойство.</param>
         /// <returns>Результат.</returns>
-        public bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name)
+        public override bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type,
+                                   string property_name)
         {
+            AddToContainerCache(container_type, model_accessor, model_type, property_name);
             ModelMetadataConfiguration model_configuration = GetModelMetadata(model_type);
-            if (model_configuration != null && model_configuration.Properties != null && model_configuration.Properties.Count > 0)
+            if (model_configuration != null && model_configuration.Properties != null &&
+                model_configuration.Properties.Count > 0)
             {
                 IDictionary<string, ModelMetadataPropertyConfiguration> properties = model_configuration.Properties;
                 foreach (var property in properties)
@@ -96,15 +157,18 @@ namespace Health.Site.Models.Configuration.Providers
         /// <summary>
         /// Получить метаданные для свойства модели.
         /// </summary>
-        /// <param name="container_type"></param>
-        /// <param name="model_accessor"></param>
+        /// <param name="container_type">Тип контейнера.</param>
+        /// <param name="model_accessor">Делегат доступа к модели.</param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Имя свойства.</param>
         /// <returns>Метаданные для свойства.</returns>
-        public ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name)
-        {
+        public override ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor,
+                                                              Type model_type, string property_name)
+        {            
+            AddToContainerCache(container_type, model_accessor, model_type, property_name);
             ModelMetadataConfiguration model_configuration = GetModelMetadata(model_type);
-            if (model_configuration != null && model_configuration.Properties != null && model_configuration.Properties.Count > 0)
+            if (model_configuration != null && model_configuration.Properties != null &&
+                model_configuration.Properties.Count > 0)
             {
                 IDictionary<string, ModelMetadataPropertyConfiguration> properties = model_configuration.Properties;
                 foreach (var property in properties)

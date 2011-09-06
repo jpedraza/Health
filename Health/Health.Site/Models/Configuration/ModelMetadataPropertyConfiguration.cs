@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
-using Health.Site.Models.Rules;
 
 namespace Health.Site.Models.Configuration
 {
@@ -17,6 +13,16 @@ namespace Health.Site.Models.Configuration
         /// Если от формы получена пустая строка она преобразуется в null.
         /// </summary>
         public bool ConvertEmptyStringToNull = true;
+
+        /// <summary>
+        /// Необходимо ли отображать объект.
+        /// </summary>
+        public bool ShowForDisplay = true;
+
+        /// <summary>
+        /// Необходимо ли отображать объект в формах редактирования.
+        /// </summary>
+        public bool ShowForEdit = true;
 
         /// <summary>
         /// Описание объекта.
@@ -54,16 +60,6 @@ namespace Health.Site.Models.Configuration
         public string ShortDisplayName { get; set; }
 
         /// <summary>
-        /// Необходимо ли отображать объект.
-        /// </summary>
-        public bool ShowForDisplay = true;
-
-        /// <summary>
-        /// Необходимо ли отображать объект в формах редактирования.
-        /// </summary>
-        public bool ShowForEdit = true;
-
-        /// <summary>
         /// Текст который выводится вместо комплексного значения объекта.
         /// </summary>
         public string SimpleDisplayText { get; set; }
@@ -99,12 +95,8 @@ namespace Health.Site.Models.Configuration
         public Dictionary<string, object> AdditionalValues { get; set; }
 
         /// <summary>
-        /// Правила валидации для свойства.
+        /// Атрибуты модели.
         /// </summary>
-        public IList<IValidatorRuleConfig> ValidatorRule { get; set; }
-
         public IList<Attribute> Attributes { get; set; }
     }
 }
-
-        

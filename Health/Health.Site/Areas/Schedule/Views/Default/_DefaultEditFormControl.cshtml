@@ -16,8 +16,9 @@
         @Html.HiddenFor(m => m.DefaultSchedule.Parameter.ParameterId)
         <fieldset>
             <legend>Период</legend>
-            @Html.ValidationMessageFor(m => m.DefaultSchedule.Period)
+            @*Html.ValidationMessageFor(m => m.DefaultSchedule.Period)*@
             @Html.EditorFor(m => m.DefaultSchedule.Period)
+            @Html.DisplayFor(m => m.DefaultSchedule.Period)
         </fieldset>
 
         <fieldset>

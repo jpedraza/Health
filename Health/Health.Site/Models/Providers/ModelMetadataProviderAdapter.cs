@@ -1,35 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Mvc;
-using Health.Core.Entities.POCO;
+using Health.Core.API;
 using Health.Site.Models.Configuration;
-using Health.Site.Models.Rules;
+using System.ComponentModel.DataAnnotations;
 
 namespace Health.Site.Models.Providers
 {
     /// <summary>
     /// Адаптер для привязки метаданных модели из провайдера конфигурации.
     /// </summary>
-    public class ModelMetadataProviderAdapter : DataAnnotationsModelMetadataProvider
+    public abstract class ModelMetadataProviderAdapter : DataAnnotationsModelMetadataProvider
     {
-        /// <summary>
-        /// Провайдер конйигурации.
-        /// </summary>
-        protected IMetadataConfigurationProvider ConfigurationProvider { get; set; }
-
         /// <summary>
         /// Биндер.
         /// </summary>
-        protected ModelMetadataProviderBinder Binder { get; set; }
+        protected readonly ModelMetadataProviderBinder Binder;
 
-        public ModelMetadataProviderAdapter(IMetadataConfigurationProvider configuration_provider, ModelMetadataProviderBinder binder)
+        /// <summary>
+        /// Провайдер конйигурации.
+        /// </summary>
+        protected readonly IMetadataConfigurationProvider ConfigurationProvider;
+
+        /// <summary>
+        /// DI ядро.
+        /// </summary>
+        protected readonly IDIKernel DIKernel;
+
+        protected ModelMetadataProviderAdapter(IDIKernel di_kernel,
+                                               IMetadataConfigurationProvider configuration_provider)
         {
+            DIKernel = di_kernel;
             ConfigurationProvider = configuration_provider;
-            Binder = binder;
+            Binder = di_kernel.Get<ModelMetadataProviderBinder>();
         }
 
         #region Overrides of AssociatedMetadataProvider
@@ -50,89 +54,121 @@ namespace Health.Site.Models.Providers
             // Создать базовый набор метаданных...
             var model_metadata = new ModelMetadata(this, container_type, model_accessor, model_type,
                                                    property_name);
-            
+
             // если метаданные имеют не системный тип...
-            if (model_type.Namespace == typeof(int).Namespace)
+            if (model_type.Namespace == typeof (int).Namespace)
             {
-                // если в поставщике метаданных есть метаданные для типа модели с заданным свойством...
+                 //если в поставщике метаданных есть метаданные для типа модели с заданным свойством...
                 if (ConfigurationProvider.IsHaveMetadata(container_type, model_accessor, container_type, property_name))
                 {
-                    // получить метаданные для свойства...
-                    ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type, model_accessor, container_type, property_name);
+                     //получить метаданные для свойства...
+                    ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type,
+                                                                                                model_accessor,
+                                                                                                container_type,
+                                                                                                property_name);
 
                     if (meta != null)
                     {
-                        if (meta.Attributes != null && meta.Attributes.Count > 0)
+                        model_metadata = InitializeMetadata(model_metadata, meta, attributes, container_type,
+                                                            model_accessor, model_type, property_name);
+                    }
+                }
+            }
+                 //если метаданные имеют родительский тип...
+            else
+            {
+                 //создаем провайдер потипу модели...
+                AssociatedMetadataProvider provider = Binder.ResolveProvider(model_type) ??
+                                                      new EmptyModelMetadataProvider();
+                 //создаем метаданные...
+                model_metadata = new ModelMetadata(provider, container_type, model_accessor, model_type, property_name);
+            }
+            return model_metadata;
+        }
+
+        protected abstract ModelMetadata InitializeMetadata(ModelMetadata model_metadata,
+                                                            ModelMetadataPropertyConfiguration property_configuration,
+                                                            IEnumerable<Attribute> attributes, Type container_type,
+                                                            Func<object> model_accessor, Type model_type,
+                                                            string property_name);
+
+        protected ModelMetadata InitializeAttributes(ModelMetadata model_metadata,
+                                                     ModelMetadataPropertyConfiguration property_configuration,
+                                                     Type container_type,
+                                                     Func<object> model_accessor, Type model_type,
+                                                     string property_name)
+        {
+            if (model_metadata == null) throw new ArgumentNullException("model_metadata");
+            IList<Attribute> attributes = property_configuration.Attributes;
+            model_metadata = base.CreateMetadata(attributes, container_type,
+                                                 model_accessor,
+                                                 model_type, property_name);
+            foreach (Attribute attribute in attributes)
+            {
+                if (attribute.GetType() == typeof(RequiredAttribute))
+                {
+                    model_metadata.IsRequired = false;
+                }
+            }
+            return model_metadata;
+        }
+
+        protected ModelMetadata InitializeProperties(ModelMetadata model_metadata,
+                                                     ModelMetadataPropertyConfiguration property_configuration)
+        {
+            PropertyInfo[] property_infos = typeof (ModelMetadataPropertyConfiguration).GetProperties();
+
+            // обходим свойства...
+            foreach (PropertyInfo property_info in property_infos)
+            {
+                // получаем соответствующее свойство из класса метаданных модели...
+                PropertyInfo metadata_property = typeof (ModelMetadata).GetProperty(property_info.Name);
+
+                // если свойство определено в стандартной модели метаданных...
+                if (metadata_property != null)
+                {
+                    // если это не словарь дополнительных параметров...
+                    if (property_info.PropertyType != typeof (Dictionary<string, object>))
+                    {
+                        // получаем значение свойства из провайдера конфигурации...
+                        object value = Convert.ChangeType(
+                            typeof (ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
+                                GetValue
+                                (property_configuration, null),
+                            metadata_property.PropertyType);
+                        // заносим значение в метаданные модели.
+                        metadata_property.SetValue(model_metadata, value, null);
+                    }
+                        // в ином случае...
+                    else
+                    {
+                        // получаем словарь дополнительных метаданных из провайдера конфигурации...
+                        var additional_val =
+                            typeof (ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
+                                GetValue
+                                (property_configuration, null) as
+                            Dictionary<string, object>;
+
+                        if (additional_val != null)
                         {
-                            model_metadata = base.CreateMetadata(meta.Attributes, container_type, model_accessor,
-                                                                 model_type, property_name);
-                        }
+                            // получаем словарь дополнительных метаданных из метаданных модели...
+                            var values =
+                                metadata_property.GetValue(model_metadata, null) as
+                                Dictionary<string, object>;
 
-                        // получаем все свойства конйигурационной модели...
-                        PropertyInfo[] property_infos = typeof(ModelMetadataPropertyConfiguration).GetProperties();
 
-                        // обходим свойства...
-                        foreach (PropertyInfo property_info in property_infos)
-                        {
-                            // получаем соответствующее свойство из класса метаданных модели...
-                            var metadata_property = typeof(ModelMetadata).GetProperty(property_info.Name);
-
-                            // если свойство определено в стандартной модели метаданных...
-                            if (metadata_property != null)
+                            if (values != null)
                             {
-                                // если это не словарь дополнительных параметров...
-                                if (property_info.PropertyType != typeof(Dictionary<string, object>))
+                                // обходим...
+                                foreach (var key_value_pair in additional_val)
                                 {
-                                    // получаем значение свойства из провайдера конфигурации...
-                                    object value = Convert.ChangeType(
-                                        typeof(ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).
-                                            GetValue
-                                            (meta, null),
-                                        metadata_property.PropertyType);
-                                    // заносим значение в метаданные модели.
-                                    metadata_property.SetValue(model_metadata, value, null);
-                                }
-                                // в ином случае...
-                                else
-                                {
-                                    // получаем словарь дополнительных метаданных из провайдера конфигурации...
-                                    var additional_val =
-                                        typeof(ModelMetadataPropertyConfiguration).GetProperty(property_info.Name).GetValue
-                                            (meta, null) as
-                                        Dictionary<string, object>;
-
-                                    if (additional_val != null)
-                                    {
-                                        // получаем словарь дополнительных метаданных из метаданных модели...
-                                        var values =
-                                            metadata_property.GetValue(model_metadata, null) as
-                                            Dictionary<string, object>;
-
-
-                                        if (values != null)
-                                        {
-                                            // обходим...
-                                            foreach (KeyValuePair<string, object> key_value_pair in additional_val)
-                                            {
-                                                // заносим в словарь.
-                                                values.Add(key_value_pair.Key, key_value_pair.Value);
-                                            }
-                                        }
-                                    }
+                                    // заносим в словарь.
+                                    values.Add(key_value_pair.Key, key_value_pair.Value);
                                 }
                             }
                         }
                     }
                 }
-            }
-            // если метаданные имеют родительский тип...
-            else
-            {
-                // создаем провайдер потипу модели...
-                AssociatedMetadataProvider provider = Binder.ResolveProvider(model_type) ??
-                                                      new EmptyModelMetadataProvider();
-                // создаем метаданные...
-                model_metadata = new ModelMetadata(provider, container_type, model_accessor, model_type, property_name);
             }
             return model_metadata;
         }

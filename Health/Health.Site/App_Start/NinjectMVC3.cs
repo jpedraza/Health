@@ -28,6 +28,8 @@ using Ninject.Web.Mvc.FilterBindingSyntax;
 using Ninject.Web.Mvc.Validation;
 using NinjectAdapter;
 using WebActivator;
+using Health.Site.Models.Metadata;
+using Health.Core.Entities.Virtual;
 
 [assembly: PreApplicationStartMethod(typeof (NinjectMVC3), "Start")]
 [assembly: ApplicationShutdownMethod(typeof (NinjectMVC3), "Stop")]
@@ -62,7 +64,7 @@ namespace Health.Site.App_Start
         /// </summary>
         public static void ModelToBinder()
         {
-            ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
+            //ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
         }
 
         /// <summary>
@@ -80,6 +82,7 @@ namespace Health.Site.App_Start
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+            _diKernel = new DIKernel(kernel);
             var locator = new NinjectServiceLocator(kernel);
             ServiceLocator.SetLocatorProvider(() => locator);
             RegisterServices(kernel);
@@ -100,44 +103,55 @@ namespace Health.Site.App_Start
             kernel.Bind<IPermanentCredentialRepository>().To<CookieRepository>();
             kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
             kernel.Bind<IDefaultScheduleRepository>().To<DefaultScheduleFakeRepository>().InSingletonScope();
+            // ~
+
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>();
             kernel.Bind<IRegistrationService>().To<RegistrationService>();
+            // ~
+
             // Фабрики
             kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
+            // ~
+
             // Фильтры для атрибутов
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
                 WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
+            // ~
+
             // Прочее
             kernel.Bind<IDIKernel>().To<DIKernel>();
             kernel.Bind<ILogger>().To<Logger>().WithConstructorArgument("class_name", c => c.Request.Service.Name);
+            // ~
+
             // Провайдеры метаданных
-            kernel.Bind<BinaryMetadataConfigurationProvider>().ToSelf().InRequestScope();
-            kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope();
+            /* Биндеры */
+            kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope().
+                OnActivation(a => a.Bind<TestModel>().To<MMPAAttributeThenProperty, XmlMetadataConfigurationProvider>()
+                    .WithConfigurationParameters()).
+                OnActivation(a => a.Bind<Patient>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+
+            /* Адаптеры */
+            kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();
+
+            /* Провайдеры конфигураций */
+            kernel.Bind<ClassMetadataConfigurationProvider>().ToSelf().InRequestScope();
+            kernel.Bind<SerializerMetadataConfigurationProvider>().ToSelf().InRequestScope();
+            kernel.Bind<XmlMetadataConfigurationProvider>().ToSelf().InRequestScope().
+                WithConstructorArgument("path", HostingEnvironment.MapPath("~/App_Data/ModelMetadata/"));
+            // ~
         }
-
-
 
         /// <summary>
         /// Регистрация провайдеров метаданных.
         /// </summary>
         private static void ModelProvider()
         {
-            var binder = new ModelMetadataProviderBinder();
-
-            binder.AddConfigurationProvider(new XmlMetadataConfigurationProvider(HostingEnvironment.MapPath("~/App_Data/ModelMetadata/")));
-            binder.AddConfigurationProvider(new XmlABMetadataConfigurationProvider(HostingEnvironment.MapPath("~/App_Data/ModelMetadata/")));
-            //binder.AddConfigurationProvider(new BinaryMetadataConfigurationProvider(_diKernel));
-
-            //binder.Bind<TestModel>().To<ModelMetadataProviderAdapter, BinaryMetadataConfigurationProvider>();
-            binder.Bind<Patient>().To<ModelMetadataProviderAdapter, BinaryMetadataConfigurationProvider>();
-
-            var manager = new ModelMetadataProviderManager(binder);
-            ModelMetadataProviders.Current = manager;
-            ModelValidatorProviders.Providers.Clear();
-            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(binder));
+            ModelMetadataProviders.Current = new ModelMetadataProviderManager(_diKernel);
+            ModelValidatorProviders.Providers.Clear();            
+            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(_diKernel));
         }
     }
 }
