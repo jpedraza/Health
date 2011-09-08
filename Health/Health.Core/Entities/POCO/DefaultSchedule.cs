@@ -20,6 +20,11 @@ namespace Health.Core.Entities.POCO
         #region Implementation of ISchedule
 
         /// <summary>
+        /// Идентификатор расписания.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Параметр для которого составлено расписание.
         /// </summary>
         public Parameter Parameter { get; set; }

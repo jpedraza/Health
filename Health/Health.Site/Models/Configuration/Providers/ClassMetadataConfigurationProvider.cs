@@ -47,7 +47,6 @@ namespace Health.Site.Models.Configuration.Providers
         /// <returns>Тип метаданных.</returns>
         private Type CreateMetadataModelType(Type model_type)
         {
-            if (MetadataModelType != null) return MetadataModelType;
             string metadata_model_type_name = String.Format("{0}Metadata", model_type.Name);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Type[] assembly_types = assembly.GetTypes();
@@ -138,7 +137,8 @@ namespace Health.Site.Models.Configuration.Providers
                                    string property_name)
         {
             AddToContainerCache(container_type, model_accessor, model_type, property_name);
-            ModelMetadataConfiguration model_configuration = GetModelMetadata(model_type);
+            if (container_type == null) return false;
+            ModelMetadataConfiguration model_configuration = GetModelMetadata(container_type);
             if (model_configuration != null && model_configuration.Properties != null &&
                 model_configuration.Properties.Count > 0)
             {
@@ -166,7 +166,8 @@ namespace Health.Site.Models.Configuration.Providers
                                                               Type model_type, string property_name)
         {            
             AddToContainerCache(container_type, model_accessor, model_type, property_name);
-            ModelMetadataConfiguration model_configuration = GetModelMetadata(model_type);
+            if (container_type == null) return null;
+            ModelMetadataConfiguration model_configuration = GetModelMetadata(container_type);
             if (model_configuration != null && model_configuration.Properties != null &&
                 model_configuration.Properties.Count > 0)
             {

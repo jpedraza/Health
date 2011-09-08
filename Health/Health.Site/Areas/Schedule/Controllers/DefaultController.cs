@@ -28,9 +28,9 @@ namespace Health.Site.Areas.Schedule.Controllers
         }
 
         [PRGImport(ParametersHook = true)]
-        public ActionResult Edit(int parameter_id = 1)
+        public ActionResult Edit(int schedule_id = 1)
         {
-            DefaultSchedule default_schedule = CoreKernel.DefaultScheduleRepo.GetById(parameter_id);
+            DefaultSchedule default_schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
             var view_model = new DefaultScheduleFormModel
                                  {
                                          DefaultSchedule = default_schedule
@@ -39,14 +39,41 @@ namespace Health.Site.Areas.Schedule.Controllers
         }
 
         [PRGExport(ParametersHook = true)]
-        public ActionResult EditSubmit(DefaultScheduleFormModel view_model)
+        public ActionResult EditSubmit(DefaultScheduleFormModel form_model)
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.DefaultScheduleRepo.Save(view_model.DefaultSchedule);
+                CoreKernel.DefaultScheduleRepo.Update(form_model.DefaultSchedule);
                 return RedirectTo<DefaultController>(a => a.Index());
             }
-            return RedirectTo<DefaultController>(a => a.Edit(view_model.DefaultSchedule.Parameter.ParameterId));
+            return RedirectTo<DefaultController>(a => a.Edit(form_model.DefaultSchedule.Id));
+        }
+        
+        [PRGImport(ParametersHook = true)]
+        public ActionResult Add(DefaultScheduleFormModel form_model)
+        {
+            form_model = form_model ?? new DefaultScheduleFormModel
+                                           {
+                                               DefaultSchedule = new DefaultSchedule()
+                                           };
+            return View(form_model);
+        }
+
+        [PRGExport(ParametersHook = true)]
+        public ActionResult AddSubmit([Bind(Include = "DefaultSchedule")]DefaultScheduleFormModel form_model)
+        {
+            if (ModelState.IsValid)
+            {
+                CoreKernel.DefaultScheduleRepo.Save(form_model.DefaultSchedule);
+                return RedirectTo<DefaultController>(a => a.Index());
+            }
+            return RedirectTo<DefaultController>(a => a.Add(form_model));
+        }
+
+        public ActionResult Delete(int schedule_id)
+        {
+            CoreKernel.DefaultScheduleRepo.DeleteById(schedule_id);
+            return RedirectTo<DefaultController>(a => a.Index());
         }
     }
 }

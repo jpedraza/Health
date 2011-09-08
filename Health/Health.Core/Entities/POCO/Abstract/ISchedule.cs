@@ -9,6 +9,11 @@ namespace Health.Core.Entities.POCO.Abstract
     public interface ISchedule : IEntity
     {
         /// <summary>
+        /// Идентификатор расписания.
+        /// </summary>
+        int Id { get; set; }
+
+        /// <summary>
         /// Параметр для которого составлено расписание.
         /// </summary>
         Parameter Parameter { get; set; }

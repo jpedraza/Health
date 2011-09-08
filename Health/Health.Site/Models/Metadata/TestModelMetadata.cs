@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Health.Core.Entities.Virtual;
 using Health.Site.Models.Validators;
 using System.Web.Mvc;
 
@@ -24,19 +25,5 @@ namespace Health.Site.Models.Metadata
     {
         [DisplayName("New name for propety")]
         public string Name { get; set; }
-    }
-
-    public class PatientMetadata
-    {
-        [DisplayName("Имя для токена")]
-        public string Token { get; set; }
-    }
-    
-    public class PeriodMetadata
-    {
-        [DisplayName("Год")]
-        [Required(ErrorMessage="Необходимо указать год.")]
-        [Range(0, 200, ErrorMessage="Число лет должно быть от 0 до 200.")]
-        public int Years { get; set; }
     }
 }

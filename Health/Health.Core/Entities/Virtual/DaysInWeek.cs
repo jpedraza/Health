@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Health.Core.Entities.Virtual
@@ -43,6 +44,11 @@ namespace Health.Core.Entities.Virtual
             return (from day in _days
                     where day.Value.Name == name
                     select day.Value).FirstOrDefault();
+        }
+
+        public static IEnumerable<Day> GetAll()
+        {
+            return _days.Values.AsEnumerable();
         }
     }
 }

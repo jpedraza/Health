@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Health.Core.Entities.Virtual
 {
@@ -51,6 +52,11 @@ namespace Health.Core.Entities.Virtual
                 }
             }
             throw new Exception("Неверное имя месяца.");
+        }
+
+        public static IEnumerable<Month> GetAll()
+        {
+            return _months.Values.AsEnumerable();
         }
     }
 }

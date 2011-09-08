@@ -2,8 +2,11 @@
 {
     public enum ParityOfWeek
     {
+        // Нечетная
         Odd = 1,
+        // Четная
         Even = 2,
+        // Любая
         All = 0
     }
 

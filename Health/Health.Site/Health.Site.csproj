@@ -174,7 +174,12 @@
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
     <Compile Include="Helpers\Classes\MenuElement.cs" />
+    <Compile Include="Models\Metadata\DayMetadata.cs" />
+    <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
+    <Compile Include="Models\Metadata\MonthMetadata.cs" />
+    <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\TestModelMetadata.cs" />
+    <Compile Include="Models\Metadata\WeekMetadata.cs" />
     <Compile Include="Models\Providers\MMPAAttributeOnly.cs" />
     <Compile Include="Models\Providers\MMPAAttributeThenProperty.cs" />
     <Compile Include="Models\Providers\ModelMetadataProviderAdapter.cs" />
@@ -326,7 +331,7 @@
     <Content Include="Areas\Schedule\Views\Default\_DefaultTableControl.cshtml" />
     <Content Include="Areas\Schedule\Views\Default\Edit.cshtml" />
     <Content Include="Areas\Schedule\Views\Default\_DefaultEditFormControl.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\_Input.cshtml" />
+    <Content Include="Areas\Schedule\Views\Default\Add.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

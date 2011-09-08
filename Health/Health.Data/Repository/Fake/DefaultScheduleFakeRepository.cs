@@ -19,6 +19,7 @@ namespace Health.Data.Repository.Fake
                             {
                                 new DefaultSchedule
                                     {
+                                        Id = 1,
                                         Day = DaysInWeek.All,
                                         Week = WeeksInMonth.All,
                                         Month = MonthsInYear.All,
@@ -36,6 +37,7 @@ namespace Health.Data.Repository.Fake
                                     },
                                 new DefaultSchedule
                                     {
+                                        Id = 2,
                                         Day = DaysInWeek.All,
                                         Week = WeeksInMonth.Even,
                                         Month = MonthsInYear.May,
@@ -54,14 +56,27 @@ namespace Health.Data.Repository.Fake
                             };
         }
 
-        public DefaultSchedule GetById(int parameter_id)
+        public DefaultSchedule GetById(int schedule_id)
         {
             return (from default_schedule in _entities
-                   where default_schedule.Parameter.ParameterId == parameter_id
+                   where default_schedule.Id == schedule_id
                    select default_schedule).FirstOrDefault();
         }
 
-        public override bool Save(DefaultSchedule entity)
+        public bool DeleteById(int schedule_id)
+        {
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                DefaultSchedule default_schedule = _entities[i];
+                if (default_schedule.Id == schedule_id)
+                {
+                    _entities.RemoveAt(i);
+                }
+            }
+            return true;
+        }
+
+        public override bool Update(DefaultSchedule entity)
         {
             foreach (DefaultSchedule default_schedule in _entities)
             {

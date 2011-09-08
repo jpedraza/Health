@@ -55,33 +55,21 @@ namespace Health.Site.Models.Providers
             var model_metadata = new ModelMetadata(this, container_type, model_accessor, model_type,
                                                    property_name);
 
-            // если метаданные имеют не системный тип...
-            if (model_type.Namespace == typeof (int).Namespace)
+            
+            //если в поставщике метаданных есть метаданные для типа модели с заданным свойством...
+            if (ConfigurationProvider.IsHaveMetadata(container_type, model_accessor, model_type, property_name))
             {
-                 //если в поставщике метаданных есть метаданные для типа модели с заданным свойством...
-                if (ConfigurationProvider.IsHaveMetadata(container_type, model_accessor, container_type, property_name))
-                {
-                     //получить метаданные для свойства...
-                    ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type,
-                                                                                                model_accessor,
-                                                                                                container_type,
-                                                                                                property_name);
+                    //получить метаданные для свойства...
+                ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type,
+                                                                                            model_accessor,
+                                                                                            container_type,
+                                                                                            property_name);
 
-                    if (meta != null)
-                    {
-                        model_metadata = InitializeMetadata(model_metadata, meta, attributes, container_type,
-                                                            model_accessor, model_type, property_name);
-                    }
+                if (meta != null)
+                {
+                    model_metadata = InitializeMetadata(model_metadata, meta, attributes, container_type,
+                                                        model_accessor, model_type, property_name);
                 }
-            }
-                 //если метаданные имеют родительский тип...
-            else
-            {
-                 //создаем провайдер потипу модели...
-                AssociatedMetadataProvider provider = Binder.ResolveProvider(model_type) ??
-                                                      new EmptyModelMetadataProvider();
-                 //создаем метаданные...
-                model_metadata = new ModelMetadata(provider, container_type, model_accessor, model_type, property_name);
             }
             return model_metadata;
         }
@@ -103,13 +91,13 @@ namespace Health.Site.Models.Providers
             model_metadata = base.CreateMetadata(attributes, container_type,
                                                  model_accessor,
                                                  model_type, property_name);
-            foreach (Attribute attribute in attributes)
+            /*foreach (Attribute attribute in attributes)
             {
                 if (attribute.GetType() == typeof(RequiredAttribute))
-                {
+                {*/
                     model_metadata.IsRequired = false;
-                }
-            }
+                /*}
+            }*/
             return model_metadata;
         }
 

@@ -129,12 +129,16 @@ namespace Health.Site.App_Start
             // Провайдеры метаданных
             /* Биндеры */
             kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope().
-                OnActivation(a => a.Bind<TestModel>().To<MMPAAttributeThenProperty, XmlMetadataConfigurationProvider>()
-                    .WithConfigurationParameters()).
-                OnActivation(a => a.Bind<Patient>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+                OnActivation(a => a.Bind<TestModel>().To<MMPAAttributeThenProperty, XmlMetadataConfigurationProvider>()).
+                OnActivation(a => a.Bind<Patient>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.Bind<Period>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.Bind<DefaultSchedule>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.Bind<Day>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.Bind<Month>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.Bind<Week>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
 
             /* Адаптеры */
-            kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();
+            //kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();
 
             /* Провайдеры конфигураций */
             kernel.Bind<ClassMetadataConfigurationProvider>().ToSelf().InRequestScope();
