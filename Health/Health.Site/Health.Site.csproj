@@ -142,6 +142,7 @@
     <Compile Include="Areas\Schedule\Controllers\PersonalController.cs" />
     <Compile Include="Areas\Schedule\Models\DefaultScheduleForm.cs" />
     <Compile Include="Areas\Schedule\Models\DefaultScheduleList.cs" />
+    <Compile Include="Areas\Schedule\Models\DefaultScheduleAddMetadata.cs" />
     <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
     <Compile Include="Attributes\Auth.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\Metadata\DayMetadata.cs" />
     <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\MonthMetadata.cs" />
+    <Compile Include="Models\Metadata\ParameterMetadata.cs" />
     <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\TestModelMetadata.cs" />
     <Compile Include="Models\Metadata\WeekMetadata.cs" />

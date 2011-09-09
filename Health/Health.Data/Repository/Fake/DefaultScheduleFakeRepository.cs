@@ -25,7 +25,7 @@ namespace Health.Data.Repository.Fake
                                         Month = MonthsInYear.All,
                                         Parameter = new Parameter
                                                         {
-                                                            ParameterId = 1,
+                                                            Id = 1,
                                                             Name = "давление"
                                                         },
                                         Period = new Period
@@ -43,7 +43,7 @@ namespace Health.Data.Repository.Fake
                                         Month = MonthsInYear.May,
                                         Parameter = new Parameter
                                                         {
-                                                            ParameterId = 2,
+                                                            Id = 2,
                                                             Name = "температура"
                                                         },
                                         Period = new Period
@@ -80,7 +80,7 @@ namespace Health.Data.Repository.Fake
         {
             foreach (DefaultSchedule default_schedule in _entities)
             {
-                if (default_schedule.Parameter.ParameterId == entity.Parameter.ParameterId)
+                if (default_schedule.Parameter.Id == entity.Parameter.Id)
                 {
                     _entities.Remove(default_schedule);
                     _entities.Add(entity);

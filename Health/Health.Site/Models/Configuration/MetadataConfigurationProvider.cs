@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Reflection;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Health.Site.Models.Configuration
 {
@@ -47,14 +45,14 @@ namespace Health.Site.Models.Configuration
                     if (call != null)
                     {
                         LambdaExpression exp = Expression.Lambda(
-                            call, new[] { expression.Parameters[0] });
+                            call, new[] {expression.Parameters[0]});
                         Delegate @delegate = exp.Compile();
                         value = @delegate.DynamicInvoke(container);
                     }
                     var parameter = member_access_expression.Expression as ParameterExpression;
                     if (parameter != null)
                     {
-                        LambdaExpression exp = Expression.Lambda(parameter, new[] { parameter });
+                        LambdaExpression exp = Expression.Lambda(parameter, new[] {parameter});
                         Delegate @delegate = exp.Compile();
                         value = @delegate.DynamicInvoke(container);
                     }
@@ -68,22 +66,27 @@ namespace Health.Site.Models.Configuration
         /// <summary>
         /// Существуют ли метаданные для свойства модели.
         /// </summary>
-        /// <param name="container_type">Тип контейнера.</param>
-        /// <param name="model_accessor">Делегат доступа к модели.</param>
+        /// <param name="container_type"></param>
+        /// <param name="model_accessor"></param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Свойство.</param>
+        /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Результат.</returns>
-        public abstract bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name);
+        public abstract bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type,
+                                            string property_name, params object[] parameters);
 
         /// <summary>
         /// Получить метаданные для свойства модели.
         /// </summary>
-        /// <param name="container_type">Тип контейнера.</param>
-        /// <param name="model_accessor">Делегат доступа к модели.</param>
+        /// <param name="container_type"></param>
+        /// <param name="model_accessor"></param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Имя свойства.</param>
+        /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Метаданные для свойства.</returns>
-        public abstract ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor, Type model_type, string property_name);
+        public abstract ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor,
+                                                                       Type model_type, string property_name,
+                                                                       params object[] parameters);
 
         /// <summary>
         /// Кэш-контейнеров в которых определены свойства модели.

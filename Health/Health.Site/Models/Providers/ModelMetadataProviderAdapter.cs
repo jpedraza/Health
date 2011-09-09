@@ -57,13 +57,15 @@ namespace Health.Site.Models.Providers
 
             
             //если в поставщике метаданных есть метаданные для типа модели с заданным свойством...
-            if (ConfigurationProvider.IsHaveMetadata(container_type, model_accessor, model_type, property_name))
+            if (ConfigurationProvider.IsHaveMetadata(container_type, model_accessor, model_type, property_name, 
+                Binder.GetConfigurationParametersByModelType(container_type)))
             {
-                    //получить метаданные для свойства...
+                //получить метаданные для свойства...
                 ModelMetadataPropertyConfiguration meta = ConfigurationProvider.GetMetadata(container_type,
                                                                                             model_accessor,
                                                                                             container_type,
-                                                                                            property_name);
+                                                                                            property_name,
+                                                                                            Binder.GetConfigurationParametersByModelType(container_type));
 
                 if (meta != null)
                 {

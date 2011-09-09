@@ -104,7 +104,7 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <param name="model_type">Тип модели.</param>
         /// <returns>Текущий провайдер биндинга.</returns>
-        public ModelMetadataProviderBinder Bind(Type model_type)
+        public ModelMetadataProviderBinder For(Type model_type)
         {
             CurrentModelType = model_type;
             return this;
@@ -115,9 +115,9 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <returns></returns>
-        public ModelMetadataProviderBinder Bind<TModel>()
+        public ModelMetadataProviderBinder For<TModel>()
         {
-            return Bind(typeof (TModel));
+            return For(typeof (TModel));
         }
 
         /// <summary>
@@ -125,8 +125,22 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <param name="provider_type">Тип провайдера.</param>
         /// <param name="configuration_type">Тип провайдера конйигурации.</param>
-        public ModelMetadataProviderBinder To(Type provider_type, Type configuration_type)
+        public ModelMetadataProviderBinder Use(Type provider_type, Type configuration_type)
         {
+            for (int i= 0; i < Binding.Count; i++)
+            {
+                MetadataProviderBindingModel binding_model = Binding[i];
+                if (binding_model.ModelType == CurrentModelType)
+                {
+                    Binding[i] = new MetadataProviderBindingModel
+                                     {
+                                         ModelType = CurrentModelType,
+                                         ProviderType = provider_type,
+                                         ConfigurationType = configuration_type
+                                     };
+                    return this;
+                }
+            }
             Binding.Add(new MetadataProviderBindingModel
                             {
                                 ModelType = CurrentModelType,
@@ -141,11 +155,11 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <typeparam name="TProvider">Тип провайдера.</typeparam>
         /// <typeparam name="TConfiguration">Тип провайдера конйигурации.</typeparam>
-        public ModelMetadataProviderBinder To<TProvider, TConfiguration>()
+        public ModelMetadataProviderBinder Use<TProvider, TConfiguration>()
             where TProvider : AssociatedMetadataProvider
             where TConfiguration : IMetadataConfigurationProvider
         {
-            return To(typeof (TProvider), typeof (TConfiguration));
+            return Use(typeof (TProvider), typeof (TConfiguration));
         }
 
         /// <summary>
@@ -280,6 +294,18 @@ namespace Health.Site.Models.Providers
                     binding_model.ConfigurationParameters = configuration_parameters;
                 }
             }
+        }
+
+        public object[] GetConfigurationParametersByModelType(Type model_type)
+        {
+            foreach (MetadataProviderBindingModel binding_model in Binding)
+            {
+                if (binding_model.ModelType == model_type)
+                {
+                    return binding_model.ConfigurationParameters;
+                }
+            }
+            return null;
         }
     }
 }

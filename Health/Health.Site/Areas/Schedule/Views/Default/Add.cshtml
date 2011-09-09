@@ -14,7 +14,8 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>@Html.LabelFor(m => m.DefaultSchedule.Parameter)</legend>
-        <p>@Html.TextBoxFor(m => m.DefaultSchedule.Parameter.ParameterId)</p>
+        <p>@Html.LabelFor(m => m.DefaultSchedule.Parameter.Id)</p>
+        <p>@Html.TextBoxFor(m => m.DefaultSchedule.Parameter.Id) @Html.ValidationMessageFor(m => m.DefaultSchedule.Parameter.Id)</p>
     </fieldset>
     
     <fieldset>

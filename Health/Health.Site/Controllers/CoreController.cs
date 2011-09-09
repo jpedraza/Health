@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Controllers
 {
@@ -30,6 +31,14 @@ namespace Health.Site.Controllers
         public ICoreKernel CoreKernel
         {
             get { return _coreKernel ?? (_coreKernel = DIKernel.Get<ICoreKernel>()); }
+        }
+
+        /// <summary>
+        /// Биндер метаданных.
+        /// </summary>
+        public ModelMetadataProviderBinder MetadataBinder
+        {
+            get { return DIKernel.Get<ModelMetadataProviderBinder>(); }
         }
 
         /// <summary>

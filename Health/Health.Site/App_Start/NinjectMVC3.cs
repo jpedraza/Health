@@ -129,13 +129,14 @@ namespace Health.Site.App_Start
             // Провайдеры метаданных
             /* Биндеры */
             kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope().
-                OnActivation(a => a.Bind<TestModel>().To<MMPAAttributeThenProperty, XmlMetadataConfigurationProvider>()).
-                OnActivation(a => a.Bind<Patient>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.Bind<Period>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.Bind<DefaultSchedule>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.Bind<Day>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.Bind<Month>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.Bind<Week>().To<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+                OnActivation(a => a.For<TestModel>().Use<MMPAAttributeThenProperty, XmlMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Patient>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<DefaultSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Day>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Month>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Week>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
 
             /* Адаптеры */
             //kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
-using Health.Data.Repository.Fake;
 using Health.Site.Areas.Schedule.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
+using Health.Site.Models.Configuration.Providers;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Schedule.Controllers
 {
@@ -33,7 +30,7 @@ namespace Health.Site.Areas.Schedule.Controllers
             DefaultSchedule default_schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
             var view_model = new DefaultScheduleFormModel
                                  {
-                                         DefaultSchedule = default_schedule
+                                     DefaultSchedule = default_schedule
                                  };
             return View(view_model);
         }
@@ -48,10 +45,12 @@ namespace Health.Site.Areas.Schedule.Controllers
             }
             return RedirectTo<DefaultController>(a => a.Edit(form_model.DefaultSchedule.Id));
         }
-        
+
         [PRGImport(ParametersHook = true)]
         public ActionResult Add(DefaultScheduleFormModel form_model)
         {
+            MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
             form_model = form_model ?? new DefaultScheduleFormModel
                                            {
                                                DefaultSchedule = new DefaultSchedule()
@@ -60,8 +59,10 @@ namespace Health.Site.Areas.Schedule.Controllers
         }
 
         [PRGExport(ParametersHook = true)]
-        public ActionResult AddSubmit([Bind(Include = "DefaultSchedule")]DefaultScheduleFormModel form_model)
+        public ActionResult AddSubmit([Bind(Include = "DefaultSchedule")] DefaultScheduleFormModel form_model)
         {
+            MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
             if (ModelState.IsValid)
             {
                 CoreKernel.DefaultScheduleRepo.Save(form_model.DefaultSchedule);

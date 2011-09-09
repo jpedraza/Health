@@ -35,9 +35,10 @@ namespace Health.Site.Models.Configuration.Providers
         /// <param name="model_accessor"></param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Свойство.</param>
+        /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Результат.</returns>
         public bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type,
-                                   string property_name)
+                                   string property_name, params object[] parameters)
         {
             if (model_type == null) return false;
             ModelMetadataConfiguration model_metadata = ParseXml(model_type);
@@ -56,9 +57,11 @@ namespace Health.Site.Models.Configuration.Providers
         /// <param name="model_accessor"></param>
         /// <param name="model_type">Тип модели.</param>
         /// <param name="property_name">Имя свойства.</param>
+        /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Метаданные для свойства.</returns>
         public ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor,
-                                                              Type model_type, string property_name)
+                                                              Type model_type, string property_name,
+                                                              params object[] parameters)
         {
             if (model_type == null) return null;
             ModelMetadataConfiguration model_metadata = ParseXml(model_type);
