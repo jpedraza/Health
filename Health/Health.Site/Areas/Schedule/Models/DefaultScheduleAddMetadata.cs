@@ -12,6 +12,6 @@ namespace Health.Site.Areas.Schedule.Models
     {
         [DisplayName("Идентификатор параметра.")]
         [Required(ErrorMessage = "Нужно указать номер параметра.")]
-        public new int ParameterId { get; set; }
+        public new int Id { get; set; }
     }
 }

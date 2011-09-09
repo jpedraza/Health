@@ -103,6 +103,7 @@ namespace Health.Site.App_Start
             kernel.Bind<IPermanentCredentialRepository>().To<CookieRepository>();
             kernel.Bind<ICandidateRepository>().To<CandidatesFakeRepository>().InSingletonScope();
             kernel.Bind<IDefaultScheduleRepository>().To<DefaultScheduleFakeRepository>().InSingletonScope();
+            kernel.Bind<IPersonalScheduleRepository>().To<PersonalScheduleFakeRepository>().InSingletonScope();
             // ~
 
             // Сервисы
@@ -136,7 +137,8 @@ namespace Health.Site.App_Start
                 OnActivation(a => a.For<Day>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<Month>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<Week>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+                OnActivation(a => a.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<PersonalSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
 
             /* Адаптеры */
             //kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();

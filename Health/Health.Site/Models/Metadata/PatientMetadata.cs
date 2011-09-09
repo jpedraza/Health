@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Health.Site.Models.Metadata
 {
-    public class ParameterMetadata
+    public class PatientMetadata
     {
-        [DisplayName("Ифентификатор параметра")]
-        public int Id { get; set; }
+        [DisplayName("Логин")]
+        public string Login { get; set; }
     }
 }

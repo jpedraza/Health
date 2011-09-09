@@ -1,5 +1,9 @@
-﻿@{
+﻿@using Health.Site.Areas.Schedule.Models
+@model PersonalScheduleList
+@{
     ViewBag.Title = "Персональные расписания.";
 }
 
 <h2>@ViewBag.Title</h2>
+
+@Html.Partial("_PersonalTableControl", Model.PersonalSchedules)

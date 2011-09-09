@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Health.Core.API;
+using Health.Site.Areas.Schedule.Models;
 using Health.Site.Attributes;
+using Health.Site.Controllers;
 
 namespace Health.Site.Areas.Schedule.Controllers
 {
-    [Auth(AllowRoles = "Admin")]
-    public class PersonalController : Controller
+    public class PersonalController : CoreController
     {
+        public PersonalController(IDIKernel di_kernel) : base(di_kernel) { }
+
         public ActionResult Index()
         {
-            return View();
+            var form_model = new PersonalScheduleList
+                                 {
+                                     PersonalSchedules = CoreKernel.PersonalScheduleRepo.GetAll()
+                                 };
+            return View(form_model);
         }
     }
 }
