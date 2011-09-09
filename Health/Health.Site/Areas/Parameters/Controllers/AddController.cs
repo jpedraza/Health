@@ -19,74 +19,72 @@ namespace Health.Site.Areas.Parameters.Controllers
         }
         //
         // GET: /Parameters/Add/
-        //TODO: Для добавления параметра необходимо 1-добавить проверку на null. 2 Добавить кнопки back
-        //TODO: Добавить разметку на первой форме
-        //TODO: PRG
+        //TODO: Добавить разметку на первой форме (пока непринципиально)
+        //TODO: Сделать специальную страницу для ошибок
+        //TODO: Переименовать названия контроллеров и записи типа <summary>
         /// <summary>
-        /// Отображение формы начала создания
+        /// Отображение формы начала создания нового параметра
         /// </summary>
-        [PRGImport]
-        public ActionResult Index([Bind(Include = "StartAddForm")] ParametersViewModel form_model)
+        public ActionResult Index()
         {
-            if (form_model != null && form_model.StartAddForm != null)
-            {
-                return View(form_model);
-            }
             return View();
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Отображение формы для продолжения создания нового параметра
+        /// </summary>
+        /// <param name="form_model"></param>
+        /// <returns></returns>
         public ActionResult NextAdd([Bind(Include = "StartAddForm")] ParametersViewModel form_model)
         {
             if (ModelState.IsValid)
             {
-                
                 if (form_model != null && form_model.StartAddForm != null)
                 {
-                    var Model =  form_model.StartAddParameter(form_model.StartAddForm.Name, form_model.StartAddForm.Value, form_model.StartAddForm.DefaultValue, form_model.StartAddForm.Is_childs, form_model.StartAddForm.Is_var, form_model.StartAddForm.Is_param, CoreKernel.ParamRepo);
-                    TempData["NewParam"] = Model.NewParam;
-                    return View(new ParametersViewModel { 
-                    parameters = Model.parameters,
-                    NewParam = Model.NewParam,
-                    StartAddForm = Model.StartAddForm
-                    });
+                    form_model =  form_model.StartAddParameter(form_model.StartAddForm.Name, 
+                        form_model.StartAddForm.Value, 
+                        form_model.StartAddForm.DefaultValue, 
+                        form_model.StartAddForm.Is_childs, 
+                        form_model.StartAddForm.Is_var, 
+                        form_model.StartAddForm.Is_param, 
+                        CoreKernel.ParamRepo);
+                    TempData["NewParam"] = form_model.NewParam;
+                    return View(form_model);
                 }
                 else
-                    return RedirectTo<AddController>(a => a.Index(form_model));
+                    return RedirectTo<AddController>(a => a.Index());
             }
 
             return View();
         }
-
+        /// <summary>
+        /// Отображение формы 
+        /// </summary>
+        /// <param name="form_model"></param>
+        /// <returns></returns>
         public ActionResult Var([Bind(Include = "NextAddForm")] ParametersViewModel form_model)
         {
             if (ModelState.IsValid)
             {
-
-                if (form_model != null)
+                form_model.NewParam = (Parameter)TempData["NewParam"];
+                TempData.Keep("NewParam");
+                if (form_model.NextAddForm != null&&ParametersViewModel.IsCorrectStage2(form_model.NewParam))
                 {
-                    form_model.NewParam = (Parameter)TempData["NewParam"];
-                    TempData.Keep("NewParam");
-                    var Model = form_model.NextAddParameter(form_model);
-                    if (!Model.NewParam.MetaData.Is_var)
+                    form_model.NextAddParameter(form_model);
+                    if (!form_model.NewParam.MetaData.Is_var)
                     {
-                        bool result = CoreKernel.ParamRepo.Add(Model.NewParam);
-                        TempData["Result"] = result;
                         return RedirectTo<AddController>(a => a.Confirm(form_model));
                     }                        
                     else
                     {
-                        ViewData["NumVar"] = form_model.NextAddForm.NumVariant;
-                        Model.display_for = form_model.NextAddForm.NumVariant;
-                        return View(new ParametersViewModel { 
-                        display_for = Model.display_for,
-                        NewParam = Model.NewParam
-                        });
+                        form_model.display_for = form_model.NextAddForm.NumVariant;
+                        TempData["NewParam"] = form_model.NewParam;
+                        return View(form_model);
                     }
                     
                 }
                 else
-                    RedirectTo<AddController>(a => a.Index(form_model));
+                    return RedirectTo<AddController>(a => a.Index());
             }
 
             return View();
@@ -94,19 +92,22 @@ namespace Health.Site.Areas.Parameters.Controllers
 
         public ActionResult Confirm([Bind(Include = "VarForm")] ParametersViewModel form_model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 form_model.NewParam = (Parameter)TempData["NewParam"];
-                TempData.Keep("NewParam");
                 ParametersViewModel Model = form_model.AddParameter(form_model);
                 bool result = CoreKernel.ParamRepo.Add(Model.NewParam);
                 TempData["Result"] = result;
-
                 ViewData["Result"] = TempData["Result"];
                 TempData.Keep("Result");
-            }            
-            return View();
+                return View();
+            }
+            else
+            { 
+                return RedirectTo<AddController>(a => a.Var(form_model));
+            }
+           
         }
     }
 }

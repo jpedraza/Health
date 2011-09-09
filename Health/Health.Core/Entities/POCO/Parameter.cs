@@ -1,4 +1,5 @@
-﻿using Health.Core.Entities.POCO.Abstract;
+﻿//TODO: Убрать атрибут Период для Параметра
+using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Core.Entities.POCO
 {

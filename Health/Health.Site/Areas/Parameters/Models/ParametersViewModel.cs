@@ -83,6 +83,7 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// /// <param name="last_model_state">Преидущее состояние модели.</param>
         /// <returns>Обновленная модель</returns>
+        //TODO: Внимание! необходимо пофиксить алгоритм, в контроллере, так в случае редиректа, или возвращения назад Age уже присвоено, но со старой формы подается null((
         public virtual ParametersViewModel NextAddParameter(ParametersViewModel last_model_state)
         {
             this.NewParam = last_model_state.NewParam;
@@ -98,15 +99,17 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// <param name="last_model_state">Последнее состояние модели</param>
         /// <returns></returns>
+        //TODO: Внимание, исправить алгоритм, учитывая, что в интевское может записаться текстовое, хотя фильтр пропускает((
         public virtual ParametersViewModel AddParameter(ParametersViewModel last_model_state)
         {
             this.NewParam = last_model_state.NewParam;
-            this.NewParam.MetaData.Variants = new Variant[last_model_state.VarForm.variants.Count];
-            for (int i = 0; i < this.NewParam.MetaData.Variants.Length; i++)
+            if (last_model_state.VarForm != null && last_model_state.VarForm.variants != null)
             {
-                this.NewParam.MetaData.Variants[i] = new Variant(last_model_state.VarForm.variants[i], last_model_state.VarForm.balls[i]);
-                this.NewParam.MetaData.Variants[i].Value = last_model_state.VarForm.variants[i];
-                this.NewParam.MetaData.Variants[i].Ball = last_model_state.VarForm.balls[i];
+                this.NewParam.MetaData.Variants = new Variant[last_model_state.VarForm.variants.Count];
+                for (int i = 0; i < this.NewParam.MetaData.Variants.Length; i++)
+                {
+                    this.NewParam.MetaData.Variants[i] = new Variant(last_model_state.VarForm.variants[i].Value, last_model_state.VarForm.variants[i].Ball);
+                }
             }
             return this;
         }
@@ -125,5 +128,24 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         public VarFormModel VarForm { get; set; }
 
+        /// <summary>
+        /// Проверяет, правильно, ли заполнена форма?
+        /// </summary>
+        /// <param name="form1">Первая форма</param>
+        /// <returns></returns>
+        public static bool IsCorrectStage1(StartAddFormModel form1)
+        {
+            return (form1.DefaultValue != null && form1.Is_childs != null && form1.Is_param != null && form1.Is_var != null && form1.Name != null && form1.Value != null);
+        }
+
+        /// <summary>
+        /// Проверяет корректность заполнения второй формы
+        /// </summary>
+        /// <param name="form2">вторая форма</param>
+        /// <returns></returns>
+        public static bool IsCorrectStage2(Parameter NewParam)
+        {
+            return (NewParam != null && NewParam.DefaultValue!=null && NewParam.Id != null && NewParam.Value != null);
+        }
     }
 }

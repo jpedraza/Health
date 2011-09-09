@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Collections;
+using Health.Core.Entities.POCO;
 
 namespace Health.Site.Areas.Parameters.Models.Forms
 {
@@ -83,16 +85,49 @@ namespace Health.Site.Areas.Parameters.Models.Forms
     /// </summary>
     public class VarFormModel
     {
-        /// <summary>
-        /// Варианты ответов на вопросы
-        /// </summary>
-        [Required(ErrorMessage = "Введите, пожалуйста, вариант")]
-        public IList<string> variants { get; set; }
+        [CannotBeEmptyAtribute]
+        public IList<Variant> variants { get; set; }
+    }
 
+    /// <summary>
+    /// Данный класс описывает валидатор для проверки:
+    /// Все ли элементы списка на форме заполнены?
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class CannotBeEmptyAtribute : ValidationAttribute
+    {
+        private const string defaultError = "'{0}' must have at least one element";
+        public CannotBeEmptyAtribute()
+            : base(defaultError)
+        {
+        }
+
+        public override bool IsValid(object value)
+        {
+            IList<Variant> list = value as IList<Variant>;
+            if (list == null || list.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                foreach (Variant variant in list)
+                {
+                    if (String.IsNullOrEmpty(variant.Value) || String.IsNullOrEmpty(variant.Ball.ToString()))
+                        return false;
+                    else
+                        return true;
+                }
+            }
+            return flag;
+        }
         /// <summary>
-        /// Баллы за определенный ответ
+        /// Служебная переменная, для реализации алгоритма.
         /// </summary>
-        [Required(ErrorMessage = "Введите, пожалуйста, вариант")]
-        public IList<Nullable<double>>balls { get; set; }
+        private static bool flag = true;
+        public override string FormatErrorMessage(string name)
+        {
+            return String.Format(this.ErrorMessageString, name);
+        }
     }
 }

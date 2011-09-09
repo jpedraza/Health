@@ -76,7 +76,6 @@
      <td>
         @if(metadata.Is_var)
         {
-            __razor_helper_writer.WriteLine("Варианты ответа: ");
             @ShowVariant(metadata.Variants)
         }
         </td> 
@@ -86,16 +85,18 @@
 {
     foreach(var item2 in vars)
     {
-        <p>@item2.Value
+        <p>"@item2.Value"
          - 
-        @item2.Ball
-         баллов
+        <b>@item2.Ball</b>
         </p>
     }
     
 }
 <h2>Таблица просмотра всех параметров</h2>
 <table border="1" cellspacing="1">
+<tr><th>Общая характеристика параметра</th>
+<th>Мета-данные</th>
+<th>Варианты ответа (баллы)</th></tr>
 @foreach (var item in Model.parameters)
 {
    <tr>

@@ -21,11 +21,11 @@
         <tr>
         <td>Variant # @Html.Encode(i + 1)</td>
        
-        <td> @Html.ValidationMessageFor(x => x.VarForm.variants[i])
-        @Html.TextBoxFor(x => x.VarForm.variants[i])</td>
+        <td> @Html.ValidationMessageFor(x => x.VarForm.variants[i].Value)
+        @Html.TextBoxFor(x => x.VarForm.variants[i].Value)</td>
         <td>
-        @Html.ValidationMessageFor(x => x.VarForm.balls[i])
-        @Html.TextBoxFor(x => x.VarForm.balls[i])</td>
+        @Html.ValidationMessageFor(x => x.VarForm.variants[i].Ball)
+        @Html.TextBoxFor(x => x.VarForm.variants[i].Ball)</td>
         </tr>
     }
     </table>
