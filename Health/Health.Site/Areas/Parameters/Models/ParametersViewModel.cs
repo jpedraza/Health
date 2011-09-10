@@ -25,7 +25,21 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         public Parameter NewParam { get; set; }
 
-        public virtual ParametersViewModel StartEditParameter
+        /// <summary>
+        /// Данный метод перезаписывает атрибуты параметры здоровья человека,
+        /// в соответствии с данными, введенными пользователем на 1 этапе ввода 
+        /// </summary>
+        /// <param name="form">Форма ввода 1 -го этапа</param>
+        /// <returns>Возвращается обновленное состояние модели</returns>
+        public virtual ParametersViewModel StartEditParameter(StartAddFormModel form)
+        {
+            if (this.NewParam == null)
+            {
+                this.NewParam = new Parameter();
+            }
+            //this.NewParam.Id = form.
+            return this;
+        }
         
         /// <summary>
         /// Первая стадия добавления параметра

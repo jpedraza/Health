@@ -304,8 +304,6 @@
     <Content Include="Areas\Parameters\Views\Add\Var.cshtml" />
     <Content Include="Areas\Parameters\Views\Add\Confirm.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Edit.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Edit2.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
