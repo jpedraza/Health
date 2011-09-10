@@ -122,6 +122,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\AdminViewModel.cs" />
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
+    <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
     <Compile Include="Areas\Parameters\Models\Forms\ParametersFormsModels.cs" />
     <Compile Include="Areas\Parameters\Models\ParametersViewModel.cs" />
@@ -302,6 +303,9 @@
     <Content Include="Areas\Parameters\Views\Add\NextAdd.cshtml" />
     <Content Include="Areas\Parameters\Views\Add\Var.cshtml" />
     <Content Include="Areas\Parameters\Views\Add\Confirm.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\Index.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\Edit.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\Edit2.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

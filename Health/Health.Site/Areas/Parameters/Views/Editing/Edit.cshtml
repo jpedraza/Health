@@ -1,0 +1,30 @@
+﻿@model Health.Site.Areas.Parameters.Models.ParametersViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm("Edit2", "Editing", new {Area = "Parameters"}))
+{
+    <p>@Html.LabelFor(x => x.StartAddForm.Name)</p>
+    <p>@Html.ValidationMessageFor(x =>x.StartAddForm.Name)</p>
+    <p>@Html.TextBoxFor(x => x.StartAddForm.Name)</p>
+    
+    <p>@Html.LabelFor(x => x.StartAddForm.Value)</p>
+    <p>@Html.ValidationMessageFor(x => x.StartAddForm.Value)</p>
+    <p>@Html.TextBoxFor(x => x.StartAddForm.Value)</p>
+    
+    <p>@Html.LabelFor(x => x.StartAddForm.DefaultValue)</p>
+    <p>@Html.ValidationMessageFor(x => x.StartAddForm.DefaultValue)</p>
+    <p>@Html.TextBoxFor(x => x.StartAddForm.DefaultValue)</p>
+    
+    <p>@Html.LabelFor(x => x.StartAddForm.Is_childs) 
+    @Html.CheckBoxFor(x => x.StartAddForm.Is_childs)</p>
+    
+    <p>@Html.LabelFor(x => x.StartAddForm.Is_var)
+    @Html.CheckBoxFor(x => x.StartAddForm.Is_var)</p>
+    
+    <p>@Html.LabelFor(x => x.StartAddForm.Is_param)
+    @Html.CheckBoxFor(x => x.StartAddForm.Is_param)</p>    
+    <input type="submit" value="Отправить" />
+}

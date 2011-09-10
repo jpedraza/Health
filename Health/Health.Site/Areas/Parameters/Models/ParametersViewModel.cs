@@ -25,6 +25,8 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         public Parameter NewParam { get; set; }
 
+        public virtual ParametersViewModel StartEditParameter
+        
         /// <summary>
         /// Первая стадия добавления параметра
         /// </summary>
@@ -40,13 +42,13 @@ namespace Health.Site.Areas.Parameters.Models
             var found_parametr = ParamRepo.GetByValue(Name);
             if (found_parametr == null)
             {
-                NewParam = new Parameter { 
+                NewParam = new Parameter
+                {
                     Name = Name,
                     Value = Value,
                     DefaultValue = DefaultValue,
                 };
             }
-
             var i = 0;
             var j = 0;
             var parameters = ParamRepo.GetAllParam();
@@ -83,7 +85,6 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// /// <param name="last_model_state">Преидущее состояние модели.</param>
         /// <returns>Обновленная модель</returns>
-        //TODO: Внимание! необходимо пофиксить алгоритм, в контроллере, так в случае редиректа, или возвращения назад Age уже присвоено, но со старой формы подается null((
         public virtual ParametersViewModel NextAddParameter(ParametersViewModel last_model_state)
         {
             this.NewParam = last_model_state.NewParam;
@@ -99,7 +100,6 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// <param name="last_model_state">Последнее состояние модели</param>
         /// <returns></returns>
-        //TODO: Внимание, исправить алгоритм, учитывая, что в интевское может записаться текстовое, хотя фильтр пропускает((
         public virtual ParametersViewModel AddParameter(ParametersViewModel last_model_state)
         {
             this.NewParam = last_model_state.NewParam;
