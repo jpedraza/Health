@@ -25,6 +25,11 @@ namespace Health.Site.Areas.Parameters
                 "Parameters_Editing_Edit",
                 "Parameters/Editing/Edit/{parameter_id}",
                 new { controller = "Editing", action = "Edit", parameter_id = UrlParameter.Optional});
+
+            context.MapRoute(
+                "Parameters_Editing_Deletevariant",
+                "Parameters/Editing/Deletevariant/{variant_id}",
+                new { controller = "Editing", action = "Deletevariant", variant_id = UrlParameter.Optional});
         }
     }
 }

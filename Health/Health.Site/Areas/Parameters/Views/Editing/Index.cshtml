@@ -10,7 +10,7 @@
 <table border="1" cellspacing="1">
 <tr><th>Id</th>
 <th>Name</th>
-<th>Action</th></tr>
+<th colspan="2">Действие</th></tr>
 @{
     IList<Parameter> parameters = ViewData["Parameters"] as IList<Parameter>;
     if(parameters != null)
@@ -21,7 +21,8 @@
             <td>@parameter.Name</td>
             <td>@Html.RouteLink("Ред.", "Parameters_Editing_Edit", new
            {
-           parameter_id = parameter.Id}) 
+           parameter_id = parameter.Id}) </td>
+           <td>
                 Удал.</td></tr>
         }
     }

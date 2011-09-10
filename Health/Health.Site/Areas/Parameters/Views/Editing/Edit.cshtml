@@ -1,0 +1,66 @@
+﻿@using Health.Core.Entities.POCO;
+@model Health.Site.Areas.Parameters.Models.ParametersViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    //TODO: В шапке таблицы вариантов прописать объединение последних двух столбцов
+}
+
+<h2>На этой странице можно изменить некоторые атибуты и мета-данные 
+уже существующего параметра.</h2>
+
+<h5>Общее описание параметра и его мета-данных</h5>
+@using (Html.BeginForm("Save", "Editing", new { area = "Parameters" }))
+{
+    <p>@Html.LabelFor(x => x.EditingForm.Name)</p>
+    <p>@Html.ValidationMessageFor(x => x.EditingForm.Name)</p>
+    <p>@Html.TextAreaFor(x => x.EditingForm.Name)</p>
+    
+    <p>@Html.LabelFor(x => x.EditingForm.Value)</p>
+    <p>@Html.ValidationMessageFor(x => x.EditingForm.Value)</p>
+    <p>@Html.TextBoxFor(x => x.EditingForm.Value)</p>
+    
+    <p>@Html.LabelFor(x => x.EditingForm.DefaultValue)</p>
+    <p>@Html.ValidationMessageFor(x => x.EditingForm.DefaultValue)</p>
+    <p>@Html.TextBoxFor(x => x.EditingForm.DefaultValue)</p>
+    
+    <p>@Html.LabelFor(x => x.EditingForm.Age)</p>
+    <p>@Html.ValidationMessageFor(x => x.EditingForm.Age)</p>
+    <p>@Html.TextBoxFor(x => x.EditingForm.Age)</p>
+    
+    <p>@Html.LabelFor(x => x.EditingForm.Id_cat)</p>
+    <p>@Html.ValidationMessageFor(x => x.EditingForm.Id_cat)</p>
+    <p>@Html.TextBoxFor(x => x.EditingForm.Id_cat)</p>
+    
+    <h5>Описание вариантов ответа на параметр</h5>
+    if (Model.EditParam.MetaData.Is_var)
+    {
+        <table cellspacing="0"><tr><th></th><th>Variants</th><th>Balls</th><th>Action</th></tr>
+        @{
+        var i = 1;
+            }
+        @foreach (Variant variant in Model.EditingForm.variants)
+        {
+             <tr>
+            <td>Variant # @Html.Encode(i)</td>
+       
+            <td> @Html.ValidationMessageFor(x => variant.Value)
+            @Html.TextBoxFor(x => variant.Value)</td>
+            <td>
+            @Html.ValidationMessageFor(x => variant.Ball)
+            @Html.TextBoxFor(x => variant.Ball)</td>
+            <td>@Html.RouteLink("Del.", "Parameters_Editing_Deletevariant", new
+           {
+               variant_id = i - 1
+           })</td>
+            </tr>
+            i++;
+        }
+        </table>
+    }
+    else
+    {
+        <p>Вариантов для редактирования нет</p>
+    }
+    <input type="submit" value="Send" />
+}

@@ -20,27 +20,16 @@ namespace Health.Site.Areas.Parameters.Models
         ///Служебная переменная
         /// </summary>
         public Nullable<int> display_for { get; set; }
+
         /// <summary>
         /// Новый параметр здоровья
         /// </summary>
         public Parameter NewParam { get; set; }
 
         /// <summary>
-        /// Данный метод перезаписывает атрибуты параметры здоровья человека,
-        /// в соответствии с данными, введенными пользователем на 1 этапе ввода 
+        /// Редактируемый параметр здоровья человека
         /// </summary>
-        /// <param name="form">Форма ввода 1 -го этапа</param>
-        /// <returns>Возвращается обновленное состояние модели</returns>
-        public virtual ParametersViewModel StartEditParameter(StartAddFormModel form)
-        {
-            if (this.NewParam == null)
-            {
-                this.NewParam = new Parameter();
-            }
-            //this.NewParam.Id = form.
-            return this;
-        }
-        
+        public Parameter EditParam { get; set; }
         /// <summary>
         /// Первая стадия добавления параметра
         /// </summary>
@@ -160,6 +149,34 @@ namespace Health.Site.Areas.Parameters.Models
         public static bool IsCorrectStage2(Parameter NewParam)
         {
             return (NewParam != null && NewParam.DefaultValue!=null && NewParam.Id != null && NewParam.Value != null);
+        }
+
+        /// <summary>
+        /// Форма для редактирования параметра здоровья
+        /// </summary>
+        public EditingFormModel EditingForm { get; set; }
+
+        /// <summary>
+        /// Данный метод подготавливает состояние модели
+        /// к записи в репозиторий измененый параметр здоровья человека
+        /// </summary>
+        /// <param name="last_form_model">Последнее состояние млдели</param>
+        /// <returns>Измененное состояние модели</returns>
+        public virtual ParametersViewModel SaveEditngParameter(ParametersViewModel last_form_model)
+        {
+            EditParam.Name = EditingForm.Name;
+            EditParam.Value = EditingForm.Value;
+            EditParam.DefaultValue = EditingForm.DefaultValue;
+            EditParam.MetaData.Age = EditingForm.Age;
+            EditParam.MetaData.Id_cat = EditingForm.Id_cat;
+            if (EditingForm.variants != null)
+            {
+                for (int i = 0; i < EditingForm.variants.Count; i++)
+                {
+                    EditParam.MetaData.Variants[i] = EditingForm.variants[i];
+                }
+            }
+            return this;
         }
     }
 }

@@ -16,6 +16,48 @@ namespace Health.Data.Repository.Fake
             #region FakeData
             Save(new Parameter
             {
+                Name = "Температура",
+                Value = 0,
+                Id = 6,
+                DefaultValue = 36.6,
+                MetaData = new MetaData
+                {
+                    Id_cat = 6,
+                    Is_var = false,
+                    Age = 12,
+                    Id_parent = null,
+                    Obligation = true,
+                    Is_childs = false,
+                    period = 12,
+                    Variants = null
+                }
+            });
+            Save(
+                new Parameter
+                {
+                    Name = "Головна боль",
+                    Value = "Нет",
+                    Id = 7,
+                    DefaultValue = "Нет",
+                    MetaData = new MetaData{
+                        Id_cat = 6,
+                        Is_var = true,
+                        Age = 13,
+                        Id_parent = null,
+                        Is_childs = false,
+                        Obligation = true,
+                        period = 32,
+                        Variants = new Variant[]{
+                        new Variant{
+                        Value = "Не болит",
+                        Ball = 0},
+                        new Variant{
+                        Value = "Болит",
+                        Ball = 1}}
+                    }
+                });
+            Save(new Parameter
+            {
                 Name = "Характеристика здоровья ребенка при рождении",
                 Value = 14,
                 DefaultValue = 0,

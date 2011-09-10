@@ -130,4 +130,45 @@ namespace Health.Site.Areas.Parameters.Models.Forms
             return String.Format(this.ErrorMessageString, name);
         }
     }
+
+    /// <summary>
+    /// Модель формы редактирования уже существующего параметра.
+    /// </summary>
+    public class EditingFormModel
+    {
+        /// <summary>
+        /// Название параметра здоровья
+        /// </summary>
+        [Required(ErrorMessage = "Введите название параметра")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Значение параметра здоровья
+        /// </summary>
+        [Required(ErrorMessage = "Введите значение параметра")]
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Значение по-умолчанию
+        /// </summary>
+        [Required(ErrorMessage = "Введите значение по-умолчанию")]
+        public string DefaultValue { get; set; }
+
+        /// <summary>
+        /// Возраст
+        /// </summary>
+        [Required(ErrorMessage = "Введите возраст")]
+        public string Age { get; set; }
+
+        /// <summary>
+        /// Id_cat
+        /// </summary>
+        public Nullable<int> Id_cat { get; set; }
+
+        /// <summary>
+        /// Варианты ответов на параметр.
+        /// </summary>
+        [CannotBeEmptyAtribute]
+        public IList<Variant> variants { get; set; }
+    }
 }
