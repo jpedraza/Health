@@ -59,7 +59,16 @@ namespace Health.Site.Areas.Parameters.Controllers
         public ActionResult ContinueEdit()
         {
             Parameter parameter = TempData["EditParameter"] as Parameter;
-            TempData.Keep("EditParameter");
+            if (parameter == null)
+            {
+                var str = "Ошибка, нет данных (параметра) для продолжения редактирования.";
+                TempData["Error"] = str;
+                return RedirectTo<EditingController>(a => a.Error());
+            }
+            // Следующая операция необходима для обновления параметра в модели.
+            // А предыдущая нужна для получения ID обновляемого параметра
+            parameter = CoreKernel.ParamRepo.GetById(parameter.Id);
+            TempData["EditParameter"] = parameter;
             if (parameter != null)
             {
                 return View(new ParametersViewModel
@@ -92,7 +101,7 @@ namespace Health.Site.Areas.Parameters.Controllers
             TempData.Keep("EditParameter");
             if (form_model.EditParam != null && form_model.EditingForm != null)
             {
-                form_model.SaveEditngParameter(form_model);
+                form_model.SaveEditngParameter();
                 bool Result = CoreKernel.ParamRepo.Edit(form_model.EditParam);
                 TempData["Result"] = Result.ToString();
                 return RedirectTo<EditingController>(a => a.ConfirmSave());
@@ -107,26 +116,47 @@ namespace Health.Site.Areas.Parameters.Controllers
 
         public ActionResult AddVariant()
         {
-            //.....
-            return View();
+            Parameter parameter = TempData["EditParameter"] as Parameter;
+            TempData.Keep("EditParameter");
+            if (parameter != null)
+            {
+                return View(new ParametersViewModel { EditParam = parameter});
+            }
+            else
+            {
+                var str = "Ошибка, нет данных (параметра) для добавления варианта ответа.";
+                TempData["Error"] = str;
+                return RedirectTo<EditingController>(a => a.Error());
+            }
         }
 
         public ActionResult SaveAddVariant([Bind(Include = "VarForm")] ParametersViewModel form_model)
         {
-            //....
-            return View();
+            form_model.EditParam = TempData["EditParameter"] as Parameter;
+            TempData.Keep("EditParameter");
+            if (form_model.EditParam != null & form_model.VarForm.variants != null)
+            {
+                form_model.AddVariant();
+                CoreKernel.ParamRepo.Edit(form_model.EditParam);
+                return RedirectTo<EditingController>(s => s.ContinueEdit());
+            }
+            else
+            {
+                var str = "Ошибка, нет данных (параметра) для добавления варианта ответа.";
+                TempData["Error"] = str;
+                return RedirectTo<EditingController>(a => a.Error());
+            }
         }
 
         public ActionResult Deletevariant(int variant_id)
         {
             Parameter parameter = TempData["EditParameter"] as Parameter;
             TempData.Keep("EditParameter");
-            if(parameter != null)
+            if (parameter != null)
             {
-                var variants = new List<Variant>(parameter.MetaData.Variants);
-                variants.RemoveAt(variant_id);
-                parameter.MetaData.Variants = variants.ToArray();
+                ParametersViewModel.DeleteVariant(variant_id, parameter);
                 TempData["EditParameter"] = parameter;
+                CoreKernel.ParamRepo.Edit(parameter);
                 return RedirectTo<EditingController>(s => s.ContinueEdit());
             }
             else
@@ -136,6 +166,8 @@ namespace Health.Site.Areas.Parameters.Controllers
                 return RedirectTo<EditingController>(a => a.Error());
             }
         }
+
+       
         public ActionResult ConfirmSave()
         {
             ViewData["Result"] = TempData["Result"];

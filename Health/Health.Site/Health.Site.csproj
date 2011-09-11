@@ -308,6 +308,8 @@
     <Content Include="Areas\Parameters\Views\Editing\Error.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\ConfirmSave.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Deletevariant.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\ContinueEdit.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\AddVariant.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

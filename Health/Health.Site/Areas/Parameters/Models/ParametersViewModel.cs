@@ -162,7 +162,7 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// <param name="last_form_model">Последнее состояние млдели</param>
         /// <returns>Измененное состояние модели</returns>
-        public virtual ParametersViewModel SaveEditngParameter(ParametersViewModel last_form_model)
+        public virtual void SaveEditngParameter()
         {
             EditParam.Name = EditingForm.Name;
             EditParam.Value = EditingForm.Value;
@@ -176,7 +176,33 @@ namespace Health.Site.Areas.Parameters.Models
                     EditParam.MetaData.Variants[i] = EditingForm.variants[i];
                 }
             }
-            return this;
+        }
+
+        /// <summary>
+        /// Удаляет вариант ответа из параметра
+        /// </summary>
+        /// <param name="variant_id">Id удаляемого варианта</param>
+        /// <param name="parameter">Параметр, у которого удаляют вариант ответа</param>
+        public static void DeleteVariant(int variant_id, Parameter parameter)
+        {
+            var variants = new List<Variant>(parameter.MetaData.Variants);
+            variants.RemoveAt(variant_id);
+            parameter.MetaData.Variants = variants.ToArray();
+            if (parameter.MetaData.Variants.Length == 0)
+            {
+                parameter.MetaData.Is_var = false;
+                parameter.MetaData.Variants = null;
+            }
+        }
+
+        /// <summary>
+        /// Добавляет новый вариант ответа к текущему параметру.
+        /// </summary>
+        public void AddVariant()
+        {
+            var list = new List<Variant>(EditParam.MetaData.Variants);
+            list.Add(VarForm.variants.First());
+            EditParam.MetaData.Variants = list.ToArray();
         }
     }
 }

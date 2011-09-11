@@ -1,0 +1,30 @@
+﻿@model Health.Site.Areas.Parameters.Models.ParametersViewModel
+
+@{
+    ViewBag.Title = "AddVariant";
+}
+
+<h2>Заполните соответствующие поля, для создания нового параметра</h2>
+@using (Html.BeginForm("SaveAddVariant", "Editing", new { area = "Parameters" }))
+{
+    <table cellspacing="0">
+    <tr>
+    <th></th>
+    <th>Variants</th>
+    <th>Balls</th>
+    </tr>
+    @for (int i = 0; i < 1; i++)
+    {
+        <tr>
+        <td>Variant # @Html.Encode(i + 1)</td>
+       
+        <td> @Html.ValidationMessageFor(x => x.VarForm.variants[i].Value)
+        @Html.TextBoxFor(x => x.VarForm.variants[i].Value)</td>
+        <td>
+        @Html.ValidationMessageFor(x => x.VarForm.variants[i].Ball)
+        @Html.TextBoxFor(x => x.VarForm.variants[i].Ball)</td>
+        </tr>
+    }
+    </table>
+    <input type="submit" value="Send" />
+}
