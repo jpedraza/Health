@@ -167,7 +167,6 @@ namespace Health.Site.Areas.Parameters.Controllers
             }
         }
 
-       
         public ActionResult ConfirmSave()
         {
             ViewData["Result"] = TempData["Result"];
@@ -178,6 +177,12 @@ namespace Health.Site.Areas.Parameters.Controllers
         {
             ViewData["Message"] = TempData["Error"];
             return View();
+        }
+
+        public ActionResult Delete(int parameter_id)
+        {
+            TempData["Result"] = CoreKernel.ParamRepo.DeleteParam(parameter_id);
+            return RedirectTo<EditingController>(g => g.ConfirmSave());
         }
     }
 }

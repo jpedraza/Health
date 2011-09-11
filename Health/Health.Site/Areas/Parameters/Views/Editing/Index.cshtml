@@ -23,12 +23,13 @@
            {
            parameter_id = parameter.Id}) </td>
            <td>
-                Удал.</td></tr>
+                @Html.RouteLink("Удал.", "Parameters_Editing_Delete" , new
+                {parameter_id = parameter.Id})</td></tr>
         }
     }
     else
     {
-        <tr><td>Ошибка</td></tr>
+        <tr><td>Ошибка</td><td>Параметров нет.</td></tr>
     }
 }
 </table>
