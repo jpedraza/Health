@@ -11,9 +11,7 @@ namespace Health.Site.Areas.Schedules.Controllers
 {
     public class DefaultController : CoreController
     {
-        public DefaultController(IDIKernel di_kernel) : base(di_kernel)
-        {
-        }
+        public DefaultController(IDIKernel di_kernel) : base(di_kernel) { }
 
         public ActionResult Index()
         {
@@ -56,6 +54,7 @@ namespace Health.Site.Areas.Schedules.Controllers
                                {
                                    DefaultSchedule = new DefaultSchedule()
                                };
+            form.Parameters = CoreKernel.ParamRepo.GetAll();
             return View(form);
         }
 

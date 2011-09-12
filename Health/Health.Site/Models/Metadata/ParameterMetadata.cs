@@ -10,5 +10,8 @@ namespace Health.Site.Models.Metadata
     {
         [DisplayName("Ифентификатор параметра")]
         public int Id { get; set; }
+
+        [DisplayName("Имя параметра")]
+        public int Name { get; set; }
     }
 }

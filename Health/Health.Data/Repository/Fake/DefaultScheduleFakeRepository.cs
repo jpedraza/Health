@@ -89,5 +89,11 @@ namespace Health.Data.Repository.Fake
             }
             throw new Exception("Переданное для обновления дефолтное расписание отсутствует в репозитории.");
         }
+
+        public override bool Save(DefaultSchedule entity)
+        {
+            entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
+            return base.Save(entity);
+        }
     }
 }

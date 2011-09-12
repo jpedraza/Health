@@ -14,6 +14,25 @@ namespace Health.Site.Areas.Schedules.Models
     {
         public DefaultSchedule DefaultSchedule { get; set; }
 
+        public IEnumerable<Parameter> Parameters { get; set; }
+
+        public IEnumerable<SelectListItem> ParametersSelectList
+        {
+            get
+            {
+                var selected_list = new BindingList<SelectListItem>();
+                foreach (Parameter parameter in Parameters)
+                {
+                    selected_list.Add(new SelectListItem
+                                          {
+                                              Text = parameter.Name,
+                                              Value = parameter.Id.ToString()
+                                          });
+                }
+                return selected_list;
+            }
+        }
+
         public string Message { get; set; }
 
         public IEnumerable<SelectListItem> AllDaysInWeek

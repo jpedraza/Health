@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Health.Site.Extensions
@@ -20,6 +23,11 @@ namespace Health.Site.Extensions
         {
             var member_expression = (MemberExpression) property.Body;
             return member_expression.Member.Name;
+        }
+
+        public static bool IsNullAndCountIsZero(this IEnumerable<object> enumerable)
+        {
+            return enumerable == null || enumerable.Count() == 0;
         }
     }
 }
