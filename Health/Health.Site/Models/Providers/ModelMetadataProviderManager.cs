@@ -40,7 +40,9 @@ namespace Health.Site.Models.Providers
             Binder = _diKernel.Get<ModelMetadataProviderBinder>();
             if (Binder.IsHaveMetadataProvider(container_type))
             {
-                return Binder.ResolveProvider(container_type).GetMetadataForProperties(container, container_type);
+                IEnumerable<ModelMetadata> model_metadata =
+                    Binder.ResolveProvider(container_type).GetMetadataForProperties(container, container_type);
+                return model_metadata;
             }
 
             return DefaultProvider.GetMetadataForProperties(container, container_type);
@@ -52,8 +54,10 @@ namespace Health.Site.Models.Providers
             Binder = _diKernel.Get<ModelMetadataProviderBinder>();
             if (Binder.IsHaveMetadataProvider(container_type))
             {
-                return Binder.ResolveProvider(container_type).GetMetadataForProperty(model_accessor, container_type,
-                                                                                     property_name);
+                ModelMetadata model_metadata =
+                    Binder.ResolveProvider(container_type).GetMetadataForProperty(model_accessor, container_type,
+                                                                                  property_name);
+                return model_metadata;
             }
 
             return DefaultProvider.GetMetadataForProperty(model_accessor, container_type, property_name);
@@ -64,7 +68,9 @@ namespace Health.Site.Models.Providers
             Binder = _diKernel.Get<ModelMetadataProviderBinder>();
             if (Binder.IsHaveMetadataProvider(model_type))
             {
-                return Binder.ResolveProvider(model_type).GetMetadataForType(model_accessor, model_type);
+                ModelMetadata model_metadata = Binder.ResolveProvider(model_type).GetMetadataForType(model_accessor,
+                                                                                                     model_type);
+                return model_metadata;
             }
 
             return DefaultProvider.GetMetadataForType(model_accessor, model_type);

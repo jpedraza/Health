@@ -136,16 +136,24 @@
     <Compile Include="Areas\Account\Models\Forms\AccountFormsModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Models\AdminViewModel.cs" />
-    <Compile Include="Areas\Schedule\Controllers\DefaultController.cs" />
-    <Compile Include="Areas\Schedule\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Schedule\Controllers\PersonalController.cs" />
-    <Compile Include="Areas\Schedule\Models\DefaultScheduleForm.cs" />
-    <Compile Include="Areas\Schedule\Models\DefaultScheduleList.cs" />
-    <Compile Include="Areas\Schedule\Models\DefaultScheduleAddMetadata.cs" />
-    <Compile Include="Areas\Schedule\Models\PersonalScheduleList.cs" />
-    <Compile Include="Areas\Schedule\Models\PersonalScheduleListMetadata.cs" />
-    <Compile Include="Areas\Schedule\ScheduleAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\PatientsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\Patients\PatientsForm.cs" />
+    <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
+    <Compile Include="Areas\Candidate\Controllers\CrudController.cs" />
+    <Compile Include="Areas\Candidate\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Candidate\Models\CandidateList.cs" />
+    <Compile Include="Areas\Schedules\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Schedules\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Schedules\Controllers\PersonalController.cs" />
+    <Compile Include="Areas\Schedules\Models\DefaultScheduleMetadata.cs" />
+    <Compile Include="Areas\Schedules\Models\DefaultScheduleModels.cs" />
+    <Compile Include="Areas\Schedules\Models\PersonalScheduleMetadata.cs" />
+    <Compile Include="Areas\Schedules\Models\PersonalScheduleModels.cs" />
+    <Compile Include="Areas\Schedules\SchedulesAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Models\Users\Metadata\UsersAddMetadata.cs" />
+    <Compile Include="Areas\Admin\Models\Users\UsersForm.cs" />
+    <Compile Include="Areas\Admin\Models\Users\UsersList.cs" />
     <Compile Include="Attributes\Auth.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
     <Compile Include="Controllers\CoreController.cs" />
@@ -177,6 +185,7 @@
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
     <Compile Include="Helpers\Classes\MenuElement.cs" />
+    <Compile Include="Models\Mapper.cs" />
     <Compile Include="Models\Metadata\DayMetadata.cs" />
     <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\MonthMetadata.cs" />
@@ -185,6 +194,7 @@
     <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\PersonalScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\TestModelMetadata.cs" />
+    <Compile Include="Models\Metadata\UserMetadata.cs" />
     <Compile Include="Models\Metadata\WeekMetadata.cs" />
     <Compile Include="Models\Providers\MMPAAttributeOnly.cs" />
     <Compile Include="Models\Providers\MMPAAttributeThenProperty.cs" />
@@ -298,8 +308,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Account\Views\Shared\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Schedule\Views\Shared\" />
+    <Folder Include="Areas\Candidate\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -329,16 +338,29 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Account\Views\Interview\Confirm.cshtml" />
-    <Content Include="Areas\Schedule\Views\Web.config" />
-    <Content Include="Areas\Schedule\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\Index.cshtml" />
-    <Content Include="Areas\Schedule\Views\Personal\Index.cshtml" />
-    <Content Include="Areas\Schedule\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\_DefaultTableControl.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\Edit.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\_DefaultEditFormControl.cshtml" />
-    <Content Include="Areas\Schedule\Views\Default\Add.cshtml" />
-    <Content Include="Areas\Schedule\Views\Personal\_PersonalTableControl.cshtml" />
+    <Content Include="Areas\Candidate\Views\Web.config" />
+    <Content Include="Areas\Candidate\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Candidate\Views\Home\_CandidateTableControl.cshtml" />
+    <Content Include="Areas\Candidate\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\_UsersList.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\_UsersForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\_PatientsForm.cshtml" />
+    <Content Include="Areas\Schedules\Views\Web.config" />
+    <Content Include="Areas\Schedules\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleForm.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleList.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\Add.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\Edit.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\Index.cshtml" />
+    <Content Include="Areas\Schedules\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\_PersonalList.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\Confirm.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\_PatientsDisplay.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\Confirm.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleDisplay.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

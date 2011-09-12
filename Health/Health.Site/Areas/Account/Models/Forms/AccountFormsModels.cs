@@ -34,7 +34,7 @@ namespace Health.Site.Areas.Account.Models.Forms
     /// <summary>
     /// Модель формы регистрации кандидатов
     /// </summary>
-    public class RegistrationFormModel : Candidate
+    public class RegistrationFormModel : Core.Entities.POCO.Candidate
     {
         [Required]
         public new string FirstName { get; set; }

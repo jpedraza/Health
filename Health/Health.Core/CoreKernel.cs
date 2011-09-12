@@ -16,6 +16,7 @@ namespace Health.Core
         private IUserRepository _userRepo;
         private IDefaultScheduleRepository _defaultScheduleRepo;
         private IPersonalScheduleRepository _personalScheduleRepo;
+        private IPatientRepository _patientRepo;
 
         /// <summary>
         /// Создает экземпляр центральное сервиса.
@@ -117,6 +118,23 @@ namespace Health.Core
                 return _personalScheduleRepo;
             }
             set { _personalScheduleRepo = value; }
+        }
+
+        /// <summary>
+        /// Репозиторий пациентов.
+        /// </summary>
+        public IPatientRepository PatientRepo
+        {
+            get
+            {
+                if (_patientRepo == null)
+                {
+                    _patientRepo = DIKernel.Get<IPatientRepository>(this);
+                    Logger.Debug("Репозиторий пациентов создан.");
+                }
+                return _patientRepo;
+            }
+            set { _patientRepo = value; }
         }
 
         /// <summary>

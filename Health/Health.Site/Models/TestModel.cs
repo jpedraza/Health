@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Health.Core.API;
 using Health.Core.Entities.POCO;
 using Health.Site.Attributes;
 

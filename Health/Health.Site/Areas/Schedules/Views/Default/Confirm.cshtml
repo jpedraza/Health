@@ -1,0 +1,14 @@
+﻿@using Health.Site.Areas.Schedules.Models
+@model DefaultScheduleForm
+
+@{
+    ViewBag.Title = "Confirm";
+}
+
+<h2>@Model.Message</h2>
+
+@Html.Partial("_DefaultScheduleDisplay")
+
+<p>@Html.ActionLink("Добавить новое расписание", "Add", "Default")</p>
+<p>@Html.RouteLink("Редактировать добавленное", "Schedules_Default_Edit", new { schedule_id = Model.DefaultSchedule.Id })</p>
+<p>@Html.ActionLink("Перейти к списку расписаний", "Index", "Default")</p>

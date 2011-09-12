@@ -42,6 +42,14 @@ namespace Health.Site.Controllers
         }
 
         /// <summary>
+        /// Копирует свойства одного объекта в одноименные и однотипные свойства другого объекта.
+        /// </summary>
+        public Mapper Mapper
+        {
+            get { return DIKernel.Get<Mapper>(); }
+        }
+
+        /// <summary>
         /// DI ядро системы.
         /// </summary>
         public IDIKernel DIKernel { get; private set; }
@@ -77,9 +85,8 @@ namespace Health.Site.Controllers
             string area_name = String.Empty;
             if (full_name != null)
             {
-                area_name =
-                    full_name.Replace("Health.Site", "").Replace("Areas", "").Replace("Controllers", "").Replace(controller_name, "").
-                        Replace(".", "").Replace("Controller", "");
+                string[] temp = full_name.Split('.');
+                area_name = full_name.Contains("Areas") ? temp[3] : temp[2];
             }
             return RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
         }
@@ -102,7 +109,7 @@ namespace Health.Site.Controllers
                     code_error = (exception as HttpException).GetHttpCode();
                 }
                 message = exception.Message;
-                var error_model = new ErrorViewModel
+                var error_model = new ErrorViewModel()
                                       {
                                           ErrorModel = new ErrorModel
                                                            {

@@ -15,23 +15,23 @@ namespace Health.Data.Repository.Fake
                             {
                                 new Role
                                     {
-                                        Name = "Guest",
-                                        Code = 0
+                                        Id = 1,
+                                        Name = "Guest"
                                     },
                                 new Role
                                     {
-                                        Name = "Patient",
-                                        Code = 1
+                                        Id = 2,
+                                        Name = "Patient"
                                     },
                                 new Role
                                     {
-                                        Name = "Doctor",
-                                        Code = 2
+                                        Id = 3,
+                                        Name = "Doctor"
                                     },
                                 new Role
                                     {
-                                        Name = "Admin",
-                                        Code = 3
+                                        Id = 4,
+                                        Name = "Admin"
                                     }
                             };
         }
@@ -41,6 +41,11 @@ namespace Health.Data.Repository.Fake
         public Role GetByName(string name)
         {
             return _entities.Where(x => x.Name == name).FirstOrDefault();
+        }
+
+        public Role GetById(int role_id)
+        {
+            return _entities.Where(x => x.Id == role_id).FirstOrDefault();
         }
 
         #endregion

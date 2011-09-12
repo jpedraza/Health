@@ -26,7 +26,7 @@ namespace Health.Site.Areas.Account.Controllers
             {
                 return View(form_model);
             }
-            return View(new AccountViewModel
+            return View(new AccountViewModel()
                             {
                                 InterviewForm = new InterviewFormModel()
                                                     {

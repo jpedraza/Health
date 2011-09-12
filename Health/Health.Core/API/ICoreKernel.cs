@@ -40,6 +40,11 @@ namespace Health.Core.API
         /// </summary>
         IPersonalScheduleRepository PersonalScheduleRepo { get; set; }
 
+        /// <summary>
+        /// Репозиторий пациентов.
+        /// </summary>
+        IPatientRepository PatientRepo { get; set; }
+
         #endregion
 
         #region Services

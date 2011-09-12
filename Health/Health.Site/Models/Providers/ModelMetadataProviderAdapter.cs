@@ -73,6 +73,7 @@ namespace Health.Site.Models.Providers
                                                         model_accessor, model_type, property_name);
                 }
             }
+            model_metadata.IsRequired = false;
             return model_metadata;
         }
 

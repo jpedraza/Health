@@ -1,0 +1,22 @@
+﻿@using Health.Core.Entities.POCO
+@model IEnumerable<User>
+
+<table>
+    <tr>
+        @{
+            //TODO: Добавить проверку на случай если пользователей нет вообще.
+            User us = Model.ElementAt(0);
+         }
+        <td>@Html.LabelFor(m => us.Id)</td>
+        <td>@Html.LabelFor(m => us.Login)</td>
+        <td>@Html.LabelFor(m => us.Role)</td>
+    </tr>
+    @foreach (User user in Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Login</td>
+            <td>@user.Role.Name</td>
+        </tr>
+    }
+</table>

@@ -14,7 +14,7 @@ namespace Health.Site.Controllers
 
         public ActionResult Index()
         {
-            var test_model = new TestModel
+            var test_model = new TestModel()
                                  {
                                      Enother = new List<Patient>
                                                    {

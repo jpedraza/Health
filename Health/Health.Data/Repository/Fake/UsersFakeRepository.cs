@@ -13,6 +13,7 @@ namespace Health.Data.Repository.Fake
         {
             Save(new User
                      {
+                         Id = 1,
                          FirstName = "Анатолий",
                          LastName = "Петров",
                          ThirdName = "Витальевич",
@@ -22,6 +23,7 @@ namespace Health.Data.Repository.Fake
                      });
             Save(new User
                      {
+                         Id = 2,
                          FirstName = "Максим",
                          LastName = "Васильев",
                          ThirdName = "Александрович",

@@ -1,4 +1,5 @@
-﻿using Health.Site.Areas.Account.Models.Forms;
+﻿using Health.Core.API;
+using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Models;
 
 namespace Health.Site.Areas.Account.Models
