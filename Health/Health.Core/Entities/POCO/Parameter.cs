@@ -6,16 +6,17 @@ namespace Health.Core.Entities.POCO
     public class Parameter : IEntity
     {
         /// <summary>
-        /// Id параметра
+        /// Идентификатор параметра.
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
-        /// Текстовое название параметра
+        /// Текстовое название параметра.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Значение параметра (если параметр с вариантами, то сумма баллов)
+        /// Значение параметра (если параметр с вариантами, то сумма баллов).
         /// </summary>
         public object Value { get; set; }
 
@@ -25,7 +26,7 @@ namespace Health.Core.Entities.POCO
         public object DefaultValue { get; set; }
 
         /// <summary>
-        /// Мета-данные (описывают характеристику параметра)
+        /// Мета-данные (описывают характеристику параметра).
         /// </summary>
         public MetaData MetaData { get; set; }        
     }

@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web.Mvc;
 using Health.Core.API;
-using Health.Core.Entities;
 using Health.Core.Entities.POCO;
 
 namespace Health.Site.Models.Binders

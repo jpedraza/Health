@@ -5,5 +5,8 @@ namespace Health.Core.API.Repository
 {
     public interface IDefaultScheduleRepository : ICoreRepository<DefaultSchedule>, IScheduleRepository
     {
+        DefaultSchedule GetById(int parameter_id);
+
+        bool DeleteById(int schedule_id);
     }
 }

@@ -1,0 +1,17 @@
+﻿@using Health.Site.Areas.Admin.Models.Users
+@model UsersForm
+
+<p>@Html.LabelFor(m => m.User.Login)</p>
+<p>@Html.EditorFor(m => m.User.Login) @Html.ValidationMessageFor(m => m.User.Login)</p>
+<p>@Html.LabelFor(m => m.User.Password)</p>
+<p>@Html.EditorFor(m => m.User.Password) @Html.ValidationMessageFor(m => m.User.Password)</p>
+<p>@Html.LabelFor(m => m.User.FirstName)</p>
+<p>@Html.EditorFor(m => m.User.FirstName) @Html.ValidationMessageFor(m => m.User.FirstName)</p>
+<p>@Html.LabelFor(m => m.User.LastName)</p>
+<p>@Html.EditorFor(m => m.User.LastName) @Html.ValidationMessageFor(m => m.User.LastName)</p>
+<p>@Html.LabelFor(m => m.User.ThirdName)</p>
+<p>@Html.EditorFor(m => m.User.ThirdName) @Html.ValidationMessageFor(m => m.User.ThirdName)</p>
+<p>@Html.LabelFor(m => m.User.Birthday)</p>
+<p>@Html.EditorFor(m => m.User.Birthday) @Html.ValidationMessageFor(m => m.User.Birthday)</p>
+<p>@Html.LabelFor(m => m.User.Role)</p>
+<p>@Html.DropDownListFor(m => m.User.Role.Id, Model.RolesSelectList) @Html.ValidationMessageFor(m => m.User.Role)</p>

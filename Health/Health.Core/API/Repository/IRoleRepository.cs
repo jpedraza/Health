@@ -14,5 +14,12 @@ namespace Health.Core.API.Repository
         /// <param name="name">Имя роли.</param>
         /// <returns>Найденная роль.</returns>
         Role GetByName(string name);
+
+        /// <summary>
+        /// Получить роль по ее идентификатору.
+        /// </summary>
+        /// <param name="role_id">Идентификатор роли.</param>
+        /// <returns>Роль.</returns>
+        Role GetById(int role_id);
     }
 }

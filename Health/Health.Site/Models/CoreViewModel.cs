@@ -7,14 +7,5 @@ namespace Health.Site.Models
     /// </summary>
     public class CoreViewModel
     {
-        /// <summary>
-        /// DI ядро.
-        /// </summary>
-        public IDIKernel DIKernel { get; set; }
-
-        /// <summary>
-        /// Центральное ядро приложения.
-        /// </summary>
-        public ICoreKernel CoreKernel { get; set; }
     }
 }

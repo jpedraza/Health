@@ -1,0 +1,33 @@
+﻿@using Health.Site.Areas.Schedules.Models
+@model DefaultScheduleForm
+
+<fieldset>
+        <legend>@Model.DefaultSchedule.Parameter.Name</legend>
+        <fieldset>
+            <legend>@Html.LabelFor(m => m.DefaultSchedule.Period)</legend>
+            @Html.DisplayFor(m => m.DefaultSchedule.Period)
+        </fieldset>
+
+        <fieldset>
+            <legend>Промежуток времени</legend>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.TimeStart): @Model.DefaultSchedule.TimeStart</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.TimeEnd): @Model.DefaultSchedule.TimeEnd</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>@Html.LabelFor(m => m.DefaultSchedule.Day)</legend>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Day.InMonth): @Model.DefaultSchedule.Day.InMonth </p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Day.InWeek): @Model.DefaultSchedule.Day.InWeek</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>@Html.LabelFor(m => m.DefaultSchedule.Week)</legend>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Week.InMonth): @Model.DefaultSchedule.Week.InMonth</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Week.Parity): @Model.DefaultSchedule.Week.Parity</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>@Html.LabelFor(m => m.DefaultSchedule.Month)</legend>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Month.InYear): @Model.DefaultSchedule.Month.InYear</p>
+        </fieldset>
+</fieldset>

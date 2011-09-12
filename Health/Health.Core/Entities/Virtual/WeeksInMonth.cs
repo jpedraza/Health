@@ -25,8 +25,8 @@ namespace Health.Core.Entities.Virtual
                                                                    };
 
         public static readonly Week Odd = _weeks[1];
-        public static readonly Week Even = _weeks[1];
-        public static readonly Week All = _weeks[1];
+        public static readonly Week Even = _weeks[2];
+        public static readonly Week All = _weeks[3];
 
         public static Week Week(int index)
         {

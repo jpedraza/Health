@@ -8,5 +8,8 @@ namespace Health.Core.API.Repository
     /// </summary>
     public interface ICandidateRepository : ICoreRepository<Candidate>
     {
+        bool DeleteById(int candidate_id);
+
+        Candidate GetById(int candidate_id);
     }
 }

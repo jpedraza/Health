@@ -1,0 +1,14 @@
+﻿@using Health.Site.Areas.Admin.Models.Patients
+@model PatientsForm
+
+@{
+    ViewBag.Title = "Добвление пациента";
+}
+
+<h2>Добвление пациента</h2>
+
+@using (Html.BeginForm("AddSubmit", "Patients", new { area = "Admin" }))
+{
+    @Html.Partial("_PatientsForm")
+    <input type="submit" value="Создать"/>
+}

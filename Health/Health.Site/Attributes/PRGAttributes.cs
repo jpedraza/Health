@@ -137,8 +137,8 @@ namespace Health.Site.Attributes
         public override void OnActionExecuted(ActionExecutedContext filter_context)
         {
             base.OnActionExecuted(filter_context);
-            // Если модель валидна и если результат действия - редирект на роут...
-            if (!filter_context.Controller.ViewData.ModelState.IsValid && filter_context.Result is RedirectToRouteResult)
+            // Если модель не валидна и если результат действия - редирект на роут...
+            if (/*!filter_context.Controller.ViewData.ModelState.IsValid && */filter_context.Result is RedirectToRouteResult)
             {
                 var result = filter_context.Result as RedirectToRouteResult;
                 // формируем ключи для получения данных их постоянного хранилища.

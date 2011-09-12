@@ -15,6 +15,9 @@ namespace Health.Core
         private IRoleRepository _roleRepo;
         private IUserRepository _userRepo;
         private IParameterRepository _paramRepo;
+        private IDefaultScheduleRepository _defaultScheduleRepo;
+        private IPersonalScheduleRepository _personalScheduleRepo;
+        private IPatientRepository _patientRepo;
 
         /// <summary>
         /// Создает экземпляр центральное сервиса.
@@ -96,6 +99,57 @@ namespace Health.Core
                 }
                 return _candRepo;
             }
+        }
+
+        /// <summary>
+        /// Дефолтный репозиторий расписаний.
+        /// </summary>
+        public IDefaultScheduleRepository DefaultScheduleRepo
+        {
+            get
+            {
+                if (_defaultScheduleRepo == null)
+                {
+                    _defaultScheduleRepo = DIKernel.Get<IDefaultScheduleRepository>(this);
+                    Logger.Debug("Репозиторий дефолтных расписаний создан.");
+                }
+                return _defaultScheduleRepo;
+            }
+            set { _defaultScheduleRepo = value; }
+        }
+
+        /// <summary>
+        /// Персональный репозиторий расписаний.
+        /// </summary>
+        public IPersonalScheduleRepository PersonalScheduleRepo
+        {
+            get
+            {
+                if (_personalScheduleRepo == null)
+                {
+                    _personalScheduleRepo = DIKernel.Get<IPersonalScheduleRepository>(this);
+                    Logger.Debug("Репозиторий персональных расписаний создан.");
+                }
+                return _personalScheduleRepo;
+            }
+            set { _personalScheduleRepo = value; }
+        }
+
+        /// <summary>
+        /// Репозиторий пациентов.
+        /// </summary>
+        public IPatientRepository PatientRepo
+        {
+            get
+            {
+                if (_patientRepo == null)
+                {
+                    _patientRepo = DIKernel.Get<IPatientRepository>(this);
+                    Logger.Debug("Репозиторий пациентов создан.");
+                }
+                return _patientRepo;
+            }
+            set { _patientRepo = value; }
         }
 
         /// <summary>

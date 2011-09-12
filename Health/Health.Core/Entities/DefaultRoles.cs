@@ -14,8 +14,7 @@ namespace Health.Core.Entities
             {
                 return _all ?? (_all = new Role
                                            {
-                                               Name = "All",
-                                               Code = 98
+                                               Name = "All"
                                            });
             }
             set { _all = value; }
@@ -27,8 +26,7 @@ namespace Health.Core.Entities
             {
                 return _guest ?? (_guest = new Role
                                                {
-                                                   Name = "Guest",
-                                                   Code = 99
+                                                   Name = "Guest"
                                                });
             }
             set { _guest = value; }
