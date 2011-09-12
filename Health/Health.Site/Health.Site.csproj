@@ -384,7 +384,6 @@
     <Content Include="Areas\Admin\Views\Patients\_PatientsDisplay.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Confirm.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleDisplay.cshtml" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
