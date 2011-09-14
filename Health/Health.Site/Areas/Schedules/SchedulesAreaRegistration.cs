@@ -21,6 +21,12 @@ namespace Health.Site.Areas.Schedules
             );
 
             context.MapRoute(
+                "Schedules_Default_AddBase",
+                "Schedules/Default/Add/{schedule_id}",
+                new { controller = "Default", action = "AddBase", schedule_id = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
                 "Schedules_Default_Edit",
                 "Schedules/Default/Edit/{schedule_id}",
                 new { controller = "Default", action = "Edit", schedule_id = UrlParameter.Optional }

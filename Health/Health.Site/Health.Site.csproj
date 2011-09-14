@@ -200,6 +200,7 @@
     <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\PersonalScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\TestModelMetadata.cs" />
+    <Compile Include="Models\Metadata\TimeIntervalMetadata.cs" />
     <Compile Include="Models\Metadata\UserMetadata.cs" />
     <Compile Include="Models\Metadata\WeekMetadata.cs" />
     <Compile Include="Models\Providers\MMPAAttributeOnly.cs" />
@@ -384,6 +385,7 @@
     <Content Include="Areas\Schedules\Views\Default\Confirm.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleDisplay.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleList.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\Delete.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

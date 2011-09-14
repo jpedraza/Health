@@ -39,7 +39,7 @@ namespace Health.Site.Areas.Schedules.Controllers
                     : View(form);
         }
 
-        [PRGExport(ParametersHook = true)]
+        [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult EditSubmit(DefaultScheduleForm form)
         {
             if (ModelState.IsValid)
@@ -49,6 +49,17 @@ namespace Health.Site.Areas.Schedules.Controllers
                 return RedirectTo<DefaultController>(a => a.Confirm(form));
             }
             return RedirectTo<DefaultController>(a => a.Edit(form.DefaultSchedule.Id));
+        }
+        
+        public ActionResult AddBase(int schedule_id)
+        {
+            DefaultSchedule schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
+            var form = new DefaultScheduleForm
+                           {
+                               DefaultSchedule = schedule,
+                               Parameters = CoreKernel.ParamRepo.GetAll()
+                           };
+            return RedirectTo<DefaultController>(a => a.Add(form), new[] { "form" });
         }
 
         [PRGImport(ParametersHook = true)]
@@ -64,7 +75,7 @@ namespace Health.Site.Areas.Schedules.Controllers
             return View(form);
         }
 
-        [PRGExport(ParametersHook = true)]
+        [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult AddSubmit([Bind(Include = "DefaultSchedule")] DefaultScheduleForm form)
         {
             MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().

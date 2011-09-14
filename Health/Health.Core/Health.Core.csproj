@@ -103,6 +103,7 @@
     <Compile Include="Entities\Virtual\Month.cs" />
     <Compile Include="Entities\Virtual\MonthsInYear.cs" />
     <Compile Include="Entities\Virtual\Period.cs" />
+    <Compile Include="Entities\Virtual\TimeInterval.cs" />
     <Compile Include="Entities\Virtual\Week.cs" />
     <Compile Include="Entities\Virtual\WeeksInMonth.cs" />
     <Compile Include="Exceptions\BaseException.cs" />

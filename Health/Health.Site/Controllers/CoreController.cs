@@ -78,10 +78,33 @@ namespace Health.Site.Controllers
                 IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
                 TempData[prg_model_state.PRGParametersKey] = prg_parameters;
             }
-            var act = (MethodCallExpression) action.Body;
+            return GetRedirectResult(action);
+        }
+
+        public ActionResult RedirectTo<T>(Expression<Action<T>> action, string[] aliases)
+            where T : Controller
+        {
+            var prg_model_state = new PRGModelState
+                                      {
+                                          ParametersHook = true
+                                      };
+            IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
+            for (int i = 0; i < aliases.Length; i++)
+            {
+                string alias = aliases[i];
+                prg_parameters[i].Name = alias;
+            }
+            TempData[prg_model_state.PRGParametersKey] = prg_parameters;
+            return GetRedirectResult(action);
+        }
+
+        private RedirectToRouteResult GetRedirectResult<T>(Expression<Action<T>> action)
+            where T : Controller
+        {
+            var act = (MethodCallExpression)action.Body;
             string action_name = act.Method.Name;
-            string controller_name = typeof (T).Name.Replace("Controller", "");
-            string full_name = typeof (T).FullName;
+            string controller_name = typeof(T).Name.Replace("Controller", "");
+            string full_name = typeof(T).FullName;
             string area_name = String.Empty;
             if (full_name != null)
             {
