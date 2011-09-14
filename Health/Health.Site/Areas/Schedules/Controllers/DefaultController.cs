@@ -11,7 +11,9 @@ namespace Health.Site.Areas.Schedules.Controllers
 {
     public class DefaultController : CoreController
     {
-        public DefaultController(IDIKernel di_kernel) : base(di_kernel) { }
+        public DefaultController(IDIKernel di_kernel) : base(di_kernel)
+        {
+        }
 
         public ActionResult Index()
         {
@@ -25,12 +27,16 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Edit(int schedule_id = 1)
         {
-            DefaultSchedule default_schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
-            var view_model = new DefaultScheduleForm
-                                 {
-                                     DefaultSchedule = default_schedule
-                                 };
-            return View(view_model);
+            DefaultSchedule schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
+            var form = new DefaultScheduleForm
+                            {
+                                DefaultSchedule = schedule,
+                                Parameters = CoreKernel.ParamRepo.GetAll()
+                            };
+            return
+                schedule == null
+                    ? RedirectTo<DefaultController>(a => a.Index())
+                    : View(form);
         }
 
         [PRGExport(ParametersHook = true)]
@@ -72,17 +78,32 @@ namespace Health.Site.Areas.Schedules.Controllers
             return RedirectTo<DefaultController>(a => a.Add(form));
         }
 
-        public ActionResult Delete(int schedule_id)
+        public ActionResult Delete(int schedule_id, bool? confirm)
         {
-            CoreKernel.DefaultScheduleRepo.DeleteById(schedule_id);
+            if (!confirm.HasValue)
+            {
+                DefaultSchedule schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
+                var form = new DefaultScheduleForm
+                               {
+                                   DefaultSchedule = schedule,
+                                   Message = "Точно удалить расписание?"
+                               };
+                return
+                    schedule == null
+                        ? RedirectTo<DefaultController>(a => a.Index())
+                        : View(form);
+            }
+            if (confirm.Value) CoreKernel.DefaultScheduleRepo.DeleteById(schedule_id);
             return RedirectTo<DefaultController>(a => a.Index());
         }
 
         [PRGImport(ParametersHook = true)]
         public ActionResult Confirm(DefaultScheduleForm form)
         {
-            if (form.DefaultSchedule == null) return RedirectTo<DefaultController>(a => a.Index());
-            return View(form);
+            return 
+                form.DefaultSchedule == null
+                    ? RedirectTo<DefaultController>(a => a.Index())
+                    : View(form);
         }
     }
 }

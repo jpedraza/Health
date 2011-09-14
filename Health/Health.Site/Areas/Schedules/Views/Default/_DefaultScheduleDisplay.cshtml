@@ -5,7 +5,12 @@
         <legend>@Model.DefaultSchedule.Parameter.Name</legend>
         <fieldset>
             <legend>@Html.LabelFor(m => m.DefaultSchedule.Period)</legend>
-            @Html.DisplayFor(m => m.DefaultSchedule.Period)
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Period.Years): @Model.DefaultSchedule.Period.Years</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Period.Months): @Model.DefaultSchedule.Period.Months</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Period.Weeks): @Model.DefaultSchedule.Period.Weeks</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Period.Days): @Model.DefaultSchedule.Period.Days</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Period.Hours): @Model.DefaultSchedule.Period.Hours</p>
+            <p>@Html.LabelFor(m => m.DefaultSchedule.Period.Minutes): @Model.DefaultSchedule.Period.Minutes</p>
         </fieldset>
 
         <fieldset>

@@ -378,12 +378,12 @@
     <Content Include="Areas\Schedules\Views\Default\Edit.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Index.cshtml" />
     <Content Include="Areas\Schedules\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Schedules\Views\Personal\_PersonalList.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Confirm.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\_PatientsDisplay.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Confirm.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleDisplay.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleList.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

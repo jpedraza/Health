@@ -25,7 +25,7 @@ namespace Health.Site.Extensions
             return member_expression.Member.Name;
         }
 
-        public static bool IsNullAndCountIsZero(this IEnumerable<object> enumerable)
+        public static bool IsNullOrCountIsZero(this IEnumerable<object> enumerable)
         {
             return enumerable == null || enumerable.Count() == 0;
         }

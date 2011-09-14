@@ -28,8 +28,8 @@ namespace Health.Site.Areas.Schedules
 
             context.MapRoute(
                 "Schedules_Default_Delete",
-                "Schedules/Default/Delete/{schedule_id}",
-                new { controller = "Default", action = "Delete", schedule_id = UrlParameter.Optional }
+                "Schedules/Default/Delete/{schedule_id}/{confirm}",
+                new { controller = "Default", action = "Delete", schedule_id = UrlParameter.Optional, confirm = UrlParameter.Optional }
                 );
         }
     }

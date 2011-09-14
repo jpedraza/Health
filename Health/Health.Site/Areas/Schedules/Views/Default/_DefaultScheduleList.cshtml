@@ -2,7 +2,7 @@
 @using Health.Site.Extensions
 @model IEnumerable<DefaultSchedule>
 
-@if (Model.IsNullAndCountIsZero())
+@if (Model.IsNullOrCountIsZero())
 {
     <h2>А расписаний то нету.</h2>
 }

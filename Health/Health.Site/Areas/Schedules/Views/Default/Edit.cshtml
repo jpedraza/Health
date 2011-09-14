@@ -7,4 +7,12 @@
 
 <h2>Edit</h2>
 
-@Html.Partial("_DefaultScheduleForm")
+@using (Html.BeginForm("EditSubmit", "Default"))
+{
+    <fieldset>
+        <legend>@Model.DefaultSchedule.Parameter.Name</legend>
+        @Html.HiddenFor(m => m.DefaultSchedule.Id)
+        @Html.Partial("_DefaultScheduleForm")
+    </fieldset>
+    <p><input type="submit" value="Сохранить"/></p>
+}
