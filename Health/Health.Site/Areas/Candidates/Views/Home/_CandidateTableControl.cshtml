@@ -1,10 +1,10 @@
-@using Health.Core.Entities.POCO
+п»ї@using Health.Core.Entities.POCO
 @using Health.Site.Extensions
 @model IEnumerable<Candidate>
   
 @if (Model.IsNullOrCountIsZero())
 {
-    <h2>Кандидатов пока нету.</h2>
+    <h2>РљР°РЅРґРёРґР°С‚РѕРІ РїРѕРєР° РЅРµС‚Сѓ.</h2>
 }
 else
 {
@@ -18,7 +18,7 @@ else
             <td>@Html.LabelFor(m => cand.ThirdName)</td>
             <td>@Html.LabelFor(m => cand.Card)</td>
             <td>@Html.LabelFor(m => cand.Policy)</td>
-            <td colspan="2">Функции</td>
+            <td colspan="2">Р¤СѓРЅРєС†РёРё</td>
         </tr>
         @foreach (Candidate candidate in Model)
         {
@@ -30,11 +30,11 @@ else
                 <td>@candidate.ThirdName</td>
                 <td>@candidate.Card</td>
                 <td>@candidate.Policy</td>
-                <td>@Html.RouteLink("Отклонить заявку", "Candidates_Crud_RejectBid", new
+                <td>@Html.RouteLink("РћС‚РєР»РѕРЅРёС‚СЊ Р·Р°СЏРІРєСѓ", "Candidates_Crud_RejectBid", new
                                                                            {
                                                                                candidate_id = candidate.Id
                                                                            })</td>
-                <td>@Html.RouteLink("Принять заявку", "Candidates_Crud_AcceptBid", new
+                <td>@Html.RouteLink("РџСЂРёРЅСЏС‚СЊ Р·Р°СЏРІРєСѓ", "Candidates_Crud_AcceptBid", new
                                                                          {
                                                                              candidate_id = candidate.Id
                                                                          })</td>

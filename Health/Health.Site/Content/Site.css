@@ -4,30 +4,36 @@ to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #5c87b2;
+    background-color: #ffffff;
+    background-image: url('background.png');
+    background-repeat: repeat;
     font-size: .85em;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     color: #696969;
+    height: auto;
+    min-width: 1500px;
 }
 
 a:link {
-    color: #034af3;
-    text-decoration: underline;
+    color: #252525;
+    text-decoration: none;
+    cursor: default;
+    padding: 8px;
+    white-space: nowrap;
 }
 
 a:visited {
-    color: #505abc;
-}
-
-a:hover {
-    color: #1d60ff;
-    text-decoration: none;
+    color: #252525;
 }
 
 a:active {
-    color: #12eb87;
+    background-color: #87cbff;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 p, ul {
@@ -42,33 +48,25 @@ section {
     display: block;
 }
 
-table td {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-table td:hover {
-    background-color: #A6DDFF;
-}
-
 /* PAGE   
 ----------------------------------------------------------*/
 
 #page_container {
     width: 100%;
+    height: 100%;    
 }
 
 #page_content {
-    width: 65%;
-    float: right;
-    padding: 15px 3%;
+    width: 70%;
+    margin-left: 25%;
+    padding: 15px 3%;  
 }
 
 #main_page_menu {    
+    width: 20%;
+    min-width: 300px;
     float: left;
-    width: 25%;
-    padding: 10px 2%;
+    padding: 10px 2%;    
 }
 
 /* HEADINGS   
@@ -131,10 +129,12 @@ header h1, #header h1 {
 
 #main {
     padding: 30px 30px 15px 30px;
-    background-color: #fff;
-    border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
-    -moz-border-radius: 4px 0 0 0;
+    height: 100%;
+    margin-top: 70px;      
+    background-color: #ffffff;
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
 }
 
 footer,
@@ -155,7 +155,6 @@ footer,
 ----------------------------------------------------------*/
 
 ul#menu {
-    border-bottom: 1px #5C87B2 solid;
     padding: 0 0 2px;
     position: relative;
     margin: 0;
@@ -223,8 +222,8 @@ textarea {
 input[type="text"],
 input[type="password"] {
     border: 1px solid #ccc;
-    padding: 2px;
-    font-size: 1.2em;
+    padding: 4px;
+    font-size: 1.1em;
     color: #444;
     width: 200px;
 }
@@ -247,11 +246,15 @@ input[type="submit"] {
 table {
     border: solid 1px #e8eef4;
     border-collapse: collapse;
+    background-color: #ffffff;
 }
 
 table td {
     padding: 5px;
-    border: solid 1px #e8eef4;
+    border: solid 1px #e8eef4; 
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table th {
@@ -281,6 +284,21 @@ div#title {
     display: block;
     float: left;
     text-align: left;
+}
+
+div#logo {
+    display: block;
+    float: left;
+    background-image: url('logo.png');
+    background-position: center;
+    background-size: contain;
+    position: absolute;
+    background-repeat: no-repeat;
+    width: 824px;
+    height: 261px;
+    margin-top: -80px;
+    margin-left: -80px;
+    z-index: -1;
 }
 
 #logindisplay {
