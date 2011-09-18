@@ -11,4 +11,11 @@ namespace Health.Site.Areas.Schedules.Models
     {
         public IEnumerable<PersonalSchedule> PersonalSchedules { get; set; }
     }
+
+    public class PersonalScheduleForm : CoreViewModel
+    {
+        public PersonalSchedule PersonalSchedule { get; set; }
+
+        public string Message { get; set; }
+    }
 }

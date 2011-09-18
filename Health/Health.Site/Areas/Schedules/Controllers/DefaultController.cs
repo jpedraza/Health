@@ -15,14 +15,30 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
         }
 
-        public ActionResult Index()
+        #region Show
+
+        [RequiredParametersInRouteValues]
+        public ActionResult Show(int schedule_id)
         {
-            var view_model = new DefaultScheduleList
-                                 {
-                                     DefaultSchedules = CoreKernel.DefaultScheduleRepo.GetAll()
-                                 };
-            return View(view_model);
+            var form = new DefaultScheduleForm
+                            {
+                                DefaultSchedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id)
+                            };
+            return View(form);
         }
+
+        public ActionResult Show()
+        {
+            var list_form = new DefaultScheduleList
+            {
+                DefaultSchedules = CoreKernel.DefaultScheduleRepo.GetAll()
+            };
+            return View("List", list_form);
+        }
+
+        #endregion
+
+        #region Edit
 
         [PRGImport(ParametersHook = true)]
         public ActionResult Edit(int schedule_id = 1)
@@ -35,12 +51,12 @@ namespace Health.Site.Areas.Schedules.Controllers
                             };
             return
                 schedule == null
-                    ? RedirectTo<DefaultController>(a => a.Index())
+                    ? RedirectTo<DefaultController>(a => a.Show())
                     : View(form);
         }
 
         [HttpPost, PRGExport(ParametersHook = true)]
-        public ActionResult EditSubmit(DefaultScheduleForm form)
+        public ActionResult Edit(DefaultScheduleForm form)
         {
             if (ModelState.IsValid)
             {
@@ -50,33 +66,29 @@ namespace Health.Site.Areas.Schedules.Controllers
             }
             return RedirectTo<DefaultController>(a => a.Edit(form.DefaultSchedule.Id));
         }
+
+        #endregion
+
+        #region Add
         
-        public ActionResult AddBase(int schedule_id)
+        [PRGImport(ParametersHook = true)]
+        public ActionResult Add(int? schedule_id)
         {
-            DefaultSchedule schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
+            MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
+            DefaultSchedule schedule = !schedule_id.HasValue
+                                           ? new DefaultSchedule()
+                                           : CoreKernel.DefaultScheduleRepo.GetById(schedule_id.Value);
             var form = new DefaultScheduleForm
                            {
                                DefaultSchedule = schedule,
                                Parameters = CoreKernel.ParamRepo.GetAll()
                            };
-            return RedirectTo<DefaultController>(a => a.Add(form), new[] { "form" });
-        }
-
-        [PRGImport(ParametersHook = true)]
-        public ActionResult Add(DefaultScheduleForm form)
-        {
-            MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
-                WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
-            form = form ?? new DefaultScheduleForm
-                               {
-                                   DefaultSchedule = new DefaultSchedule()
-                               };
-            form.Parameters = CoreKernel.ParamRepo.GetAll();
             return View(form);
         }
 
         [HttpPost, PRGExport(ParametersHook = true)]
-        public ActionResult AddSubmit([Bind(Include = "DefaultSchedule")] DefaultScheduleForm form)
+        public ActionResult Add(DefaultScheduleForm form)
         {
             MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
                 WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
@@ -88,6 +100,10 @@ namespace Health.Site.Areas.Schedules.Controllers
             }
             return RedirectTo<DefaultController>(a => a.Add(form));
         }
+
+        #endregion
+
+        #region Delete
 
         public ActionResult Delete(int schedule_id, bool? confirm)
         {
@@ -101,20 +117,26 @@ namespace Health.Site.Areas.Schedules.Controllers
                                };
                 return
                     schedule == null
-                        ? RedirectTo<DefaultController>(a => a.Index())
+                        ? RedirectTo<DefaultController>(a => a.Show())
                         : View(form);
             }
             if (confirm.Value) CoreKernel.DefaultScheduleRepo.DeleteById(schedule_id);
-            return RedirectTo<DefaultController>(a => a.Index());
+            return RedirectTo<DefaultController>(a => a.Show());
         }
+
+        #endregion
+
+        #region Other
 
         [PRGImport(ParametersHook = true)]
         public ActionResult Confirm(DefaultScheduleForm form)
         {
             return 
                 form.DefaultSchedule == null
-                    ? RedirectTo<DefaultController>(a => a.Index())
+                    ? RedirectTo<DefaultController>(a => a.Show())
                     : View(form);
         }
+
+        #endregion
     }
 }

@@ -212,7 +212,14 @@ namespace Health.Site.Attributes
         public override void OnActionExecuted(ActionExecutedContext filter_context)
         {
             base.OnActionExecuted(filter_context);
-
+            if (filter_context.HttpContext.Request.RequestType == "GET")
+            {
+                if (filter_context.Result is ViewResult)
+                {
+                    var view_result = filter_context.Result as ViewResult;
+                    view_result.ViewData.ModelState.Clear();
+                }
+            }
             TempDataDictionary temp_data = filter_context.Controller.TempData;
             if (temp_data.ContainsKey(ModelStateKey))
             {

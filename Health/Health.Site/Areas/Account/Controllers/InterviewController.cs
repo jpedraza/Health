@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
 using Health.Site.Areas.Account.Models;
-using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
 
@@ -20,36 +19,19 @@ namespace Health.Site.Areas.Account.Controllers
         /// </summary>
         /// <returns></returns>
         [PRGImport(ParametersHook = true)]
-        public ActionResult Interview([Bind(Include = "InterviewForm")] AccountViewModel form_model)
+        public ActionResult Interview(InterviewForm form)
         {
-            if (form_model != null && form_model.InterviewForm != null)
-            {
-                return View(form_model);
-            }
-            return View(new AccountViewModel()
-                            {
-                                InterviewForm = new InterviewFormModel()
-                                                    {
-                                                        Parameters = new List<Parameter>
-                                                                         {
-                                                                             new Parameter
-                                                                                 {
-                                                                                     Name = "P1",
-                                                                                     Value = "V1"
-                                                                                 }
-                                                                         }
-                                                    }
-                            });
+            return View(form);
         }
 
         [HttpPost, ValidateAntiForgeryToken, PRGExport(ParametersHook = true)]
-        public ActionResult InterviewSubmit([Bind(Include = "InterviewForm")] AccountViewModel form_model)
+        public ActionResult InterviewSubmit(InterviewForm form)
         {
             if (ModelState.IsValid)
             {
                 return RedirectTo<InterviewController>(a => a.Confirm());
             }
-            return RedirectTo<InterviewController>(a => a.Interview(form_model));
+            return RedirectTo<InterviewController>(a => a.Interview(form));
         }
 
         public ActionResult Confirm()

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Health.Core.API;
-using Health.Site.Areas.Candidate.Models;
+using Health.Site.Areas.Candidates.Models;
 using Health.Site.Controllers;
 
-namespace Health.Site.Areas.Candidate.Controllers
+namespace Health.Site.Areas.Candidates.Controllers
 {
     public class HomeController : CoreController
     {

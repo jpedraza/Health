@@ -132,23 +132,22 @@
     <Compile Include="Areas\Account\Controllers\AuthorizationController.cs" />
     <Compile Include="Areas\Account\Controllers\InterviewController.cs" />
     <Compile Include="Areas\Account\Controllers\RegistrationController.cs" />
-    <Compile Include="Areas\Account\Models\AccountViewModel.cs" />
-    <Compile Include="Areas\Account\Models\Forms\AccountFormsModels.cs" />
+    <Compile Include="Areas\Account\Models\AccountModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PatientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\Patients\PatientsForm.cs" />
+    <Compile Include="Areas\Candidates\CandidateAreaRegistration.cs" />
+    <Compile Include="Areas\Candidates\Controllers\CrudController.cs" />
+    <Compile Include="Areas\Candidates\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Candidates\Models\CandidateList.cs" />
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
     <Compile Include="Areas\Parameters\Models\Forms\ParametersFormsModels.cs" />
     <Compile Include="Areas\Parameters\Models\ParametersViewModel.cs" />
     <Compile Include="Areas\Parameters\ParametersAreaRegistration.cs" />
-    <Compile Include="Areas\Candidate\CandidateAreaRegistration.cs" />
-    <Compile Include="Areas\Candidate\Controllers\CrudController.cs" />
-    <Compile Include="Areas\Candidate\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Candidate\Models\CandidateList.cs" />
     <Compile Include="Areas\Schedules\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Schedules\Controllers\HomeController.cs" />
     <Compile Include="Areas\Schedules\Controllers\PersonalController.cs" />
@@ -162,10 +161,10 @@
     <Compile Include="Areas\Admin\Models\Users\UsersList.cs" />
     <Compile Include="Attributes\Auth.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
+    <Compile Include="Attributes\RequireRouteValues.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DI\DIKernel.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
@@ -192,6 +191,7 @@
     <Compile Include="Models\Forms\ParametersFormBase.cs" />
     <Compile Include="Helpers\Classes\MenuElement.cs" />
     <Compile Include="Models\Mapper.cs" />
+    <Compile Include="Models\Metadata\CandidateMetadata.cs" />
     <Compile Include="Models\Metadata\DayMetadata.cs" />
     <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\MonthMetadata.cs" />
@@ -209,7 +209,6 @@
     <Compile Include="Models\Providers\ModelMetadataProviderManager.cs" />
     <Compile Include="Models\Providers\ModelMetadataProviderBinder.cs" />
     <Compile Include="Models\Providers\ModelValidatorProviderAdapter.cs" />
-    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\Validation\TestModelValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CookieRepository.cs" />
@@ -316,7 +315,7 @@
   <ItemGroup>
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Candidate\Views\Shared\" />
+    <Folder Include="Areas\Candidates\Views\Shared\" />
     <Folder Include="Areas\Parameters\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -362,10 +361,6 @@
     <Content Include="Areas\Parameters\Views\Editing\Deletevariant.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\ContinueEdit.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\AddVariant.cshtml" />
-    <Content Include="Areas\Candidate\Views\Web.config" />
-    <Content Include="Areas\Candidate\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Candidate\Views\Home\_CandidateTableControl.cshtml" />
-    <Content Include="Areas\Candidate\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersForm.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
@@ -386,6 +381,16 @@
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleDisplay.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleList.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Delete.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\Delete.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleDisplay.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\Edit.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\Show.cshtml" />
+    <Content Include="Areas\Schedules\Views\Default\List.cshtml" />
+    <Content Include="Areas\Schedules\Views\Shared\_AreaLayout.cshtml" />
+    <Content Include="Areas\Candidates\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Candidates\Views\Home\_CandidateTableControl.cshtml" />
+    <Content Include="Areas\Candidates\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Candidates\Views\Web.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -21,9 +21,15 @@ namespace Health.Site.Areas.Schedules
             );
 
             context.MapRoute(
+                "Schedules_Default_Show",
+                "Schedules/Default/Show/{schedule_id}",
+                new { controller = "Default", action = "Show", schedule_id = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
                 "Schedules_Default_AddBase",
                 "Schedules/Default/Add/{schedule_id}",
-                new { controller = "Default", action = "AddBase", schedule_id = UrlParameter.Optional }
+                new { controller = "Default", action = "Add", schedule_id = UrlParameter.Optional }
                 );
 
             context.MapRoute(
@@ -36,6 +42,12 @@ namespace Health.Site.Areas.Schedules
                 "Schedules_Default_Delete",
                 "Schedules/Default/Delete/{schedule_id}/{confirm}",
                 new { controller = "Default", action = "Delete", schedule_id = UrlParameter.Optional, confirm = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
+                "Schedules_Personal_Delete",
+                "Schedules/Personal/Delete/{schedule_id}/{confirm}",
+                new { controller = "Personal", action = "Delete", schedule_id = UrlParameter.Optional, confirm = UrlParameter.Optional }
                 );
         }
     }

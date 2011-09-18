@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
@@ -50,6 +51,25 @@ namespace Health.Data.Repository.Fake
                                   TimeStart = new TimeSpan(8, 0, 0),
                                   TimeEnd = new TimeSpan(12, 0, 0)
                               });
+        }
+
+        public PersonalSchedule GetById(int schedule_id)
+        {
+            return _entities.Where(e => e.Id == schedule_id).FirstOrDefault();
+        }
+
+        public bool DeleteById(int schedule_id)
+        {
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                PersonalSchedule entity = _entities[i];
+                if (entity.Id == schedule_id)
+                {
+                    _entities.RemoveAt(i);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

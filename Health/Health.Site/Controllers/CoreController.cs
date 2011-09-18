@@ -109,7 +109,7 @@ namespace Health.Site.Controllers
             if (full_name != null)
             {
                 string[] temp = full_name.Split('.');
-                area_name = full_name.Contains("Areas") ? temp[3] : temp[2];
+                area_name = full_name.Contains("Areas") ? temp[3] : "";
             }
             return RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
         }

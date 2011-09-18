@@ -1,19 +1,18 @@
 ﻿@using Health.Site.Areas.Account.Models
-@model AccountViewModel
+@model LoginForm
 
 @{
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
+<h2>@Html.LabelForModel()</h2>
 
-@using (Html.BeginForm("LoginSubmit", "Authorization", new {area = "Account"}))
+@using (Html.BeginForm())
 {
-    <p>@Html.LabelFor(x => x.LoginForm.Login)</p>
-    <p>@Html.ValidationMessageFor(x => x.LoginForm.Login)</p>
-    <p>@Html.TextBoxFor(x => x.LoginForm.Login)</p>
-    <p>@Html.LabelFor(x => x.LoginForm.Password)</p>
-    <p>@Html.PasswordFor(x => x.LoginForm.Password)</p>
-    <p>@Html.LabelFor(x => x.LoginForm.RememberMe) @Html.CheckBoxFor(x => x.LoginForm.RememberMe) @Html.AntiForgeryToken()</p>
+    <p>@Html.LabelFor(m => m.Login)</p>
+    <p>@Html.TextBoxFor(m => m.Login) @Html.ValidationMessageFor(m => m.Login)</p>
+    <p>@Html.LabelFor(m => m.Password)</p>
+    <p>@Html.PasswordFor(m => m.Password) @Html.ValidationMessageFor(m => m.Password)</p>
+    <p>@Html.LabelFor(m => m.RememberMe) @Html.CheckBoxFor(m => m.RememberMe) @Html.AntiForgeryToken()</p>
     <input type="submit" value="Send" />
 }

@@ -1,6 +1,6 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 
-namespace Health.Site.Areas.Candidate
+namespace Health.Site.Areas.Candidates
 {
     public class CandidateAreaRegistration : AreaRegistration
     {
@@ -12,20 +12,20 @@ namespace Health.Site.Areas.Candidate
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Candidate_default",
-                "Candidate/{controller}/{action}",
+                "Candidates_default",
+                "Candidates/{controller}/{action}",
                 new {controller = "Home", action = "Index"}
                 );
 
             context.MapRoute(
-                "Candidate_Crud_RejectBid",
-                "Candidate/Crud/RejectBid/{candidate_id}",
+                "Candidates_Crud_RejectBid",
+                "Candidates/Crud/RejectBid/{candidate_id}",
                 new { controller = "Crud", action = "RejectBid", candidate_id = UrlParameter.Optional }
                 );
 
             context.MapRoute(
-                "Candidate_Crud_AcceptBid",
-                "Candidate/Crud/AcceptBid/{candidate_id}",
+                "Candidates_Crud_AcceptBid",
+                "Candidates/Crud/AcceptBid/{candidate_id}",
                 new { controller = "Crud", action = "AcceptBid", candidate_id = UrlParameter.Optional }
                 );
         }

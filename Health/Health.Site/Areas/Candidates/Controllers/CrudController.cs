@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Controllers;
 
-namespace Health.Site.Areas.Candidate.Controllers
+namespace Health.Site.Areas.Candidates.Controllers
 {
     public class CrudController : CoreController
     {

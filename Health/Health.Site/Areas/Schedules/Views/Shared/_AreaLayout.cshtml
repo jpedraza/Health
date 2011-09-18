@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page_container">    
+    <div id="page_content">
+        @RenderBody()
+    </div>
+    <div id="main_page_menu">
+        <p>@Html.RouteLink("Дефолтные рассписания для параметров...", new { area = "Schedules", controller = "Default", action = "Show" })</p>
+        <p>@Html.RouteLink("Персональные рассписания для параметров...", new { area = "Schedules", controller = "Personal", action = "Index" })</p>
+        <div id="page_menu">
+            @RenderSection("page_menu", false)
+        </div>        
+    </div>    
+</div>

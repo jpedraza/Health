@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Areas.Account.Models;
+using Health.Site.Attributes;
 using Health.Site.Controllers;
 
 namespace Health.Site.Areas.Account.Controllers
@@ -14,27 +15,25 @@ namespace Health.Site.Areas.Account.Controllers
         /// <summary>
         /// Отображение формы регистрации
         /// </summary>
-        /// <returns></returns>
-        public ActionResult Registration()
+        [PRGImport(ParametersHook = true)]
+        public ActionResult Registration(RegistrationForm form)
         {
-            return View();
+            return View(form);
         }
 
         /// <summary>
         /// Обработка запроса на регистрацию
         /// </summary>
-        /// <param name="form_model">Модель формы регистрации</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Registration([Bind(Include = "RegistrationForm")] AccountViewModel form_model)
+        /// <param name="form">Модель формы регистрации</param>
+        [HttpPost, PRGExport(ParametersHook = true)]
+        public ActionResult RegistrationSubmit(RegistrationForm form)
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.RegServ.SaveBid(form_model.RegistrationForm);
-                return RedirectToRoute(new {area = "", controller = "Home", action = "Index"});
+                CoreKernel.RegServ.SaveBid(form.Candidate);
+                return RedirectTo<HomeController>(a => a.Index());
             }
-            return View(form_model);
+            return RedirectTo<RegistrationController>(a => a.Registration(form));
         }
     }
 }

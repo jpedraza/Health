@@ -13,14 +13,8 @@ namespace Health.Site.Areas.Account
         {
             context.MapRoute(
                 "Account_default",
-                "Account/{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional}
-                );
-
-            context.MapRoute(
-                "LoginShort",
-                "Login",
-                new {area = "Account", controller = "Authorization", action = "Login"}
+                "Account/{controller}/{action}",
+                new {controller = "Home", action = "Index"}
                 );
         }
     }

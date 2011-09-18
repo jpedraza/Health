@@ -43,7 +43,10 @@ else
                 <td>@personal_schedule.Week.Parity</td>
                 <td>@personal_schedule.Month.InYear</td>
                 <td>Редактировать</td>
-                <td>Удалить</td>
+                <td>@Html.RouteLink("Удалить", "Schedules_Personal_Delete", new
+               {
+                   schedule_id = personal_schedule.Id
+               })</td>
             </tr>
         }
     </table>

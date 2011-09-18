@@ -52,6 +52,25 @@ table td:hover {
     background-color: #A6DDFF;
 }
 
+/* PAGE   
+----------------------------------------------------------*/
+
+#page_container {
+    width: 100%;
+}
+
+#page_content {
+    width: 65%;
+    float: right;
+    padding: 15px 3%;
+}
+
+#main_page_menu {    
+    float: left;
+    width: 25%;
+    padding: 10px 2%;
+}
+
 /* HEADINGS   
 ----------------------------------------------------------*/
 
