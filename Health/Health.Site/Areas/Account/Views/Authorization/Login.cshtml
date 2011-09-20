@@ -10,9 +10,9 @@
 @using (Html.BeginForm("LoginSubmit", "Authorization", new {area = "Account"}))
 {
     <p>@Html.LabelFor(m => m.Login)</p>
-    <p>@Html.TextBoxFor(m => m.Login) @Html.ValidationMessageFor(m => m.Login)</p>
+    <p>@Html.EditorFor(m => m.Login) @Html.ValidationMessageFor(m => m.Login)</p>
     <p>@Html.LabelFor(m => m.Password)</p>
-    <p>@Html.PasswordFor(m => m.Password) @Html.ValidationMessageFor(m => m.Password)</p>
-    <p>@Html.LabelFor(m => m.RememberMe) @Html.CheckBoxFor(m => m.RememberMe) @Html.AntiForgeryToken()</p>
+    <p>@Html.EditorFor(m => m.Password) @Html.ValidationMessageFor(m => m.Password)</p>
+    <p>@Html.LabelFor(m => m.RememberMe) @Html.EditorFor(m => m.RememberMe)</p>
     <input type="submit" value="Send" />
 }

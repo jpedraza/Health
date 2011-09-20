@@ -1,5 +1,15 @@
-﻿@{
+﻿@using Health.Site.Areas.Schedules.Models
+@model PersonalScheduleForm
+
+@{
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.PersonalSchedule.Id)
+    @Html.Partial("_PersonalScheduleForm")
+    <p><input type="submit" value="Send" /></p>
+}

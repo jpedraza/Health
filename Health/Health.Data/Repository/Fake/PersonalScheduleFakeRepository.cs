@@ -71,5 +71,21 @@ namespace Health.Data.Repository.Fake
             }
             return false;
         }
+
+        public override bool Update(PersonalSchedule entity)
+        {
+            entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
+            entity.Patient = DIKernel.Get<IPatientRepository>().GetById(entity.Patient.Id);
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                PersonalSchedule schedule = _entities[i];
+                if (schedule.Id == entity.Id)
+                {
+                    _entities[i] = entity;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

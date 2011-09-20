@@ -15,32 +15,44 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Show
 
-        public ActionResult Index()
+        public ActionResult List()
         {
-            var form_model = new PersonalScheduleList
+            var form = new PersonalScheduleList
                                  {
                                      PersonalSchedules = CoreKernel.PersonalScheduleRepo.GetAll()
                                  };
-            return View(form_model);
+            return View(form);
         }
 
         #endregion
 
-        [PRGImport]
-        public ActionResult Edit(PersonalScheduleForm form)
+        #region Edit
+
+        [PRGImport(ParametersHook=true)]
+        public ActionResult Edit(int schedule_id = 1)
         {
-            return View();
+            PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id);
+            var form = new PersonalScheduleForm
+                                {
+                                    PersonalSchedule = schedule,
+                                    Parameters = CoreKernel.ParamRepo.GetAll(),
+                                    Patients = CoreKernel.PatientRepo.GetAll()
+                                };
+            return View(form);
         }
 
-        [HttpPost, PRGExport]
-        public ActionResult EditSubmit(PersonalScheduleForm form)
+        [HttpPost, PRGExport(ParametersHook=true)]
+        public ActionResult Edit(PersonalScheduleForm form)
         {
             if (ModelState.IsValid)
             {
-                return RedirectTo<PersonalController>(a => a.Index());
+                CoreKernel.PersonalScheduleRepo.Update(form.PersonalSchedule);
+                return RedirectTo<PersonalController>(a => a.List());
             }
-            return RedirectTo<PersonalController>(a => a.Index());
+            return RedirectTo<PersonalController>(a => a.Edit(form.PersonalSchedule.Id));
         }
+
+        #endregion
 
         #region Delete
 
@@ -55,11 +67,11 @@ namespace Health.Site.Areas.Schedules.Controllers
                                    PersonalSchedule = schedule
                                };
                 return schedule == null
-                           ? RedirectTo<PersonalController>(a => a.Index())
+                           ? RedirectTo<PersonalController>(a => a.List())
                            : View(form);
             }
             if (confirm.Value) CoreKernel.PersonalScheduleRepo.DeleteById(schedule_id);
-            return RedirectTo<PersonalController>(a => a.Index());
+            return RedirectTo<PersonalController>(a => a.List());
         }
 
         #endregion

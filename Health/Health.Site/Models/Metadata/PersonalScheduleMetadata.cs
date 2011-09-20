@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using Health.Core.Entities.POCO;
+using Health.Core.Entities.Virtual;
 
 namespace Health.Site.Models.Metadata
 {
@@ -12,8 +13,11 @@ namespace Health.Site.Models.Metadata
         [DisplayName("Идентификатор расписания")]
         public int Id { get; set; }
 
-        [DisplayName("Диагноз")]
-        public Diagnosis Diagnosis { get; set; }
+        [DisplayName("Пациент")]
+        public Patient Patient { get; set; }
+
+        [DisplayName("Параметр")]
+        public Parameter Parameter { get; set; }
 
         [DisplayName("Дата начала")]
         public DateTime DateStart { get; set; }
@@ -26,5 +30,14 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Время окончания")]
         public TimeSpan TimeEnd { get; set; }
+
+        [DisplayName("День")]
+        public Day Day { get; set; }
+
+        [DisplayName("Неделя")]
+        public Week Week { get; set; }
+
+        [DisplayName("Месяц")]
+        public Month Month { get; set; }
     }
 }

@@ -16,8 +16,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         }
 
         #region Show
-
-        [RequiredParametersInRouteValues]
+                
         public ActionResult Show(int schedule_id)
         {
             var form = new DefaultScheduleForm
@@ -27,13 +26,13 @@ namespace Health.Site.Areas.Schedules.Controllers
             return View(form);
         }
 
-        public ActionResult Show()
+        public ActionResult List()
         {
             var list_form = new DefaultScheduleList
             {
                 DefaultSchedules = CoreKernel.DefaultScheduleRepo.GetAll()
             };
-            return View("List", list_form);
+            return View(list_form);
         }
 
         #endregion
@@ -51,7 +50,7 @@ namespace Health.Site.Areas.Schedules.Controllers
                             };
             return
                 schedule == null
-                    ? RedirectTo<DefaultController>(a => a.Show())
+                    ? RedirectTo<DefaultController>(a => a.List())
                     : View(form);
         }
 
@@ -117,11 +116,11 @@ namespace Health.Site.Areas.Schedules.Controllers
                                };
                 return
                     schedule == null
-                        ? RedirectTo<DefaultController>(a => a.Show())
+                        ? RedirectTo<DefaultController>(a => a.List())
                         : View(form);
             }
             if (confirm.Value) CoreKernel.DefaultScheduleRepo.DeleteById(schedule_id);
-            return RedirectTo<DefaultController>(a => a.Show());
+            return RedirectTo<DefaultController>(a => a.List());
         }
 
         #endregion
@@ -133,7 +132,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             return 
                 form.DefaultSchedule == null
-                    ? RedirectTo<DefaultController>(a => a.Show())
+                    ? RedirectTo<DefaultController>(a => a.List())
                     : View(form);
         }
 

@@ -39,6 +39,12 @@ namespace Health.Site.Areas.Schedules
                 );
 
             context.MapRoute(
+                "Schedules_Personal_Edit",
+                "Schedules/Personal/Edit/{schedule_id}",
+                new { controller = "Personal", action = "Edit", schedule_id = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
                 "Schedules_Default_Delete",
                 "Schedules/Default/Delete/{schedule_id}/{confirm}",
                 new { controller = "Default", action = "Delete", schedule_id = UrlParameter.Optional, confirm = UrlParameter.Optional }

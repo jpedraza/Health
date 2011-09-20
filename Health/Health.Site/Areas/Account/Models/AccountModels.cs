@@ -25,6 +25,7 @@ namespace Health.Site.Areas.Account.Models
         /// </summary>
         [Required(ErrorMessage = "Введите, пожалуйста, пароль.")]
         [DisplayName("Пароль")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         /// <summary>

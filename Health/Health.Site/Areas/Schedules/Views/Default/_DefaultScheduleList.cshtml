@@ -20,7 +20,7 @@ else
             <td>@Html.LabelFor(m => schedule.Month.InYear)</td>
             <td>@Html.LabelFor(m => schedule.Week.InMonth)</td>
             <td>@Html.LabelFor(m => schedule.Week.Parity)</td>
-            <td colspan="2">Функции</td>
+            <td colspan="3">Функции</td>
         </tr>
         @foreach (DefaultSchedule default_schedule in Model)
         {
@@ -56,6 +56,10 @@ else
                {
                    schedule_id = default_schedule.Id
                })</td>
+               <td>@Html.RouteLink("Глянуть", "Schedules_Default_Show", new {
+                  schedule_id = default_schedule.Id
+              })
+               </td>
             </tr>
         }
     </table>
