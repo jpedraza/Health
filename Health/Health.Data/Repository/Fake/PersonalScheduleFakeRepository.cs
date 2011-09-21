@@ -15,14 +15,8 @@ namespace Health.Data.Repository.Fake
             _entities.Add(new PersonalSchedule
                               {
                                   Id = 1,
-                                  Parameter = new Parameter
-                                                  {
-                                                      Id = 1
-                                                  },
-                                  Patient = new Patient
-                                                {
-                                                    Login = "Login 1"
-                                                },
+                                  Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
+                                  Patient = DIKernel.Get<IPatientRepository>().GetById(1),
                                   DateStart = DateTime.Now,
                                   DateEnd = DateTime.Now.AddYears(1),
                                   Day = DaysInWeek.All,
@@ -35,14 +29,8 @@ namespace Health.Data.Repository.Fake
             _entities.Add(new PersonalSchedule
                               {
                                   Id = 2,
-                                  Parameter = new Parameter
-                                                  {
-                                                      Id = 2
-                                                  },
-                                  Patient = new Patient
-                                                {
-                                                    Login = "Login 2"
-                                                },
+                                  Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
+                                  Patient = DIKernel.Get<IPatientRepository>().GetById(2),
                                   DateStart = DateTime.Now,
                                   DateEnd = DateTime.Now.AddYears(2),
                                   Day = DaysInWeek.Monday,
@@ -56,6 +44,14 @@ namespace Health.Data.Repository.Fake
         public PersonalSchedule GetById(int schedule_id)
         {
             return _entities.Where(e => e.Id == schedule_id).FirstOrDefault();
+        }
+
+        public override bool Save(PersonalSchedule entity)
+        {
+            entity.Patient = DIKernel.Get<IPatientRepository>().GetById(entity.Patient.Id);
+            entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
+            _entities.Add(entity);
+            return true;
         }
 
         public bool DeleteById(int schedule_id)

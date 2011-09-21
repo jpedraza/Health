@@ -24,6 +24,15 @@ namespace Health.Site.Areas.Schedules.Controllers
             return View(form);
         }
 
+        public ActionResult Show(int schedule_id) 
+        {
+            var form = new PersonalScheduleForm
+            {
+                PersonalSchedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id)
+            };
+            return View(form);
+        }
+
         #endregion
 
         #region Edit
@@ -50,6 +59,37 @@ namespace Health.Site.Areas.Schedules.Controllers
                 return RedirectTo<PersonalController>(a => a.List());
             }
             return RedirectTo<PersonalController>(a => a.Edit(form.PersonalSchedule.Id));
+        }
+
+        #endregion
+
+        #region Add
+
+        [PRGImport(ParametersHook=true)]
+        public ActionResult Add(int? schedule_id)
+        {
+            PersonalSchedule schedule = !schedule_id.HasValue
+                                            ? new PersonalSchedule()
+                                            : CoreKernel.PersonalScheduleRepo.GetById(schedule_id.Value);
+            var form = new PersonalScheduleForm 
+            {
+                PersonalSchedule = schedule,
+                Parameters = CoreKernel.ParamRepo.GetAll(),
+                Patients = CoreKernel.PatientRepo.GetAll()
+            };
+            return View(form);
+        }
+
+        [HttpPost, PRGExport(ParametersHook=true)]
+        public ActionResult Add(PersonalScheduleForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                CoreKernel.PersonalScheduleRepo.Save(form.PersonalSchedule);
+                return RedirectTo<PersonalController>(a => a.List());
+            }
+            return RedirectTo<PersonalController>(a => a.Add(form.PersonalSchedule.Id));
+
         }
 
         #endregion

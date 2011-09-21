@@ -392,6 +392,8 @@
     <Content Include="Areas\Candidates\Views\Home\Index.cshtml" />
     <Content Include="Areas\Candidates\Views\Web.config" />
     <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleForm.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\Show.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\Add.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

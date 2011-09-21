@@ -14,34 +14,20 @@ else
                 PersonalSchedule schedule = Model.ElementAt(0);
             }
             <td>@Html.LabelFor(m => schedule.Id)</td>
-            <td>@Html.LabelFor(m => schedule.Parameter.Id)</td>
+            <td>@Html.LabelFor(m => schedule.Parameter.Name)</td>
             <td>@Html.LabelFor(m => schedule.Patient.Login)</td>
-            <td>@Html.LabelFor(m => schedule.DateStart)</td>
-            <td>@Html.LabelFor(m => schedule.DateEnd)</td>        
-            <td>@Html.LabelFor(m => schedule.TimeStart)</td>
-            <td>@Html.LabelFor(m => schedule.TimeEnd)</td>
-            <td>@Html.LabelFor(m => schedule.Day.InMonth)</td>
-            <td>@Html.LabelFor(m => schedule.Day.InWeek)</td>
-            <td>@Html.LabelFor(m => schedule.Week.InMonth)</td>
-            <td>@Html.LabelFor(m => schedule.Week.Parity)</td>
-            <td>@Html.LabelFor(m => schedule.Month.InYear)</td>
             <td colspan="2">Функции</td>
         </tr>
         @foreach (PersonalSchedule personal_schedule in Model)
         {
             <tr>
                 <td>@personal_schedule.Id</td>
-                <td>@personal_schedule.Parameter.Id</td>
+                <td>@personal_schedule.Parameter.Name</td>
                 <td>@personal_schedule.Patient.Login</td>
-                <td>@personal_schedule.DateStart</td>
-                <td>@personal_schedule.DateEnd</td>        
-                <td>@personal_schedule.TimeStart</td>
-                <td>@personal_schedule.TimeEnd</td>
-                <td>@personal_schedule.Day.InMonth</td>
-                <td>@personal_schedule.Day.InWeek</td>
-                <td>@personal_schedule.Week.InMonth</td>
-                <td>@personal_schedule.Week.Parity</td>
-                <td>@personal_schedule.Month.InYear</td>
+                <td>@Html.RouteLink("Подробнее", "Schedules_Personal_Show", new 
+               { 
+                   schedule_id = personal_schedule.Id
+               })</td>
                 <td>@Html.RouteLink("Редактировать", "Schedules_Personal_Edit", new 
                {
                    schedule_id = personal_schedule.Id

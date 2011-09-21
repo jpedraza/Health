@@ -1,0 +1,14 @@
+﻿@using Health.Site.Areas.Schedules.Models
+@model PersonalScheduleForm
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Partial("_PersonalScheduleForm")
+    <input type="submit" value="Send" />
+}

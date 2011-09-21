@@ -27,9 +27,21 @@ namespace Health.Site.Areas.Schedules
                 );
 
             context.MapRoute(
+                "Schedules_Personal_Show",
+                "Schedules/Personal/Show/{schedule_id}",
+                new { controller = "Personal", action = "Show", schedule_id = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
                 "Schedules_Default_AddBase",
                 "Schedules/Default/Add/{schedule_id}",
                 new { controller = "Default", action = "Add", schedule_id = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
+                "Schedules_Personal_AddBase",
+                "Schedules/Personal/Add/{schedule_id}",
+                new { controller = "Personal", action = "Add", schedule_id = UrlParameter.Optional }
                 );
 
             context.MapRoute(

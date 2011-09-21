@@ -11,20 +11,15 @@ else
     <table>
         <tr>
             @{ DefaultSchedule schedule = Model.ElementAt(0); }
+            <td>@Html.LabelFor(m => schedule.Id)</td>
             <td>@Html.LabelFor(m => schedule.Parameter)</td>
             <td>@Html.LabelFor(m => schedule.Period)</td>
-            <td>@Html.LabelFor(m => schedule.TimeStart)</td>
-            <td>@Html.LabelFor(m => schedule.TimeEnd)</td>
-            <td>@Html.LabelFor(m => schedule.Day.InWeek)</td>
-            <td>@Html.LabelFor(m => schedule.Day.InMonth)</td>
-            <td>@Html.LabelFor(m => schedule.Month.InYear)</td>
-            <td>@Html.LabelFor(m => schedule.Week.InMonth)</td>
-            <td>@Html.LabelFor(m => schedule.Week.Parity)</td>
             <td colspan="3">Функции</td>
         </tr>
         @foreach (DefaultSchedule default_schedule in Model)
         {
             <tr>
+                <td>@default_schedule.Id</td>
                 <td>@default_schedule.Parameter.Name</td>
                 @{
             const string format = "{0} - годов <br />" +
@@ -41,13 +36,6 @@ else
                                                       default_schedule.Period.Minutes));
                 }
                 <td>@period</td>
-                <td>@default_schedule.TimeStart</td>
-                <td>@default_schedule.TimeEnd</td>
-                <td>@default_schedule.Day.InWeek</td>
-                <td>@default_schedule.Day.InMonth</td>
-                <td>@default_schedule.Month.InYear</td>
-                <td>@default_schedule.Week.InMonth</td>
-                <td>@default_schedule.Week.Parity</td>
                 <td>@Html.RouteLink("Редактировать", "Schedules_Default_Edit", new
                {
                    schedule_id = default_schedule.Id
