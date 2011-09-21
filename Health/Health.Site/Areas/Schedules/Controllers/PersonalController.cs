@@ -15,21 +15,21 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Show
 
-        public ActionResult List()
+        public ActionResult Show(int schedule_id)
         {
-            var form = new PersonalScheduleList
-                                 {
-                                     PersonalSchedules = CoreKernel.PersonalScheduleRepo.GetAll()
-                                 };
+            var form = new PersonalScheduleForm
+                           {
+                               PersonalSchedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id)
+                           };
             return View(form);
         }
 
-        public ActionResult Show(int schedule_id) 
+        public ActionResult List()
         {
-            var form = new PersonalScheduleForm
-            {
-                PersonalSchedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id)
-            };
+            var form = new PersonalScheduleList
+                           {
+                               PersonalSchedules = CoreKernel.PersonalScheduleRepo.GetAll()
+                           };
             return View(form);
         }
 
@@ -37,26 +37,27 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Edit
 
-        [PRGImport(ParametersHook=true)]
+        [PRGImport(ParametersHook = true)]
         public ActionResult Edit(int schedule_id = 1)
         {
             PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id);
             var form = new PersonalScheduleForm
-                                {
-                                    PersonalSchedule = schedule,
-                                    Parameters = CoreKernel.ParamRepo.GetAll(),
-                                    Patients = CoreKernel.PatientRepo.GetAll()
-                                };
+                           {
+                               PersonalSchedule = schedule,
+                               Parameters = CoreKernel.ParamRepo.GetAll(),
+                               Patients = CoreKernel.PatientRepo.GetAll()
+                           };
             return View(form);
         }
 
-        [HttpPost, PRGExport(ParametersHook=true)]
+        [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult Edit(PersonalScheduleForm form)
         {
             if (ModelState.IsValid)
             {
                 CoreKernel.PersonalScheduleRepo.Update(form.PersonalSchedule);
-                return RedirectTo<PersonalController>(a => a.List());
+                form.Message = "Расписание отредактировано";
+                return RedirectTo<PersonalController>(a => a.Confirm(form));
             }
             return RedirectTo<PersonalController>(a => a.Edit(form.PersonalSchedule.Id));
         }
@@ -65,31 +66,31 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Add
 
-        [PRGImport(ParametersHook=true)]
+        [PRGImport(ParametersHook = true)]
         public ActionResult Add(int? schedule_id)
         {
             PersonalSchedule schedule = !schedule_id.HasValue
                                             ? new PersonalSchedule()
                                             : CoreKernel.PersonalScheduleRepo.GetById(schedule_id.Value);
-            var form = new PersonalScheduleForm 
-            {
-                PersonalSchedule = schedule,
-                Parameters = CoreKernel.ParamRepo.GetAll(),
-                Patients = CoreKernel.PatientRepo.GetAll()
-            };
+            var form = new PersonalScheduleForm
+                           {
+                               PersonalSchedule = schedule,
+                               Parameters = CoreKernel.ParamRepo.GetAll(),
+                               Patients = CoreKernel.PatientRepo.GetAll()
+                           };
             return View(form);
         }
 
-        [HttpPost, PRGExport(ParametersHook=true)]
+        [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult Add(PersonalScheduleForm form)
         {
             if (ModelState.IsValid)
             {
                 CoreKernel.PersonalScheduleRepo.Save(form.PersonalSchedule);
-                return RedirectTo<PersonalController>(a => a.List());
+                form.Message = "Расписание отредактировано";
+                return RedirectTo<PersonalController>(a => a.Confirm(form));
             }
             return RedirectTo<PersonalController>(a => a.Add(form.PersonalSchedule.Id));
-
         }
 
         #endregion
@@ -112,6 +113,18 @@ namespace Health.Site.Areas.Schedules.Controllers
             }
             if (confirm.Value) CoreKernel.PersonalScheduleRepo.DeleteById(schedule_id);
             return RedirectTo<PersonalController>(a => a.List());
+        }
+
+        #endregion
+
+        #region Other 
+
+        public ActionResult Confirm(PersonalScheduleForm form)
+        {
+            return
+                form.PersonalSchedule == null
+                    ? RedirectTo<PersonalController>(a => a.List())
+                    : View(form);
         }
 
         #endregion

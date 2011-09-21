@@ -8,5 +8,6 @@ namespace Health.Core.Entities.POCO
 {
     public class Diagnosis : IEntity
     {
+        
     }
 }

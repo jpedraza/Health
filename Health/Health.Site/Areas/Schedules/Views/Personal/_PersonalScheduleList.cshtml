@@ -24,18 +24,18 @@ else
                 <td>@personal_schedule.Id</td>
                 <td>@personal_schedule.Parameter.Name</td>
                 <td>@personal_schedule.Patient.Login</td>
-                <td>@Html.RouteLink("Подробнее", "Schedules_Personal_Show", new 
-               { 
-                   schedule_id = personal_schedule.Id
-               })</td>
-                <td>@Html.RouteLink("Редактировать", "Schedules_Personal_Edit", new 
-               {
-                   schedule_id = personal_schedule.Id
-               })</td>
+                <td>@Html.RouteLink("Подробнее", "Schedules_Personal_Show", new
+                                                                  {
+                                                                      schedule_id = personal_schedule.Id
+                                                                  })</td>
+                <td>@Html.RouteLink("Редактировать", "Schedules_Personal_Edit", new
+                                                                      {
+                                                                          schedule_id = personal_schedule.Id
+                                                                      })</td>
                 <td>@Html.RouteLink("Удалить", "Schedules_Personal_Delete", new
-               {
-                   schedule_id = personal_schedule.Id
-               })</td>
+                                                                  {
+                                                                      schedule_id = personal_schedule.Id
+                                                                  })</td>
             </tr>
         }
     </table>

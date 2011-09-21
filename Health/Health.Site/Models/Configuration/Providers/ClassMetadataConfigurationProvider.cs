@@ -89,7 +89,71 @@ namespace Health.Site.Models.Configuration.Providers
             {
                 return model_metadata;
             }
-            PropertyInfo[] properties = MetadataModelType.GetProperties();
+
+            if (MetadataModelType.BaseType != null)
+            {
+                PropertyInfo[] base_properties = MetadataModelType.BaseType.GetProperties();
+                foreach (PropertyInfo base_property in base_properties)
+                {
+                    var property_metadata = new ModelMetadataPropertyConfiguration();
+                    IList<Attribute> custom_attributes = new BindingList<Attribute>();
+                    object[] attributes = base_property.GetCustomAttributes(false);
+                    foreach (object attribute in attributes)
+                    {
+                        custom_attributes.Add(attribute as Attribute);
+                    }
+                    property_metadata.Attributes = custom_attributes;
+                    model_metadata.Properties.Add(base_property.Name, property_metadata);
+                }
+                PropertyInfo[] properties = MetadataModelType.GetProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    var property_metadata = new ModelMetadataPropertyConfiguration();
+                    IList<Attribute> custom_attributes = new BindingList<Attribute>();
+                    object[] attributes = property.GetCustomAttributes(false);
+                    foreach (object attribute in attributes)
+                    {
+                        custom_attributes.Add(attribute as Attribute);
+                    }
+                    property_metadata.Attributes = custom_attributes;
+                    if (!model_metadata.Properties.ContainsKey(property.Name))
+                    {
+                        model_metadata.Properties.Add(property.Name, property_metadata);
+                    }
+                    else
+                    {
+                        foreach (Attribute custom_attribute in custom_attributes)
+                        {
+                            if (model_metadata.Properties[property.Name].Attributes.Contains(custom_attribute))
+                            {
+                                int index = model_metadata.Properties[property.Name].Attributes.IndexOf(custom_attribute);
+                                model_metadata.Properties[property.Name].Attributes.RemoveAt(index);
+                            }
+                            model_metadata.Properties[property.Name].Attributes.Add(custom_attribute);
+                        }
+                    }
+                }
+                ConfigurationCache.Add(model_type, model_metadata);
+            }
+            else
+            {
+                PropertyInfo[] properties = MetadataModelType.GetProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    var property_metadata = new ModelMetadataPropertyConfiguration();
+                    IList<Attribute> custom_attributes = new BindingList<Attribute>();
+                    object[] attributes = property.GetCustomAttributes(false);
+                    foreach (object attribute in attributes)
+                    {
+                        custom_attributes.Add(attribute as Attribute);
+                    }
+                    property_metadata.Attributes = custom_attributes;
+                    model_metadata.Properties.Add(property.Name, property_metadata);
+                }
+                ConfigurationCache.Add(model_type, model_metadata);
+            }
+
+            /*PropertyInfo[] properties = MetadataModelType.GetProperties();
             foreach (PropertyInfo property in properties)
             {
                 var property_metadata = new ModelMetadataPropertyConfiguration();
@@ -102,7 +166,7 @@ namespace Health.Site.Models.Configuration.Providers
                 property_metadata.Attributes = custom_attributes;
                 model_metadata.Properties.Add(property.Name, property_metadata);
             }
-            ConfigurationCache.Add(model_type, model_metadata);
+            ConfigurationCache.Add(model_type, model_metadata);*/
             return model_metadata;
         }
 

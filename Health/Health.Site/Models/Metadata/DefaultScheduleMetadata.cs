@@ -21,11 +21,9 @@ namespace Health.Site.Models.Metadata
         public Parameter Parameter { get; set; }
 
         [DisplayName("Время начала ввода параметра.")]
-        [Required]
         public TimeSpan TimeStart { get; set; }
 
         [DisplayName("Время окончания ввода параметра.")]
-        [Required]
         public TimeSpan TimeEnd { get; set; }
 
         [DisplayName("День в который возможен ввод параметра.")]

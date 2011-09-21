@@ -83,6 +83,7 @@
     <Compile Include="API\Validators\IValueValidator.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="CoreKernel.cs" />
+    <Compile Include="Entities\POCO\Abstract\IKey.cs" />
     <Compile Include="Entities\POCO\Abstract\ISchedule.cs" />
     <Compile Include="Entities\POCO\Candidate.cs" />
     <Compile Include="Entities\DefaultRoles.cs" />

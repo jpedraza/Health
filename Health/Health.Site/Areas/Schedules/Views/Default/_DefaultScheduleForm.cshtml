@@ -10,11 +10,7 @@
 </fieldset>
 <fieldset>
     <legend>@Html.LabelFor(m => m.DefaultSchedule.Period)</legend>
-    @Html.EditorFor(m => m.DefaultSchedule.Period)
-</fieldset>
-
-<fieldset>
-    <legend>Промежуток времени</legend>
+    @Html.EditorFor(m => m.DefaultSchedule.Period)    
     <p>@Html.LabelFor(m => m.DefaultSchedule.TimeStart)</p>
     <p>@Html.EditorFor(m => m.DefaultSchedule.TimeStart) @Html.ValidationMessageFor(m => m.DefaultSchedule.TimeStart)</p>
     <p>@Html.LabelFor(m => m.DefaultSchedule.TimeEnd)</p>

@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
+using Health.Core.Entities.Virtual;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
@@ -16,22 +17,22 @@ namespace Health.Site.Areas.Schedules.Controllers
         }
 
         #region Show
-                
+
         public ActionResult Show(int schedule_id)
         {
             var form = new DefaultScheduleForm
-                            {
-                                DefaultSchedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id)
-                            };
+                           {
+                               DefaultSchedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id)
+                           };
             return View(form);
         }
 
         public ActionResult List()
         {
             var list_form = new DefaultScheduleList
-            {
-                DefaultSchedules = CoreKernel.DefaultScheduleRepo.GetAll()
-            };
+                                {
+                                    DefaultSchedules = CoreKernel.DefaultScheduleRepo.GetAll()
+                                };
             return View(list_form);
         }
 
@@ -44,10 +45,10 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             DefaultSchedule schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
             var form = new DefaultScheduleForm
-                            {
-                                DefaultSchedule = schedule,
-                                Parameters = CoreKernel.ParamRepo.GetAll()
-                            };
+                           {
+                               DefaultSchedule = schedule,
+                               Parameters = CoreKernel.ParamRepo.GetAll()
+                           };
             return
                 schedule == null
                     ? RedirectTo<DefaultController>(a => a.List())
@@ -69,12 +70,12 @@ namespace Health.Site.Areas.Schedules.Controllers
         #endregion
 
         #region Add
-        
+
         [PRGImport(ParametersHook = true)]
         public ActionResult Add(int? schedule_id)
         {
-            MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
-                WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
+            MetadataBinder.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof (PeriodAddMetadata));
             DefaultSchedule schedule = !schedule_id.HasValue
                                            ? new DefaultSchedule()
                                            : CoreKernel.DefaultScheduleRepo.GetById(schedule_id.Value);
@@ -89,8 +90,8 @@ namespace Health.Site.Areas.Schedules.Controllers
         [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult Add(DefaultScheduleForm form)
         {
-            MetadataBinder.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
-                WithConfigurationParameters(typeof (DefaultScheduleAddMetadata));
+            MetadataBinder.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof(PeriodAddMetadata));
             if (ModelState.IsValid)
             {
                 CoreKernel.DefaultScheduleRepo.Save(form.DefaultSchedule);
@@ -130,7 +131,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Confirm(DefaultScheduleForm form)
         {
-            return 
+            return
                 form.DefaultSchedule == null
                     ? RedirectTo<DefaultController>(a => a.List())
                     : View(form);

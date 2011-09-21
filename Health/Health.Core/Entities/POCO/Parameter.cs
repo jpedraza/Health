@@ -3,13 +3,8 @@ using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Core.Entities.POCO
 {
-    public class Parameter : IEntity
+    public class Parameter : IEntity, IKey
     {
-        /// <summary>
-        /// Идентификатор параметра.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Текстовое название параметра.
         /// </summary>
@@ -28,6 +23,15 @@ namespace Health.Core.Entities.POCO
         /// <summary>
         /// Мета-данные (описывают характеристику параметра).
         /// </summary>
-        public MetaData MetaData { get; set; }        
+        public MetaData MetaData { get; set; }
+
+        #region Implementation of IKey
+
+        /// <summary>
+        /// Идентификатор сущности.
+        /// </summary>
+        public int Id { get; set; }
+
+        #endregion
     }
 }

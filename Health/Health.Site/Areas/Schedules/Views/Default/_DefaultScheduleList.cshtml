@@ -22,32 +22,33 @@ else
                 <td>@default_schedule.Id</td>
                 <td>@default_schedule.Parameter.Name</td>
                 @{
-            const string format = "{0} - годов <br />" +
-                                  "{1} - месяцев <br />" +
-                                  "{2} - недель <br />" +
-                                  "{3} - дней <br />" +
-                                  "{4} - часов <br />" +
-                                  "{5} - минут";
-            var period = new HtmlString(String.Format(format, default_schedule.Period.Years,
-                                                      default_schedule.Period.Months,
-                                                      default_schedule.Period.Weeks,
-                                                      default_schedule.Period.Days,
-                                                      default_schedule.Period.Hours,
-                                                      default_schedule.Period.Minutes));
+                    const string format = "{0} - годов <br />" +
+                                          "{1} - месяцев <br />" +
+                                          "{2} - недель <br />" +
+                                          "{3} - дней <br />" +
+                                          "{4} - часов <br />" +
+                                          "{5} - минут";
+                    var period = new HtmlString(String.Format(format, default_schedule.Period.Years,
+                                                              default_schedule.Period.Months,
+                                                              default_schedule.Period.Weeks,
+                                                              default_schedule.Period.Days,
+                                                              default_schedule.Period.Hours,
+                                                              default_schedule.Period.Minutes));
                 }
                 <td>@period</td>
+                <td>@Html.RouteLink("Подробнее", "Schedules_Default_Show", new
+                                                                 {
+                                                                     schedule_id = default_schedule.Id
+                                                                 })              
+                </td>
                 <td>@Html.RouteLink("Редактировать", "Schedules_Default_Edit", new
-               {
-                   schedule_id = default_schedule.Id
-               })</td>
+                                                                     {
+                                                                         schedule_id = default_schedule.Id
+                                                                     })</td>
                 <td>@Html.RouteLink("Удалить", "Schedules_Default_Delete", new
-               {
-                   schedule_id = default_schedule.Id
-               })</td>
-               <td>@Html.RouteLink("Глянуть", "Schedules_Default_Show", new {
-                  schedule_id = default_schedule.Id
-              })
-               </td>
+                                                                 {
+                                                                     schedule_id = default_schedule.Id
+                                                                 })</td>  
             </tr>
         }
     </table>

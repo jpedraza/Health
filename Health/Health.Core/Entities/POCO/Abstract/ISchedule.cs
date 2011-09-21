@@ -6,13 +6,8 @@ namespace Health.Core.Entities.POCO.Abstract
     /// <summary>
     /// Базовый интерфейс расписаний.
     /// </summary>
-    public interface ISchedule : IEntity
+    public interface ISchedule : IEntity, IKey
     {
-        /// <summary>
-        /// Идентификатор расписания.
-        /// </summary>
-        int Id { get; set; }
-
         /// <summary>
         /// Параметр для которого составлено расписание.
         /// </summary>

@@ -69,6 +69,10 @@ section {
     padding: 10px 2%;    
 }
 
+#page_menu {
+    border-top: 2px solid #189aff;
+}
+
 /* HEADINGS   
 ----------------------------------------------------------*/
 
@@ -116,6 +120,7 @@ header, #header {
     margin-bottom: 0px;
     color: #000;
     padding: 0;
+    height: 130px;
 }
 
 header h1, #header h1 {
@@ -129,8 +134,7 @@ header h1, #header h1 {
 
 #main {
     padding: 30px 30px 15px 30px;
-    height: 100%;
-    margin-top: 70px;      
+    height: 100%;    
     background-color: #ffffff;
     border-radius: 5px 0 0 0;
     -webkit-border-radius: 5px 5px 5px 5px;
@@ -157,7 +161,7 @@ footer,
 ul#menu {
     padding: 0 0 2px;
     position: relative;
-    margin: 0;
+    margin: 0;    
     text-align: right;
 }
 
@@ -179,11 +183,11 @@ ul#menu li a {
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #e8eef4;
+    background-color: #fff;
     color: #034af3;
-    border-radius: 4px 4px 0 0;
-    -webkit-border-radius: 4px 4px 0 0;
-    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 ul#menu li a:hover {

@@ -372,7 +372,6 @@
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleList.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Add.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Edit.cshtml" />
-    <Content Include="Areas\Schedules\Views\Default\Index.cshtml" />
     <Content Include="Areas\Schedules\Views\Home\Index.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\List.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Confirm.cshtml" />
@@ -394,6 +393,7 @@
     <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleForm.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Show.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Add.cshtml" />
+    <Content Include="Areas\Schedules\Views\Personal\Confirm.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
