@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
-using System.ComponentModel.DataAnnotations;
+using Health.Core.API;
+using Health.Site.Attributes;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Models.Configuration.Providers
 {
@@ -25,7 +27,7 @@ namespace Health.Site.Models.Configuration.Providers
         /// <summary>
         /// Базовый конструктор.
         /// </summary>
-        public ClassMetadataConfigurationProvider()
+        public ClassMetadataConfigurationProvider(IDIKernel di_kernel) : base(di_kernel)
         {
             ConfigurationCache = new Dictionary<Type, ModelMetadataConfiguration>();
             ContainerCache = new Dictionary<string, object>();
@@ -34,8 +36,9 @@ namespace Health.Site.Models.Configuration.Providers
         /// <summary>
         /// Конструктор с возможностью указать конкретный тип метаданных для модели.
         /// </summary>
+        /// <param name="di_kernel"></param>
         /// <param name="metadata_model_type">Тип метаданных модели.</param>
-        public ClassMetadataConfigurationProvider(Type metadata_model_type) : this() 
+        public ClassMetadataConfigurationProvider(IDIKernel di_kernel, Type metadata_model_type) : this(di_kernel)
         {
             MetadataModelType = metadata_model_type;
         }
@@ -89,71 +92,7 @@ namespace Health.Site.Models.Configuration.Providers
             {
                 return model_metadata;
             }
-
-            if (MetadataModelType.BaseType != null)
-            {
-                PropertyInfo[] base_properties = MetadataModelType.BaseType.GetProperties();
-                foreach (PropertyInfo base_property in base_properties)
-                {
-                    var property_metadata = new ModelMetadataPropertyConfiguration();
-                    IList<Attribute> custom_attributes = new BindingList<Attribute>();
-                    object[] attributes = base_property.GetCustomAttributes(false);
-                    foreach (object attribute in attributes)
-                    {
-                        custom_attributes.Add(attribute as Attribute);
-                    }
-                    property_metadata.Attributes = custom_attributes;
-                    model_metadata.Properties.Add(base_property.Name, property_metadata);
-                }
-                PropertyInfo[] properties = MetadataModelType.GetProperties();
-                foreach (PropertyInfo property in properties)
-                {
-                    var property_metadata = new ModelMetadataPropertyConfiguration();
-                    IList<Attribute> custom_attributes = new BindingList<Attribute>();
-                    object[] attributes = property.GetCustomAttributes(false);
-                    foreach (object attribute in attributes)
-                    {
-                        custom_attributes.Add(attribute as Attribute);
-                    }
-                    property_metadata.Attributes = custom_attributes;
-                    if (!model_metadata.Properties.ContainsKey(property.Name))
-                    {
-                        model_metadata.Properties.Add(property.Name, property_metadata);
-                    }
-                    else
-                    {
-                        foreach (Attribute custom_attribute in custom_attributes)
-                        {
-                            if (model_metadata.Properties[property.Name].Attributes.Contains(custom_attribute))
-                            {
-                                int index = model_metadata.Properties[property.Name].Attributes.IndexOf(custom_attribute);
-                                model_metadata.Properties[property.Name].Attributes.RemoveAt(index);
-                            }
-                            model_metadata.Properties[property.Name].Attributes.Add(custom_attribute);
-                        }
-                    }
-                }
-                ConfigurationCache.Add(model_type, model_metadata);
-            }
-            else
-            {
-                PropertyInfo[] properties = MetadataModelType.GetProperties();
-                foreach (PropertyInfo property in properties)
-                {
-                    var property_metadata = new ModelMetadataPropertyConfiguration();
-                    IList<Attribute> custom_attributes = new BindingList<Attribute>();
-                    object[] attributes = property.GetCustomAttributes(false);
-                    foreach (object attribute in attributes)
-                    {
-                        custom_attributes.Add(attribute as Attribute);
-                    }
-                    property_metadata.Attributes = custom_attributes;
-                    model_metadata.Properties.Add(property.Name, property_metadata);
-                }
-                ConfigurationCache.Add(model_type, model_metadata);
-            }
-
-            /*PropertyInfo[] properties = MetadataModelType.GetProperties();
+            PropertyInfo[] properties = MetadataModelType.GetProperties();
             foreach (PropertyInfo property in properties)
             {
                 var property_metadata = new ModelMetadataPropertyConfiguration();
@@ -161,12 +100,51 @@ namespace Health.Site.Models.Configuration.Providers
                 object[] attributes = property.GetCustomAttributes(false);
                 foreach (object attribute in attributes)
                 {
+                    if (attribute.GetType() == typeof(ClassMetadataAttribute))
+                    {
+                        var att = attribute as ClassMetadataAttribute;
+                        if (att != null)
+                            _diKernel.Get<ModelMetadataProviderBinder>().For(property.PropertyType).Use
+                                <MMPAAttributeOnly, ClassMetadataConfigurationProvider>().WithConfigurationParameters(
+                                    att.GetMetadataType());
+                    }
                     custom_attributes.Add(attribute as Attribute);
                 }
                 property_metadata.Attributes = custom_attributes;
                 model_metadata.Properties.Add(property.Name, property_metadata);
             }
-            ConfigurationCache.Add(model_type, model_metadata);*/
+            if (MetadataModelType.BaseType != null)
+            {
+                PropertyInfo[] base_properties = MetadataModelType.BaseType.GetProperties();
+                foreach (PropertyInfo base_property in base_properties)
+                {
+                    object[] attributes = base_property.GetCustomAttributes(false);
+                    if (!model_metadata.Properties.ContainsKey(base_property.Name))
+                    {
+                        IList<Attribute> custom_attributes = new BindingList<Attribute>();
+                        foreach (object attribute in attributes)
+                        {
+                            custom_attributes.Add(attribute as Attribute);
+                        }
+                        var property_metadata = new ModelMetadataPropertyConfiguration {Attributes = custom_attributes};
+                        model_metadata.Properties.Add(base_property.Name, property_metadata);
+                    }
+                    else
+                    {
+                        foreach (object attribute in attributes)
+                        {
+                            IList<Attribute> current_attributes = model_metadata.Properties[base_property.Name].Attributes;
+                            Attribute current_attribute =
+                                current_attributes.Where(a => a.GetType() == attribute.GetType()).FirstOrDefault();
+                            if (current_attribute == null)
+                            {
+                                current_attributes.Add(attribute as Attribute);
+                            }
+                        }
+                    }
+                }
+            }
+            ConfigurationCache.Add(model_type, model_metadata);
             return model_metadata;
         }
 
@@ -180,7 +158,8 @@ namespace Health.Site.Models.Configuration.Providers
         protected void AddToContainerCache(Type container_type, Func<object> model_accessor, Type model_type,
                                            string property_name)
         {
-            string key = String.Format("{0}{1}{2}", container_type == null ? "" : container_type.Name, model_type.Name, property_name);
+            string key = String.Format("{0}{1}{2}", container_type == null ? "" : container_type.Name, model_type.Name,
+                                       property_name);
             object value = GetParentObjectContainer(property_name, model_accessor);
             if (value == null) return;
             if (ContainerCache.ContainsKey(key))
@@ -193,7 +172,7 @@ namespace Health.Site.Models.Configuration.Providers
             }
         }
 
-        #region Implementation of IMetadataConfigurationProvider
+        #region Implementation of MetadataConfigurationProvider
 
         /// <summary>
         /// Существуют ли метаданные для свойства модели.
@@ -205,7 +184,7 @@ namespace Health.Site.Models.Configuration.Providers
         /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Результат.</returns>
         public override bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type,
-                                   string property_name, params object[] parameters)
+                                            string property_name, params object[] parameters)
         {
             AddToContainerCache(container_type, model_accessor, model_type, property_name);
             if (container_type == null) return false;
@@ -235,8 +214,9 @@ namespace Health.Site.Models.Configuration.Providers
         /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Метаданные для свойства.</returns>
         public override ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor,
-                                                              Type model_type, string property_name, params object[] parameters)
-        {            
+                                                                       Type model_type, string property_name,
+                                                                       params object[] parameters)
+        {
             AddToContainerCache(container_type, model_accessor, model_type, property_name);
             if (container_type == null) return null;
             ModelMetadataConfiguration model_configuration = GetModelMetadata(container_type, parameters);

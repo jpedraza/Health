@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using Health.Core.API;
 
 namespace Health.Site.Models.Configuration.Providers
 {
     /// <summary>
     /// Xml провайдер конфигурации для модели.
     /// </summary>
-    public class XmlMetadataConfigurationProvider : IMetadataConfigurationProvider
+    public class XmlMetadataConfigurationProvider : MetadataConfigurationProvider
     {
         /// <summary>
         /// Путь поиска файлов с метаданными.
@@ -20,13 +21,14 @@ namespace Health.Site.Models.Configuration.Providers
         /// <summary>
         /// Конструктор.
         /// </summary>
+        /// <param name="di_kernel"></param>
         /// <param name="path">Путь поиска файлов с метаданными.</param>
-        public XmlMetadataConfigurationProvider(string path)
+        public XmlMetadataConfigurationProvider(IDIKernel di_kernel, string path) : base(di_kernel)
         {
             _path = path;
         }
 
-        #region Implementation of IMetadataConfigurationProvider
+        #region Implementation of MetadataConfigurationProvider
 
         /// <summary>
         /// Существуют ли метаданные для свойства модели.
@@ -37,7 +39,7 @@ namespace Health.Site.Models.Configuration.Providers
         /// <param name="property_name">Свойство.</param>
         /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Результат.</returns>
-        public bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type,
+        public override bool IsHaveMetadata(Type container_type, Func<object> model_accessor, Type model_type,
                                    string property_name, params object[] parameters)
         {
             if (model_type == null) return false;
@@ -59,7 +61,7 @@ namespace Health.Site.Models.Configuration.Providers
         /// <param name="property_name">Имя свойства.</param>
         /// <param name="parameters">Дополнительные параметры.</param>
         /// <returns>Метаданные для свойства.</returns>
-        public ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor,
+        public override ModelMetadataPropertyConfiguration GetMetadata(Type container_type, Func<object> model_accessor,
                                                               Type model_type, string property_name,
                                                               params object[] parameters)
         {
@@ -72,11 +74,6 @@ namespace Health.Site.Models.Configuration.Providers
             }
             return null;
         }
-
-        /// <summary>
-        /// Кэш-контейнеров в которых определены свойства модели.
-        /// </summary>
-        public IDictionary<string, object> ContainerCache { get; set; }
 
         /// <summary>
         /// Парсинг xml-файла с метаданными.

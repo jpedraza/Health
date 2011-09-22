@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
+using Health.Site.Models.Configuration.Providers;
 using Health.Site.Models.Providers;
 
 namespace Health.Site.Controllers
@@ -39,6 +40,12 @@ namespace Health.Site.Controllers
         public ModelMetadataProviderBinder MetadataBinder
         {
             get { return DIKernel.Get<ModelMetadataProviderBinder>(); }
+        }
+
+        public void ClassMetadataBinder<TFor, TUse>()
+        {
+            MetadataBinder.For<TFor>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof (TUse));
         }
 
         /// <summary>

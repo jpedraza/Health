@@ -4,6 +4,7 @@ using Health.Core.Entities.POCO;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
+using Health.Site.Models.Metadata;
 
 namespace Health.Site.Areas.Schedules.Controllers
 {
@@ -40,6 +41,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Edit(int schedule_id = 1)
         {
+            ClassMetadataBinder<PersonalSchedule, PersonalScheduleEditMetadata>();
             PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id);
             var form = new PersonalScheduleForm
                            {
@@ -53,6 +55,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult Edit(PersonalScheduleForm form)
         {
+            ClassMetadataBinder<PersonalSchedule, PersonalScheduleEditMetadata>();
             if (ModelState.IsValid)
             {
                 CoreKernel.PersonalScheduleRepo.Update(form.PersonalSchedule);

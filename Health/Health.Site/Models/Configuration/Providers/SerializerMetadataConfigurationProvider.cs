@@ -16,18 +16,10 @@ namespace Health.Site.Models.Configuration.Providers
     public abstract class SerializerMetadataConfigurationProvider : MetadataConfigurationProvider
     {
         /// <summary>
-        /// DI ядро.
-        /// </summary>
-        private readonly IDIKernel _diKernel;
-
-        /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="di_kernel">DI ядро.</param>
-        protected SerializerMetadataConfigurationProvider(IDIKernel di_kernel)
-        {
-            _diKernel = di_kernel;
-        }        
+        protected SerializerMetadataConfigurationProvider(IDIKernel di_kernel) : base(di_kernel) { }
 
         #region Serialization
 

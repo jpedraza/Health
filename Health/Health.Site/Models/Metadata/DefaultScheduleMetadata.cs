@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
+using Health.Site.Areas.Schedules.Models;
+using Health.Site.Attributes;
 
 namespace Health.Site.Models.Metadata
 {
@@ -18,6 +20,7 @@ namespace Health.Site.Models.Metadata
         public Period Period { get; set; }
 
         [DisplayName("Параметр.")]
+        [ClassMetadata(typeof(IfSubParameterMetadata))]
         public Parameter Parameter { get; set; }
 
         [DisplayName("Время начала ввода параметра.")]
@@ -34,5 +37,11 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Неделя в которую возможен ввод параметра.")]
         public Week Week { get; set; }
+    }
+
+    public class DefaultScheduleEditMetadata : DefaultScheduleMetadata
+    {
+        [Required(ErrorMessage = "Укажите идентификатор расписания.")]
+        public new int Id { get; set; }
     }
 }

@@ -10,6 +10,9 @@ namespace Health.Site.Models.Metadata
 {
     public class PatientMetadata
     {
+        [DisplayName("Идентификатор пользователя")]
+        public int Id { get; set; }
+
         [DisplayName("Имя")]
         public string FirstName { get; set; }
 
@@ -37,5 +40,11 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Номер больничной карты")]
         public string Card { get; set; }
+    }
+
+    public class IfSubPatientMetadata : PatientMetadata
+    {
+        [Required(ErrorMessage = "Выберите пользователя.")]
+        public new int Id { get; set; }
     }
 }

@@ -151,15 +151,14 @@
     <Compile Include="Areas\Schedules\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Schedules\Controllers\HomeController.cs" />
     <Compile Include="Areas\Schedules\Controllers\PersonalController.cs" />
-    <Compile Include="Areas\Schedules\Models\DefaultScheduleMetadata.cs" />
     <Compile Include="Areas\Schedules\Models\DefaultScheduleModels.cs" />
-    <Compile Include="Areas\Schedules\Models\PersonalScheduleMetadata.cs" />
     <Compile Include="Areas\Schedules\Models\PersonalScheduleModels.cs" />
     <Compile Include="Areas\Schedules\SchedulesAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Models\Users\Metadata\UsersAddMetadata.cs" />
     <Compile Include="Areas\Admin\Models\Users\UsersForm.cs" />
     <Compile Include="Areas\Admin\Models\Users\UsersList.cs" />
     <Compile Include="Attributes\Auth.cs" />
+    <Compile Include="Attributes\ClassMetadata.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
     <Compile Include="Attributes\RequireRouteValues.cs" />
     <Compile Include="Controllers\CoreController.cs" />
@@ -179,7 +178,6 @@
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="Models\Binders\ParametersFormBinder.cs" />
     <Compile Include="Models\Configuration\ModelMetadataPropertyConfiguration.cs" />
-    <Compile Include="Models\Configuration\IMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\ModelMetadataConfiguration.cs" />
     <Compile Include="Models\Configuration\Providers\SerializerMetadataConfigurationProvider.cs" />
     <Compile Include="Models\Configuration\Providers\ClassMetadataConfigurationProvider.cs" />
@@ -289,6 +287,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Scripts\Site\jQueryWidgets.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -400,6 +399,8 @@
     <Content Include="Views\Widget\MainMenu.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TimeSpan.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

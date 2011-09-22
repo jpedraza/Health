@@ -6,6 +6,7 @@ using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
 using Health.Site.Models.Configuration.Providers;
+using Health.Site.Models.Metadata;
 using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Schedules.Controllers
@@ -43,6 +44,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Edit(int schedule_id = 1)
         {
+            ClassMetadataBinder<DefaultSchedule, DefaultScheduleEditMetadata>();
             DefaultSchedule schedule = CoreKernel.DefaultScheduleRepo.GetById(schedule_id);
             var form = new DefaultScheduleForm
                            {
@@ -58,6 +60,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult Edit(DefaultScheduleForm form)
         {
+            ClassMetadataBinder<DefaultSchedule, DefaultScheduleEditMetadata>();
             if (ModelState.IsValid)
             {
                 CoreKernel.DefaultScheduleRepo.Update(form.DefaultSchedule);
@@ -74,8 +77,6 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Add(int? schedule_id)
         {
-            MetadataBinder.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
-                WithConfigurationParameters(typeof (PeriodAddMetadata));
             DefaultSchedule schedule = !schedule_id.HasValue
                                            ? new DefaultSchedule()
                                            : CoreKernel.DefaultScheduleRepo.GetById(schedule_id.Value);
@@ -90,8 +91,6 @@ namespace Health.Site.Areas.Schedules.Controllers
         [HttpPost, PRGExport(ParametersHook = true)]
         public ActionResult Add(DefaultScheduleForm form)
         {
-            MetadataBinder.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
-                WithConfigurationParameters(typeof(PeriodAddMetadata));
             if (ModelState.IsValid)
             {
                 CoreKernel.DefaultScheduleRepo.Save(form.DefaultSchedule);

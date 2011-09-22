@@ -114,7 +114,6 @@ namespace Health.Site.App_Start
             // ~
 
             // Фабрики
-            kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
             // ~
 
             // Фильтры для атрибутов

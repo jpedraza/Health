@@ -45,7 +45,7 @@ namespace Health.Site.Models.Providers
             if (context.Controller.GetType() != typeof(ErrorController) &&
                 Binder.IsHaveConfiguration(metadata.ContainerType))
             {
-                IMetadataConfigurationProvider configuration_provider =
+                MetadataConfigurationProvider configuration_provider =
                     Binder.ResolveConfiguration(metadata.ContainerType);
 
                 ModelMetadataPropertyConfiguration config =

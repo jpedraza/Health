@@ -21,7 +21,7 @@ namespace Health.Site.Models.Providers
         /// <summary>
         /// Провайдер конйигурации.
         /// </summary>
-        protected readonly IMetadataConfigurationProvider ConfigurationProvider;
+        protected readonly MetadataConfigurationProvider ConfigurationProvider;
 
         /// <summary>
         /// DI ядро.
@@ -29,7 +29,7 @@ namespace Health.Site.Models.Providers
         protected readonly IDIKernel DIKernel;
 
         protected ModelMetadataProviderAdapter(IDIKernel di_kernel,
-                                               IMetadataConfigurationProvider configuration_provider)
+                                               MetadataConfigurationProvider configuration_provider)
         {
             DIKernel = di_kernel;
             ConfigurationProvider = configuration_provider;

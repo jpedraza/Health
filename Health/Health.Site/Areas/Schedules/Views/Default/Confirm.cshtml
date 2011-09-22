@@ -13,5 +13,4 @@
     <p>@Html.ActionLink("Добавить новое расписание", "Add", "Default")</p>
     <p>@Html.RouteLink("Добавить новое расписание на основе текущего", "Schedules_Default_AddBase", new {schedule_id = Model.DefaultSchedule.Id})</p>
     <p>@Html.RouteLink("Редактировать добавленное", "Schedules_Default_Edit", new {schedule_id = Model.DefaultSchedule.Id})</p>
-    <p>@Html.ActionLink("Перейти к списку расписаний", "Show", "Default")</p>
 }
