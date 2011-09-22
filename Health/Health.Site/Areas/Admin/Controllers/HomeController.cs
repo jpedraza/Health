@@ -13,11 +13,9 @@ namespace Health.Site.Areas.Admin.Controllers
         public HomeController(IDIKernel di_kernel) : base(di_kernel)
         {
         }
-
-        [Auth(AllowRoles = "Admin")]
+        
         public ActionResult Index()
         {
-            ViewData["Role"] = CoreKernel.AuthServ.UserCredential.Role;
             return View();
         }
     }

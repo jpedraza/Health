@@ -9,6 +9,11 @@ namespace Health.Core.Entities.POCO
     public class User : IEntity
     {
         /// <summary>
+        /// Идентификатор пользователя.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Имя пользователя
         /// </summary>
         public string FirstName { get; set; }

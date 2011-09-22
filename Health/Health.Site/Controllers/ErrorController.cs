@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
@@ -17,6 +18,7 @@ namespace Health.Site.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Index([Bind(Include = "ErrorModel")] ErrorViewModel error_model)
         {
+            Exception exception = Server.GetLastError();
             if (error_model != null && error_model.ErrorModel != null)
             {
                 return View(error_model);

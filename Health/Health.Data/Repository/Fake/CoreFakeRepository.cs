@@ -33,6 +33,20 @@ namespace Health.Data.Repository.Fake
             _entities.Remove(entity);
             return true;
         }
+
+        public virtual bool Update(TIEntity entity)
+        {
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                TIEntity i_entity = _entities[i];
+                if (i_entity.Equals(entity))
+                {
+                    _entities[i] = entity;
+                }
+            }
+            return true;
+        }
+
         #endregion
     }
 }

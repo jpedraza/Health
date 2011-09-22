@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Controllers
 {
@@ -16,7 +17,7 @@ namespace Health.Site.Controllers
     /// </summary>
     public abstract class CoreController : Controller
     {
-        protected ICoreKernel _coreKernel;
+        private ICoreKernel _coreKernel;
 
         protected CoreController(IDIKernel di_kernel)
         {
@@ -30,6 +31,22 @@ namespace Health.Site.Controllers
         public ICoreKernel CoreKernel
         {
             get { return _coreKernel ?? (_coreKernel = DIKernel.Get<ICoreKernel>()); }
+        }
+
+        /// <summary>
+        /// Биндер метаданных.
+        /// </summary>
+        public ModelMetadataProviderBinder MetadataBinder
+        {
+            get { return DIKernel.Get<ModelMetadataProviderBinder>(); }
+        }
+
+        /// <summary>
+        /// Копирует свойства одного объекта в одноименные и однотипные свойства другого объекта.
+        /// </summary>
+        public Mapper Mapper
+        {
+            get { return DIKernel.Get<Mapper>(); }
         }
 
         /// <summary>
@@ -68,9 +85,8 @@ namespace Health.Site.Controllers
             string area_name = String.Empty;
             if (full_name != null)
             {
-                area_name =
-                    full_name.Replace("Health.Site", "").Replace("Areas", "").Replace("Controllers", "").Replace(controller_name, "").
-                        Replace(".", "").Replace("Controller", "");
+                string[] temp = full_name.Split('.');
+                area_name = full_name.Contains("Areas") ? temp[3] : temp[2];
             }
             return RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
         }
@@ -81,7 +97,6 @@ namespace Health.Site.Controllers
         /// <param name="filter_context">Контекст ошибки.</param>
         protected override void OnException(ExceptionContext filter_context)
         {
-
             // Код ошибки по-умолчанию.
             int code_error = 500;
             string message;
@@ -94,7 +109,7 @@ namespace Health.Site.Controllers
                     code_error = (exception as HttpException).GetHttpCode();
                 }
                 message = exception.Message;
-                var error_model = new ErrorViewModel
+                var error_model = new ErrorViewModel()
                                       {
                                           ErrorModel = new ErrorModel
                                                            {

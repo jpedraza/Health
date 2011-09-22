@@ -13,6 +13,8 @@ namespace Health.Core.API
         /// </summary>
         ILogger Logger { get; set; }
 
+        #region Repositories
+
         /// <summary>
         /// Репозиторий ролей.
         /// </summary>
@@ -29,6 +31,30 @@ namespace Health.Core.API
         ICandidateRepository CandRepo { get; }
 
         /// <summary>
+        /// Дефолтный репозиторий расписаний.
+        /// </summary>
+        IDefaultScheduleRepository DefaultScheduleRepo { get; set; }
+
+        /// <summary>
+        /// Персональный репозиторий расписаний.
+        /// </summary>
+        IPersonalScheduleRepository PersonalScheduleRepo { get; set; }
+
+        /// <summary>
+        /// Репозиторий пациентов.
+        /// </summary>
+        IPatientRepository PatientRepo { get; set; }
+
+        /// <summary>
+        /// Репозиторий параметров.
+        /// </summary>
+        IParameterRepository ParamRepo { get; }
+
+        #endregion
+
+        #region Services
+
+        /// <summary>
         /// Сервис авторизации.
         /// </summary>
         IAuthorizationService AuthServ { get; }
@@ -37,10 +63,7 @@ namespace Health.Core.API
         /// Сервис регистрации.
         /// </summary>
         IRegistrationService RegServ { get; }
-
-        /// <summary>
-        /// Репозиторий параметров здоровья человека
-        /// </summary>
-        IParameterRepository ParamRepo { get; }
+        
+        #endregion
     }
 }

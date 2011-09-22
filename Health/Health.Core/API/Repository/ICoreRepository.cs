@@ -31,5 +31,12 @@ namespace Health.Core.API.Repository
         /// <param name="entity">Сущность, реализующая IEntity.</param>
         /// <returns>Результат удаления.</returns>
         bool Delete(TEntity entity);
+
+        /// <summary>
+        /// Добавить сущность в источник данных.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool Update(TEntity entity);
     }
 }

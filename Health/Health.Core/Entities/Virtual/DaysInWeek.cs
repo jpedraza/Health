@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Health.Core.Entities.Virtual
@@ -14,10 +15,10 @@ namespace Health.Core.Entities.Virtual
                                                                      {5, new Day {Name = "Пятница", InWeek = 5}},
                                                                      {6, new Day {Name = "Суббота", InWeek = 6}},
                                                                      {7, new Day {Name = "Воскресенье", InWeek = 7}},
-                                                                     {8, new Day {Name = "Все", InWeek = 8}}
+                                                                     {8, new Day {Name = "Все"}}
                                                                  };
 
-        public static readonly Day Month = _days[1];
+        public static readonly Day Monday = _days[1];
 
         public static readonly Day Tuesday = _days[2];
 
@@ -43,6 +44,11 @@ namespace Health.Core.Entities.Virtual
             return (from day in _days
                     where day.Value.Name == name
                     select day.Value).FirstOrDefault();
+        }
+
+        public static IEnumerable<Day> GetAll()
+        {
+            return _days.Values.AsEnumerable();
         }
     }
 }

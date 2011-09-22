@@ -7,22 +7,5 @@
 }
 
 <h2>@ViewBag.Message</h2>
-<p>
-    Для получения дополнительных сведений о ASP.NET MVC посетите веб-сайт <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-</p>
-<h2>Роли на сервере:</h2>
-@{
-    var roles = (IEnumerable<Role>) ViewData["Roles"];
-}
-<ul>
-    @foreach (Role role in roles)
-    {
-        <li>@role.Name</li>
-    }
-</ul>
 
-<h2>Число кандидатов: @ViewBag.CountCandidates</h2>
-
-<h2>Новая роль: @ViewBag.NewRole.Name</h2>
-
-<h2>Имя переменной: @ViewBag.VarName</h2>
+<p>@Html.RouteLink("Test", new { area = "", controller = "Test", action = "Index" })</p>

@@ -8,13 +8,13 @@ namespace Health.Core.Entities.POCO
     public class Role : IEntity
     {
         /// <summary>
-        /// Имя роли
+        /// Идентификатор роли.
         /// </summary>
-        public string Name { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// Код роли
+        /// Имя роли.
         /// </summary>
-        public int Code { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,11 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Reflection;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Health.Core;
+using Health.Core.API;
+using Health.Core.API.Repository;
+using Health.Core.API.Services;
+using Health.Core.API.Validators;
+using Health.Core.Entities.POCO;
+using Health.Core.Services;
+using Health.Data.Repository.Fake;
+using Health.Data.Validators;
+using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
-using Health.Site.Controllers;
+using Health.Site.DI;
+using Health.Site.Filters;
 using Health.Site.Models;
+using Health.Site.Models.Binders;
+using Health.Site.Models.Configuration.Providers;
+using Health.Site.Models.Providers;
+using Health.Site.Repository;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Mvc;
+using Ninject.Web.Mvc.FilterBindingSyntax;
 
 namespace Health.Site
 {
@@ -14,11 +33,19 @@ namespace Health.Site
 
     public class MvcApplication : HttpApplication
     {
+        /// <summary>
+        /// Регистрация глобальных фильтров.
+        /// </summary>
+        /// <param name="filters">Коллекция фильтров.</param>
         protected static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             //filters.Add(new HandleErrorAttribute());
         }
 
+        /// <summary>
+        /// Регистрация роутов.
+        /// </summary>
+        /// <param name="routes">Коллекция роутов.</param>
         protected static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

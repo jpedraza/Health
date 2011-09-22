@@ -4,4 +4,5 @@
 
 <h2>Index</h2>
 
-@ViewData["Role"]
+<p>@Html.RouteLink("Кандидаты", new { area = "Candidate", controller = "Home", action = "Index" })</p>
+<p>@Html.RouteLink("Пользователи", new { area = "Admin", controller = "Users", action = "Index" })</p>

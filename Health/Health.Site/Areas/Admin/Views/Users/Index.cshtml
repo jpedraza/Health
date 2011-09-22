@@ -1,0 +1,17 @@
+﻿@using Health.Site.Areas.Admin.Models.Users
+@model UsersList
+
+@{
+    ViewBag.Title = "Список ползователей";
+}
+
+<h2>Список пользователей</h2>
+<p>    
+    @using (Html.BeginForm("Add", "Users", new { area = "Admin" }))
+    {
+        <input type="submit" value="Добавить нового" />
+        @Html.DropDownListFor(m => m.Role.Name, Model.RolesSelectList)
+    }
+</p>
+
+@Html.Partial("_UsersList", Model.Users)
