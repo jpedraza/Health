@@ -41,19 +41,22 @@ namespace Health.Site.Areas.Parameters.Controllers
                 return RedirectTo<EditingController>(a => a.Error());
             }
             TempData["EditParameter"] = parameter;
-            return View(new ParametersViewModel
             {
-                EditParam = parameter,
-                EditingForm = new Models.Forms.EditingFormModel
+
+                return View(new ParametersViewModel
                 {
-                    Name = parameter.Name,
-                    Value = parameter.Value.ToString(),
-                    DefaultValue = parameter.DefaultValue.ToString(),
-                    Age = parameter.MetaData.Age.ToString(),
-                    Id_cat = parameter.MetaData.Id_cat,
-                    variants = parameter.MetaData.Variants
-                }
-            });
+                    EditParam = parameter,
+                    EditingForm = new Models.Forms.EditingFormModel
+                    {
+                        Name = parameter.Name,
+                        Value = parameter.Value.ToString(),
+                        DefaultValue = parameter.DefaultValue.ToString(),
+                        Age = parameter.MetaData.Age.ToString(),
+                        Id_cat = parameter.MetaData.Id_cat,
+                        variants = parameter.MetaData.Variants
+                    }
+                });
+            }
         }
 
         public ActionResult ContinueEdit()
