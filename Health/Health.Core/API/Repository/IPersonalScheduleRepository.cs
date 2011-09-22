@@ -9,5 +9,8 @@ namespace Health.Core.API.Repository
 {
     public interface IPersonalScheduleRepository : ICoreRepository<PersonalSchedule>, IScheduleRepository
     {
+        PersonalSchedule GetById(int schedule_id);
+
+        bool DeleteById(int schedule_id);
     }
 }

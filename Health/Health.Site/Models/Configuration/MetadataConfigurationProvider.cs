@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using Health.Core.API;
 
 namespace Health.Site.Models.Configuration
 {
     /// <summary>
     /// Базовый класс провайдеров конфигураций.
     /// </summary>
-    public abstract class MetadataConfigurationProvider : IMetadataConfigurationProvider
+    public abstract class MetadataConfigurationProvider// : MetadataConfigurationProvider
     {
+        protected readonly IDIKernel _diKernel;
+
+        protected MetadataConfigurationProvider(IDIKernel di_kernel)
+        {
+            _diKernel = di_kernel;
+        }
+
         /// <summary>
         /// Получить контейнер в которов определено свойсво модели.
         /// </summary>
@@ -61,7 +69,7 @@ namespace Health.Site.Models.Configuration
             return value;
         }
 
-        #region Implementation of IMetadataConfigurationProvider
+        #region Implementation of MetadataConfigurationProvider
 
         /// <summary>
         /// Существуют ли метаданные для свойства модели.

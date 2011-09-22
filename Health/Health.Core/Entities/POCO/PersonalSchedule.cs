@@ -18,11 +18,6 @@ namespace Health.Core.Entities.POCO
         public Patient Patient { get; set; }
 
         /// <summary>
-        /// Для какого диагноза.
-        /// </summary>
-        public Diagnosis Diagnosis { get; set; }
-
-        /// <summary>
         /// Дата начала замеров.
         /// </summary>
         public DateTime DateStart { get; set; }

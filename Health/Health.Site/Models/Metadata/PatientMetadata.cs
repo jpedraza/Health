@@ -10,23 +10,22 @@ namespace Health.Site.Models.Metadata
 {
     public class PatientMetadata
     {
+        [DisplayName("Идентификатор пользователя")]
+        public int Id { get; set; }
+
         [DisplayName("Имя")]
-        [Required]
         public string FirstName { get; set; }
 
         [DisplayName("Фамилия")]
-        [Required]
         public string LastName { get; set; }
 
         [DisplayName("Отчество")]
         public string ThirdName { get; set; }
 
         [DisplayName("Логин")]
-        [Required]
         public string Login { get; set; }
 
         [DisplayName("Пароль")]
-        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -34,15 +33,18 @@ namespace Health.Site.Models.Metadata
         public Role Role { get; set; }
 
         [DisplayName("День рождения")]
-        [Required]
         public DateTime Birthday { get; set; }
 
         [DisplayName("Номер полюса")]
-        [Required]
         public string Policy { get; set; }
 
         [DisplayName("Номер больничной карты")]
-        [Required]
         public string Card { get; set; }
+    }
+
+    public class IfSubPatientMetadata : PatientMetadata
+    {
+        [Required(ErrorMessage = "Выберите пользователя.")]
+        public new int Id { get; set; }
     }
 }

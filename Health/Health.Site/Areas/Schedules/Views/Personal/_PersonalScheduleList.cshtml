@@ -1,0 +1,42 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Extensions
+@model IEnumerable<PersonalSchedule>
+
+@if (Model.IsNullOrCountIsZero())
+{
+    <h2>Персональных расписаний нет.</h2>
+}
+else
+{
+    <table>
+        <tr>
+            @{
+                PersonalSchedule schedule = Model.ElementAt(0);
+            }
+            <td>@Html.LabelFor(m => schedule.Id)</td>
+            <td>@Html.LabelFor(m => schedule.Parameter.Name)</td>
+            <td>@Html.LabelFor(m => schedule.Patient.Login)</td>
+            <td colspan="2">Функции</td>
+        </tr>
+        @foreach (PersonalSchedule personal_schedule in Model)
+        {
+            <tr>
+                <td>@personal_schedule.Id</td>
+                <td>@personal_schedule.Parameter.Name</td>
+                <td>@personal_schedule.Patient.Login</td>
+                <td>@Html.RouteLink("Подробнее", "Schedules_Personal_Show", new
+                                                                  {
+                                                                      schedule_id = personal_schedule.Id
+                                                                  })</td>
+                <td>@Html.RouteLink("Редактировать", "Schedules_Personal_Edit", new
+                                                                      {
+                                                                          schedule_id = personal_schedule.Id
+                                                                      })</td>
+                <td>@Html.RouteLink("Удалить", "Schedules_Personal_Delete", new
+                                                                  {
+                                                                      schedule_id = personal_schedule.Id
+                                                                  })</td>
+            </tr>
+        }
+    </table>
+}

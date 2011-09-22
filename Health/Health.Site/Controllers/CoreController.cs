@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
+using Health.Site.Models.Configuration.Providers;
 using Health.Site.Models.Providers;
 
 namespace Health.Site.Controllers
@@ -39,6 +40,12 @@ namespace Health.Site.Controllers
         public ModelMetadataProviderBinder MetadataBinder
         {
             get { return DIKernel.Get<ModelMetadataProviderBinder>(); }
+        }
+
+        public void ClassMetadataBinder<TFor, TUse>()
+        {
+            MetadataBinder.For<TFor>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
+                WithConfigurationParameters(typeof (TUse));
         }
 
         /// <summary>
@@ -78,15 +85,38 @@ namespace Health.Site.Controllers
                 IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
                 TempData[prg_model_state.PRGParametersKey] = prg_parameters;
             }
-            var act = (MethodCallExpression) action.Body;
+            return GetRedirectResult(action);
+        }
+
+        public ActionResult RedirectTo<T>(Expression<Action<T>> action, string[] aliases)
+            where T : Controller
+        {
+            var prg_model_state = new PRGModelState
+                                      {
+                                          ParametersHook = true
+                                      };
+            IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
+            for (int i = 0; i < aliases.Length; i++)
+            {
+                string alias = aliases[i];
+                prg_parameters[i].Name = alias;
+            }
+            TempData[prg_model_state.PRGParametersKey] = prg_parameters;
+            return GetRedirectResult(action);
+        }
+
+        private RedirectToRouteResult GetRedirectResult<T>(Expression<Action<T>> action)
+            where T : Controller
+        {
+            var act = (MethodCallExpression)action.Body;
             string action_name = act.Method.Name;
-            string controller_name = typeof (T).Name.Replace("Controller", "");
-            string full_name = typeof (T).FullName;
+            string controller_name = typeof(T).Name.Replace("Controller", "");
+            string full_name = typeof(T).FullName;
             string area_name = String.Empty;
             if (full_name != null)
             {
                 string[] temp = full_name.Split('.');
-                area_name = full_name.Contains("Areas") ? temp[3] : temp[2];
+                area_name = full_name.Contains("Areas") ? temp[3] : "";
             }
             return RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
         }

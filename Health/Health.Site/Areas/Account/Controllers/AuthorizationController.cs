@@ -16,33 +16,28 @@ namespace Health.Site.Areas.Account.Controllers
         /// Отображение формы входа
         /// </summary>
         /// <returns></returns>
-        [PRGImport]
-        public ActionResult Login([Bind(Include = "LoginForm")] AccountViewModel form_model)
+        [PRGImport(ParametersHook = true)]
+        public ActionResult Login(LoginForm form)
         {
-            if (form_model != null && form_model.LoginForm != null)
-            {
-                return View(form_model);
-            }
-            return View();
+            return View(form);
         }
 
         /// <summary>
         /// Авторизация пользователя
         /// </summary>
-        /// <param name="form_model"></param>
+        /// <param name="form"></param>
         /// <returns></returns>
-        [HttpPost, ValidateAntiForgeryToken, PRGExport]
-        public ActionResult LoginSubmit([Bind(Include = "LoginForm")] AccountViewModel form_model)
+        [HttpPost, PRGExport(ParametersHook = true)]
+        public ActionResult LoginSubmit(LoginForm form)
         {
             if (ModelState.IsValid)
             {
-                if (CoreKernel.AuthServ.Login(form_model.LoginForm.Login, form_model.LoginForm.Password,
-                                              form_model.LoginForm.RememberMe))
+                if (CoreKernel.AuthServ.Login(form.Login, form.Password, form.RememberMe))
                 {
                     return RedirectTo<Admin.Controllers.HomeController>(a => a.Index());
                 }
             }
-            return RedirectTo<AuthorizationController>(a => a.Login(form_model));
+            return RedirectTo<AuthorizationController>(a => a.Login(form));
         }
 
         /// <summary>

@@ -83,6 +83,7 @@
     <Compile Include="API\Validators\IValueValidator.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="CoreKernel.cs" />
+    <Compile Include="Entities\POCO\Abstract\IKey.cs" />
     <Compile Include="Entities\POCO\Abstract\ISchedule.cs" />
     <Compile Include="Entities\POCO\Candidate.cs" />
     <Compile Include="Entities\DefaultRoles.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Entities\Virtual\Month.cs" />
     <Compile Include="Entities\Virtual\MonthsInYear.cs" />
     <Compile Include="Entities\Virtual\Period.cs" />
+    <Compile Include="Entities\Virtual\TimeInterval.cs" />
     <Compile Include="Entities\Virtual\Week.cs" />
     <Compile Include="Entities\Virtual\WeeksInMonth.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
@@ -116,7 +118,6 @@
     <Compile Include="Services\RenderingService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

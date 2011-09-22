@@ -1,0 +1,13 @@
+﻿@using Health.Site.Areas.Schedules.Models
+@model PersonalScheduleList
+@{
+    ViewBag.Title = "Персональные расписания.";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_PersonalScheduleList", Model.PersonalSchedules)
+
+@section page_menu{
+    <p>@Html.ActionLink("Добавить новое расписание..", "Add", "Personal")</p>
+}

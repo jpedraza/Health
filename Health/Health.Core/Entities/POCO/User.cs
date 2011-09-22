@@ -6,13 +6,8 @@ namespace Health.Core.Entities.POCO
     /// <summary>
     /// Пользователь
     /// </summary>
-    public class User : IEntity
+    public class User : IEntity, IKey
     {
-        /// <summary>
-        /// Идентификатор пользователя.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Имя пользователя
         /// </summary>
@@ -52,5 +47,14 @@ namespace Health.Core.Entities.POCO
         /// Токен для сессии в куках
         /// </summary>
         public string Token { get; set; }
+
+        #region Implementation of IKey
+
+        /// <summary>
+        /// Идентификатор сущности.
+        /// </summary>
+        public int Id { get; set; }
+
+        #endregion
     }
 }

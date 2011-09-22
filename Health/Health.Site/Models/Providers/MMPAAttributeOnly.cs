@@ -8,7 +8,7 @@ namespace Health.Site.Models.Providers
 {
     public class MMPAAttributeOnly : ModelMetadataProviderAdapter
     {
-        public MMPAAttributeOnly(IDIKernel di_kernel, IMetadataConfigurationProvider configuration_provider)
+        public MMPAAttributeOnly(IDIKernel di_kernel, MetadataConfigurationProvider configuration_provider)
             : base(di_kernel, configuration_provider)
         {
         }

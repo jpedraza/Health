@@ -5,16 +5,20 @@ namespace Health.Core.Entities.POCO
     /// <summary>
     /// Роль пользователя
     /// </summary>
-    public class Role : IEntity
+    public class Role : IEntity, IKey
     {
-        /// <summary>
-        /// Идентификатор роли.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Имя роли.
         /// </summary>
         public string Name { get; set; }
+
+        #region Implementation of IKey
+
+        /// <summary>
+        /// Идентификатор сущности.
+        /// </summary>
+        public int Id { get; set; }
+
+        #endregion
     }
 }

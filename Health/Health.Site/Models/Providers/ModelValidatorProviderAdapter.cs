@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Health.Core.API;
@@ -44,7 +45,7 @@ namespace Health.Site.Models.Providers
             if (context.Controller.GetType() != typeof(ErrorController) &&
                 Binder.IsHaveConfiguration(metadata.ContainerType))
             {
-                IMetadataConfigurationProvider configuration_provider =
+                MetadataConfigurationProvider configuration_provider =
                     Binder.ResolveConfiguration(metadata.ContainerType);
 
                 ModelMetadataPropertyConfiguration config =

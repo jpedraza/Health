@@ -10,7 +10,6 @@ using Health.Core.Services;
 using Health.Data.Repository.Fake;
 using Health.Data.Validators;
 using Health.Site.App_Start;
-using Health.Site.Areas.Account.Models.Forms;
 using Health.Site.Attributes;
 using Health.Site.DI;
 using Health.Site.Filters;
@@ -60,19 +59,19 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Регистрация нестандартных биндеров для моделей
-        /// </summary>
-        public static void ModelToBinder()
-        {
-            //ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
-        }
-
-        /// <summary>
         /// Остановка приложения.
         /// </summary>
         public static void Stop()
         {
             _bootstrapper.ShutDown();
+        }
+
+        /// <summary>
+        /// Регистрация нестандартных биндеров для моделей
+        /// </summary>
+        public static void ModelToBinder()
+        {
+            //ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
         }
 
         /// <summary>
@@ -110,12 +109,11 @@ namespace Health.Site.App_Start
 
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
-            kernel.Bind<IAuthorizationService>().To<AuthorizationService>();
+            kernel.Bind<IAuthorizationService>().To<AuthorizationService>().InRequestScope();
             kernel.Bind<IRegistrationService>().To<RegistrationService>();
             // ~
 
             // Фабрики
-            kernel.Bind<IValidatorFactory>().To<ValidatorFactory>();
             // ~
 
             // Фильтры для атрибутов
@@ -132,7 +130,6 @@ namespace Health.Site.App_Start
             // Провайдеры метаданных
             /* Биндеры */
             kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope().
-                OnActivation(a => a.For<TestModel>().Use<MMPAAttributeThenProperty, XmlMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<Patient>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<DefaultSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
@@ -141,7 +138,8 @@ namespace Health.Site.App_Start
                 OnActivation(a => a.For<Week>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<PersonalSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<User>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+                OnActivation(a => a.For<User>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Candidate>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
 
             /* Адаптеры */
             //kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();

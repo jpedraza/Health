@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
@@ -14,14 +15,8 @@ namespace Health.Data.Repository.Fake
             _entities.Add(new PersonalSchedule
                               {
                                   Id = 1,
-                                  Parameter = new Parameter
-                                                  {
-                                                      Id = 1
-                                                  },
-                                  Patient = new Patient
-                                                {
-                                                    Login = "Login 1"
-                                                },
+                                  Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
+                                  Patient = DIKernel.Get<IPatientRepository>().GetById(1),
                                   DateStart = DateTime.Now,
                                   DateEnd = DateTime.Now.AddYears(1),
                                   Day = DaysInWeek.All,
@@ -34,14 +29,8 @@ namespace Health.Data.Repository.Fake
             _entities.Add(new PersonalSchedule
                               {
                                   Id = 2,
-                                  Parameter = new Parameter
-                                                  {
-                                                      Id = 2
-                                                  },
-                                  Patient = new Patient
-                                                {
-                                                    Login = "Login 2"
-                                                },
+                                  Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
+                                  Patient = DIKernel.Get<IPatientRepository>().GetById(2),
                                   DateStart = DateTime.Now,
                                   DateEnd = DateTime.Now.AddYears(2),
                                   Day = DaysInWeek.Monday,
@@ -50,6 +39,49 @@ namespace Health.Data.Repository.Fake
                                   TimeStart = new TimeSpan(8, 0, 0),
                                   TimeEnd = new TimeSpan(12, 0, 0)
                               });
+        }
+
+        public PersonalSchedule GetById(int schedule_id)
+        {
+            return _entities.Where(e => e.Id == schedule_id).FirstOrDefault();
+        }
+
+        public override bool Save(PersonalSchedule entity)
+        {
+            entity.Patient = DIKernel.Get<IPatientRepository>().GetById(entity.Patient.Id);
+            entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
+            _entities.Add(entity);
+            return true;
+        }
+
+        public bool DeleteById(int schedule_id)
+        {
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                PersonalSchedule entity = _entities[i];
+                if (entity.Id == schedule_id)
+                {
+                    _entities.RemoveAt(i);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public override bool Update(PersonalSchedule entity)
+        {
+            entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
+            entity.Patient = DIKernel.Get<IPatientRepository>().GetById(entity.Patient.Id);
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                PersonalSchedule schedule = _entities[i];
+                if (schedule.Id == entity.Id)
+                {
+                    _entities[i] = entity;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

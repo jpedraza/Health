@@ -1,0 +1,14 @@
+﻿@model DefaultScheduleList
+@using Health.Site.Areas.Schedules.Models
+
+@{
+    ViewBag.Title = "Дефолтные расписания.";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_DefaultScheduleList", Model.DefaultSchedules)
+
+@section page_menu {
+    <p>@Html.ActionLink("Добавить новое расписание..", "Add", "Default")</p>
+}

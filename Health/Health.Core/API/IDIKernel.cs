@@ -23,21 +23,18 @@ namespace Health.Core.API
         object Get(Type type);
 
         /// <summary>
-        /// Инициализировать объект заданного интерфейса и передать ему DI ядро и центральный сервис.
-        /// </summary>
-        /// <typeparam name="TObject">Интерфейс объекта.</typeparam>
-        /// <param name="core_kernel">Центральный сервис.</param>
-        /// <returns>Объект заданного интерфейса.</returns>
-        TObject Get<TObject>(ICoreKernel core_kernel)
-            where TObject : ICore;
-
-        /// <summary>
         /// Получить все объекты связанные с данным сервисом.
         /// </summary>
         /// <param name="service_type"></param>
         /// <returns></returns>
         IEnumerable<object> GetServices(Type service_type);
 
+        /// <summary>
+        /// Получить экземпляр объекта с определенным набором параметров конструктора.
+        /// </summary>
+        /// <param name="type">Тип объекта.</param>
+        /// <param name="constructor_parameters">Параметры конструктора.</param>
+        /// <returns>Экземпляр объекта.</returns>
         object Get(Type type, params object[] constructor_parameters);
     }
 }

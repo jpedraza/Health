@@ -61,5 +61,10 @@ namespace Health.Data.Repository.Fake
             user_repo.Save(entity);
             return base.Save(entity);
         }
+
+        public Patient GetById(int patient_id)
+        {
+            return _entities.Where(p => p.Id == patient_id).FirstOrDefault();
+        }
     }
 }

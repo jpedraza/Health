@@ -292,13 +292,13 @@ namespace Health.Data.Repository.Fake
             {
                 var res = false;
                 try 
-	            {
+                {
                     res = Save(NewParam);
-	            }
-	            catch (System.Exception)
-	            {
+                }
+                catch (System.Exception)
+                {
                     res = false;
-	            }
+                }
                 return res;
             }
             

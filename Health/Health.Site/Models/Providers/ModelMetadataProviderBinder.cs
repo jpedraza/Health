@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using Health.Core.API;
+using Health.Site.Attributes;
 using Health.Site.Models.Configuration;
+using Health.Site.Models.Configuration.Providers;
 
 namespace Health.Site.Models.Providers
 {
@@ -60,7 +64,7 @@ namespace Health.Site.Models.Providers
     {
         public Type ConfigurationType { get; set; }
 
-        public IMetadataConfigurationProvider ConfigurationProvider { get; set; }
+        public MetadataConfigurationProvider ConfigurationProvider { get; set; }
     }
 
 
@@ -127,7 +131,7 @@ namespace Health.Site.Models.Providers
         /// <param name="configuration_type">Тип провайдера конйигурации.</param>
         public ModelMetadataProviderBinder Use(Type provider_type, Type configuration_type)
         {
-            for (int i= 0; i < Binding.Count; i++)
+            for (int i = 0; i < Binding.Count; i++)
             {
                 MetadataProviderBindingModel binding_model = Binding[i];
                 if (binding_model.ModelType == CurrentModelType)
@@ -157,7 +161,7 @@ namespace Health.Site.Models.Providers
         /// <typeparam name="TConfiguration">Тип провайдера конйигурации.</typeparam>
         public ModelMetadataProviderBinder Use<TProvider, TConfiguration>()
             where TProvider : AssociatedMetadataProvider
-            where TConfiguration : IMetadataConfigurationProvider
+            where TConfiguration : MetadataConfigurationProvider
         {
             return Use(typeof (TProvider), typeof (TConfiguration));
         }
@@ -173,37 +177,21 @@ namespace Health.Site.Models.Providers
             {
                 if (binding_model.ModelType == model_type)
                 {
-                    /*foreach (MetadataProviderCache provider_cache in ProviderCache)
+                    int length = binding_model.ConfigurationParameters == null
+                                     ? 1
+                                     : binding_model.ConfigurationParameters.Length + 1;
+                    var parameters = new object[length];
+                    parameters[0] = _diKernel.Get<IDIKernel>();
+                    for (int i = 0; i < length - 1; i++)
                     {
-                        if (binding_model.ProviderType == provider_cache.ProviderType && binding_model.ConfigurationType == provider_cache.ConfigurationType)
-                        {
-                            return provider_cache.Provider;
-                        }
-                    }*/
-                    IMetadataConfigurationProvider configuration_provider;
-                    AssociatedMetadataProvider provider;
-                    /*foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
-                    {
-                        if (configuration_cache.ConfigurationType == binding_model.ConfigurationType)
-                        {
-                            configuration_provider = configuration_cache.ConfigurationProvider;
-                            provider = _diKernel.Get(binding_model.ProviderType, _diKernel, configuration_provider) as AssociatedMetadataProvider;
-                            ProviderCache.Add(new MetadataProviderCache
-                                                  {
-                                                      ConfigurationType = binding_model.ConfigurationType,
-                                                      ProviderType = binding_model.ProviderType,
-                                                      Provider = provider
-                                                  });
-                            return provider;
-                        }
-                    }*/
-                    //configuration_provider = (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
-                    configuration_provider =
-                        (IMetadataConfigurationProvider) _diKernel.Get(binding_model.ConfigurationType, 
-                        binding_model.ConfigurationParameters);
-                    provider =
-                        _diKernel.Get(binding_model.ProviderType, _diKernel, configuration_provider) as
-                        AssociatedMetadataProvider;
+                        object parameter = binding_model.ConfigurationParameters[i];
+                        parameters[i + 1] = parameter;
+                    }
+                    var configuration_provider =
+                        _diKernel.Get(binding_model.ConfigurationType,
+                                      parameters) as MetadataConfigurationProvider;
+                    var provider = _diKernel.Get(binding_model.ProviderType, _diKernel, configuration_provider) as
+                                   AssociatedMetadataProvider;
                     return provider;
                 }
             }
@@ -226,22 +214,14 @@ namespace Health.Site.Models.Providers
         /// </summary>
         /// <param name="model_type">Тип модели.</param>
         /// <returns>Экземпляр провайдера конйигурации.</returns>
-        public IMetadataConfigurationProvider ResolveConfiguration(Type model_type)
+        public MetadataConfigurationProvider ResolveConfiguration(Type model_type)
         {
             foreach (MetadataProviderBindingModel binding_model in Binding)
             {
                 if (binding_model.ModelType == model_type)
                 {
-                    /*foreach (MetadataConfigurationCache configuration_cache in ConfigurationCache)
-                    {
-                        if (binding_model.ConfigurationType == configuration_cache.ConfigurationType)
-                        {
-                            return configuration_cache.ConfigurationProvider;
-                        }
-                    }*/
-                    //return (IMetadataConfigurationProvider)Activator.CreateInstance(binding_model.ConfigurationType);
-                    return (IMetadataConfigurationProvider)_diKernel.Get(binding_model.ConfigurationType, 
-                        binding_model.ConfigurationParameters);
+                    return (MetadataConfigurationProvider) _diKernel.Get(binding_model.ConfigurationType,
+                                                                          binding_model.ConfigurationParameters);
                 }
             }
             return null;
@@ -285,7 +265,7 @@ namespace Health.Site.Models.Providers
         /// Задать параметры конструктора провайдера конфигурации.
         /// </summary>
         /// <param name="configuration_parameters">Массив параметров.</param>
-        public void WithConfigurationParameters(params object[] configuration_parameters) 
+        public void WithConfigurationParameters(params object[] configuration_parameters)
         {
             foreach (MetadataProviderBindingModel binding_model in Binding)
             {

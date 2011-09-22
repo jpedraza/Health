@@ -23,7 +23,7 @@ namespace Health.Site.Models.Providers
         public ModelMetadataProviderManager(IDIKernel di_kernel)
         {
             _diKernel = di_kernel;
-            DefaultProvider = new EmptyModelMetadataProvider();
+            DefaultProvider = new DataAnnotationsModelMetadataProvider();
         }
 
         #region Overrides of ModelMetadataProvider

@@ -1,0 +1,15 @@
+﻿@using Health.Site.Areas.Schedules.Models
+@model PersonalScheduleForm
+
+@{
+    ViewBag.Title = "Удаление расписания";
+}
+
+<h2>@Model.Message
+    <p>
+        @Html.RouteLink("Да", "Schedules_Personal_Delete", new {schedule_id = Model.PersonalSchedule.Id, confirm = true})
+        @Html.RouteLink("Нет", "Schedules_Personal_Delete", new {schedule_id = Model.PersonalSchedule.Id, confirm = false})
+    </p>
+</h2>
+
+@Html.Partial("_PersonalScheduleDisplay")

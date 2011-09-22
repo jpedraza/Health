@@ -23,11 +23,7 @@ namespace Health.Data.Repository.Fake
                                         Day = DaysInWeek.All,
                                         Week = WeeksInMonth.All,
                                         Month = MonthsInYear.All,
-                                        Parameter = new Parameter
-                                                        {
-                                                            Id = 1,
-                                                            Name = "давление"
-                                                        },
+                                        Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
                                         Period = new Period
                                                      {
                                                          Years = 2
@@ -41,11 +37,7 @@ namespace Health.Data.Repository.Fake
                                         Day = DaysInWeek.All,
                                         Week = WeeksInMonth.Even,
                                         Month = MonthsInYear.May,
-                                        Parameter = new Parameter
-                                                        {
-                                                            Id = 2,
-                                                            Name = "температура"
-                                                        },
+                                        Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
                                         Period = new Period
                                                      {
                                                          Months = 6
@@ -80,14 +72,21 @@ namespace Health.Data.Repository.Fake
         {
             foreach (DefaultSchedule default_schedule in _entities)
             {
-                if (default_schedule.Parameter.Id == entity.Parameter.Id)
+                if (default_schedule.Id == entity.Id)
                 {
                     _entities.Remove(default_schedule);
+                    entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
                     _entities.Add(entity);
                     return true;
                 }
             }
             throw new Exception("Переданное для обновления дефолтное расписание отсутствует в репозитории.");
+        }
+
+        public override bool Save(DefaultSchedule entity)
+        {
+            entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
+            return base.Save(entity);
         }
     }
 }

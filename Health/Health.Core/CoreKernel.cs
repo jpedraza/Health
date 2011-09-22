@@ -48,7 +48,7 @@ namespace Health.Core
             {
                 if (_roleRepo == null)
                 {
-                    _roleRepo = DIKernel.Get<IRoleRepository>(this);
+                    _roleRepo = DIKernel.Get<IRoleRepository>();
                     Logger.Debug("Репозиторий ролей  инициализирован.");
                 }
                 return _roleRepo;
@@ -63,7 +63,7 @@ namespace Health.Core
             {
                 if (_paramRepo == null)
                 {
-                    _paramRepo = DIKernel.Get<IParameterRepository>(this);
+                    _paramRepo = DIKernel.Get<IParameterRepository>();
                     Logger.Debug("Репозиторий параметров инициализирован.");
                 }
                 return _paramRepo;
@@ -78,7 +78,7 @@ namespace Health.Core
             {
                 if (_userRepo == null)
                 {
-                    _userRepo = DIKernel.Get<IUserRepository>(this);
+                    _userRepo = DIKernel.Get<IUserRepository>();
                     Logger.Debug("Репозиторий пользователей инициализирован.");
                 }
                 return _userRepo;
@@ -94,7 +94,7 @@ namespace Health.Core
             {
                 if (_candRepo == null)
                 {
-                    _candRepo = DIKernel.Get<ICandidateRepository>(this);
+                    _candRepo = DIKernel.Get<ICandidateRepository>();
                     Logger.Debug("Репозиторий кандидатов инициализирован");
                 }
                 return _candRepo;
@@ -110,7 +110,7 @@ namespace Health.Core
             {
                 if (_defaultScheduleRepo == null)
                 {
-                    _defaultScheduleRepo = DIKernel.Get<IDefaultScheduleRepository>(this);
+                    _defaultScheduleRepo = DIKernel.Get<IDefaultScheduleRepository>();
                     Logger.Debug("Репозиторий дефолтных расписаний создан.");
                 }
                 return _defaultScheduleRepo;
@@ -127,7 +127,7 @@ namespace Health.Core
             {
                 if (_personalScheduleRepo == null)
                 {
-                    _personalScheduleRepo = DIKernel.Get<IPersonalScheduleRepository>(this);
+                    _personalScheduleRepo = DIKernel.Get<IPersonalScheduleRepository>();
                     Logger.Debug("Репозиторий персональных расписаний создан.");
                 }
                 return _personalScheduleRepo;
@@ -144,7 +144,7 @@ namespace Health.Core
             {
                 if (_patientRepo == null)
                 {
-                    _patientRepo = DIKernel.Get<IPatientRepository>(this);
+                    _patientRepo = DIKernel.Get<IPatientRepository>();
                     Logger.Debug("Репозиторий пациентов создан.");
                 }
                 return _patientRepo;
@@ -161,7 +161,7 @@ namespace Health.Core
             {
                 if (_authServ == null)
                 {
-                    _authServ = DIKernel.Get<IAuthorizationService>(this);
+                    _authServ = DIKernel.Get<IAuthorizationService>();
                     Logger.Debug("Сервис авторизации запущен.");
                 }
                 return _authServ;
@@ -177,7 +177,7 @@ namespace Health.Core
             {
                 if (_regServ == null)
                 {
-                    _regServ = DIKernel.Get<IRegistrationService>(this);
+                    _regServ = DIKernel.Get<IRegistrationService>();
                     Logger.Debug("Сервис регистрации запущен.");
                 }
 
