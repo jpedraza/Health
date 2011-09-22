@@ -20,7 +20,7 @@ namespace Health.Site.Areas.Admin.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Add(PatientsForm form)
         {
-            form = form ?? new PatientsForm {Patient = new Patient()};
+            form.Patient = form.Patient ?? new Patient();
             return View(form);
         }
 

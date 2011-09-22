@@ -1,0 +1,9 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model CandidateList
+
+@{
+    ViewBag.Title = "Список кандидатов";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_CandidateList", Model.Candidates)

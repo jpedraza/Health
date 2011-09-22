@@ -134,14 +134,12 @@
     <Compile Include="Areas\Account\Controllers\RegistrationController.cs" />
     <Compile Include="Areas\Account\Models\AccountModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CandidatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PatientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\CandidateModels.cs" />
     <Compile Include="Areas\Admin\Models\Patients\PatientsForm.cs" />
-    <Compile Include="Areas\Candidates\CandidateAreaRegistration.cs" />
-    <Compile Include="Areas\Candidates\Controllers\CrudController.cs" />
-    <Compile Include="Areas\Candidates\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Candidates\Models\CandidateList.cs" />
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
@@ -314,7 +312,6 @@
   <ItemGroup>
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Candidates\Views\Shared\" />
     <Folder Include="Areas\Parameters\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -385,14 +382,12 @@
     <Content Include="Areas\Schedules\Views\Default\Show.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\List.cshtml" />
     <Content Include="Areas\Schedules\Views\Shared\_AreaLayout.cshtml" />
-    <Content Include="Areas\Candidates\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Candidates\Views\Home\_CandidateTableControl.cshtml" />
-    <Content Include="Areas\Candidates\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Candidates\Views\Web.config" />
     <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleForm.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Show.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Add.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Confirm.cshtml" />
+    <Content Include="Areas\Admin\Views\Candidates\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Candidates\_CandidateList.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

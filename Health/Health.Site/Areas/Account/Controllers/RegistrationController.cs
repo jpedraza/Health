@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.Entities.POCO;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
@@ -18,6 +19,7 @@ namespace Health.Site.Areas.Account.Controllers
         [PRGImport(ParametersHook = true)]
         public ActionResult Registration(RegistrationForm form)
         {
+            form.Candidate = form.Candidate ?? new Candidate();
             return View(form);
         }
 

@@ -1,0 +1,30 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Extensions
+@model IEnumerable<Candidate>
+
+@if (Model.IsNullOrCountIsZero())
+{
+    <h2>Кандидатов нет</h2>
+}
+else
+{
+    Candidate cand = Model.ElementAt(0);
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => cand.Id)</td>
+            <td>@Html.LabelFor(m => cand.Login)</td>
+            <td>@Html.LabelFor(m => cand.Card)</td>
+            <td>@Html.LabelFor(m => cand.Policy)</td>
+            <td colspan="3">Функции</td>
+        </tr>
+        @foreach (Candidate candidate in Model)
+        {
+            <tr>
+                <td>@candidate.Id</td>
+                <td>@candidate.Login</td>
+                <td>@candidate.Card</td>
+                <td>@candidate.Policy</td>
+            </tr>
+        }
+    </table>
+}
