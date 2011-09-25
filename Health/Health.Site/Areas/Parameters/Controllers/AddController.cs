@@ -8,6 +8,7 @@ using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Areas.Parameters.Models;
 using Health.Core.Entities.POCO;
+using Health.Site.Models.Metadata;
 
 namespace Health.Site.Areas.Parameters.Controllers
 {
@@ -28,6 +29,7 @@ namespace Health.Site.Areas.Parameters.Controllers
         /// </summary>
         public ActionResult Index()
         {
+            ClassMetadataBinder<Parameter, ParameterMetadata>();
             return View();
         }
 

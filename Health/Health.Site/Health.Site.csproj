@@ -145,6 +145,7 @@
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Parameters\Controllers\TestController.cs" />
     <Compile Include="Areas\Parameters\Models\Forms\ParametersFormsModels.cs" />
     <Compile Include="Areas\Parameters\Models\ParametersViewModel.cs" />
     <Compile Include="Areas\Parameters\ParametersAreaRegistration.cs" />
@@ -393,6 +394,7 @@
     <Content Include="Areas\Schedules\Views\Personal\Show.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Add.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\Confirm.cshtml" />
+    <Content Include="Areas\Parameters\Views\Test\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
