@@ -288,4 +288,27 @@ namespace Health.Site.Models.Providers
             return null;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public abstract class ModelMetadataProviderBinderAttribute : Attribute
+    {
+        public Type ConfigurationType;
+
+        public Type ProviderType;
+
+        public Type MetadataType;
+
+        protected ModelMetadataProviderBinderAttribute(Type metadata_type, Type provider_type, Type configuration_type)
+        {
+            MetadataType = metadata_type;
+            ProviderType = provider_type;
+            ConfigurationType = configuration_type;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ClassMetadataAttribute : ModelMetadataProviderBinderAttribute
+    {
+        public ClassMetadataAttribute(Type metadata_type) : base(metadata_type, typeof(MMPAAttributeOnly), typeof(ClassMetadataConfigurationProvider)) { }
+    }
 }

@@ -105,6 +105,8 @@ namespace Health.Site.App_Start
             kernel.Bind<IDefaultScheduleRepository>().To<DefaultScheduleFakeRepository>().InSingletonScope();
             kernel.Bind<IPersonalScheduleRepository>().To<PersonalScheduleFakeRepository>().InSingletonScope();
             kernel.Bind<IPatientRepository>().To<PatientFakeRepository>().InSingletonScope();
+            kernel.Bind<IDoctorRepository>().To<DoctorsFakeRepository>().InSingletonScope();
+            kernel.Bind<ISpecialtyRepository>().To<SpecialtyFakeRepository>().InSingletonScope();
             // ~
 
             // Сервисы

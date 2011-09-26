@@ -76,10 +76,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib, Version=2.0.95.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -135,11 +131,14 @@
     <Compile Include="Areas\Account\Models\AccountModels.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CandidatesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoctorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PatientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\CandidateModels.cs" />
-    <Compile Include="Areas\Admin\Models\Patients\PatientsForm.cs" />
+    <Compile Include="Areas\Admin\Models\DoctorModels.cs" />
+    <Compile Include="Areas\Admin\Models\PatientModels.cs" />
+    <Compile Include="Areas\Admin\Models\UserModels.cs" />
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
@@ -152,11 +151,7 @@
     <Compile Include="Areas\Schedules\Models\DefaultScheduleModels.cs" />
     <Compile Include="Areas\Schedules\Models\PersonalScheduleModels.cs" />
     <Compile Include="Areas\Schedules\SchedulesAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Models\Users\Metadata\UsersAddMetadata.cs" />
-    <Compile Include="Areas\Admin\Models\Users\UsersForm.cs" />
-    <Compile Include="Areas\Admin\Models\Users\UsersList.cs" />
     <Compile Include="Attributes\Auth.cs" />
-    <Compile Include="Attributes\ClassMetadata.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
     <Compile Include="Attributes\RequireRouteValues.cs" />
     <Compile Include="Controllers\CoreController.cs" />
@@ -171,8 +166,6 @@
     </Compile>
     <Compile Include="Helpers\Classes\MainMenu.cs" />
     <Compile Include="Helpers\HtmlElementsHelpers.cs" />
-    <Compile Include="Helpers\RenderParameters.cs" />
-    <Compile Include="Helpers\RenderParametersForm.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="Models\Binders\ParametersFormBinder.cs" />
     <Compile Include="Models\Configuration\ModelMetadataPropertyConfiguration.cs" />
@@ -278,12 +271,17 @@
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
-    <Content Include="Scripts\jquery-ui-1.8.15.js" />
-    <Content Include="Scripts\jquery-ui-1.8.15.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.14.js" />
+    <Content Include="Scripts\jquery-ui-1.8.14.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.16.js" />
+    <Content Include="Scripts\jquery-ui-1.8.16.min.js" />
+    <Content Include="Scripts\jquery-ui-i18n.js" />
+    <Content Include="Scripts\jquery-ui-i18n.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
+    <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <Content Include="Scripts\Site\jQueryWidgets.js" />
     <Content Include="Web.config" />
@@ -311,7 +309,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Account\Views\Shared\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Parameters\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -358,10 +355,7 @@
     <Content Include="Areas\Parameters\Views\Editing\ContinueEdit.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\AddVariant.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersList.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\_UsersForm.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Add.cshtml" />
-    <Content Include="Areas\Admin\Views\Patients\_PatientsForm.cshtml" />
     <Content Include="Areas\Schedules\Views\Web.config" />
     <Content Include="Areas\Schedules\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleForm.cshtml" />
@@ -371,7 +365,6 @@
     <Content Include="Areas\Schedules\Views\Home\Index.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\List.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Confirm.cshtml" />
-    <Content Include="Areas\Admin\Views\Patients\_PatientsDisplay.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\Confirm.cshtml" />
     <Content Include="Areas\Schedules\Views\Default\_DefaultScheduleDisplay.cshtml" />
     <Content Include="Areas\Schedules\Views\Personal\_PersonalScheduleList.cshtml" />
@@ -388,6 +381,20 @@
     <Content Include="Areas\Schedules\Views\Personal\Confirm.cshtml" />
     <Content Include="Areas\Admin\Views\Candidates\List.cshtml" />
     <Content Include="Areas\Admin\Views\Candidates\_CandidateList.cshtml" />
+    <Content Include="Areas\Admin\Views\Candidates\Show.cshtml" />
+    <Content Include="Areas\Admin\Views\Candidates\DisplayTemplates\Candidate.cshtml" />
+    <Content Include="Areas\Admin\Views\Candidates\ConfirmBid.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AreaLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\DisplayTemplates\Patient.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\EditorTemplates\Patient.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\_PatientList.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\Show.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\_DoctorList.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\DisplayTemplates\Doctor.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\Show.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

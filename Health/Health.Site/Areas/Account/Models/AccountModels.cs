@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Health.Core.Entities.POCO;
+using Health.Site.Attributes;
 using Health.Site.Models;
+using Health.Site.Models.Metadata;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Account.Models
 {
@@ -40,6 +43,7 @@ namespace Health.Site.Areas.Account.Models
     /// </summary>
     public class RegistrationForm : CoreViewModel
     {
+        [ClassMetadata(typeof(CandidateFormMetadata))]
         public Candidate Candidate { get; set; }
     }
 

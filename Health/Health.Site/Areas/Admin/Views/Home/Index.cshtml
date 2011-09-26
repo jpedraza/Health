@@ -1,8 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Кабинет";
 }
 
-<h2>Index</h2>
-
-<p>@Html.ActionLink("Кандидаты", "List", "Candidates")</p>
-<p>@Html.RouteLink("Пользователи", new { area = "Admin", controller = "Users", action = "Index" })</p>
+<h2>@ViewBag.Title</h2>

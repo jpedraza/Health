@@ -1,11 +1,15 @@
-﻿@using Health.Site.Areas.Schedules.Models
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Areas.Schedules.Models
 @model PersonalScheduleForm
            
+@{
+    Model.PersonalSchedule = Model.PersonalSchedule ?? new PersonalSchedule();
+}
 @Html.ValidationSummary(true)
 <fieldset>
     <legend>@Html.LabelFor(m => m.PersonalSchedule.Parameter)</legend>
     <p>@Html.DropDownListFor(m => m.PersonalSchedule.Parameter.Id, Model.ParametersSelectList) 
-    @Html.ValidationMessageFor(m => m.PersonalSchedule.Parameter.Id)</p>
+        @Html.ValidationMessageFor(m => m.PersonalSchedule.Parameter.Id)</p>
 </fieldset>
 
 <fieldset>

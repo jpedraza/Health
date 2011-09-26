@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Health.Core.Entities.POCO;
 using Health.Site.Models;
 
-namespace Health.Site.Areas.Admin.Models.Users
+namespace Health.Site.Areas.Admin.Models
 {
-    public class UsersList : CoreViewModel
+    public class UserList : CoreViewModel
     {
         public IEnumerable<User> Users { get; set; }
 

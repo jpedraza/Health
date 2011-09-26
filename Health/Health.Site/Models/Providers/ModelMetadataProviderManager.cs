@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
+using Health.Site.Attributes;
 using Health.Site.Models.Configuration.Providers;
 using Health.Site.Models.Metadata;
 
@@ -38,6 +40,7 @@ namespace Health.Site.Models.Providers
         public override IEnumerable<ModelMetadata> GetMetadataForProperties(object container, Type container_type)
         {
             Binder = _diKernel.Get<ModelMetadataProviderBinder>();
+            FindAndBind(container_type);
             if (Binder.IsHaveMetadataProvider(container_type))
             {
                 IEnumerable<ModelMetadata> model_metadata =
@@ -52,6 +55,7 @@ namespace Health.Site.Models.Providers
                                                              string property_name)
         {
             Binder = _diKernel.Get<ModelMetadataProviderBinder>();
+            FindAndBind(container_type);
             if (Binder.IsHaveMetadataProvider(container_type))
             {
                 ModelMetadata model_metadata =
@@ -66,6 +70,7 @@ namespace Health.Site.Models.Providers
         public override ModelMetadata GetMetadataForType(Func<object> model_accessor, Type model_type)
         {
             Binder = _diKernel.Get<ModelMetadataProviderBinder>();
+            FindAndBind(model_type);
             if (Binder.IsHaveMetadataProvider(model_type))
             {
                 ModelMetadata model_metadata = Binder.ResolveProvider(model_type).GetMetadataForType(model_accessor,
@@ -77,5 +82,27 @@ namespace Health.Site.Models.Providers
         }
 
         #endregion
+
+        private void FindAndBind(Type model_type)
+        {
+            if (model_type == null) return;
+            PropertyInfo[] properties = model_type.GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                object[] attributes = property.GetCustomAttributes(false);
+                foreach (object attribute in attributes)
+                {
+                    if (attribute is ModelMetadataProviderBinderAttribute)
+                    {
+                        var att = attribute as ModelMetadataProviderBinderAttribute;
+                        _diKernel.Get<ModelMetadataProviderBinder>().For(property.PropertyType).Use(att.ProviderType,
+                                                                                                    att.
+                                                                                                        ConfigurationType)
+                            .WithConfigurationParameters(
+                                att.MetadataType);
+                    }
+                }
+            }
+        }
     }
 }

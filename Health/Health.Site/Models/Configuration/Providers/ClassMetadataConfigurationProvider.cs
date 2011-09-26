@@ -100,20 +100,12 @@ namespace Health.Site.Models.Configuration.Providers
                 object[] attributes = property.GetCustomAttributes(false);
                 foreach (object attribute in attributes)
                 {
-                    if (attribute.GetType() == typeof(ClassMetadataAttribute))
-                    {
-                        var att = attribute as ClassMetadataAttribute;
-                        if (att != null)
-                            _diKernel.Get<ModelMetadataProviderBinder>().For(property.PropertyType).Use
-                                <MMPAAttributeOnly, ClassMetadataConfigurationProvider>().WithConfigurationParameters(
-                                    att.GetMetadataType());
-                    }
                     custom_attributes.Add(attribute as Attribute);
                 }
                 property_metadata.Attributes = custom_attributes;
                 model_metadata.Properties.Add(property.Name, property_metadata);
             }
-            if (MetadataModelType.BaseType != null)
+            if (MetadataModelType.BaseType != null && MetadataModelType.BaseType != typeof(object))
             {
                 PropertyInfo[] base_properties = MetadataModelType.BaseType.GetProperties();
                 foreach (PropertyInfo base_property in base_properties)

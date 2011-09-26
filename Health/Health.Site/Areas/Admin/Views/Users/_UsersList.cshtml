@@ -15,6 +15,7 @@ else
             <td>@Html.LabelFor(m => us.Id)</td>
             <td>@Html.LabelFor(m => us.Login)</td>
             <td>@Html.LabelFor(m => us.Role)</td>
+            <td colspan="3">Функции</td>
         </tr>
         @foreach (User user in Model)
         {
@@ -22,6 +23,12 @@ else
                 <td>@user.Id</td>
                 <td>@user.Login</td>
                 <td>@user.Role.Name</td>
+                <td>@Html.RouteLink("Подробнее", "Admin_default", new
+                                       {
+                                           id = user.Id,
+                                           controller = user.Role.Name + "s",
+                                           action = "Show"
+                                       })</td>
             </tr>
         }
     </table>

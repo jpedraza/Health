@@ -1,0 +1,34 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Extensions
+@model IEnumerable<Patient>
+
+@if (Model.IsNullOrCountIsZero())
+{
+    <h2>Пациентов нету</h2>
+}
+else
+{
+    Patient pat = Model.ElementAt(0);
+    <table>
+        <tr>            
+            <td>@Html.LabelFor(m => pat.Id)</td>
+            <td>@Html.LabelFor(m => pat.Login)</td>
+            <td>@Html.LabelFor(m => pat.FullName)</td>    
+            <td colspan="3">Функции</td>        
+        </tr>
+        @foreach (Patient patient in Model)
+        {
+            <tr>
+                <td>@patient.Id</td>
+                <td>@patient.Login</td>
+                <td>@patient.FullName</td>
+                <td>@Html.RouteLink("Подробнее", "Admin_default", new
+                                                        {
+                                                            id = patient.Id, 
+                                                            controller = "Patients", 
+                                                            action = "Show"
+                                                        })</td>                
+            </tr>
+        }
+    </table>
+}

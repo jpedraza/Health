@@ -15,10 +15,9 @@ namespace Health.Site.Controllers
         {
         }
 
-        [PRGImport(ParametersHook = true)]
-        public ActionResult Index([Bind(Include = "ErrorModel")] ErrorViewModel error_model)
+        [PRGImport]
+        public ActionResult Index(ErrorViewModel error_model)
         {
-            Exception exception = Server.GetLastError();
             if (error_model != null && error_model.ErrorModel != null)
             {
                 return View(error_model);

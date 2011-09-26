@@ -8,6 +8,7 @@ using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Models.Metadata
 {
@@ -39,9 +40,15 @@ namespace Health.Site.Models.Metadata
         public Week Week { get; set; }
     }
 
-    public class DefaultScheduleEditMetadata : DefaultScheduleMetadata
+    public class DefaultScheduleFormMetadata : DefaultScheduleMetadata
     {
         [Required(ErrorMessage = "Укажите идентификатор расписания.")]
         public new int Id { get; set; }
+
+        [Required(ErrorMessage = "Укажите время начала ввода параметра")]
+        public new TimeSpan TimeStart { get; set; }
+
+        [Required(ErrorMessage = "Укажите время окончания ввода параметра")]
+        public new TimeSpan TimeEnd { get; set; }
     }
 }

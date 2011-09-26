@@ -4,11 +4,14 @@ using System.Web.Mvc;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
 using Health.Site.Models;
+using Health.Site.Models.Metadata;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Schedules.Models
 {
     public class DefaultScheduleForm : CoreViewModel
     {
+        [ClassMetadata(typeof (DefaultScheduleFormMetadata))]
         public DefaultSchedule DefaultSchedule { get; set; }
 
         public IEnumerable<Parameter> Parameters { get; set; }

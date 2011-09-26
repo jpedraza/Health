@@ -1,5 +1,5 @@
-﻿@using Health.Site.Areas.Admin.Models.Patients
-@model PatientsForm
+﻿@using Health.Site.Areas.Admin.Models
+@model PatientForm
 
 @{
     ViewBag.Title = "Добвление пациента";
@@ -9,6 +9,6 @@
 
 @using (Html.BeginForm("AddSubmit", "Patients", new { area = "Admin" }))
 {
-    @Html.Partial("_PatientsForm")
+    @Html.EditorFor(m => m.Patient)
     <input type="submit" value="Создать"/>
 }

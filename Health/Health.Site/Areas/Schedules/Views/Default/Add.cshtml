@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddSubmit", "Default"))
 {
     @Html.Partial("_DefaultScheduleForm")
     <p><input type="submit" value="Сохранить"/></p>

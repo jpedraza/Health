@@ -28,6 +28,7 @@ namespace Health.Core.Services
         public void AcceptBid(Candidate candidate)
         {
             CoreKernel.CandRepo.Delete(candidate);
+            if (candidate == null) throw new Exception("Невозможно принять заявку от пустого кандидата.");
             var patient = new Patient
                               {
                                   Id = candidate.Id,

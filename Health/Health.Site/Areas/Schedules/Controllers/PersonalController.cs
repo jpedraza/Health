@@ -4,7 +4,6 @@ using Health.Core.Entities.POCO;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
-using Health.Site.Models.Metadata;
 
 namespace Health.Site.Areas.Schedules.Controllers
 {
@@ -16,13 +15,18 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Show
 
-        public ActionResult Show(int schedule_id)
+        public ActionResult Show(int? id)
         {
+            if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
+            PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(id.Value);
             var form = new PersonalScheduleForm
                            {
-                               PersonalSchedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id)
+                               PersonalSchedule = schedule
                            };
-            return View(form);
+            return
+                schedule == null
+                    ? RedirectTo<PersonalController>(a => a.List())
+                    : View(form);
         }
 
         public ActionResult List()
@@ -38,54 +42,45 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Edit
 
-        [PRGImport(ParametersHook = true)]
-        public ActionResult Edit(int schedule_id = 1)
+        [PRGImport]
+        public ActionResult Edit([PRGInRoute] int? id, PersonalScheduleForm form)
         {
-            ClassMetadataBinder<PersonalSchedule, PersonalScheduleEditMetadata>();
-            PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id);
-            var form = new PersonalScheduleForm
-                           {
-                               PersonalSchedule = schedule,
-                               Parameters = CoreKernel.ParamRepo.GetAll(),
-                               Patients = CoreKernel.PatientRepo.GetAll()
-                           };
-            return View(form);
+            if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
+            PersonalSchedule schedule = form.PersonalSchedule ?? CoreKernel.PersonalScheduleRepo.GetById(id.Value);
+            form.PersonalSchedule = schedule;
+            form.Parameters = CoreKernel.ParamRepo.GetAll();
+            return
+                schedule == null
+                    ? RedirectTo<PersonalController>(a => a.List())
+                    : View(form);
         }
 
-        [HttpPost, PRGExport(ParametersHook = true)]
+        [HttpPost, PRGExport]
         public ActionResult Edit(PersonalScheduleForm form)
         {
-            ClassMetadataBinder<PersonalSchedule, PersonalScheduleEditMetadata>();
             if (ModelState.IsValid)
             {
                 CoreKernel.PersonalScheduleRepo.Update(form.PersonalSchedule);
                 form.Message = "Расписание отредактировано";
                 return RedirectTo<PersonalController>(a => a.Confirm(form));
             }
-            return RedirectTo<PersonalController>(a => a.Edit(form.PersonalSchedule.Id));
+            return RedirectTo<PersonalController>(a => a.Edit(form.PersonalSchedule.Id, form));
         }
 
         #endregion
 
         #region Add
 
-        [PRGImport(ParametersHook = true)]
-        public ActionResult Add(int? schedule_id)
+        [PRGImport]
+        public ActionResult Add(PersonalScheduleForm form)
         {
-            PersonalSchedule schedule = !schedule_id.HasValue
-                                            ? new PersonalSchedule()
-                                            : CoreKernel.PersonalScheduleRepo.GetById(schedule_id.Value);
-            var form = new PersonalScheduleForm
-                           {
-                               PersonalSchedule = schedule,
-                               Parameters = CoreKernel.ParamRepo.GetAll(),
-                               Patients = CoreKernel.PatientRepo.GetAll()
-                           };
+            form.Parameters = CoreKernel.ParamRepo.GetAll();
+            form.Patients = CoreKernel.PatientRepo.GetAll();
             return View(form);
         }
 
-        [HttpPost, PRGExport(ParametersHook = true)]
-        public ActionResult Add(PersonalScheduleForm form)
+        [HttpPost, PRGExport]
+        public ActionResult AddSubmit(PersonalScheduleForm form)
         {
             if (ModelState.IsValid)
             {
@@ -93,18 +88,19 @@ namespace Health.Site.Areas.Schedules.Controllers
                 form.Message = "Расписание отредактировано";
                 return RedirectTo<PersonalController>(a => a.Confirm(form));
             }
-            return RedirectTo<PersonalController>(a => a.Add(form.PersonalSchedule.Id));
+            return RedirectTo<PersonalController>(a => a.Add(form));
         }
 
         #endregion
 
         #region Delete
 
-        public ActionResult Delete(int schedule_id, bool? confirm)
+        public ActionResult Delete(int? id, bool? confirm)
         {
+            if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
             if (!confirm.HasValue)
             {
-                PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(schedule_id);
+                PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(id.Value);
                 var form = new PersonalScheduleForm
                                {
                                    Message = "Точно удалить это расписание",
@@ -114,7 +110,7 @@ namespace Health.Site.Areas.Schedules.Controllers
                            ? RedirectTo<PersonalController>(a => a.List())
                            : View(form);
             }
-            if (confirm.Value) CoreKernel.PersonalScheduleRepo.DeleteById(schedule_id);
+            if (confirm.Value) CoreKernel.PersonalScheduleRepo.DeleteById(id.Value);
             return RedirectTo<PersonalController>(a => a.List());
         }
 
@@ -122,6 +118,7 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Other 
 
+        [PRGImport]
         public ActionResult Confirm(PersonalScheduleForm form)
         {
             return

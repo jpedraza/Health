@@ -51,6 +51,11 @@ namespace Health.Data.Repository.Fake
             return required_user;
         }
 
+        public User GetById(int user_id)
+        {
+            return _entities.Where(e => e.Id == user_id).FirstOrDefault();
+        }
+
         public User GetByLogin(string login)
         {
             User required_user = default(User);

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
-using Health.Site.Areas.Admin.Models.Patients;
+using Health.Site.Areas.Admin.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
 
@@ -17,15 +13,34 @@ namespace Health.Site.Areas.Admin.Controllers
         {
         }
 
+        #region Show
+
+        public ActionResult Show(int id)
+        {
+            Patient patient = CoreKernel.PatientRepo.GetById(id);
+            var form = new PatientForm {Patient = patient};
+            return View(form);
+        }
+
+        public ActionResult List()
+        {
+            var form = new PatientList {Patients = CoreKernel.PatientRepo.GetAll()};
+            return View(form);
+        }
+
+        #endregion
+
+        #region Add
+
         [PRGImport(ParametersHook = true)]
-        public ActionResult Add(PatientsForm form)
+        public ActionResult Add(PatientForm form)
         {
             form.Patient = form.Patient ?? new Patient();
             return View(form);
         }
 
         [HttpPost, PRGExport(ParametersHook = true)]
-        public ActionResult AddSubmit(PatientsForm form)
+        public ActionResult AddSubmit(PatientForm form)
         {
             if (ModelState.IsValid)
             {
@@ -35,10 +50,16 @@ namespace Health.Site.Areas.Admin.Controllers
             return RedirectTo<PatientsController>(a => a.Add(form));
         }
 
+        #endregion
+
+        #region Confirm
+
         [PRGImport(ParametersHook = true)]
-        public ActionResult Confirm(PatientsForm form)
+        public ActionResult Confirm(PatientForm form)
         {
             return View(form);
         }
+
+        #endregion
     }
 }

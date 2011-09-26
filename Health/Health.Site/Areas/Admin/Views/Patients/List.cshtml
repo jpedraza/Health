@@ -1,0 +1,18 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model PatientList
+
+@{
+    ViewBag.Title = "Список пациентов";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_PatientList", Model.Patients)
+
+@section page_menu{
+    <p>@Html.RouteLink("Добавить пациента", "Admin_default", new
+                                                                {
+                                                                    controller = "Patients",
+                                                                    action = "Add"
+                                                                })</p>
+}

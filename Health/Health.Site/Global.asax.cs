@@ -1,29 +1,12 @@
-﻿using System.Reflection;
+﻿using System;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Health.Core;
 using Health.Core.API;
-using Health.Core.API.Repository;
-using Health.Core.API.Services;
-using Health.Core.API.Validators;
-using Health.Core.Entities.POCO;
-using Health.Core.Services;
-using Health.Data.Repository.Fake;
-using Health.Data.Validators;
-using Health.Site.Attributes;
-using Health.Site.DI;
-using Health.Site.Filters;
+using Health.Site.App_Start;
+using Health.Site.Controllers;
 using Health.Site.Models;
-using Health.Site.Models.Binders;
-using Health.Site.Models.Configuration.Providers;
-using Health.Site.Models.Providers;
-using Health.Site.Repository;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
-using Ninject.Web.Mvc;
-using Ninject.Web.Mvc.FilterBindingSyntax;
 
 namespace Health.Site
 {
@@ -78,8 +61,42 @@ namespace Health.Site
         /// </summary>
         protected void Application_Error()
         {
+            Response.Clear();
+            Response.StatusCode = 500;
+            var last_exception = Server.GetLastError();
+            var exception = last_exception as HttpException;
+            if (exception != null)
+            {
+                Response.StatusCode = exception.GetHttpCode();
+            }
+            var error_controller = new ErrorController(NinjectMVC3.Kernel.Get<IDIKernel>());
+            var model = new ErrorViewModel
+                            {
+                                ErrorModel = new ErrorModel
+                                                 {
+                                                     Message =
+                                                         last_exception.
+                                                         Message,
+                                                     Code =
+                                                         Response.StatusCode
+                                                 }
+                            };
+            var route_data = new RouteData
+                                    {
+                                        Values =
+                                            {
+                                                {"controller", "Error"},
+                                                {"action", "Index"},
+                                                {
+                                                    "error_model", model
+                                                    }
+                                            }
+                                    };
+            var request_context = new RequestContext(new HttpContextWrapper(Context), route_data);
+            var controller_context = new ControllerContext(request_context, error_controller);
+            var view_result = error_controller.Index(model);
+            view_result.ExecuteResult(controller_context);
             Server.ClearError();
-            Response.Redirect(@"~/Error");
         }
 
         protected void Application_Start()

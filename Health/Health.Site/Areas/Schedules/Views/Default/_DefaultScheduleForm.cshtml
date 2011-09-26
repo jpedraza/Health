@@ -1,12 +1,16 @@
-﻿@using Health.Site.Areas.Schedules.Models
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Areas.Schedules.Models
 @model DefaultScheduleForm
            
+@{
+    Model.DefaultSchedule = Model.DefaultSchedule ?? new DefaultSchedule();
+}
 @Html.ValidationSummary(true)
 <fieldset>
     <legend>@Html.LabelFor(m => m.DefaultSchedule.Parameter)</legend>
     <p>@Html.LabelFor(m => m.DefaultSchedule.Parameter.Name)</p>
     <p>@Html.DropDownListFor(m => m.DefaultSchedule.Parameter.Id, Model.ParametersSelectList) 
-    @Html.ValidationMessageFor(m => m.DefaultSchedule.Parameter.Id)</p>
+        @Html.ValidationMessageFor(m => m.DefaultSchedule.Parameter.Id)</p>
 </fieldset>
 <fieldset>
     <legend>@Html.LabelFor(m => m.DefaultSchedule.Period)</legend>

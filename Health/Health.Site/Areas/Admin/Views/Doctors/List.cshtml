@@ -1,0 +1,10 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model DoctorList
+
+@{
+    ViewBag.Title = "Список докторов";
+}
+
+<h2>Список докторов</h2>
+
+@Html.Partial("_DoctorList", Model.Doctors)

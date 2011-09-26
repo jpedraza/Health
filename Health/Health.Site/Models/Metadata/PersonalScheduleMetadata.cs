@@ -7,6 +7,7 @@ using System.Web;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
 using Health.Site.Attributes;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Models.Metadata
 {
@@ -24,19 +25,15 @@ namespace Health.Site.Models.Metadata
         public Parameter Parameter { get; set; }
 
         [DisplayName("Дата начала")]
-        [Required(ErrorMessage = "Необходимо указать дату начала ввода параметра")]
         public DateTime DateStart { get; set; }
 
         [DisplayName("Дата окончания")]
-        [Required(ErrorMessage = "Необходимо указать дату окончаня ввода параметра")]
         public DateTime DateEnd { get; set; }
 
         [DisplayName("Время начальное")]
-        [Required(ErrorMessage = "Необходимо указать время ввода параметра")]
         public TimeSpan TimeStart { get; set; }
 
         [DisplayName("Время окончания")]
-        [Required(ErrorMessage = "Необходимо указать время ввода параметра")]
         public TimeSpan TimeEnd { get; set; }
 
         [DisplayName("День")]
@@ -49,9 +46,21 @@ namespace Health.Site.Models.Metadata
         public Month Month { get; set; }
     }
 
-    public class PersonalScheduleEditMetadata : PersonalScheduleMetadata
+    public class PersonalScheduleFormMetadata : PersonalScheduleMetadata
     {
         [Required(ErrorMessage = "Выберите расписание")]
         public new int Id { get; set; }
+
+        [Required(ErrorMessage = "Необходимо указать дату начала ввода параметра")]
+        public new DateTime DateStart { get; set; }
+
+        [Required(ErrorMessage = "Необходимо указать дату окончаня ввода параметра")]
+        public new DateTime DateEnd { get; set; }
+
+        [Required(ErrorMessage = "Укажите время начала ввода параметра")]
+        public new TimeSpan TimeStart { get; set; }
+
+        [Required(ErrorMessage = "Укажите время окончания ввода параметра")]
+        public new TimeSpan TimeEnd { get; set; }
     }
 }

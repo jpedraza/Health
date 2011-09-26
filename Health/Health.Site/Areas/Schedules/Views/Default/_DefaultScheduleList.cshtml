@@ -36,19 +36,24 @@ else
                                                               default_schedule.Period.Minutes));
                 }
                 <td>@period</td>
-                <td>@Html.RouteLink("Подробнее", "Schedules_Default_Show", new
-                                                                 {
-                                                                     schedule_id = default_schedule.Id
-                                                                 })              
+                <td>@Html.RouteLink("Подробнее", "Schedules_default", new
+                                                                        {
+                                                                            id = default_schedule.Id,
+                                                                            controller = "Default",
+                                                                            action = "Show"
+                                                                        })              
                 </td>
-                <td>@Html.RouteLink("Редактировать", "Schedules_Default_Edit", new
+                <td>@Html.RouteLink("Редактировать", "Schedules_default", new
+                                                                            {
+                                                                                id = default_schedule.Id,
+                                                                                controller = "Default",
+                                                                                action = "Edit"
+                                                                            })</td>
+                <td>@Html.RouteLink("Удалить", "Schedules_Delete", new
                                                                      {
-                                                                         schedule_id = default_schedule.Id
-                                                                     })</td>
-                <td>@Html.RouteLink("Удалить", "Schedules_Default_Delete", new
-                                                                 {
-                                                                     schedule_id = default_schedule.Id
-                                                                 })</td>  
+                                                                         id = default_schedule.Id,
+                                                                         controller = "Default"
+                                                                     })</td>  
             </tr>
         }
     </table>

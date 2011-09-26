@@ -24,6 +24,24 @@ else
                 <td>@candidate.Login</td>
                 <td>@candidate.Card</td>
                 <td>@candidate.Policy</td>
+                <td>@Html.RouteLink("Подробнее", "Admin_default", new
+                                                        {
+                                                            id = candidate.Id,
+                                                            controller = "Candidates",
+                                                            action = "Show"
+                                                        })</td>
+                <td>@Html.RouteLink("Принять заявку", "Admin_default", new
+                                                             {
+                                                                 id = candidate.Id,
+                                                                 controller = "Candidates",
+                                                                 action = "AcceptBid"
+                                                             })</td>
+                <td>@Html.RouteLink("Отклонить заявку", "Admin_default", new
+                                                               {
+                                                                   id = candidate.Id,
+                                                                   controller = "Candidates",
+                                                                   action = "RejectBid"
+                                                               })</td>
             </tr>
         }
     </table>

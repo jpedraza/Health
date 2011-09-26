@@ -12,9 +12,15 @@ namespace Health.Site.Areas.Admin
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
+                "Admin_Patients_default",
+                "Admin/Patients/{action}",
+                new { controller = "Patients", action = "List" }
+                );
+
+            context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional}
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
                 );
         }
     }

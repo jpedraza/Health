@@ -5,8 +5,8 @@
 <div id="page_container">    
     <div id="main_page_menu">
         <h2>Меню страницы</h2>
-        <p>@Html.RouteLink("Дефолтные рассписания для параметров...", new { area = "Schedules", controller = "Default", action = "List" })</p>
-        <p>@Html.RouteLink("Персональные рассписания для параметров...", new { area = "Schedules", controller = "Personal", action = "List" })</p>
+        <p>@Html.RouteLink("Дефолтные рассписания для параметров...", new {area = "Schedules", controller = "Default", action = "List"})</p>
+        <p>@Html.RouteLink("Персональные рассписания для параметров...", new {area = "Schedules", controller = "Personal", action = "List"})</p>
         @if (IsSectionDefined("page_menu"))
         {
             <div id="page_menu">

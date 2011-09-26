@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
-using Health.Site.Areas.Admin.Models.Users;
+using Health.Site.Areas.Admin.Models;
 using Health.Site.Controllers;
 
 namespace Health.Site.Areas.Admin.Controllers
@@ -15,22 +15,22 @@ namespace Health.Site.Areas.Admin.Controllers
         {
         }
 
-        public ActionResult Index()
+        public ActionResult List()
         {
-            var model = new UsersList
-                            {
-                                Users = CoreKernel.UserRepo.GetAll(),
-                                Roles = CoreKernel.RoleRepo.GetAll()
-                            };
+            var model = new UserList
+            {
+                Users = CoreKernel.UserRepo.GetAll(),
+                Roles = CoreKernel.RoleRepo.GetAll()
+            };
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Add(UsersList form)
+        public ActionResult Add(UserList form)
         {
-            string controller_name = String.Format("{0}s", form.Role.Name);
-            const string action_name = "Add";
-            return RedirectToRoute(new {area = "Admin", controller = controller_name, action = action_name});
+            string controller = String.Format("{0}s", form.Role.Name);
+            const string action = "Add";
+            return RedirectToRoute(new {area = "Admin", controller, action});
         }
     }
 }

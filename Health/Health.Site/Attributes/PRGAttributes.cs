@@ -52,41 +52,16 @@ namespace Health.Site.Attributes
                     if (action_as_call.Object != null)
                     {
                         Type controller_type = action_as_call.Object.Type;
+                        PRGParametersKey = PRGParametersKeyPrefix + action_name +
+                                                               controller_type.Name.Replace("Controller", "");
                         ReadOnlyCollection<Expression> arguments = action_as_call.Arguments;
                         // перебираем параметры...
                         foreach (Expression argument in arguments)
                         {
-                            if (argument.NodeType == ExpressionType.MemberAccess)
-                            {
-                                var member = argument as MemberExpression;
-                                if (member != null)
-                                {
-                                    // получаем имя параметра...
-                                    string member_name = member.Member.Name;
-                                    var property_info = member.Member as FieldInfo;
-                                    if (property_info != null)
-                                    {
-                                        if (member.Expression.NodeType == ExpressionType.Constant)
-                                        {
-                                            var member_value_exp = member.Expression as ConstantExpression;
-                                            if (member_value_exp != null)
-                                            {
-                                                // получаем значение параметра...
-                                                object value = property_info.GetValue(member_value_exp.Value);
-                                                // формируем ключ для сохранения...
-                                                PRGParametersKey = PRGParametersKeyPrefix + action_name +
-                                                                   controller_type.Name.Replace("Controller", "");
-                                                // добавляем параметр.
-                                                prg_parameters.Add(new PRGParameter
-                                                                       {
-                                                                           Name = member_name,
-                                                                           Value = value
-                                                                       });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            UnaryExpression expression = Expression.Convert(argument, typeof (object));
+                            var getter = Expression.Lambda<Func<object>>(expression);
+                            object value = getter.Compile()();
+                            prg_parameters.Add(new PRGParameter {Value = value});
                         }
                     }
                 }
@@ -161,6 +136,11 @@ namespace Health.Site.Attributes
     /// </summary>
     public class PRGImport : PRGModelState
     {
+        public PRGImport()
+        {
+            ParametersHook = true;
+        }
+
         /// <summary>
         /// Перед выполнением действия внедряем сохраненные параметры.
         /// </summary>
@@ -188,16 +168,13 @@ namespace Health.Site.Attributes
                         // берем список параметров метода...
                         ParameterDescriptor[] parameter_descriptors = filter_context.ActionDescriptor.GetParameters();
                         // перебираем их...
-                        foreach (PRGParameter prg_parameter in prg_parameters)
+                        foreach (ParameterDescriptor parameter_descriptor in parameter_descriptors)
                         {
-                            if (parameter_descriptors.Any(p => p.ParameterName == prg_parameter.Name
-                                                               &&
-                                                               (p.ParameterType.IsAssignableFrom(
-                                                                   prg_parameter.Value.GetType()) ||
-                                                                p.ParameterType == prg_parameter.Value.GetType())))
+                            PRGParameter prg_parameter =
+                                prg_parameters.Where(p => p.Name == parameter_descriptor.ParameterName).FirstOrDefault();
+                            if (prg_parameter != null)
                             {
-                                // внедряем параметр в метод.
-                                filter_context.ActionParameters[prg_parameter.Name] = prg_parameter.Value;
+                                filter_context.ActionParameters[parameter_descriptor.ParameterName] = prg_parameter.Value;
                             }
                         }
                     }
@@ -240,6 +217,9 @@ namespace Health.Site.Attributes
             }
         }
     }
+
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class PRGInRoute : Attribute { }
 
     /// <summary>
     /// Формат хранения параметров в хранилище.

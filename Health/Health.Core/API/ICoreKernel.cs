@@ -50,6 +50,11 @@ namespace Health.Core.API
         /// </summary>
         IParameterRepository ParamRepo { get; }
 
+        /// <summary>
+        /// Репозиторий докторов.
+        /// </summary>
+        IDoctorRepository DoctorRepo { get; }
+
         #endregion
 
         #region Services

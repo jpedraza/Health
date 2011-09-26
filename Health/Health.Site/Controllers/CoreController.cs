@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Mime;
 using System.Reflection;
@@ -23,7 +24,6 @@ namespace Health.Site.Controllers
         protected CoreController(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
-            Logger = DIKernel.Get<ILogger>();
         }
 
         /// <summary>
@@ -64,7 +64,10 @@ namespace Health.Site.Controllers
         /// <summary>
         /// Логгер.
         /// </summary>
-        protected ILogger Logger { get; set; }
+        protected ILogger Logger
+        {
+            get { return DIKernel.Get<ILogger>(); }
+        }
 
         /// <summary>
         /// Строготипизированный редирект.
@@ -73,39 +76,7 @@ namespace Health.Site.Controllers
         /// <param name="action">Действие контроллера.</param>
         /// <param name="parameters_hook">Передача параметров метода при редиректе.</param>
         /// <returns>Результат редиректа.</returns>
-        public ActionResult RedirectTo<T>(Expression<Action<T>> action, bool parameters_hook = false)
-            where T : Controller
-        {
-            if (parameters_hook)
-            {
-                var prg_model_state = new PRGModelState
-                                          {
-                                              ParametersHook = true
-                                          };
-                IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
-                TempData[prg_model_state.PRGParametersKey] = prg_parameters;
-            }
-            return GetRedirectResult(action);
-        }
-
-        public ActionResult RedirectTo<T>(Expression<Action<T>> action, string[] aliases)
-            where T : Controller
-        {
-            var prg_model_state = new PRGModelState
-                                      {
-                                          ParametersHook = true
-                                      };
-            IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
-            for (int i = 0; i < aliases.Length; i++)
-            {
-                string alias = aliases[i];
-                prg_parameters[i].Name = alias;
-            }
-            TempData[prg_model_state.PRGParametersKey] = prg_parameters;
-            return GetRedirectResult(action);
-        }
-
-        private RedirectToRouteResult GetRedirectResult<T>(Expression<Action<T>> action)
+        public ActionResult RedirectTo<T>(Expression<Action<T>> action, bool parameters_hook = true)
             where T : Controller
         {
             var act = (MethodCallExpression)action.Body;
@@ -118,46 +89,38 @@ namespace Health.Site.Controllers
                 string[] temp = full_name.Split('.');
                 area_name = full_name.Contains("Areas") ? temp[3] : "";
             }
-            return RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
-        }
+            // получаем результат редиректа...
+            RedirectToRouteResult result = RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
 
-        /// <summary>
-        /// Обрабатывает исключения в контроллерах.
-        /// </summary>
-        /// <param name="filter_context">Контекст ошибки.</param>
-        protected override void OnException(ExceptionContext filter_context)
-        {
-            // Код ошибки по-умолчанию.
-            int code_error = 500;
-            string message;
-            try
+            // если разрешена передача параметров...
+            if (parameters_hook)
             {
-                // Получаем последнюю ошибку
-                Exception exception = filter_context.Exception;
-                if (exception is HttpException)
+                var prg_model_state = new PRGModelState{ParametersHook = true};
+                // получаем список параметров...
+
+                IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
+                if (prg_parameters.Count > 0)
                 {
-                    code_error = (exception as HttpException).GetHttpCode();
+                    // перебираем параметры метода...
+                    ParameterInfo[] parameters = act.Method.GetParameters();
+                    for (int i = 0; i < prg_parameters.Count(); i++)
+                    {
+                        prg_parameters[i].Name = parameters[i].Name;
+                        // если параметр помечен PRGInRoute атрибутом...
+                        var attr =
+                            (PRGInRoute) parameters[i].GetCustomAttributes(typeof (PRGInRoute), false).FirstOrDefault();
+                        if (attr != null)
+                        {
+                            // добавляем параметр в роут...
+                            result.RouteValues.Add(prg_parameters[i].Name, prg_parameters[i].Value);
+                        }
+                    }
+                    // сохраняем текущий список параметров...
+                    TempData[prg_model_state.PRGParametersKey] = prg_parameters;
                 }
-                message = exception.Message;
-                var error_model = new ErrorViewModel()
-                                      {
-                                          ErrorModel = new ErrorModel
-                                                           {
-                                                               Code = code_error,
-                                                               Message = message
-                                                           }
-                                      };
-                var prg_model_state = new PRGModelState { ParametersHook = true };
-                IList<PRGParameter> prg_parameters =
-                    prg_model_state.GetExportModel<ErrorController>(a => a.Index(error_model));
-                TempData[prg_model_state.PRGParametersKey] = prg_parameters;
             }
-            catch (Exception exception)
-            {
-                code_error = 500;
-                message = exception.Message;
-            }
-            base.OnException(filter_context);
+            // производим редирект...
+            return result;
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Health.Core.Entities.POCO;
-using Health.Site.Models;
-using System.Web.Mvc;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Web.Mvc;
+using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
+using Health.Site.Models;
+using Health.Site.Models.Metadata;
+using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Schedules.Models
 {
@@ -17,6 +16,7 @@ namespace Health.Site.Areas.Schedules.Models
 
     public class PersonalScheduleForm : CoreViewModel
     {
+        [ClassMetadata(typeof (PersonalScheduleFormMetadata))]
         public PersonalSchedule PersonalSchedule { get; set; }
 
         public IEnumerable<Parameter> Parameters { get; set; }
@@ -30,13 +30,13 @@ namespace Health.Site.Areas.Schedules.Models
                 foreach (Parameter parameter in Parameters)
                 {
                     selected_list.Add(new SelectListItem
-                    {
-                        Selected =
-                            !(PersonalSchedule == null || PersonalSchedule.Parameter == null) &&
-                            parameter.Id == PersonalSchedule.Parameter.Id,
-                        Text = parameter.Name,
-                        Value = parameter.Id.ToString()
-                    });
+                                          {
+                                              Selected =
+                                                  !(PersonalSchedule == null || PersonalSchedule.Parameter == null) &&
+                                                  parameter.Id == PersonalSchedule.Parameter.Id,
+                                              Text = parameter.Name,
+                                              Value = parameter.Id.ToString()
+                                          });
                 }
                 return selected_list;
             }
@@ -51,13 +51,14 @@ namespace Health.Site.Areas.Schedules.Models
                 var selected_list = new BindingList<SelectListItem>();
                 foreach (Patient patient in Patients)
                 {
-                    selected_list.Add(new SelectListItem{
-                        Selected = 
-                            !(PersonalSchedule != null || PersonalSchedule.Patient != null) &&
-                            patient.Id == PersonalSchedule.Patient.Id,
-                        Text = patient.FirstName + patient.LastName + patient.ThirdName,
-                        Value = patient.Id.ToString()
-                    });
+                    selected_list.Add(new SelectListItem
+                                          {
+                                              Selected =
+                                                  !(PersonalSchedule != null || PersonalSchedule.Patient != null) &&
+                                                  patient.Id == PersonalSchedule.Patient.Id,
+                                              Text = patient.FirstName + patient.LastName + patient.ThirdName,
+                                              Value = patient.Id.ToString()
+                                          });
                 }
                 return selected_list;
             }
@@ -73,11 +74,11 @@ namespace Health.Site.Areas.Schedules.Models
                 foreach (Day day in days)
                 {
                     select_list_items.Add(new SelectListItem
-                    {
-                        Selected = day.InWeek == in_week,
-                        Text = day.Name,
-                        Value = day.InWeek.ToString()
-                    });
+                                              {
+                                                  Selected = day.InWeek == in_week,
+                                                  Text = day.Name,
+                                                  Value = day.InWeek.ToString()
+                                              });
                 }
                 return select_list_items;
             }
@@ -95,15 +96,17 @@ namespace Health.Site.Areas.Schedules.Models
                                                Value = "0"
                                            }
                                    };
-                int in_month = PersonalSchedule == null || PersonalSchedule.Day == null ? 0 : PersonalSchedule.Day.InMonth;
+                int in_month = PersonalSchedule == null || PersonalSchedule.Day == null
+                                   ? 0
+                                   : PersonalSchedule.Day.InMonth;
                 for (int i = 1; i <= 31; i++)
                 {
                     var item = new SelectListItem
-                    {
-                        Selected = in_month == i,
-                        Text = i.ToString(),
-                        Value = i.ToString()
-                    };
+                                   {
+                                       Selected = in_month == i,
+                                       Text = i.ToString(),
+                                       Value = i.ToString()
+                                   };
                     all_days.Add(item);
                 }
                 return all_days;
@@ -122,11 +125,11 @@ namespace Health.Site.Areas.Schedules.Models
                 foreach (Month month in months)
                 {
                     select_list_items.Add(new SelectListItem
-                    {
-                        Selected = month.InYear == in_year,
-                        Text = month.Name,
-                        Value = month.InYear.ToString()
-                    });
+                                              {
+                                                  Selected = month.InYear == in_year,
+                                                  Text = month.Name,
+                                                  Value = month.InYear.ToString()
+                                              });
                 }
                 return select_list_items;
             }
@@ -164,6 +167,6 @@ namespace Health.Site.Areas.Schedules.Models
             }
         }
 
-        public string Message { get; set; }        
+        public string Message { get; set; }
     }
 }

@@ -1,8 +1,10 @@
-﻿@using Health.Site.Areas.Account.Models
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Areas.Account.Models
 @model RegistrationForm
 
 @{
     ViewBag.Title = "Заявка на регистрацию";
+    Model.Candidate = Model.Candidate ?? new Candidate();
 }
 @using (Html.BeginForm("RegistrationSubmit", "Registration", new {area = "Account"}))
 {

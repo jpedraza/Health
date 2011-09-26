@@ -10,43 +10,63 @@ namespace Health.Site.Models.Metadata
 {
     public class PatientMetadata
     {
-        [DisplayName("Идентификатор пользователя")]
+        [DisplayName("#")]
         public int Id { get; set; }
 
         [DisplayName("Имя")]
-        [Required(ErrorMessage = "Укажите имя")]
         public string FirstName { get; set; }
 
         [DisplayName("Фамилия")]
-        [Required(ErrorMessage = "Укажите фамилию")]
         public string LastName { get; set; }
 
         [DisplayName("Отчество")]
         public string ThirdName { get; set; }
 
+        [DisplayName("Полное имя")]
+        public string FullName { get; set; }
+
         [DisplayName("Логин")]
-        [Required(ErrorMessage = "Укажите логин")]
         public string Login { get; set; }
 
         [DisplayName("Пароль")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Укажите пароль")]
         public string Password { get; set; }
 
         [DisplayName("Роль")]
         public Role Role { get; set; }
 
         [DisplayName("День рождения")]
-        [Required(ErrorMessage = "Укажите день рождения")]
         public DateTime Birthday { get; set; }
 
         [DisplayName("Номер полюса")]
-        [Required(ErrorMessage = "Укажите номер полюса")]
         public string Policy { get; set; }
 
         [DisplayName("Номер больничной карты")]
-        [Required(ErrorMessage = "Укажите номер больничной карты")]
         public string Card { get; set; }
+    }
+
+    public class PatientFormMetadata : PatientMetadata
+    {
+        [Required(ErrorMessage = "Укажите имя")]
+        public new string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Укажите фамилию")]
+        public new string LastName { get; set; }
+
+        [Required(ErrorMessage = "Укажите логин")]
+        public new string Login { get; set; }
+
+        [Required(ErrorMessage = "Укажите пароль")]
+        public new string Password { get; set; }
+
+        [Required(ErrorMessage = "Укажите день рождения")]
+        public new DateTime Birthday { get; set; }
+
+        [Required(ErrorMessage = "Укажите номер полюса")]
+        public new string Policy { get; set; }
+
+        [Required(ErrorMessage = "Укажите номер больничной карты")]
+        public new string Card { get; set; }
     }
 
     public class IfSubPatientMetadata : PatientMetadata

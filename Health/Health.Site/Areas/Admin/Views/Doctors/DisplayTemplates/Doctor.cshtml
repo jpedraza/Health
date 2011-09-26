@@ -1,0 +1,7 @@
+﻿@using Health.Core.Entities.POCO
+@model Doctor
+
+<p>@Html.LabelFor(m => m.Login): @Model.Login</p>
+<p>@Html.LabelFor(m => m.Password): @Model.Password</p>
+<p>@Html.LabelFor(m => m.FullName): @Model.FullName</p>
+<p>@Html.LabelFor(m => m.Specialty): @Model.Specialty.Name</p>

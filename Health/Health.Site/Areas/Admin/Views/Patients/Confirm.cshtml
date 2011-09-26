@@ -1,12 +1,12 @@
-﻿@using Health.Site.Areas.Admin.Models.Patients
-@model PatientsForm
+﻿@using Health.Site.Areas.Admin.Models
+@model PatientForm
 @{
     ViewBag.Title = "Результат";
 }
 
 <h2>Результат</h2>
 
-@Html.Partial("_PatientsDisplay")
+@Html.DisplayFor(m => m.Patient)
 
-<p>@Html.RouteLink("Добавить нового пациента", new { area = "Admin", controller = "Patients", action = "Add" })</p>
-<p>@Html.RouteLink("Перейти к списку пользователей", new { area = "Admin", controller = "Users", action = "Index" })</p>
+<p>@Html.ActionLink("Добавить нового пациента", "Add", "Patients")</p>
+<p>@Html.ActionLink("Перейти к списку пользователей", "List", "Users")</p>

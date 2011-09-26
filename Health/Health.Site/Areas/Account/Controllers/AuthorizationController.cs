@@ -16,7 +16,7 @@ namespace Health.Site.Areas.Account.Controllers
         /// Отображение формы входа
         /// </summary>
         /// <returns></returns>
-        [PRGImport(ParametersHook = true)]
+        [PRGImport]
         public ActionResult Login(LoginForm form)
         {
             return View(form);
@@ -27,7 +27,7 @@ namespace Health.Site.Areas.Account.Controllers
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        [HttpPost, PRGExport(ParametersHook = true)]
+        [HttpPost, PRGExport]
         public ActionResult LoginSubmit(LoginForm form)
         {
             if (ModelState.IsValid)

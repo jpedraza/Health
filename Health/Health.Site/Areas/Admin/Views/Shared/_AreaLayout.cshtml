@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page_container">    
+    <div id="main_page_menu">
+        <h2>Меню модуля</h2>
+        <p>@Html.ActionLink("Кандидаты", "List", "Candidates")</p>        
+        <p>@Html.ActionLink("Пользователи", "List", "Users")</p>
+        <p>@Html.ActionLink("Пациенты", "List", "Patients")</p>
+        <p>@Html.ActionLink("Доктора", "List", "Doctors")</p>
+        @if (IsSectionDefined("page_menu"))
+        {
+            <div id="page_menu">
+                @RenderSection("page_menu", false)
+            </div>
+        }
+    </div>  
+    <div id="page_content">        
+        @RenderBody()
+    </div>
+</div>
