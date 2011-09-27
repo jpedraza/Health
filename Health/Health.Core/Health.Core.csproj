@@ -78,6 +78,7 @@
     <Compile Include="API\Repository\Abstract\IScheduleRepository.cs" />
     <Compile Include="API\Repository\ISpecialtyRepository.cs" />
     <Compile Include="API\Repository\IUserRepository.cs" />
+    <Compile Include="API\Services\IAttendingDoctor.cs" />
     <Compile Include="API\Services\IAuthorizationService.cs" />
     <Compile Include="API\Services\ICoreService.cs" />
     <Compile Include="API\Services\IRegistrationService.cs" />

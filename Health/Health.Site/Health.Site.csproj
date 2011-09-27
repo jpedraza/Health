@@ -183,12 +183,12 @@
     <Compile Include="Models\Metadata\CandidateMetadata.cs" />
     <Compile Include="Models\Metadata\DayMetadata.cs" />
     <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
+    <Compile Include="Models\Metadata\DoctorMetadata.cs" />
     <Compile Include="Models\Metadata\MonthMetadata.cs" />
     <Compile Include="Models\Metadata\ParameterMetadata.cs" />
     <Compile Include="Models\Metadata\PatientMetadata.cs" />
     <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\PersonalScheduleMetadata.cs" />
-    <Compile Include="Models\Metadata\TestModelMetadata.cs" />
     <Compile Include="Models\Metadata\TimeIntervalMetadata.cs" />
     <Compile Include="Models\Metadata\UserMetadata.cs" />
     <Compile Include="Models\Metadata\WeekMetadata.cs" />
@@ -395,6 +395,13 @@
     <Content Include="Areas\Admin\Views\Doctors\_DoctorList.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\DisplayTemplates\Doctor.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\Show.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\Confirm.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\_DoctorForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\Edit.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

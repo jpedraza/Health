@@ -1,0 +1,14 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model DoctorForm
+@{
+    ViewBag.Title = "Редактирование доктора";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Doctor.Id)
+    @Html.Partial("_DoctorForm")
+    <input type="submit" value="Send"/>
+}

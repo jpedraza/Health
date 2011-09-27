@@ -14,7 +14,6 @@ namespace Health.Data.Repository.Fake
         {
             Save(new Patient
             {
-                Id = 1,
                 Birthday = new DateTime(1980, 12, 2),
                 Card = "some card number",
                 FirstName = "patient1",
@@ -27,7 +26,6 @@ namespace Health.Data.Repository.Fake
             });
             Save(new Patient
             {
-                Id = 2,
                 Birthday = new DateTime(1980, 12, 2),
                 Card = "some card number",
                 FirstName = "patient2",
@@ -65,6 +63,20 @@ namespace Health.Data.Repository.Fake
         public Patient GetById(int patient_id)
         {
             return _entities.Where(p => p.Id == patient_id).FirstOrDefault();
+        }
+
+        public bool DeleteById(int patient_id)
+        {
+            for (int i = 0; i < _entities.Count; i++)
+            {
+                Patient patient = _entities[i];
+                if (patient.Id == patient_id)
+                {
+                    _entities.RemoveAt(i);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

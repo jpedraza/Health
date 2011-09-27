@@ -15,22 +15,18 @@ namespace Health.Data.Repository.Fake
                             {
                                 new Role
                                     {
-                                        Id = 1,
                                         Name = "Guest"
                                     },
                                 new Role
                                     {
-                                        Id = 2,
                                         Name = "Patient"
                                     },
                                 new Role
                                     {
-                                        Id = 3,
                                         Name = "Doctor"
                                     },
                                 new Role
                                     {
-                                        Id = 4,
                                         Name = "Admin"
                                     }
                             };

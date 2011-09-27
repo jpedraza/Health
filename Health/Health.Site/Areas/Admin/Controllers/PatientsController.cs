@@ -15,11 +15,15 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Show
 
-        public ActionResult Show(int id)
+        public ActionResult Show(int? id)
         {
-            Patient patient = CoreKernel.PatientRepo.GetById(id);
+            if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
+            Patient patient = CoreKernel.PatientRepo.GetById(id.Value);
             var form = new PatientForm {Patient = patient};
-            return View(form);
+            return 
+                patient == null
+                    ? RedirectTo<PatientsController>(a => a.List())
+                    : View(form);
         }
 
         public ActionResult List()
@@ -32,14 +36,14 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Add
 
-        [PRGImport(ParametersHook = true)]
+        [PRGImport]
         public ActionResult Add(PatientForm form)
         {
             form.Patient = form.Patient ?? new Patient();
             return View(form);
         }
 
-        [HttpPost, PRGExport(ParametersHook = true)]
+        [HttpPost, PRGExport]
         public ActionResult AddSubmit(PatientForm form)
         {
             if (ModelState.IsValid)
@@ -52,12 +56,62 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #endregion
 
+        #region Edit
+        
+        [PRGImport]
+        public ActionResult Edit(int? id, PatientForm form)
+        {
+            if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
+            form.Patient = form.Patient ?? CoreKernel.PatientRepo.GetById(id.Value);
+            return
+                form.Patient == null
+                    ? RedirectTo<PatientsController>(a => a.List())
+                    : View(form);
+        }
+
+        [HttpPost, PRGExport]
+        public ActionResult Edit(PatientForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                CoreKernel.PatientRepo.Update(form.Patient);
+                form.Message = "Пациент отредактирован";
+                return RedirectTo<PatientsController>(a => a.Confirm(form));
+            }
+            return RedirectTo<PatientsController>(a => a.Edit(form.Patient.Id, form));
+        }
+
+        #endregion
+
+        #region Delete
+
+        public ActionResult Delete(int? id, bool? confirm)
+        {
+            if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
+            if (!confirm.HasValue)
+            {
+                Patient patient = CoreKernel.PatientRepo.GetById(id.Value);
+                var form = new PatientForm {Patient = patient};
+                return
+                    patient == null
+                        ? RedirectTo<PatientsController>(a => a.List())
+                        : View(form);
+            }
+            if (confirm.Value) CoreKernel.PatientRepo.DeleteById(id.Value);
+            return RedirectTo<PatientsController>(a => a.List());
+        }
+
+        #endregion
+
         #region Confirm
 
-        [PRGImport(ParametersHook = true)]
+        [PRGImport]
         public ActionResult Confirm(PatientForm form)
         {
-            return View(form);
+            return 
+                form.Patient == null
+                    ? RedirectTo<PatientsController>(a => a.List())
+                    : View(form);
         }
 
         #endregion

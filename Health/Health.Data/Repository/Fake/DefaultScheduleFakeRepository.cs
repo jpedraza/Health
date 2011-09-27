@@ -19,7 +19,6 @@ namespace Health.Data.Repository.Fake
                             {
                                 new DefaultSchedule
                                     {
-                                        Id = 1,
                                         Day = DaysInWeek.All,
                                         Week = WeeksInMonth.All,
                                         Month = MonthsInYear.All,
@@ -33,7 +32,6 @@ namespace Health.Data.Repository.Fake
                                     },
                                 new DefaultSchedule
                                     {
-                                        Id = 2,
                                         Day = DaysInWeek.All,
                                         Week = WeeksInMonth.Even,
                                         Month = MonthsInYear.May,

@@ -9,5 +9,7 @@ namespace Health.Core.API.Repository
     public interface IDoctorRepository : ICoreRepository<Doctor>
     {
         Doctor GetById(int doctor_id);
+
+        bool DeleteById(int doctor_id);
     }
 }

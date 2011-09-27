@@ -1,0 +1,19 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Areas.Admin.Models
+@model DoctorForm
+
+@{ Model.Doctor = Model.Doctor ?? new Doctor(); }
+<p>@Html.LabelFor(m => m.Doctor.FirstName)</p>
+<p>@Html.EditorFor(m => m.Doctor.FirstName) @Html.ValidationMessageFor(m => m.Doctor.FirstName)</p>
+<p>@Html.LabelFor(m => m.Doctor.LastName)</p>
+<p>@Html.EditorFor(m => m.Doctor.LastName) @Html.ValidationMessageFor(m => m.Doctor.LastName)</p>
+<p>@Html.LabelFor(m => m.Doctor.ThirdName)</p>
+<p>@Html.EditorFor(m => m.Doctor.ThirdName) @Html.ValidationMessageFor(m => m.Doctor.ThirdName)</p>
+<p>@Html.LabelFor(m => m.Doctor.Login)</p>
+<p>@Html.EditorFor(m => m.Doctor.Login) @Html.ValidationMessageFor(m => m.Doctor.Login)</p>
+<p>@Html.LabelFor(m => m.Doctor.Password)</p>
+<p>@Html.EditorFor(m => m.Doctor.Password) @Html.ValidationMessageFor(m => m.Doctor.Password)</p>
+<p>@Html.LabelFor(m => m.Doctor.Birthday)</p>
+<p>@Html.EditorFor(m => m.Doctor.Birthday) @Html.ValidationMessageFor(m => m.Doctor.Birthday)</p>
+<p>@Html.LabelFor(m => m.Doctor.Specialty)</p>
+<p>@Html.DropDownListFor(m => m.Doctor.Specialty.Id, Model.SpecialitiesSelectList) @Html.ValidationMessageFor(m => m.Doctor.Specialty)</p>

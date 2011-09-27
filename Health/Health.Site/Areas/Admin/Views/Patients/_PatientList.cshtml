@@ -22,12 +22,9 @@ else
                 <td>@patient.Id</td>
                 <td>@patient.Login</td>
                 <td>@patient.FullName</td>
-                <td>@Html.RouteLink("Подробнее", "Admin_default", new
-                                                        {
-                                                            id = patient.Id, 
-                                                            controller = "Patients", 
-                                                            action = "Show"
-                                                        })</td>                
+                <td>@Html.RouteLink("Подробнее", "Admin_default", new {id = patient.Id, controller = "Patients", action = "Show"})</td>       
+                <td>@Html.RouteLink("Удалить", "Admin_delete", new {id = patient.Id, controller = "Patients"})</td>       
+                <td>@Html.RouteLink("Редактировать", "Admin_default", new{id = patient.Id, controller = "Patients", action = "Edit"})</td>  
             </tr>
         }
     </table>

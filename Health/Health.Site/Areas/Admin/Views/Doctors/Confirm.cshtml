@@ -1,0 +1,12 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model DoctorForm
+
+@{
+    ViewBag.Title = "Подтверждение";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>@Model.Message</p>
+
+@Html.DisplayFor(m => m.Doctor)

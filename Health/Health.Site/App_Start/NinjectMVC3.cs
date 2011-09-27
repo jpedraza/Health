@@ -141,7 +141,8 @@ namespace Health.Site.App_Start
                 OnActivation(a => a.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<PersonalSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
                 OnActivation(a => a.For<User>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Candidate>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+                OnActivation(a => a.For<Candidate>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
+                OnActivation(a => a.For<Doctor>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
 
             /* Адаптеры */
             //kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();

@@ -14,7 +14,7 @@ namespace Health.Site.Models.Metadata
 {
     public class DefaultScheduleMetadata
     {
-        [DisplayName("Идентификатор")]
+        [DisplayName("#")]
         public int Id { get; set; }
 
         [DisplayName("Период ввода параметра.")]

@@ -6,6 +6,9 @@ using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Core.Entities.POCO
 {
+    /// <summary>
+    /// Диагноз.
+    /// </summary>
     public class Diagnosis : IEntity
     {
         

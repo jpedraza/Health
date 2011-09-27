@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using Health.Core.Entities.POCO;
 
 namespace Health.Site.Models.Metadata
 {
-    public class UserMetadata
+    public class DoctorMetadata
     {
         [DisplayName("#")]
         public int Id { get; set; }
@@ -22,10 +19,14 @@ namespace Health.Site.Models.Metadata
         [DisplayName("Отчество")]
         public string ThirdName { get; set; }
 
+        [DisplayName("Полное имя")]
+        public string FullName { get; set; }
+
         [DisplayName("Логин")]
         public string Login { get; set; }
 
         [DisplayName("Пароль")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [DisplayName("Роль")]
@@ -36,5 +37,26 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Токен")]
         public string Token { get; set; }
+
+        [DisplayName("Специальность")]
+        public Specialty Specialty { get; set; }
+    }
+
+    public class DoctorFormMetadata : DoctorMetadata
+    {
+        [Required]
+        public new string FirstName { get; set; }
+
+        [Required]
+        public new string LastName { get; set; }
+
+        [Required]
+        public new string Login { get; set; }
+
+        [Required]
+        public new string Password { get; set; }
+
+        [Required]
+        public new DateTime Birthday { get; set; }
     }
 }

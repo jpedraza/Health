@@ -13,7 +13,6 @@ namespace Health.Data.Repository.Fake
         {
             Save(new Candidate
                      {
-                         Id = 1,
                          Birthday = new DateTime(1980, 12, 2),
                          Card = "some card number",
                          FirstName = "cand1",
@@ -26,7 +25,6 @@ namespace Health.Data.Repository.Fake
                      });
             Save(new Candidate
                      {
-                         Id = 2,
                          Birthday = new DateTime(1980, 12, 2),
                          Card = "some card number",
                          FirstName = "cand2",

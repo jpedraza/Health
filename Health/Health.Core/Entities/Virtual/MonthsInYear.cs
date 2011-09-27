@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Health.Core.Entities.Virtual
 {
+    /// <summary>
+    /// Месяцы в году.
+    /// </summary>
     public static class MonthsInYear
     {
         private static readonly Dictionary<int, Month> _months = new Dictionary<int, Month>
@@ -23,25 +26,86 @@ namespace Health.Core.Entities.Virtual
                                                                          {13, new Month {Name = "Все"}}
                                                                      };
 
+        /// <summary>
+        /// Январь.
+        /// </summary>
         public static readonly Month January = _months[1];
+
+        /// <summary>
+        /// Февраль.
+        /// </summary>
         public static readonly Month February = _months[2];
+
+        /// <summary>
+        /// Март.
+        /// </summary>
         public static readonly Month March = _months[3];
+
+        /// <summary>
+        /// Апрель.
+        /// </summary>
         public static readonly Month April = _months[4];
+
+        /// <summary>
+        /// Май.
+        /// </summary>
         public static readonly Month May = _months[5];
+
+        /// <summary>
+        /// Июнь.
+        /// </summary>
         public static readonly Month June = _months[6];
+
+        /// <summary>
+        /// Июль.
+        /// </summary>
         public static readonly Month July = _months[7];
+
+        /// <summary>
+        /// Август.
+        /// </summary>
         public static readonly Month August = _months[8];
+
+        /// <summary>
+        /// Сентябрь.
+        /// </summary>
         public static readonly Month September = _months[9];
+
+        /// <summary>
+        /// Октябрь.
+        /// </summary>
         public static readonly Month October = _months[10];
+
+        /// <summary>
+        /// Ноябрь.
+        /// </summary>
         public static readonly Month November = _months[11];
+
+        /// <summary>
+        /// Декабрь.
+        /// </summary>
         public static readonly Month December = _months[12];
+
+        /// <summary>
+        /// Любой месяц.
+        /// </summary>
         public static readonly Month All = _months[13];
 
+        /// <summary>
+        /// Получить месяц по его номеру.
+        /// </summary>
+        /// <param name="index">Номер месяца.</param>
+        /// <returns>Месяц.</returns>
         public static Month Month(int index)
         {
             return (index <= _months.Count & index > 0) ? _months[index] : null;
         }
 
+        /// <summary>
+        /// Получить месяц по его имени.
+        /// </summary>
+        /// <param name="name">Имя месяца.</param>
+        /// <returns>Месяц.</returns>
         public static Month Month(string name)
         {
             foreach (var month in _months)
@@ -54,6 +118,10 @@ namespace Health.Core.Entities.Virtual
             throw new Exception("Неверное имя месяца.");
         }
 
+        /// <summary>
+        /// Получить все месяцы.
+        /// </summary>
+        /// <returns>Месяцы.</returns>
         public static IEnumerable<Month> GetAll()
         {
             return _months.Values.AsEnumerable();

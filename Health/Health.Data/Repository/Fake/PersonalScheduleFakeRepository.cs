@@ -14,7 +14,6 @@ namespace Health.Data.Repository.Fake
         {
             _entities.Add(new PersonalSchedule
                               {
-                                  Id = 1,
                                   Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
                                   Patient = DIKernel.Get<IPatientRepository>().GetById(1),
                                   DateStart = DateTime.Now,
@@ -28,7 +27,6 @@ namespace Health.Data.Repository.Fake
 
             _entities.Add(new PersonalSchedule
                               {
-                                  Id = 2,
                                   Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
                                   Patient = DIKernel.Get<IPatientRepository>().GetById(2),
                                   DateStart = DateTime.Now,
@@ -50,8 +48,7 @@ namespace Health.Data.Repository.Fake
         {
             entity.Patient = DIKernel.Get<IPatientRepository>().GetById(entity.Patient.Id);
             entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
-            _entities.Add(entity);
-            return true;
+            return base.Save(entity);
         }
 
         public bool DeleteById(int schedule_id)

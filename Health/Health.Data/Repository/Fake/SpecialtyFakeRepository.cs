@@ -14,17 +14,14 @@ namespace Health.Data.Repository.Fake
         {
             Save(new Specialty
                      {
-                         Id = 1,
                          Name = "Педиатор"
                      });
             Save(new Specialty
                      {
-                         Id = 2,
                          Name = "Кардиолог"
                      });
             Save(new Specialty
                      {
-                         Id = 3,
                          Name = "Стоматолог"
                      });
         }

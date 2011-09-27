@@ -13,7 +13,7 @@ namespace Health.Site.Models.Metadata
 {
     public class PersonalScheduleMetadata
     {
-        [DisplayName("Идентификатор расписания")]
+        [DisplayName("#")]
         public int Id { get; set; }
 
         [DisplayName("Пациент")]

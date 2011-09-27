@@ -9,7 +9,7 @@ namespace Health.Site.Models.Metadata
 {
     public class ParameterMetadata
     {
-        [DisplayName("Ифентификатор параметра")]
+        [DisplayName("#")]
         public int Id { get; set; }
 
         [DisplayName("Имя параметра")]

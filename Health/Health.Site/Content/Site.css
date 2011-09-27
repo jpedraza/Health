@@ -133,6 +133,7 @@ header h1, #header h1 {
     border-radius: 5px 0 0 0;
     -webkit-border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;
+    min-height: 450px;
 }
 
 footer,
@@ -236,6 +237,8 @@ select {
 input[type="submit"] {
     font-size: 1.2em;
     padding: 5px;
+    border: 2px solid #32a6ff;
+    background-color: #fff;
 }
 
 /* TABLE

@@ -1,0 +1,15 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model PatientForm
+
+@{
+    ViewBag.Title = "Редактирование пациента";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Patient.Id)
+    @Html.EditorFor(m => m.Patient)
+    <input type="submit" value="Send"/>
+}

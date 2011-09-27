@@ -1,0 +1,15 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model PatientForm
+
+@{
+    ViewBag.Title = "Удаление пациента";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.RouteLink("Да", "Admin_delete", new {controller = "Patients", action = "Delete", id = Model.Patient.Id, confirm = true})
+    @Html.RouteLink("Нет", "Admin_delete", new {controller = "Patients", action = "Delete", id = Model.Patient.Id, confirm = false})
+</p>
+
+@Html.DisplayFor(m => m.Patient)
