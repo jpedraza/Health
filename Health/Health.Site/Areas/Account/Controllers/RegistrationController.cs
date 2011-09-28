@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.API.Services;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
@@ -30,7 +31,7 @@ namespace Health.Site.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.RegServ.SaveBid(form.Candidate);
+                Get<IRegistrationService>().SaveBid(form.Candidate);
                 return RedirectTo<HomeController>(a => a.Index());
             }
             return RedirectTo<RegistrationController>(a => a.Registration(form));

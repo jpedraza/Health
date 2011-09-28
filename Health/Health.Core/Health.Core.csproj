@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="API\Extensions\Aliases.cs" />
     <Compile Include="API\ICore.cs" />
-    <Compile Include="API\ICoreKernel.cs" />
     <Compile Include="API\IDIKernel.cs" />
     <Compile Include="API\ILogger.cs" />
     <Compile Include="API\Repository\IDefaultScheduleRepository.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="API\Validators\IValidatorFactory.cs" />
     <Compile Include="API\Validators\IValueValidator.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="CoreKernel.cs" />
     <Compile Include="Entities\POCO\Abstract\IKey.cs" />
     <Compile Include="Entities\POCO\Abstract\ISchedule.cs" />
     <Compile Include="Entities\POCO\Candidate.cs" />

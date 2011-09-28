@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Health.Core.API;
+using Health.Core.API.Services;
 using Health.Site.Models;
 
 namespace Health.Site.Helpers.Classes
@@ -12,14 +13,13 @@ namespace Health.Site.Helpers.Classes
         /// <summary>
         /// Точка входа в хелпер
         /// </summary>
-        /// <param name="core_kernel"></param>
         /// <returns>Html код для меню</returns>
-        public MainMenu(ICoreKernel core_kernel)
+        public MainMenu(IDIKernel di_kernel)
         {
-            CoreKernel = core_kernel;
+            DIKernel = di_kernel;
         }
 
-        protected ICoreKernel CoreKernel { get; set; }
+        protected IDIKernel DIKernel { get; set; }
 
         /// <summary>
         /// Получить элементы меню
@@ -28,7 +28,7 @@ namespace Health.Site.Helpers.Classes
         {
             // По-умолчанию ссылка на гланую страницу
             var elements = new List<MenuElement> {new MenuElement("Главная", "Index", "Home")};
-            string role = CoreKernel.AuthServ.UserCredential.Role;
+            string role = DIKernel.Get<IAuthorizationService>().UserCredential.Role;
             switch (role)
             {
                 case "Guest":

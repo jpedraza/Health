@@ -10,7 +10,7 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class UsersFakeRepository : CoreFakeRepository<User>, IUserRepository
     {
-        public UsersFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public UsersFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             Save(new User
                      {
@@ -19,7 +19,7 @@ namespace Health.Data.Repository.Fake
                          ThirdName = "Витальевич",
                          Login = "admin",
                          Password = "admin",
-                         Role = CoreKernel.RoleRepo.GetByName("Admin")
+                         Role = Get<IRoleRepository>().GetByName("Admin")
                      });
             Save(new User
                      {
@@ -28,7 +28,7 @@ namespace Health.Data.Repository.Fake
                          ThirdName = "Александрович",
                          Login = "patient",
                          Password = "patient",
-                         Role = CoreKernel.RoleRepo.GetByName("Patient")
+                         Role = Get<IRoleRepository>().GetByName("Patient")
                      });
         }
 

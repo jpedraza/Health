@@ -2,6 +2,7 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Health.Core.API;
+using Health.Core.API.Services;
 
 namespace Health.Site.Filters
 {
@@ -25,9 +26,9 @@ namespace Health.Site.Filters
 
         private string _userRole;
 
-        public AuthFilter(ICoreKernel core_kernel, string allow_roles, string deny_roles)
+        public AuthFilter(IDIKernel di_kernel, string allow_roles, string deny_roles)
         {
-            CoreKernel = core_kernel;
+            DIKernel = di_kernel;
             AllowRoles = allow_roles;
             DenyRoles = deny_roles;
         }
@@ -41,7 +42,7 @@ namespace Health.Site.Filters
             {
                 if (String.IsNullOrEmpty(_userRole))
                 {
-                    _userRole = CoreKernel.AuthServ.UserCredential.Role;
+                    _userRole = DIKernel.Get<IAuthorizationService>().UserCredential.Role;
                 }
                 return _userRole;
             }
@@ -50,24 +51,24 @@ namespace Health.Site.Filters
         /// <summary>
         /// ÷ентральный сервис
         /// </summary>
-        protected ICoreKernel CoreKernel { get; set; }
+        protected IDIKernel DIKernel { get; set; }
 
         #region IAuthorizationFilter Members
 
         public void OnAuthorization(AuthorizationContext filter_context)
         {
             // ≈сли у пользовател€ вообще нет роли (никакой ?)
-            if (String.IsNullOrEmpty(CoreKernel.AuthServ.UserCredential.Role))
+            if (String.IsNullOrEmpty(DIKernel.Get<IAuthorizationService>().UserCredential.Role))
             {
                 // —брасываем его сессию до гост€
-                CoreKernel.AuthServ.Logout();
+                DIKernel.Get<IAuthorizationService>().Logout();
             }
 
             // ≈сли не заданы права доступа
             if (String.IsNullOrEmpty(AllowRoles) & String.IsNullOrEmpty(DenyRoles))
             {
                 // —читаем что всем авторизованным пользовател€м разрешен доступ
-                if (!CoreKernel.AuthServ.UserCredential.IsAuthirization)
+                if (!DIKernel.Get<IAuthorizationService>().UserCredential.IsAuthirization)
                 {
                     filter_context.Result = RedirectResult;
                     return;
@@ -109,7 +110,7 @@ namespace Health.Site.Filters
 
             foreach (string role in roles)
             {
-                if (role == UserRole || role == CoreKernel.AuthServ.DefaultRoles.All.Name)
+                if (role == UserRole || role == DIKernel.Get<IAuthorizationService>().DefaultRoles.All.Name)
                 {
                     return RedirectResult;
                 }

@@ -19,33 +19,28 @@ namespace Health.Site.Controllers
     /// </summary>
     public abstract class CoreController : Controller
     {
-        private ICoreKernel _coreKernel;
-
         protected CoreController(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
         }
 
         /// <summary>
-        /// Центральное ядро системы.
-        /// </summary>
-        public ICoreKernel CoreKernel
-        {
-            get { return _coreKernel ?? (_coreKernel = DIKernel.Get<ICoreKernel>()); }
-        }
-
-        /// <summary>
         /// Биндер метаданных.
         /// </summary>
-        public ModelMetadataProviderBinder MetadataBinder
+        protected ModelMetadataProviderBinder MetadataBinder
         {
             get { return DIKernel.Get<ModelMetadataProviderBinder>(); }
         }
 
-        public void ClassMetadataBinder<TFor, TUse>()
+        protected void ClassMetadataBinder<TFor, TUse>()
         {
             MetadataBinder.For<TFor>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
                 WithConfigurationParameters(typeof (TUse));
+        }
+
+        protected T Get<T>()
+        {
+            return DIKernel.Get<T>();
         }
 
         /// <summary>

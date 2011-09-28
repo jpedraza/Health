@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Health.Core.API.Repository;
 using Health.Site.Controllers;
 using Health.Core.API;
 using Health.Site.Attributes;
@@ -23,7 +24,7 @@ namespace Health.Site.Areas.Parameters.Controllers
 
         public ActionResult Index()
         {
-            ViewData["Parameters"] = CoreKernel.ParamRepo.GetAllParam();
+            ViewData["Parameters"] = Get<IParameterRepository>().GetAllParam();
             return View();
         }
 
@@ -33,7 +34,7 @@ namespace Health.Site.Areas.Parameters.Controllers
 
         public ActionResult Edit(int parameter_id)
         {
-            Parameter parameter = CoreKernel.ParamRepo.GetById(parameter_id);
+            Parameter parameter = Get<IParameterRepository>().GetById(parameter_id);
             if (parameter == null)
             {
                 var str = "Параметра с ID = " + parameter_id.ToString() + " не существует";
@@ -67,7 +68,7 @@ namespace Health.Site.Areas.Parameters.Controllers
             }
             // Следующая операция необходима для обновления параметра в модели.
             // А предыдущая нужна для получения ID обновляемого параметра
-            parameter = CoreKernel.ParamRepo.GetById(parameter.Id);
+            parameter = Get<IParameterRepository>().GetById(parameter.Id);
             TempData["EditParameter"] = parameter;
             if (parameter != null)
             {
@@ -102,7 +103,7 @@ namespace Health.Site.Areas.Parameters.Controllers
             if (form_model.EditParam != null && form_model.EditingForm != null)
             {
                 form_model.SaveEditngParameter();
-                bool Result = CoreKernel.ParamRepo.Edit(form_model.EditParam);
+                bool Result = Get<IParameterRepository>().Edit(form_model.EditParam);
                 TempData["Result"] = Result.ToString();
                 return RedirectTo<EditingController>(a => a.ConfirmSave());
             }
@@ -137,7 +138,7 @@ namespace Health.Site.Areas.Parameters.Controllers
             if (form_model.EditParam != null & form_model.VarForm.variants != null)
             {
                 form_model.AddVariant();
-                CoreKernel.ParamRepo.Edit(form_model.EditParam);
+                Get<IParameterRepository>().Edit(form_model.EditParam);
                 return RedirectTo<EditingController>(s => s.ContinueEdit());
             }
             else
@@ -156,7 +157,7 @@ namespace Health.Site.Areas.Parameters.Controllers
             {
                 ParametersViewModel.DeleteVariant(variant_id, parameter);
                 TempData["EditParameter"] = parameter;
-                CoreKernel.ParamRepo.Edit(parameter);
+                Get<IParameterRepository>().Edit(parameter);
                 return RedirectTo<EditingController>(s => s.ContinueEdit());
             }
             else
@@ -181,7 +182,7 @@ namespace Health.Site.Areas.Parameters.Controllers
 
         public ActionResult Delete(int parameter_id)
         {
-            TempData["Result"] = CoreKernel.ParamRepo.DeleteParam(parameter_id);
+            TempData["Result"] = Get<IParameterRepository>().DeleteParam(parameter_id);
             return RedirectTo<EditingController>(g => g.ConfirmSave());
         }
     }

@@ -14,7 +14,7 @@ namespace Health.Core.Services
     {
         protected Role DefaultCandidateRole;
 
-        public RegistrationService(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public RegistrationService(IDIKernel di_kernel) : base(di_kernel)
         {
             DefaultCandidateRole = di_kernel.Get<IRoleRepository>().GetByName("Patient");
         }
@@ -27,7 +27,7 @@ namespace Health.Core.Services
         /// <param name="candidate">Кандидат.</param>
         public void AcceptBid(Candidate candidate)
         {
-            CoreKernel.CandRepo.Delete(candidate);
+            Get<ICandidateRepository>().Delete(candidate);
             if (candidate == null) throw new Exception("Невозможно принять заявку от пустого кандидата.");
             var patient = new Patient
                               {
@@ -43,7 +43,7 @@ namespace Health.Core.Services
                                   Token = candidate.Token,
                                   Role = candidate.Role
                               };
-            CoreKernel.PatientRepo.Save(patient);
+            Get<IPatientRepository>().Save(patient);
             Logger.Info(String.Format("Заявка на регистрацию для {0} - принята.", candidate.Login));
         }
 
@@ -54,7 +54,7 @@ namespace Health.Core.Services
         public void SaveBid(Candidate candidate)
         {
             candidate.Role = DefaultCandidateRole;
-            CoreKernel.CandRepo.Save(candidate);
+            Get<ICandidateRepository>().Save(candidate);
             Logger.Info(String.Format("Добавлена заявка на регистрацию - {0}.", candidate.Login));
         }
 
@@ -64,7 +64,7 @@ namespace Health.Core.Services
         /// <param name="candidate">Кандидат.</param>
         public void RejectBid(Candidate candidate)
         {
-            CoreKernel.CandRepo.DeleteById(candidate.Id);
+            Get<ICandidateRepository>().DeleteById(candidate.Id);
             Logger.Info(String.Format("Заявка на регистрацию для {0} - отклонена.", candidate.Login));
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.API.Repository;
 using Health.Site.Controllers;
 using Health.Site.Areas.Parameters.Models;
 using Health.Core.Entities.POCO;
@@ -28,7 +29,7 @@ namespace Health.Site.Areas.Parameters
         {
             return View(new ParametersViewModel
             { 
-                parameters = CoreKernel.ParamRepo.GetAllParam()
+                parameters = Get<IParameterRepository>().GetAllParam()
             });
             //return View();
         }

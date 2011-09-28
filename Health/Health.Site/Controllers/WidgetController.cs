@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.API.Services;
 using Health.Site.Helpers.Classes;
 using Health.Site.Models;
 
@@ -20,8 +21,8 @@ namespace Health.Site.Controllers
         /// </summary>
         public ActionResult MainMenu()
         {
-            ViewBag.Login = CoreKernel.AuthServ.UserCredential.Login;
-            List<MenuElement> elements = new MainMenu(CoreKernel).GetMainMenuElements();
+            ViewBag.Login = Get<IAuthorizationService>().UserCredential.Login;
+            List<MenuElement> elements = new MainMenu(DIKernel).GetMainMenuElements();
             return View(elements);
         }
     }

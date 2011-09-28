@@ -9,8 +9,8 @@ namespace Health.Data.Repository.Fake
 {
     public class PersonalScheduleFakeRepository : CoreFakeRepository<PersonalSchedule>, IPersonalScheduleRepository
     {
-        public PersonalScheduleFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel)
-            : base(di_kernel, core_kernel)
+        public PersonalScheduleFakeRepository(IDIKernel di_kernel)
+            : base(di_kernel)
         {
             _entities.Add(new PersonalSchedule
                               {

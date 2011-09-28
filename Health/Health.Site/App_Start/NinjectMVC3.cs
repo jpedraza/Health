@@ -1,4 +1,6 @@
-﻿using System.Web.Hosting;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using Health.Core;
 using Health.Core.API;
@@ -22,6 +24,7 @@ using Health.Site.Repository;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
+using Ninject.Modules;
 using Ninject.Web.Mvc;
 using Ninject.Web.Mvc.FilterBindingSyntax;
 using Ninject.Web.Mvc.Validation;
@@ -81,10 +84,11 @@ namespace Health.Site.App_Start
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+            RegisterServices(kernel);
+            InitializeData(kernel);
             _diKernel = new DIKernel(kernel);
             var locator = new NinjectServiceLocator(kernel);
             ServiceLocator.SetLocatorProvider(() => locator);
-            RegisterServices(kernel);
             Kernel = kernel;
             return kernel;
         }
@@ -110,7 +114,6 @@ namespace Health.Site.App_Start
             // ~
 
             // Сервисы
-            kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>().InRequestScope();
             kernel.Bind<IRegistrationService>().To<RegistrationService>().InRequestScope();
             kernel.Bind<IAttendingDoctorService>().To<AttendingDoctorService>().InRequestScope();
@@ -164,6 +167,68 @@ namespace Health.Site.App_Start
             ModelMetadataProviders.Current = new ModelMetadataProviderManager(_diKernel);
             ModelValidatorProviders.Providers.Clear();            
             ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(_diKernel));
+        }
+        
+        internal static void InitializeData(IKernel kernel)
+        {
+            var doctor1 = new Doctor
+            {
+                FirstName = "Анатолий",
+                LastName = "Петров",
+                ThirdName = "Витальевич",
+                Login = "doctor",
+                Password = "doctor",
+                Role = kernel.Get<IRoleRepository>().GetByName("Doctor"),
+                Birthday = DateTime.Now,
+                Specialty = kernel.Get<ISpecialtyRepository>().GetById(1)
+            };
+
+            var patient1 = new Patient
+            {
+                Birthday = new DateTime(1980, 12, 2),
+                Card = "some card number",
+                FirstName = "patient1",
+                LastName = "patient1",
+                Login = "patient1",
+                Password = "patient1",
+                Policy = "some policy number",
+                Role = kernel.Get<IRoleRepository>().GetByName("Patient"),
+                ThirdName = "patient1",
+                Doctor = doctor1
+            };
+            doctor1.Patients = new List<Patient> { patient1 };
+
+            var doctor2 = new Doctor
+            {
+                FirstName = "Анатолий1",
+                LastName = "Петров1",
+                ThirdName = "Витальевич1",
+                Login = "doctor1",
+                Password = "doctor1",
+                Role = kernel.Get<IRoleRepository>().GetByName("Doctor"),
+                Birthday = DateTime.Now,
+                Specialty = kernel.Get<ISpecialtyRepository>().GetById(2)
+            };
+
+            var patient2 = new Patient
+            {
+                Birthday = new DateTime(1980, 12, 2),
+                Card = "some card number",
+                FirstName = "patient2",
+                LastName = "patient2",
+                Login = "patient2",
+                Password = "patient2",
+                Policy = "some policy number",
+                Role = kernel.Get<IRoleRepository>().GetByName("Patient"),
+                ThirdName = "patient2",
+                Doctor = doctor2
+            };
+            doctor2.Patients = new List<Patient> { patient2 };
+            kernel.Get<IDoctorRepository>().Save(doctor1);
+            kernel.Get<IDoctorRepository>().Save(doctor2);
+            var patient_repository = kernel.Get<IPatientRepository>();
+            patient_repository.Save(patient1);
+            patient_repository.Save(patient2);
         }
     }
 }

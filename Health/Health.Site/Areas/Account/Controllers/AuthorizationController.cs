@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.API.Services;
 using Health.Site.Areas.Account.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
@@ -32,7 +33,7 @@ namespace Health.Site.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (CoreKernel.AuthServ.Login(form.Login, form.Password, form.RememberMe))
+                if (Get<IAuthorizationService>().Login(form.Login, form.Password, form.RememberMe))
                 {
                     return RedirectTo<Admin.Controllers.HomeController>(a => a.Index());
                 }
@@ -46,7 +47,7 @@ namespace Health.Site.Areas.Account.Controllers
         /// <returns></returns>
         public ActionResult Logout()
         {
-            CoreKernel.AuthServ.Logout();
+            Get<IAuthorizationService>().Logout();
 
             return RedirectTo<HomeController>(a => a.Index());
         }

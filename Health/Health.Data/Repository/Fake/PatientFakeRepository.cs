@@ -10,38 +10,21 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class PatientFakeRepository : CoreFakeRepository<Patient>, IPatientRepository
     {
-        public PatientFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public PatientFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
-            Save(new Patient
-            {
-                Birthday = new DateTime(1980, 12, 2),
-                Card = "some card number",
-                FirstName = "patient1",
-                LastName = "patient1",
-                Login = "patient1",
-                Password = "patient1",
-                Policy = "some policy number",
-                Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
-                ThirdName = "patient1",
-                Doctor = DIKernel.Get<IDoctorRepository>().GetById(1)
-            });
-            Save(new Patient
-            {
-                Birthday = new DateTime(1980, 12, 2),
-                Card = "some card number",
-                FirstName = "patient2",
-                LastName = "patient2",
-                Login = "patient2",
-                Password = "patient2",
-                Policy = "some policy number",
-                Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
-                ThirdName = "patient2",
-                Doctor = DIKernel.Get<IDoctorRepository>().GetById(2)
-            });
+            
+        }
+
+        public override bool Update(Patient entity)
+        {
+            entity.Doctor = DIKernel.Get<IDoctorRepository>().GetById(entity.Doctor.Id);
+            return base.Update(entity);
         }
 
         public override bool Delete(Patient entity)
         {
+            entity.Doctor.Patients.ToList().Remove(entity);
+            DIKernel.Get<IDoctorRepository>().Delete(entity.Doctor);
             for (int i = 0; i < _entities.Count; i++)
             {
                 Patient patient = _entities[i];
@@ -58,6 +41,7 @@ namespace Health.Data.Repository.Fake
             var role_repo = DIKernel.Get<IRoleRepository>();
             entity.Role = role_repo.GetByName("Patient");
             var user_repo = DIKernel.Get<IUserRepository>();
+            entity.Doctor = DIKernel.Get<IDoctorRepository>().GetById(entity.Doctor.Id);
             user_repo.Save(entity);
             return base.Save(entity);
         }

@@ -18,10 +18,8 @@ namespace Health.Core.Services
         /// <param name="actual_data_accessor">Репозиторий доступа к актуальным данным сессии.</param>
         /// <param name="permanent_data_accessor">Репозиторий доступа к сохраняемым данным сессии.</param>
         /// <param name="di_kernel"></param>
-        /// <param name="core_kernel"></param>
         public AuthorizationService(IActualCredentialRepository actual_data_accessor,
-                                    IPermanentCredentialRepository permanent_data_accessor, IDIKernel di_kernel,
-                                    ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+                                    IPermanentCredentialRepository permanent_data_accessor, IDIKernel di_kernel) : base(di_kernel)
         {
             ActualDataAccessor = actual_data_accessor;
             PermanentDataAccessor = permanent_data_accessor;
@@ -122,7 +120,7 @@ namespace Health.Core.Services
             Logger.Info(String.Format("Попытка авторизации пользователя: Логин - {0}, Пароль - {1}, Запоминать? - {2}.",
                                       login, password, remember_me));
 
-            User user = CoreKernel.UserRepo.GetByLoginAndPassword(login, password);
+            User user = Get<IUserRepository>().GetByLoginAndPassword(login, password);
 
             if (user != null)
             {
@@ -189,7 +187,7 @@ namespace Health.Core.Services
         public virtual void RestoreRememberSession()
         {
             UserCredential credential = PermanentDataAccessor.Read("remember");
-            User user = CoreKernel.UserRepo.GetByLogin(credential.Login);
+            User user = Get<IUserRepository>().GetByLogin(credential.Login);
             if (user != null)
             {
                 ActualDataAccessor.Write(DefaultUserCredentialName, credential);

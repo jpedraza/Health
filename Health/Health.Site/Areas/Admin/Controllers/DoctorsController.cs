@@ -1,10 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Data.Entity;
+using System.Linq.Expressions;
+using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.API.Repository;
+using Health.Core.API.Services;
 using Health.Core.Entities.POCO;
 using Health.Site.Areas.Admin.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
+using Ninject.Activation;
 
 namespace Health.Site.Areas.Admin.Controllers
 {
@@ -19,7 +24,7 @@ namespace Health.Site.Areas.Admin.Controllers
         public ActionResult Show(int? id)
         {
             if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
-            Doctor doctor = CoreKernel.DoctorRepo.GetById(id.Value);
+            Doctor doctor = Get<IDoctorRepository>().GetById(id.Value);
             var form = new DoctorForm {Doctor = doctor};
             return 
                 doctor == null
@@ -29,7 +34,7 @@ namespace Health.Site.Areas.Admin.Controllers
 
         public ActionResult List()
         {
-            var form = new DoctorList {Doctors = CoreKernel.DoctorRepo.GetAll()};
+            var form = new DoctorList {Doctors = Get<IDoctorRepository>().GetAll()};
             return View(form);
         }
 
@@ -49,7 +54,7 @@ namespace Health.Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.DoctorRepo.Save(form.Doctor);
+                Get<IDoctorRepository>().Save(form.Doctor);
                 form.Message = "Доктор добавлен";
                 return RedirectTo<DoctorsController>(a => a.Confirm(form));
             }
@@ -64,7 +69,7 @@ namespace Health.Site.Areas.Admin.Controllers
         public ActionResult Edit(int? id, DoctorForm form)
         {
             if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
-            form.Doctor = form.Doctor ?? CoreKernel.DoctorRepo.GetById(id.Value);
+            form.Doctor = form.Doctor ?? Get<IDoctorRepository>().GetById(id.Value);
             form.Specialties = DIKernel.Get<ISpecialtyRepository>().GetAll();
             return
                 form.Doctor == null
@@ -77,7 +82,7 @@ namespace Health.Site.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.DoctorRepo.Update(form.Doctor);
+                Get<IDoctorRepository>().Update(form.Doctor);
                 form.Message = "Информация о докторе изменена";
                 return RedirectTo<DoctorsController>(a => a.Confirm(form));
             }
@@ -93,31 +98,38 @@ namespace Health.Site.Areas.Admin.Controllers
             if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
             if (!confirm.HasValue)
             {
-                Doctor doctor = CoreKernel.DoctorRepo.GetById(id.Value);
+                Doctor doctor = DIKernel.Get<IDoctorRepository>().GetById(id.Value);
                 var form = new DoctorForm {Doctor = doctor};
                 return
                     doctor == null
                         ? RedirectTo<DoctorsController>(a => a.List())
                         : View(form);
             }
-            if (confirm.Value) CoreKernel.DoctorRepo.DeleteById(id.Value);
+            if (confirm.Value) DIKernel.Get<IDoctorRepository>().DeleteById(id.Value);
             return RedirectTo<DoctorsController>(a => a.List());
         }
 
         #endregion
 
         #region Led Patients
+        
+        [PRGImport]
+        public ActionResult Led([PRGInRoute]int? id)
+        {
+            if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
+            Doctor doctor = Get<IDoctorRepository>().GetById(id.Value);
+            if (doctor == null) return RedirectTo<DoctorsController>(a => a.List());
+            var form = new DoctorForm {Doctor = doctor, Patients = Get<IPatientRepository>().GetAll()};
+            return View(form);
+        }
 
-        //public ActionResult AddLed(int doctor_id, int patient_id)
-        //{
-        //    Doctor doctor = CoreKernel.DoctorRepo.GetById(doctor_id);
-        //    if (doctor == null) return RedirectTo<DoctorsController>(a => a.List());
-        //    Patient patient = CoreKernel.PatientRepo.GetById(patient_id);
-        //    if (patient == null) return RedirectTo<DoctorsController>(a => a.List());
-
-        //}
-
-        //public ActionResult RemoveLed(int doctor_id, int patient_id) {}
+        [PRGExport]
+        public ActionResult SetLed(int? doctor_id, int? patient_id)
+        {
+            if (!doctor_id.HasValue || !patient_id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
+            Get<IAttendingDoctorService>().SetLedDoctorForPatient(doctor_id.Value, patient_id.Value);
+            return RedirectTo<DoctorsController>(a => a.Led(doctor_id));
+        }
 
         #endregion
 
@@ -126,7 +138,10 @@ namespace Health.Site.Areas.Admin.Controllers
         [PRGImport]
         public ActionResult Confirm(DoctorForm form)
         {
-            return View(form);
+            return 
+                form.Doctor == null
+                    ? RedirectTo<DoctorsController>(a => a.List())
+                    : View(form);
         }
 
         #endregion

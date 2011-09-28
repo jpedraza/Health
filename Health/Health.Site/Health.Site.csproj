@@ -386,7 +386,6 @@
     <Content Include="Areas\Admin\Views\Candidates\ConfirmBid.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AreaLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\DisplayTemplates\Patient.cshtml" />
-    <Content Include="Areas\Admin\Views\Patients\EditorTemplates\Patient.cshtml" />
     <Content Include="Areas\Admin\Views\Users\List.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\List.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\_PatientList.cshtml" />
@@ -403,6 +402,7 @@
     <Content Include="Areas\Admin\Views\Doctors\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\_PatientForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Doctors\Led.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

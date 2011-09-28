@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
@@ -18,7 +19,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         public ActionResult Show(int? id)
         {
             if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
-            PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(id.Value);
+            PersonalSchedule schedule = Get<IPersonalScheduleRepository>().GetById(id.Value);
             var form = new PersonalScheduleForm
                            {
                                PersonalSchedule = schedule
@@ -33,7 +34,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             var form = new PersonalScheduleList
                            {
-                               PersonalSchedules = CoreKernel.PersonalScheduleRepo.GetAll()
+                               PersonalSchedules = Get<IPersonalScheduleRepository>().GetAll()
                            };
             return View(form);
         }
@@ -46,9 +47,9 @@ namespace Health.Site.Areas.Schedules.Controllers
         public ActionResult Edit([PRGInRoute] int? id, PersonalScheduleForm form)
         {
             if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
-            PersonalSchedule schedule = form.PersonalSchedule ?? CoreKernel.PersonalScheduleRepo.GetById(id.Value);
+            PersonalSchedule schedule = form.PersonalSchedule ?? Get<IPersonalScheduleRepository>().GetById(id.Value);
             form.PersonalSchedule = schedule;
-            form.Parameters = CoreKernel.ParamRepo.GetAll();
+            form.Parameters = Get<IParameterRepository>().GetAll();
             return
                 schedule == null
                     ? RedirectTo<PersonalController>(a => a.List())
@@ -60,7 +61,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.PersonalScheduleRepo.Update(form.PersonalSchedule);
+                Get<IPersonalScheduleRepository>().Update(form.PersonalSchedule);
                 form.Message = "Расписание отредактировано";
                 return RedirectTo<PersonalController>(a => a.Confirm(form));
             }
@@ -74,8 +75,8 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport]
         public ActionResult Add(PersonalScheduleForm form)
         {
-            form.Parameters = CoreKernel.ParamRepo.GetAll();
-            form.Patients = CoreKernel.PatientRepo.GetAll();
+            form.Parameters = Get<IParameterRepository>().GetAll();
+            form.Patients = Get<IPatientRepository>().GetAll();
             return View(form);
         }
 
@@ -84,7 +85,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             if (ModelState.IsValid)
             {
-                CoreKernel.PersonalScheduleRepo.Save(form.PersonalSchedule);
+                Get<IPersonalScheduleRepository>().Save(form.PersonalSchedule);
                 form.Message = "Расписание отредактировано";
                 return RedirectTo<PersonalController>(a => a.Confirm(form));
             }
@@ -100,7 +101,7 @@ namespace Health.Site.Areas.Schedules.Controllers
             if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
             if (!confirm.HasValue)
             {
-                PersonalSchedule schedule = CoreKernel.PersonalScheduleRepo.GetById(id.Value);
+                PersonalSchedule schedule = Get<IPersonalScheduleRepository>().GetById(id.Value);
                 var form = new PersonalScheduleForm
                                {
                                    Message = "Точно удалить это расписание",
@@ -110,7 +111,7 @@ namespace Health.Site.Areas.Schedules.Controllers
                            ? RedirectTo<PersonalController>(a => a.List())
                            : View(form);
             }
-            if (confirm.Value) CoreKernel.PersonalScheduleRepo.DeleteById(id.Value);
+            if (confirm.Value) Get<IPersonalScheduleRepository>().DeleteById(id.Value);
             return RedirectTo<PersonalController>(a => a.List());
         }
 

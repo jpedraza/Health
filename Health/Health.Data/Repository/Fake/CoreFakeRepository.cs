@@ -11,9 +11,14 @@ namespace Health.Data.Repository.Fake
     {
         protected IList<TIEntity> _entities;
 
-        protected CoreFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        protected CoreFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             _entities = new List<TIEntity>();
+        }
+
+        protected T Get<T>()
+        {
+            return DIKernel.Get<T>();
         }
 
         #region ICoreRepository<TIEntity> Members

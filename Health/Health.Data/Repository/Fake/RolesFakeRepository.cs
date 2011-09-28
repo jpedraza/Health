@@ -9,7 +9,7 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class RolesFakeRepository : CoreFakeRepository<Role>, IRoleRepository
     {
-        public RolesFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public RolesFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             _entities = new List<Role>
                             {

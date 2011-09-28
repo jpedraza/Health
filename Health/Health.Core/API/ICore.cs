@@ -14,10 +14,5 @@
         /// DI ядро.
         /// </summary>
         IDIKernel DIKernel { get; set; }
-
-        /// <summary>
-        /// Центральное ядро системы.
-        /// </summary>
-        ICoreKernel CoreKernel { get; set; }
     }
 }

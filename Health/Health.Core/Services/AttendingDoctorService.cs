@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Health.Core.API.Repository;
 using Health.Core.API.Services;
 using Health.Core.API;
 using Health.Core.Entities.POCO;
@@ -10,8 +11,8 @@ namespace Health.Core.Services
 {
     public class AttendingDoctorService : CoreService, IAttendingDoctorService
     {
-        public AttendingDoctorService(IDIKernel di_kernel, ICoreKernel core_kernel)
-            : base(di_kernel, core_kernel)
+        public AttendingDoctorService(IDIKernel di_kernel)
+            : base(di_kernel)
         {
         }
 
@@ -22,16 +23,16 @@ namespace Health.Core.Services
         /// <param name="patient_id">Идентификатор пациента.</param>
         public void SetLedDoctorForPatient(int doctor_id, int patient_id)
         {
-            Doctor doctor = CoreKernel.DoctorRepo.GetByIdIfNotLedPatient(doctor_id, patient_id);
-            Patient patient = CoreKernel.PatientRepo.GetByIdIfNotLedDoctor(patient_id, doctor_id);
+            Doctor doctor = Get<IDoctorRepository>().GetByIdIfNotLedPatient(doctor_id, patient_id);
+            Patient patient = Get<IPatientRepository>().GetByIdIfNotLedDoctor(patient_id, doctor_id);
             if (doctor != null && patient != null)
             {
                 doctor.Patients.ToList().Add(patient);
                 patient.Doctor.Patients.ToList().Remove(patient);
                 patient.Doctor = doctor;
-                CoreKernel.DoctorRepo.Update(doctor);
-                CoreKernel.DoctorRepo.Update(patient.Doctor);
-                CoreKernel.PatientRepo.Update(patient);
+                Get<IDoctorRepository>().Update(doctor);
+                Get<IDoctorRepository>().Update(patient.Doctor);
+                Get<IPatientRepository>().Update(patient);
             }            
         }
     }

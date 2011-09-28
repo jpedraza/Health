@@ -7,10 +7,9 @@ namespace Health.Core
     /// </summary>
     public class Core : ICore
     {
-        protected Core(IDIKernel di_kernel, ICoreKernel core_kernel)
+        protected Core(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
-            CoreKernel = core_kernel;
             Logger = DIKernel.Get<ILogger>();
         }
 
@@ -25,11 +24,6 @@ namespace Health.Core
         /// DI ядро.
         /// </summary>
         public IDIKernel DIKernel { get; set; }
-
-        /// <summary>
-        /// Центральное ядро системы.
-        /// </summary>
-        public ICoreKernel CoreKernel { get; set; }
 
         #endregion
     }

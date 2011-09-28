@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
 using Health.Site.Areas.Admin.Models;
 using Health.Site.Controllers;
@@ -19,8 +20,8 @@ namespace Health.Site.Areas.Admin.Controllers
         {
             var model = new UserList
             {
-                Users = CoreKernel.UserRepo.GetAll(),
-                Roles = CoreKernel.RoleRepo.GetAll()
+                Users = Get<IUserRepository>().GetAll(),
+                Roles = Get<IRoleRepository>().GetAll()
             };
             return View(model);
         }

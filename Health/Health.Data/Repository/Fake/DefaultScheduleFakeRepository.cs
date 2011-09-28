@@ -13,7 +13,7 @@ namespace Health.Data.Repository.Fake
 {
     public class DefaultScheduleFakeRepository : CoreFakeRepository<DefaultSchedule>, IDefaultScheduleRepository
     {
-        public DefaultScheduleFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public DefaultScheduleFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             _entities = new List<DefaultSchedule>
                             {

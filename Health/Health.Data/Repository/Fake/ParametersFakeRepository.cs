@@ -11,7 +11,7 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class ParametersFakeRepository : CoreFakeRepository<Parameter>, IParameterRepository
     {
-        public ParametersFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public ParametersFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             #region FakeData
             Save(new Parameter

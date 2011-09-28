@@ -21,7 +21,9 @@ namespace Health.Site.Areas.Admin.Models
         [ClassMetadata(typeof(DoctorFormMetadata))]
         public Doctor Doctor { get; set; }
 
-        public IEnumerable<Specialty> Specialties { get; set; }
+        public IEnumerable<Patient> Patients = new BindingList<Patient>();
+
+        public IEnumerable<Specialty> Specialties = new BindingList<Specialty>();
 
         public IEnumerable<SelectListItem> SpecialitiesSelectList
         {

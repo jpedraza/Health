@@ -9,7 +9,7 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class CandidatesFakeRepository : CoreFakeRepository<Candidate>, ICandidateRepository
     {
-        public CandidatesFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public CandidatesFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             Save(new Candidate
                      {

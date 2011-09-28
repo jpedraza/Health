@@ -10,7 +10,7 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class SpecialtyFakeRepository : CoreFakeRepository<Specialty>, ISpecialtyRepository
     {
-        public SpecialtyFakeRepository(IDIKernel di_kernel, ICoreKernel core_kernel) : base(di_kernel, core_kernel)
+        public SpecialtyFakeRepository(IDIKernel di_kernel) : base(di_kernel)
         {
             Save(new Specialty
                      {

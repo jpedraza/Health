@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Health.Core.API.Repository;
 using Health.Site.Controllers;
 using Health.Core.API;
 using Health.Site.Attributes;
@@ -48,7 +49,7 @@ namespace Health.Site.Areas.Parameters.Controllers
                         form_model.StartAddForm.Is_childs, 
                         form_model.StartAddForm.Is_var, 
                         form_model.StartAddForm.Is_param, 
-                        CoreKernel.ParamRepo);
+                        Get<IParameterRepository>());
                     TempData["NewParam"] = form_model.NewParam;
                     return View(form_model);
                 }
@@ -98,7 +99,7 @@ namespace Health.Site.Areas.Parameters.Controllers
 
                 form_model.NewParam = (Parameter)TempData["NewParam"];
                 ParametersViewModel Model = form_model.AddParameter(form_model);
-                bool result = CoreKernel.ParamRepo.Add(Model.NewParam);
+                bool result = Get<IParameterRepository>().Add(Model.NewParam);
                 TempData["Result"] = result;
                 ViewData["Result"] = TempData["Result"];
                 TempData.Keep("Result");
