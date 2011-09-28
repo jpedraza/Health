@@ -22,7 +22,8 @@ namespace Health.Data.Repository.Fake
                 Password = "patient1",
                 Policy = "some policy number",
                 Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
-                ThirdName = "patient1"
+                ThirdName = "patient1",
+                Doctor = DIKernel.Get<IDoctorRepository>().GetById(1)
             });
             Save(new Patient
             {
@@ -34,7 +35,8 @@ namespace Health.Data.Repository.Fake
                 Password = "patient2",
                 Policy = "some policy number",
                 Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
-                ThirdName = "patient2"
+                ThirdName = "patient2",
+                Doctor = DIKernel.Get<IDoctorRepository>().GetById(2)
             });
         }
 
@@ -77,6 +79,11 @@ namespace Health.Data.Repository.Fake
                 }
             }
             return false;
+        }
+
+        public Patient GetByIdIfNotLedDoctor(int patient_id, int doctor_id)
+        {
+            return _entities.Where(p => p.Id == patient_id && p.Doctor.Id != doctor_id).FirstOrDefault();
         }
     }
 }

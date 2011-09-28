@@ -11,5 +11,7 @@ namespace Health.Core.API.Repository
         Doctor GetById(int doctor_id);
 
         bool DeleteById(int doctor_id);
+
+        Doctor GetByIdIfNotLedPatient(int doctor_id, int patient_id);
     }
 }

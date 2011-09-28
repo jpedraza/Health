@@ -40,6 +40,7 @@ namespace Health.Site.Areas.Admin.Controllers
         public ActionResult Add(PatientForm form)
         {
             form.Patient = form.Patient ?? new Patient();
+            form.Doctors = CoreKernel.DoctorRepo.GetAll();
             return View(form);
         }
 
@@ -63,6 +64,7 @@ namespace Health.Site.Areas.Admin.Controllers
         {
             if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
             form.Patient = form.Patient ?? CoreKernel.PatientRepo.GetById(id.Value);
+            form.Doctors = CoreKernel.DoctorRepo.GetAll();
             return
                 form.Patient == null
                     ? RedirectTo<PatientsController>(a => a.List())

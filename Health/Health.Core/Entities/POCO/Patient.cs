@@ -5,6 +5,9 @@
     /// </summary>
     public class Patient : Candidate
     {
-        
+        /// <summary>
+        /// Лечащий врач.
+        /// </summary>
+        public Doctor Doctor { get; set; }
     }
 }

@@ -112,7 +112,8 @@ namespace Health.Site.App_Start
             // Сервисы
             kernel.Bind<ICoreKernel>().To<CoreKernel>().InSingletonScope();
             kernel.Bind<IAuthorizationService>().To<AuthorizationService>().InRequestScope();
-            kernel.Bind<IRegistrationService>().To<RegistrationService>();
+            kernel.Bind<IRegistrationService>().To<RegistrationService>().InRequestScope();
+            kernel.Bind<IAttendingDoctorService>().To<AttendingDoctorService>().InRequestScope();
             // ~
 
             // Фабрики

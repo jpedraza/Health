@@ -402,6 +402,7 @@
     <Content Include="Areas\Admin\Views\Doctors\_DoctorForm.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\_PatientForm.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

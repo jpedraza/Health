@@ -10,6 +10,8 @@ namespace Health.Core.API.Repository
     {
         Patient GetById(int patient_id);
 
+        Patient GetByIdIfNotLedDoctor(int patient_id, int doctor_id);
+
         bool DeleteById(int patient_id);
     }
 }

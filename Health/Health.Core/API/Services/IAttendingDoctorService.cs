@@ -6,17 +6,10 @@
     public interface IAttendingDoctorService : ICoreService
     {
         /// <summary>
-        /// Добавить ведомого пациента для доктора.
+        /// Изменить лечащего доктора у пациента.
         /// </summary>
         /// <param name="doctor_id">Идентификатор доктора.</param>
         /// <param name="patient_id">Идентификатор пациента.</param>
-        void AddLedPatient(int doctor_id, int patient_id);
-
-        /// <summary>
-        /// Удалить ведомого пациента для доктора.
-        /// </summary>
-        /// <param name="doctor_id">Идентификатор доктора.</param>
-        /// <param name="patient_id">Идентификатор пациента.</param>
-        void DeleteLedPatient(int doctor_id, int patient_id);
+        void SetLedDoctorForPatient(int doctor_id, int patient_id);
     }
 }

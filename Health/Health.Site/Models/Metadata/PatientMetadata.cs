@@ -43,6 +43,9 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Номер больничной карты")]
         public string Card { get; set; }
+
+        [DisplayName("Лечащий доктор")]
+        public Doctor Doctor { get; set; }
     }
 
     public class PatientFormMetadata : PatientMetadata

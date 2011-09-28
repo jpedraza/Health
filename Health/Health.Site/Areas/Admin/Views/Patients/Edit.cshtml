@@ -10,6 +10,6 @@
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(m => m.Patient.Id)
-    @Html.EditorFor(m => m.Patient)
+    @Html.Partial("_PatientForm")
     <input type="submit" value="Send"/>
 }

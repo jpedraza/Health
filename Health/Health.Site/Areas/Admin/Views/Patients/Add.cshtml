@@ -9,6 +9,6 @@
 
 @using (Html.BeginForm("AddSubmit", "Patients", new { area = "Admin" }))
 {
-    @Html.EditorFor(m => m.Patient)
+    @Html.Partial("_PatientForm")
     <input type="submit" value="Создать"/>
 }

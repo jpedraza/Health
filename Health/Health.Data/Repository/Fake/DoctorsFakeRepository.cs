@@ -69,5 +69,14 @@ namespace Health.Data.Repository.Fake
             entity.Specialty = DIKernel.Get<ISpecialtyRepository>().GetById(entity.Specialty.Id);
             return base.Update(entity);
         }
+
+
+        public Doctor GetByIdIfNotLedPatient(int doctor_id, int patient_id)
+        {
+            return _entities.Where(
+                        d => d.Id == doctor_id && 
+                        d.Patients.Where(
+                            p => p.Id == patient_id).FirstOrDefault() == null).FirstOrDefault();
+        }
     }
 }
