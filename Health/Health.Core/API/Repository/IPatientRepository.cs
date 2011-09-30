@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Health.Core.Entities.POCO;
+﻿using Health.Core.Entities.POCO;
 
 namespace Health.Core.API.Repository
 {
     public interface IPatientRepository : ICoreRepository<Patient>
     {
-        Patient GetById(int patient_id);
+        Patient GetById(int patientId);
 
-        Patient GetByIdIfNotLedDoctor(int patient_id, int doctor_id);
+        Patient GetByIdIfNotLedDoctor(int patientId, int doctorId);
 
-        bool DeleteById(int patient_id);
+        bool DeleteById(int patientId);
     }
 }

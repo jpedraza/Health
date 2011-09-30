@@ -14,9 +14,15 @@ namespace Health.Site.Models.Metadata
         [DisplayName("Четность недели")]
         public ParityOfWeek Parity { get; set; }
 
-        [Required]
         [Range(0, 6)]
+        [Required(ErrorMessage = "чцавыаыва")]
         [DisplayName("Номер недели в месяце")]
+        public virtual int InMonth { get; set; }
+    }
+
+    public class WeekValidationMetadata
+    {
+        [Required(ErrorMessage = "бла бла бла")]
         public int InMonth { get; set; }
     }
 }

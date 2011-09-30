@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using Health.Core.API;
+using Health.Core.TypeProvider;
+using Health.Core.Entities.Virtual;
 using Health.Site.Controllers;
 using Health.Site.Models.Configuration;
 
@@ -12,7 +16,7 @@ namespace Health.Site.Models.Providers
     /// <summary>
     /// Провайдер валидации моделей.
     /// </summary>
-    public class ModelValidatorProviderAdapter : DataAnnotationsModelValidatorProvider
+    public class ModelValidatorProviderAdapter : ModelValidatorProvider 
     {
         /// <summary>
         /// Биндер.
@@ -23,47 +27,51 @@ namespace Health.Site.Models.Providers
 
         protected readonly ModelMetadataProviderManager MetadataProviderManager;
 
-        public ModelValidatorProviderAdapter(IDIKernel di_kernel)
+        public ModelValidatorProviderAdapter(IDIKernel diKernel)
         {
-            DIKernel = di_kernel;
-            Binder = di_kernel.Get<ModelMetadataProviderBinder>();
-            MetadataProviderManager = di_kernel.Get<ModelMetadataProviderManager>();
+            DIKernel = diKernel;
+            Binder = diKernel.Get<ModelMetadataProviderBinder>();
+            MetadataProviderManager = diKernel.Get<ModelMetadataProviderManager>();
         }
 
-        #region Overrides of AssociatedValidatorProvider
+        private static Attribute ObjectTypeToAttributeType(object o)
+        {
+            return o as Attribute;
+        }
+
+        #region Overrides of ModelValidatorProvider
 
         /// <summary>
-        /// Получает средства проверки для модели, используя метаданные, контекст контроллера и список атрибутов.
+        /// Получает список средств проверки.
         /// </summary>
         /// <returns>
-        /// Средства проверки для модели.
+        /// Список средств проверки.
         /// </returns>
-        /// <param name="metadata">Метаданные.</param><param name="context">Контекст контроллера.</param><param name="attributes">Список атрибутов.</param>
-        protected override IEnumerable<ModelValidator> GetValidators(ModelMetadata metadata, ControllerContext context,
-                                                                     IEnumerable<Attribute> attributes)
+        /// <param name="metadata">Метаданные.</param><param name="context">Контекст.</param>
+        public override IEnumerable<ModelValidator> GetValidators(ModelMetadata metadata, ControllerContext context)
         {
-            if (context.Controller.GetType() != typeof(ErrorController) &&
-                Binder.IsHaveConfiguration(metadata.ContainerType))
+            if (metadata != null && metadata.ContainerType != null && !String.IsNullOrEmpty(metadata.PropertyName))
             {
-                MetadataConfigurationProvider configuration_provider =
-                    Binder.ResolveConfiguration(metadata.ContainerType);
-
-                ModelMetadataPropertyConfiguration config =
-                    configuration_provider.GetMetadata(metadata.ContainerType, null, metadata.ContainerType,
-                                                       metadata.PropertyName);
-
-                if (config != null && config.Attributes != null && config.Attributes.Count > 0)
+                var repository = DIKernel.Get<DynamicMetadataRepository>();
+                Type metadataType = repository.GetMetadataType(metadata.ContainerType);
+                if (metadataType != null)
                 {
-                    IList<Attribute> attributes_list = config.Attributes;
-                    IEnumerable<ModelValidator> new_validators = base.GetValidators(metadata, context, attributes_list);
-                    foreach (ModelValidator new_validator in new_validators)
+                    PropertyInfo propertyInfo = metadataType.GetProperty(metadata.PropertyName);
+                    if (propertyInfo != null)
                     {
-                        yield return new_validator;
+                        object[] newAttributesTemp = propertyInfo.GetCustomAttributes(false);
+                        Attribute[] newAttributes = Array.ConvertAll(newAttributesTemp, ObjectTypeToAttributeType);
+                        foreach (var attribute in newAttributes)
+                        {
+                            var att = attribute as ValidationAttribute;
+                            if (att != null)
+                                yield return new DataAnnotationsModelValidator(metadata, context, att);
+                        }
                     }
                 }
             }
             yield break;
-        }        
+        }
 
         #endregion
     }

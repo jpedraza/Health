@@ -10,7 +10,7 @@ namespace Health.Data.Repository.Fake
 {
     public sealed class PatientFakeRepository : CoreFakeRepository<Patient>, IPatientRepository
     {
-        public PatientFakeRepository(IDIKernel di_kernel) : base(di_kernel)
+        public PatientFakeRepository(IDIKernel diKernel) : base(diKernel)
         {
             
         }
@@ -38,25 +38,25 @@ namespace Health.Data.Repository.Fake
 
         public override bool Save(Patient entity)
         {
-            var role_repo = DIKernel.Get<IRoleRepository>();
-            entity.Role = role_repo.GetByName("Patient");
-            var user_repo = DIKernel.Get<IUserRepository>();
+            var roleRepo = DIKernel.Get<IRoleRepository>();
+            entity.Role = roleRepo.GetByName("Patient");
+            var userRepo = DIKernel.Get<IUserRepository>();
             entity.Doctor = DIKernel.Get<IDoctorRepository>().GetById(entity.Doctor.Id);
-            user_repo.Save(entity);
+            userRepo.Save(entity);
             return base.Save(entity);
         }
 
-        public Patient GetById(int patient_id)
+        public Patient GetById(int patientId)
         {
-            return _entities.Where(p => p.Id == patient_id).FirstOrDefault();
+            return _entities.Where(p => p.Id == patientId).FirstOrDefault();
         }
 
-        public bool DeleteById(int patient_id)
+        public bool DeleteById(int patientId)
         {
             for (int i = 0; i < _entities.Count; i++)
             {
                 Patient patient = _entities[i];
-                if (patient.Id == patient_id)
+                if (patient.Id == patientId)
                 {
                     _entities.RemoveAt(i);
                     return true;
@@ -65,9 +65,9 @@ namespace Health.Data.Repository.Fake
             return false;
         }
 
-        public Patient GetByIdIfNotLedDoctor(int patient_id, int doctor_id)
+        public Patient GetByIdIfNotLedDoctor(int patientId, int doctorId)
         {
-            return _entities.Where(p => p.Id == patient_id && p.Doctor.Id != doctor_id).FirstOrDefault();
+            return _entities.Where(p => p.Id == patientId && p.Doctor.Id != doctorId).FirstOrDefault();
         }
     }
 }

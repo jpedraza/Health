@@ -14,53 +14,53 @@ namespace Health.Site.Models.Metadata
     public class PersonalScheduleMetadata
     {
         [DisplayName("#")]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [DisplayName("Пациент")]
         [ClassMetadata(typeof(IfSubPatientMetadata))]
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
 
         [DisplayName("Параметр")]
         [ClassMetadata(typeof(IfSubParameterMetadata))]
-        public Parameter Parameter { get; set; }
+        public virtual Parameter Parameter { get; set; }
 
         [DisplayName("Дата начала")]
-        public DateTime DateStart { get; set; }
+        public virtual DateTime DateStart { get; set; }
 
         [DisplayName("Дата окончания")]
-        public DateTime DateEnd { get; set; }
+        public virtual DateTime DateEnd { get; set; }
 
         [DisplayName("Время начальное")]
-        public TimeSpan TimeStart { get; set; }
+        public virtual TimeSpan TimeStart { get; set; }
 
         [DisplayName("Время окончания")]
-        public TimeSpan TimeEnd { get; set; }
+        public virtual TimeSpan TimeEnd { get; set; }
 
         [DisplayName("День")]
-        public Day Day { get; set; }
+        public virtual Day Day { get; set; }
 
         [DisplayName("Неделя")]
-        public Week Week { get; set; }
+        public virtual Week Week { get; set; }
 
         [DisplayName("Месяц")]
-        public Month Month { get; set; }
+        public virtual Month Month { get; set; }
     }
 
     public class PersonalScheduleFormMetadata : PersonalScheduleMetadata
     {
         [Required(ErrorMessage = "Выберите расписание")]
-        public new int Id { get; set; }
+        public override int Id { get; set; }
 
         [Required(ErrorMessage = "Необходимо указать дату начала ввода параметра")]
-        public new DateTime DateStart { get; set; }
+        public override DateTime DateStart { get; set; }
 
         [Required(ErrorMessage = "Необходимо указать дату окончаня ввода параметра")]
-        public new DateTime DateEnd { get; set; }
+        public override DateTime DateEnd { get; set; }
 
         [Required(ErrorMessage = "Укажите время начала ввода параметра")]
-        public new TimeSpan TimeStart { get; set; }
+        public override TimeSpan TimeStart { get; set; }
 
         [Required(ErrorMessage = "Укажите время окончания ввода параметра")]
-        public new TimeSpan TimeEnd { get; set; }
+        public override TimeSpan TimeEnd { get; set; }
     }
 }

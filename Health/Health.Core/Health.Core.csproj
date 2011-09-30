@@ -51,6 +51,7 @@
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -120,8 +121,12 @@
     <Compile Include="Services\RegistrationService.cs" />
     <Compile Include="Services\CoreService.cs" />
     <Compile Include="Services\RenderingService.cs" />
+    <Compile Include="TypeProvider\DynamicMetadataRepository.cs" />
+    <Compile Include="TypeProvider\DynamicTypeDescriptor.cs" />
+    <Compile Include="TypeProvider\DynamicTypeDescriptorProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Entities\Entities.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

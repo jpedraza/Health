@@ -14,7 +14,7 @@ namespace Health.Site.Areas.Admin.Models
     public class PatientForm : CoreViewModel
     {
         [ClassMetadata(typeof(PatientFormMetadata))]
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
 
         public IEnumerable<Doctor> Doctors { get; set; }
 
@@ -22,21 +22,27 @@ namespace Health.Site.Areas.Admin.Models
         {
             get
             {
-                var select_list = new BindingList<SelectListItem>();
+                var selectList = new BindingList<SelectListItem>();
                 foreach (Doctor doctor in Doctors)
                 {
-                    select_list.Add(new SelectListItem 
+                    selectList.Add(new SelectListItem 
                     { 
-                        Selected = Patient.Doctor != null ? doctor.Id == Patient.Doctor.Id : false,
+                        Selected = Patient.Doctor != null && doctor.Id == Patient.Doctor.Id,
                         Text = doctor.FullName,
                         Value = doctor.Id.ToString()
                     });
                 }
-                return select_list;
+                return selectList;
             }
         }
 
         public string Message { get; set; }
+    }
+
+    public class LedPatientForm : PatientForm
+    {
+        //[ClassMetadata(typeof())]
+        public override Patient Patient { get; set; }
     }
 
     public class PatientList : CoreViewModel

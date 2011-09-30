@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Health.Core;
@@ -9,6 +11,7 @@ using Health.Core.API.Services;
 using Health.Core.API.Validators;
 using Health.Core.Entities.POCO;
 using Health.Core.Services;
+using Health.Core.TypeProvider;
 using Health.Data.Repository.Fake;
 using Health.Data.Validators;
 using Health.Site.App_Start;
@@ -86,7 +89,7 @@ namespace Health.Site.App_Start
             var kernel = new StandardKernel();
             RegisterServices(kernel);
             InitializeData(kernel);
-            _diKernel = new DIKernel(kernel);
+            //_diKernel = new DIKernel(kernel);
             var locator = new NinjectServiceLocator(kernel);
             ServiceLocator.SetLocatorProvider(() => locator);
             Kernel = kernel;
@@ -111,6 +114,8 @@ namespace Health.Site.App_Start
             kernel.Bind<IPatientRepository>().To<PatientFakeRepository>().InSingletonScope();
             kernel.Bind<IDoctorRepository>().To<DoctorsFakeRepository>().InSingletonScope();
             kernel.Bind<ISpecialtyRepository>().To<SpecialtyFakeRepository>().InSingletonScope();
+            kernel.Bind<ValidationMetadataRepository>().ToSelf().InRequestScope();
+            kernel.Bind<DynamicMetadataRepository>().ToSelf().InRequestScope();
             // ~
 
             // Сервисы
@@ -126,6 +131,11 @@ namespace Health.Site.App_Start
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
                 WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
+
+            kernel.BindFilter<ValidationMetadataFilter>(FilterScope.Controller, 0).WhenActionMethodHas
+                <ValidationMetadata>().
+                WithConstructorArgumentFromActionAttribute<ValidationMetadata>("for", att => att.For).
+                WithConstructorArgumentFromActionAttribute<ValidationMetadata>("use", att => att.Use);
             // ~
 
             // Прочее
@@ -135,21 +145,13 @@ namespace Health.Site.App_Start
 
             // Провайдеры метаданных
             /* Биндеры */
-            kernel.Bind<ModelMetadataProviderBinder>().ToSelf().InRequestScope().
-                OnActivation(a => a.For<Patient>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Period>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<DefaultSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Day>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Month>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Week>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Parameter>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<PersonalSchedule>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<User>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Candidate>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>()).
-                OnActivation(a => a.For<Doctor>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>());
+            TypeDescriptor.AddProvider(
+                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(Period), typeof(PeriodMetadata)), typeof(Period));
+            TypeDescriptor.AddProvider(
+                new DynamicTypeDescriptorProvider(kernel.Get<IDIKernel>(), typeof(Period)), typeof(Period));
 
             /* Адаптеры */
-            //kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();
+            kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();
 
             /* Провайдеры конфигураций */
             kernel.Bind<ClassMetadataConfigurationProvider>().ToSelf().InRequestScope();
@@ -164,9 +166,9 @@ namespace Health.Site.App_Start
         /// </summary>
         private static void ModelProvider()
         {
-            ModelMetadataProviders.Current = new ModelMetadataProviderManager(_diKernel);
-            ModelValidatorProviders.Providers.Clear();            
-            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(_diKernel));
+            /*ModelMetadataProviders.Current = new ModelMetadataProviderManager(Kernel.Get<IDIKernel>());*/
+            /*ModelValidatorProviders.Providers.Clear();            
+            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(Kernel.Get<IDIKernel>()));*/
         }
         
         internal static void InitializeData(IKernel kernel)

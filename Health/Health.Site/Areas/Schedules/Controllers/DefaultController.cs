@@ -1,16 +1,21 @@
-﻿using System.Web.Mvc;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
+using Health.Core.Entities.Virtual;
+using Health.Core.TypeProvider;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
+using Health.Site.Models.Metadata;
 
 namespace Health.Site.Areas.Schedules.Controllers
 {
     public class DefaultController : CoreController
     {
-        public DefaultController(IDIKernel di_kernel) : base(di_kernel)
+        public DefaultController(IDIKernel diKernel) : base(diKernel)
         {
         }
 
@@ -44,12 +49,16 @@ namespace Health.Site.Areas.Schedules.Controllers
         #region Edit
 
         [PRGImport]
+        //[ValidationMetadata(typeof(Period), typeof(PeriodMetadata))]
         public ActionResult Edit([PRGInRoute] int? id, DefaultScheduleForm form)
         {
+            Get<DynamicMetadataRepository>().Bind(typeof(Period), typeof(PeriodMetadata));
             if (!id.HasValue) return RedirectTo<DefaultController>(a => a.List());
             DefaultSchedule schedule = form.DefaultSchedule ?? Get<IDefaultScheduleRepository>().GetById(id.Value);
             form.DefaultSchedule = schedule;
             form.Parameters = Get<IParameterRepository>().GetAll();
+            TypeDescriptor.AddProviderTransparent(
+                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(Week), typeof(WeekMetadata)), form.DefaultSchedule.Week);
             return
                 schedule == null
                     ? RedirectTo<DefaultController>(a => a.List())
@@ -73,6 +82,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         #region Add
 
         [PRGImport]
+        [ValidationMetadata(typeof(Period), typeof(PeriodEditMetadata))]
         public ActionResult Add(DefaultScheduleForm form)
         {
             form.Parameters = Get<IParameterRepository>().GetAll();
@@ -80,6 +90,7 @@ namespace Health.Site.Areas.Schedules.Controllers
         }
 
         [HttpPost, PRGExport]
+        [ValidationMetadata(typeof(Period), typeof(PeriodEditMetadata))]
         public ActionResult AddSubmit(DefaultScheduleForm form)
         {
             if (ModelState.IsValid)

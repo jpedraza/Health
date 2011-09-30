@@ -20,11 +20,11 @@ namespace Health.Site.Areas.Schedules.Models
         {
             get
             {
-                var selected_list = new BindingList<SelectListItem>();
-                if (Parameters == null) return selected_list;
+                var selectedList = new BindingList<SelectListItem>();
+                if (Parameters == null) return selectedList;
                 foreach (Parameter parameter in Parameters)
                 {
-                    selected_list.Add(new SelectListItem
+                    selectedList.Add(new SelectListItem
                                           {
                                               Selected =
                                                   !(DefaultSchedule == null || DefaultSchedule.Parameter == null) &&
@@ -33,7 +33,7 @@ namespace Health.Site.Areas.Schedules.Models
                                               Value = parameter.Id.ToString()
                                           });
                 }
-                return selected_list;
+                return selectedList;
             }
         }
 
@@ -44,18 +44,18 @@ namespace Health.Site.Areas.Schedules.Models
             get
             {
                 IEnumerable<Day> days = DaysInWeek.GetAll();
-                var select_list_items = new BindingList<SelectListItem>();
-                int in_week = DefaultSchedule == null || DefaultSchedule.Day == null ? 0 : DefaultSchedule.Day.InWeek;
+                var selectListItems = new BindingList<SelectListItem>();
+                int inWeek = DefaultSchedule == null || DefaultSchedule.Day == null ? 0 : DefaultSchedule.Day.InWeek;
                 foreach (Day day in days)
                 {
-                    select_list_items.Add(new SelectListItem
+                    selectListItems.Add(new SelectListItem
                                               {
-                                                  Selected = day.InWeek == in_week,
+                                                  Selected = day.InWeek == inWeek,
                                                   Text = day.Name,
                                                   Value = day.InWeek.ToString()
                                               });
                 }
-                return select_list_items;
+                return selectListItems;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Health.Site.Areas.Schedules.Models
         {
             get
             {
-                var all_days = new BindingList<SelectListItem>
+                var allDays = new BindingList<SelectListItem>
                                    {
                                        new SelectListItem
                                            {
@@ -71,18 +71,18 @@ namespace Health.Site.Areas.Schedules.Models
                                                Value = "0"
                                            }
                                    };
-                int in_month = DefaultSchedule == null || DefaultSchedule.Day == null ? 0 : DefaultSchedule.Day.InMonth;
+                int inMonth = DefaultSchedule == null || DefaultSchedule.Day == null ? 0 : DefaultSchedule.Day.InMonth;
                 for (int i = 1; i <= 31; i++)
                 {
                     var item = new SelectListItem
                                    {
-                                       Selected = in_month == i,
+                                       Selected = inMonth == i,
                                        Text = i.ToString(),
                                        Value = i.ToString()
                                    };
-                    all_days.Add(item);
+                    allDays.Add(item);
                 }
-                return all_days;
+                return allDays;
             }
         }
 
@@ -91,20 +91,20 @@ namespace Health.Site.Areas.Schedules.Models
             get
             {
                 IEnumerable<Month> months = MonthsInYear.GetAll();
-                var select_list_items = new BindingList<SelectListItem>();
-                int in_year = DefaultSchedule == null || DefaultSchedule.Month == null
+                var selectListItems = new BindingList<SelectListItem>();
+                int inYear = DefaultSchedule == null || DefaultSchedule.Month == null
                                   ? 0
                                   : DefaultSchedule.Month.InYear;
                 foreach (Month month in months)
                 {
-                    select_list_items.Add(new SelectListItem
+                    selectListItems.Add(new SelectListItem
                                               {
-                                                  Selected = month.InYear == in_year,
+                                                  Selected = month.InYear == inYear,
                                                   Text = month.Name,
                                                   Value = month.InYear.ToString()
                                               });
                 }
-                return select_list_items;
+                return selectListItems;
             }
         }
 
@@ -112,31 +112,31 @@ namespace Health.Site.Areas.Schedules.Models
         {
             get
             {
-                ParityOfWeek parity_of_week = DefaultSchedule == null || DefaultSchedule.Week == null
+                ParityOfWeek parityOfWeek = DefaultSchedule == null || DefaultSchedule.Week == null
                                                   ? ParityOfWeek.All
                                                   : DefaultSchedule.Week.Parity;
-                var week_parity = new BindingList<SelectListItem>
+                var weekParity = new BindingList<SelectListItem>
                                       {
                                           new SelectListItem
                                               {
-                                                  Selected = parity_of_week == ParityOfWeek.All,
+                                                  Selected = parityOfWeek == ParityOfWeek.All,
                                                   Text = "Любая",
                                                   Value = ParityOfWeek.All.ToString()
                                               },
                                           new SelectListItem
                                               {
-                                                  Selected = parity_of_week == ParityOfWeek.Odd,
+                                                  Selected = parityOfWeek == ParityOfWeek.Odd,
                                                   Text = "Нечетная",
                                                   Value = ParityOfWeek.Odd.ToString()
                                               },
                                           new SelectListItem
                                               {
-                                                  Selected = parity_of_week == ParityOfWeek.Even,
+                                                  Selected = parityOfWeek == ParityOfWeek.Even,
                                                   Text = "Четная",
                                                   Value = ParityOfWeek.Even.ToString()
                                               }
                                       };
-                return week_parity;
+                return weekParity;
             }
         }
     }

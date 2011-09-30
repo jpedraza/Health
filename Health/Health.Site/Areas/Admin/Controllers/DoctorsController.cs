@@ -15,7 +15,7 @@ namespace Health.Site.Areas.Admin.Controllers
 {
     public class DoctorsController : CoreController
     {
-        public DoctorsController(IDIKernel di_kernel) : base(di_kernel)
+        public DoctorsController(IDIKernel diKernel) : base(diKernel)
         {
         }
 
@@ -107,28 +107,6 @@ namespace Health.Site.Areas.Admin.Controllers
             }
             if (confirm.Value) DIKernel.Get<IDoctorRepository>().DeleteById(id.Value);
             return RedirectTo<DoctorsController>(a => a.List());
-        }
-
-        #endregion
-
-        #region Led Patients
-        
-        [PRGImport]
-        public ActionResult Led([PRGInRoute]int? id)
-        {
-            if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
-            Doctor doctor = Get<IDoctorRepository>().GetById(id.Value);
-            if (doctor == null) return RedirectTo<DoctorsController>(a => a.List());
-            var form = new DoctorForm {Doctor = doctor, Patients = Get<IPatientRepository>().GetAll()};
-            return View(form);
-        }
-
-        [PRGExport]
-        public ActionResult SetLed(int? doctor_id, int? patient_id)
-        {
-            if (!doctor_id.HasValue || !patient_id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
-            Get<IAttendingDoctorService>().SetLedDoctorForPatient(doctor_id.Value, patient_id.Value);
-            return RedirectTo<DoctorsController>(a => a.Led(doctor_id));
         }
 
         #endregion

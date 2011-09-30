@@ -15,6 +15,6 @@ namespace Health.Core.Entities.POCO
         /// <summary>
         /// Ведомые пациенты.
         /// </summary>
-        public IEnumerable<Patient> Patients { get; set; }
+        public ICollection<Patient> Patients { get; set; }
     }
 }

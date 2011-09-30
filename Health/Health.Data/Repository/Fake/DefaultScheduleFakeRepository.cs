@@ -13,52 +13,49 @@ namespace Health.Data.Repository.Fake
 {
     public class DefaultScheduleFakeRepository : CoreFakeRepository<DefaultSchedule>, IDefaultScheduleRepository
     {
-        public DefaultScheduleFakeRepository(IDIKernel di_kernel) : base(di_kernel)
+        public DefaultScheduleFakeRepository(IDIKernel diKernel) : base(diKernel)
         {
-            _entities = new List<DefaultSchedule>
-                            {
-                                new DefaultSchedule
+            Save(new DefaultSchedule
+                {
+                    Day = DaysInWeek.All,
+                    Week = WeeksInMonth.All,
+                    Month = MonthsInYear.All,
+                    Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
+                    Period = new Period
                                     {
-                                        Day = DaysInWeek.All,
-                                        Week = WeeksInMonth.All,
-                                        Month = MonthsInYear.All,
-                                        Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
-                                        Period = new Period
-                                                     {
-                                                         Years = 2
-                                                     },
-                                        TimeStart = new TimeSpan(10, 0, 0),
-                                        TimeEnd = new TimeSpan(22, 0, 0)
+                                        Years = 2
                                     },
-                                new DefaultSchedule
+                    TimeStart = new TimeSpan(10, 0, 0),
+                    TimeEnd = new TimeSpan(22, 0, 0)
+                });
+            Save(new DefaultSchedule
+                {
+                    Day = DaysInWeek.All,
+                    Week = WeeksInMonth.Even,
+                    Month = MonthsInYear.May,
+                    Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
+                    Period = new Period
                                     {
-                                        Day = DaysInWeek.All,
-                                        Week = WeeksInMonth.Even,
-                                        Month = MonthsInYear.May,
-                                        Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
-                                        Period = new Period
-                                                     {
-                                                         Months = 6
-                                                     },
-                                        TimeStart = new TimeSpan(10, 0, 0),
-                                        TimeEnd = new TimeSpan(22, 0, 0)
-                                    }
-                            };
+                                        Months = 6
+                                    },
+                    TimeStart = new TimeSpan(10, 0, 0),
+                    TimeEnd = new TimeSpan(22, 0, 0)
+                });
         }
 
-        public DefaultSchedule GetById(int schedule_id)
+        public DefaultSchedule GetById(int scheduleId)
         {
-            return (from default_schedule in _entities
-                   where default_schedule.Id == schedule_id
-                   select default_schedule).FirstOrDefault();
+            return (from defaultSchedule in _entities
+                   where defaultSchedule.Id == scheduleId
+                   select defaultSchedule).FirstOrDefault();
         }
 
-        public bool DeleteById(int schedule_id)
+        public bool DeleteById(int scheduleId)
         {
             for (int i = 0; i < _entities.Count; i++)
             {
-                DefaultSchedule default_schedule = _entities[i];
-                if (default_schedule.Id == schedule_id)
+                DefaultSchedule defaultSchedule = _entities[i];
+                if (defaultSchedule.Id == scheduleId)
                 {
                     _entities.RemoveAt(i);
                 }
@@ -68,11 +65,11 @@ namespace Health.Data.Repository.Fake
 
         public override bool Update(DefaultSchedule entity)
         {
-            foreach (DefaultSchedule default_schedule in _entities)
+            foreach (DefaultSchedule defaultSchedule in _entities)
             {
-                if (default_schedule.Id == entity.Id)
+                if (defaultSchedule.Id == entity.Id)
                 {
-                    _entities.Remove(default_schedule);
+                    _entities.Remove(defaultSchedule);
                     entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
                     _entities.Add(entity);
                     return true;

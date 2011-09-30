@@ -1,11 +1,16 @@
 ﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Health.Core.API;
+using Health.Core.Entities.Virtual;
 using Health.Site.App_Start;
 using Health.Site.Controllers;
 using Health.Site.Models;
+using Health.Site.Models.Metadata;
+using Health.Site.Repository;
 using Ninject;
 
 namespace Health.Site
@@ -101,9 +106,16 @@ namespace Health.Site
 
         protected void Application_Start()
         {
+            
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Application_EndRequest()
+        {
+            TypeDescriptor.RemoveProvider(
+                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(Period), typeof(PeriodMetadata)), typeof(Period));
         }
     }
 }

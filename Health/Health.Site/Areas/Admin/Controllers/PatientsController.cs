@@ -11,7 +11,7 @@ namespace Health.Site.Areas.Admin.Controllers
 {
     public class PatientsController : CoreController
     {
-        public PatientsController(IDIKernel di_kernel) : base(di_kernel)
+        public PatientsController(IDIKernel diKernel) : base(diKernel)
         {
         }
 
@@ -104,6 +104,19 @@ namespace Health.Site.Areas.Admin.Controllers
             }
             if (confirm.Value) Get<IPatientRepository>().DeleteById(id.Value);
             return RedirectTo<PatientsController>(a => a.List());
+        }
+
+        #endregion
+
+        #region Led Doctor
+
+        public ActionResult Led(int? id)
+        {
+            if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
+            Patient patient = Get<IPatientRepository>().GetById(id.Value);
+            if (patient == null) return RedirectTo<PatientsController>(a => a.List());
+            var form = new PatientForm {Patient = patient, Doctors = Get<IDoctorRepository>().GetAll()};
+            return View(form);
         }
 
         #endregion

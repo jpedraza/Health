@@ -154,6 +154,7 @@
     <Compile Include="Attributes\Auth.cs" />
     <Compile Include="Attributes\PRGAttributes.cs" />
     <Compile Include="Attributes\RequireRouteValues.cs" />
+    <Compile Include="Attributes\ValidationMetadata.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="DI\DIKernel.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Filters\AuthFilter.cs" />
+    <Compile Include="Filters\ValidationMetadataFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,6 +205,7 @@
     <Compile Include="Repository\CookieRepository.cs" />
     <Compile Include="Repository\SessionRepository.cs" />
     <Compile Include="Factory\RenderingFactory.cs" />
+    <Compile Include="Repository\ValidationMetadataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ModelMetadata\TestModel.Model.xml">
@@ -403,6 +406,7 @@
     <Content Include="Areas\Admin\Views\Doctors\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\_PatientForm.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\Led.cshtml" />
+    <Content Include="Areas\Admin\Views\Patients\Led.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
