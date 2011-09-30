@@ -1,6 +1,22 @@
-﻿@{
+﻿@using Health.Site.Helpers;
+@using System.Web;
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Это тестовый контроллер</h2>
-<p>Здесь мы будем делать всякую хрень((</p>
+<p>Проверка передачи данных из контроллера.</p>
+@ViewData["text"]
+<p>Итак, проверим наш отрисовщик.</p>
+
+@{
+    var par = ViewData["parameter"] as Health.Core.Entities.POCO.Parameter;
+    var par2 = ViewData["parameter2"] as Health.Core.Entities.POCO.Parameter;}
+
+          <div style="background-color: Red;">
+          @Html.GetLayoutForParameter(par, "TestForm")
+          </div>
+
+          <div style="background-color: Green">
+          @Html.GetLayoutForParameter(par2, "TestForm")
+          </div>
