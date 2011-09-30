@@ -1,32 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
+using System.Reflection;
 using System.Web.Mvc;
 using Health.Core.API;
-using Health.Core.Entities.Virtual;
 using Health.Core.TypeProvider;
-using Health.Site.Areas.Schedules.Controllers;
-using Health.Site.Models.Metadata;
-using Health.Site.Models.Providers;
-using Health.Site.Repository;
 
 namespace Health.Site.Filters
 {
-    public class ValidationMetadataFilter : IActionFilter
+    public class ValidationModelAttributeFilter : IActionFilter
     {
         private readonly Type _for;
         private readonly Type _use;
         private readonly IDIKernel _diKernel;
+        private readonly string _alias;
 
-        public ValidationMetadataFilter(IDIKernel diKernel, Type @for, Type use)
+        public ValidationModelAttributeFilter(IDIKernel diKernel, Type @for, Type use, string alias)
         {
             _for = @for;
             _use = use;
             _diKernel = diKernel;
+            _alias = alias;
         }
 
         #region Implementation of IActionFilter
@@ -37,10 +31,15 @@ namespace Health.Site.Filters
         /// <param name="filterContext">Контекст фильтра.</param>
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _diKernel.Get<DynamicMetadataRepository>().Bind(_for, _use);
-            object model = filterContext.ActionParameters["form"];
-            var adapter = new ModelValidatorProviderAdapter(_diKernel);
-            IEnumerable<ModelValidator> validators = adapter.GetValidators(filterContext.Controller.ViewData.ModelMetadata,
+            object model;
+            if (!filterContext.ActionParameters.TryGetValue(_alias, out model))
+            {
+                throw new Exception("Модель в параметрах метода не найдена. Проверьте что имя параметра 'form' или укажите псевдоним Alias.");
+            }
+            FindModelMetadataForType(model.GetType());
+            var adapter = ModelValidatorProviders.Providers[0];
+            ModelMetadata modelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType()); 
+            IEnumerable<ModelValidator> validators = adapter.GetValidators(modelMetadata,
                                   filterContext.Controller.ControllerContext);
             filterContext.Controller.ViewData.ModelState.Clear();
             foreach (ModelValidator validator in validators)
@@ -51,18 +50,42 @@ namespace Health.Site.Filters
                     filterContext.Controller.ViewData.ModelState.AddModelError(modelValidationResult.MemberName, modelValidationResult.Message);
                 }
             }
-            filterContext.Controller.ViewData.Model = model;
             IModelBinder binder = ModelBinders.Binders.GetBinder(model.GetType());
-
             var bindingContext = new ModelBindingContext
                                                      {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, model.GetType()),
+                ModelMetadata = modelMetadata,
                 ModelName = "",
                 ModelState = filterContext.Controller.ViewData.ModelState,
                 PropertyFilter = null,
                 ValueProvider = filterContext.Controller.ValueProvider
             };
             binder.BindModel(filterContext.Controller.ControllerContext, bindingContext);
+            filterContext.Controller.ViewData.Model = model;
+        }
+
+        private void FindModelMetadataForType(Type modelType)
+        {
+            PropertyInfo[] propertyInfos = modelType.GetProperties();
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                if (propertyInfo.PropertyType.Namespace != typeof(int).Namespace)
+                {
+                    if (propertyInfo.PropertyType == _for)
+                    {
+                        FindModelMetadataForType(_use);
+                        continue;
+                    }
+                    var attribute =
+                        propertyInfo.GetCustomAttributes(typeof (ClassMetadataAttribute), true).FirstOrDefault() as
+                        ClassMetadataAttribute;
+                    if (attribute != null)
+                    {
+                        _diKernel.Get<DynamicMetadataRepository>().Bind(propertyInfo.PropertyType,
+                                                                        attribute.MetadataType);
+                        FindModelMetadataForType(attribute.MetadataType);
+                    }
+                }
+            }
         }
 
         /// <summary>

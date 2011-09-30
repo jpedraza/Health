@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Health.Core.API;
 
 namespace Health.Core.TypeProvider
 {
     public class DynamicTypeDescriptor : CustomTypeDescriptor
     {
-        private readonly Type _modelType;
         private readonly Type _metadataType;
-        private readonly IDIKernel _diKernel;
 
-        public DynamicTypeDescriptor(IDIKernel diKernel, ICustomTypeDescriptor parent, Type modelType, Type metadataType) : base(parent)
+        public DynamicTypeDescriptor(ICustomTypeDescriptor parent, Type metadataType) : base(parent)
         {
-            _modelType = modelType;
             _metadataType = metadataType;
-            _diKernel = diKernel;
         }
 
         public override PropertyDescriptorCollection GetProperties()
@@ -33,11 +25,18 @@ namespace Health.Core.TypeProvider
                 {
                     PropertyInfo propertyInfo = _metadataType.GetProperty(propertyDescriptor.Name,
                                                                        propertyDescriptor.PropertyType);
-                    object[] newAttributesTemp = propertyInfo.GetCustomAttributes(false);
-                    Attribute[] newAttributes = Array.ConvertAll(newAttributesTemp, ObjectTypeToAttributeType);
-                    if (newAttributes.Length > 0)
+                    if (propertyInfo != null)
                     {
-                        tempPropertyDescriptors.Add(new PropertyDescriptorWrapper(propertyDescriptor, newAttributes));
+                        object[] newAttributesTemp = propertyInfo.GetCustomAttributes(false);
+                        Attribute[] newAttributes = Array.ConvertAll(newAttributesTemp, ObjectTypeToAttributeType);
+                        if (newAttributes.Length > 0)
+                        {
+                            tempPropertyDescriptors.Add(new PropertyDescriptorWrapper(propertyDescriptor, newAttributes));
+                        }
+                        else
+                        {
+                            tempPropertyDescriptors.Add(propertyDescriptor);
+                        }
                     }
                     else
                     {

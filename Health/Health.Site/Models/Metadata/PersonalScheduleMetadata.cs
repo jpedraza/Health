@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
-using Health.Site.Attributes;
-using Health.Site.Models.Providers;
+using Health.Core.TypeProvider;
 
 namespace Health.Site.Models.Metadata
 {

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
-using Health.Site.Models.Providers;
+using Health.Core.TypeProvider;
 
 namespace Health.Site.Models.Metadata
 {
@@ -16,7 +16,6 @@ namespace Health.Site.Models.Metadata
         public virtual Period Period { get; set; }
 
         [DisplayName("Параметр.")]
-        //[ClassMetadata(typeof(IfSubParameterMetadata))]
         public virtual Parameter Parameter { get; set; }
 
         [DisplayName("Время начала ввода параметра.")]
@@ -40,7 +39,7 @@ namespace Health.Site.Models.Metadata
         [Required(ErrorMessage = "Укажите идентификатор расписания.")]
         public override int Id { get; set; }
 
-        [ClassMetadata(typeof(PeriodEditMetadata))]
+        [ClassMetadata(typeof(PeriodFormMetadata))]
         public override Period Period { get; set; }
 
         [Required(ErrorMessage = "Укажите время начала ввода параметра")]
@@ -48,5 +47,8 @@ namespace Health.Site.Models.Metadata
 
         [Required(ErrorMessage = "Укажите время окончания ввода параметра")]
         public override TimeSpan TimeEnd { get; set; }
+
+        [ClassMetadata(typeof(WeekFormMetadata))]
+        public override Week Week { get; set; }
     }
 }

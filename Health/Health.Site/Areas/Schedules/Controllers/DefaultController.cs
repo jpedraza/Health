@@ -37,19 +37,18 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         public ActionResult List()
         {
-            var list_form = new DefaultScheduleList
+            var listForm = new DefaultScheduleList
                                 {
                                     DefaultSchedules = Get<IDefaultScheduleRepository>().GetAll()
                                 };
-            return View(list_form);
+            return View(listForm);
         }
 
         #endregion
 
         #region Edit
 
-        [PRGImport]
-        //[ValidationMetadata(typeof(Period), typeof(PeriodMetadata))]
+        [PRGImport, ValidationModel]
         public ActionResult Edit([PRGInRoute] int? id, DefaultScheduleForm form)
         {
             Get<DynamicMetadataRepository>().Bind(typeof(Period), typeof(PeriodMetadata));
@@ -65,7 +64,7 @@ namespace Health.Site.Areas.Schedules.Controllers
                     : View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult Edit(DefaultScheduleForm form)
         {
             if (ModelState.IsValid)
@@ -81,16 +80,14 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Add
 
-        [PRGImport]
-        [ValidationMetadata(typeof(Period), typeof(PeriodEditMetadata))]
+        [PRGImport, ValidationModel]
         public ActionResult Add(DefaultScheduleForm form)
         {
             form.Parameters = Get<IParameterRepository>().GetAll();
             return View(form);
         }
 
-        [HttpPost, PRGExport]
-        [ValidationMetadata(typeof(Period), typeof(PeriodEditMetadata))]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult AddSubmit(DefaultScheduleForm form)
         {
             if (ModelState.IsValid)

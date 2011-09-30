@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Mime;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Models;
-using Health.Site.Models.Configuration.Providers;
-using Health.Site.Models.Providers;
 
 namespace Health.Site.Controllers
 {
@@ -22,20 +18,6 @@ namespace Health.Site.Controllers
         protected CoreController(IDIKernel di_kernel)
         {
             DIKernel = di_kernel;
-        }
-
-        /// <summary>
-        /// Биндер метаданных.
-        /// </summary>
-        protected ModelMetadataProviderBinder MetadataBinder
-        {
-            get { return DIKernel.Get<ModelMetadataProviderBinder>(); }
-        }
-
-        protected void ClassMetadataBinder<TFor, TUse>()
-        {
-            MetadataBinder.For<TFor>().Use<MMPAAttributeOnly, ClassMetadataConfigurationProvider>().
-                WithConfigurationParameters(typeof (TUse));
         }
 
         protected T Get<T>()

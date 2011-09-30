@@ -10,19 +10,20 @@ namespace Health.Site.Models.Metadata
 {
     public class WeekMetadata
     {
-        [Required]
         [DisplayName("Четность недели")]
         public ParityOfWeek Parity { get; set; }
 
-        [Range(0, 6)]
-        [Required(ErrorMessage = "чцавыаыва")]
         [DisplayName("Номер недели в месяце")]
         public virtual int InMonth { get; set; }
     }
 
-    public class WeekValidationMetadata
+    public class WeekFormMetadata
     {
-        [Required(ErrorMessage = "бла бла бла")]
+        [Required]
+        public ParityOfWeek Parity { get; set; }
+
+        [Range(0, 6)]
+        [Required(ErrorMessage = "Укажите номер недели в месяце")]
         public int InMonth { get; set; }
     }
 }

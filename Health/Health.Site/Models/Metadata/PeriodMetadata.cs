@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Health.Site.Models.Metadata
 {
@@ -28,7 +24,7 @@ namespace Health.Site.Models.Metadata
         public int Minutes { get; set; }
     }
 
-    public class PeriodEditMetadata
+    public class PeriodFormMetadata
     {
         [Required(ErrorMessage = "Необходимо указать число лет.")]
         [Range(0, 200, ErrorMessage = "Число лет должно быть от 0 до 200.")]
@@ -49,9 +45,5 @@ namespace Health.Site.Models.Metadata
         [Required(ErrorMessage = "Необходимо указать число часов.")]
         [Range(0, 23, ErrorMessage = "Число часов должно быть от 0 до 23.")]
         public int Hours { get; set; }
-
-        [Required(ErrorMessage = "Необходимо указать число минут.")]
-        [Range(0, 59, ErrorMessage = "Число минут должно быть от 0 до 59.")]
-        public int Minutes { get; set; }
     }
 }

@@ -2,35 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using Health.Core;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.API.Services;
-using Health.Core.API.Validators;
 using Health.Core.Entities.POCO;
 using Health.Core.Services;
 using Health.Core.TypeProvider;
 using Health.Data.Repository.Fake;
-using Health.Data.Validators;
 using Health.Site.App_Start;
 using Health.Site.Attributes;
 using Health.Site.DI;
 using Health.Site.Filters;
-using Health.Site.Models;
-using Health.Site.Models.Binders;
-using Health.Site.Models.Configuration;
-using Health.Site.Models.Configuration.Providers;
-using Health.Site.Models.Providers;
 using Health.Site.Repository;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
-using Ninject.Modules;
 using Ninject.Web.Mvc;
 using Ninject.Web.Mvc.FilterBindingSyntax;
-using Ninject.Web.Mvc.Validation;
 using NinjectAdapter;
 using WebActivator;
 using Health.Site.Models.Metadata;
@@ -43,11 +33,6 @@ namespace Health.Site.App_Start
 {
     public static class NinjectMVC3
     {
-        /// <summary>
-        /// DI ядро приложения.
-        /// </summary>
-        private static IDIKernel _diKernel;
-
         private static readonly Bootstrapper _bootstrapper = new Bootstrapper();
 
         public static IKernel Kernel { get; private set; }
@@ -60,8 +45,6 @@ namespace Health.Site.App_Start
             DynamicModuleUtility.RegisterModule(typeof (OnePerRequestModule));
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
             _bootstrapper.Initialize(CreateKernel);
-            ModelToBinder();
-            ModelProvider();
         }
 
         /// <summary>
@@ -73,14 +56,6 @@ namespace Health.Site.App_Start
         }
 
         /// <summary>
-        /// Регистрация нестандартных биндеров для моделей
-        /// </summary>
-        public static void ModelToBinder()
-        {
-            //ModelBinders.Binders.Add(typeof (InterviewFormModel), new ParametersFormBinder(Kernel.Get<IDIKernel>()));
-        }
-
-        /// <summary>
         /// Создания ядра.
         /// </summary>
         /// <returns>Созданное ядро.</returns>
@@ -89,7 +64,6 @@ namespace Health.Site.App_Start
             var kernel = new StandardKernel();
             RegisterServices(kernel);
             InitializeData(kernel);
-            //_diKernel = new DIKernel(kernel);
             var locator = new NinjectServiceLocator(kernel);
             ServiceLocator.SetLocatorProvider(() => locator);
             Kernel = kernel;
@@ -132,10 +106,11 @@ namespace Health.Site.App_Start
                 WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
                 WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
 
-            kernel.BindFilter<ValidationMetadataFilter>(FilterScope.Controller, 0).WhenActionMethodHas
-                <ValidationMetadata>().
-                WithConstructorArgumentFromActionAttribute<ValidationMetadata>("for", att => att.For).
-                WithConstructorArgumentFromActionAttribute<ValidationMetadata>("use", att => att.Use);
+            kernel.BindFilter<ValidationModelAttributeFilter>(FilterScope.Controller, 0).WhenActionMethodHas
+                <ValidationModelAttribute>().
+                WithConstructorArgumentFromActionAttribute<ValidationModelAttribute>("for", att => att.For).
+                WithConstructorArgumentFromActionAttribute<ValidationModelAttribute>("use", att => att.Use).
+                WithConstructorArgumentFromActionAttribute<ValidationModelAttribute>("alias", att => att.Alias);
             // ~
 
             // Прочее
@@ -144,31 +119,24 @@ namespace Health.Site.App_Start
             // ~
 
             // Провайдеры метаданных
-            /* Биндеры */
-            TypeDescriptor.AddProvider(
-                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(Period), typeof(PeriodMetadata)), typeof(Period));
-            TypeDescriptor.AddProvider(
-                new DynamicTypeDescriptorProvider(kernel.Get<IDIKernel>(), typeof(Period)), typeof(Period));
+            AddDisplayMetadata<Period, PeriodMetadata>();
+            AddDynamicMetadata<Period>(kernel.Get<IDIKernel>());
 
-            /* Адаптеры */
-            kernel.Bind<ModelMetadataProviderManager>().ToSelf().InRequestScope();
-
-            /* Провайдеры конфигураций */
-            kernel.Bind<ClassMetadataConfigurationProvider>().ToSelf().InRequestScope();
-            kernel.Bind<SerializerMetadataConfigurationProvider>().ToSelf().InRequestScope();
-            kernel.Bind<XmlMetadataConfigurationProvider>().ToSelf().InRequestScope().
-                WithConstructorArgument("path", HostingEnvironment.MapPath("~/App_Data/ModelMetadata/"));
+            AddDisplayMetadata<Week, WeekMetadata>();
+            AddDynamicMetadata<Week>(kernel.Get<IDIKernel>());
             // ~
         }
 
-        /// <summary>
-        /// Регистрация провайдеров метаданных.
-        /// </summary>
-        private static void ModelProvider()
+        internal static void AddDisplayMetadata<TModel, TMetadata>()
         {
-            /*ModelMetadataProviders.Current = new ModelMetadataProviderManager(Kernel.Get<IDIKernel>());*/
-            /*ModelValidatorProviders.Providers.Clear();            
-            ModelValidatorProviders.Providers.Add(new ModelValidatorProviderAdapter(Kernel.Get<IDIKernel>()));*/
+            TypeDescriptor.AddProvider(
+                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(TModel), typeof(TMetadata)), typeof(TModel));
+        }
+
+        internal static void AddDynamicMetadata<TModel>(IDIKernel diKernel)
+        {
+            TypeDescriptor.AddProvider(
+                new DynamicTypeDescriptorProvider(diKernel, typeof(TModel)), typeof(TModel));
         }
         
         internal static void InitializeData(IKernel kernel)
@@ -228,9 +196,9 @@ namespace Health.Site.App_Start
             doctor2.Patients = new List<Patient> { patient2 };
             kernel.Get<IDoctorRepository>().Save(doctor1);
             kernel.Get<IDoctorRepository>().Save(doctor2);
-            var patient_repository = kernel.Get<IPatientRepository>();
-            patient_repository.Save(patient1);
-            patient_repository.Save(patient2);
+            var patientRepository = kernel.Get<IPatientRepository>();
+            patientRepository.Save(patient1);
+            patientRepository.Save(patient2);
         }
     }
 }

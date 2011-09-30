@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using Health.Core.API;
 
 namespace Health.Core.TypeProvider
@@ -23,7 +19,7 @@ namespace Health.Core.TypeProvider
             Type metadataType = repository.GetMetadataType(objectType);
             if (metadataType == null) return base.GetTypeDescriptor(objectType, instance);
             return
-                new DynamicTypeDescriptor(_diKernel, base.GetTypeDescriptor(objectType, instance), objectType, metadataType);
+                new DynamicTypeDescriptor(base.GetTypeDescriptor(objectType, instance), metadataType);
         }
     }
 }

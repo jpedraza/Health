@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Health.Core.Entities.POCO;
-using Health.Site.Attributes;
+using Health.Core.TypeProvider;
 using Health.Site.Models;
 using Health.Site.Models.Metadata;
-using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Account.Models
 {

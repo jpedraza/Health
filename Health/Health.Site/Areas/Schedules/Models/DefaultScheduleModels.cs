@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Web.Mvc;
 using Health.Core.Entities.POCO;
 using Health.Core.Entities.Virtual;
+using Health.Core.TypeProvider;
 using Health.Site.Models;
 using Health.Site.Models.Metadata;
-using Health.Site.Models.Providers;
 
 namespace Health.Site.Areas.Schedules.Models
 {

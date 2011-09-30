@@ -43,4 +43,21 @@ namespace Health.Core.TypeProvider
             return null;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public abstract class ModelMetadataProviderBinderAttribute : Attribute
+    {
+        public Type MetadataType;
+
+        protected ModelMetadataProviderBinderAttribute(Type metadataType)
+        {
+            MetadataType = metadataType;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ClassMetadataAttribute : ModelMetadataProviderBinderAttribute
+    {
+        public ClassMetadataAttribute(Type metadataType) : base(metadataType) { }
+    }
 }
