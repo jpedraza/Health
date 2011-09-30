@@ -9,6 +9,7 @@ using Health.Site.Attributes;
 using Health.Site.Areas.Parameters.Models;
 using Health.Core.Entities.POCO;
 using Health.Site.Models.Metadata;
+using Health.Data.Repository.Fake;
 
 namespace Health.Site.Areas.Parameters.Controllers
 {
@@ -27,6 +28,7 @@ namespace Health.Site.Areas.Parameters.Controllers
         /// <summary>
         /// Отображение формы начала создания нового параметра
         /// </summary>
+        [PRGImport]
         public ActionResult Index()
         {
             ClassMetadataBinder<Parameter, ParameterMetadata>();
@@ -38,26 +40,20 @@ namespace Health.Site.Areas.Parameters.Controllers
         /// </summary>
         /// <param name="form_model"></param>
         /// <returns></returns>
-        public ActionResult NextAdd([Bind(Include = "StartAddForm")] ParametersViewModel form_model)
+        [PRGImport, PRGExport]
+        public ActionResult NextAdd(ParametersViewModel form_model)
         {
             if (ModelState.IsValid)
             {
                 if (form_model != null && form_model.StartAddForm != null)
                 {
-                    form_model =  form_model.StartAddParameter(form_model.StartAddForm.Name, 
-                        form_model.StartAddForm.Value, 
-                        form_model.StartAddForm.DefaultValue, 
-                        form_model.StartAddForm.Is_childs, 
-                        form_model.StartAddForm.Is_var, 
-                        form_model.StartAddForm.Is_param, 
-                        CoreKernel.ParamRepo);
+                    form_model.StartAddParameter(DIKernel.Get<ParametersFakeRepository>());
                     TempData["NewParam"] = form_model.NewParam;
                     return View(form_model);
                 }
                 else
                     return RedirectTo<AddController>(a => a.Index());
             }
-
             return View();
         }
         /// <summary>
@@ -65,15 +61,16 @@ namespace Health.Site.Areas.Parameters.Controllers
         /// </summary>
         /// <param name="form_model"></param>
         /// <returns></returns>
-        public ActionResult Var([Bind(Include = "NextAddForm")] ParametersViewModel form_model)
+        [PRGExport, PRGImport]
+        public ActionResult Var( ParametersViewModel form_model)
         {
             if (ModelState.IsValid)
             {
-                form_model.NewParam = (Parameter)TempData["NewParam"];
+                form_model.NewParam = TempData["NewParam"] as Parameter;
                 TempData.Keep("NewParam");
-                if (form_model.NextAddForm != null&&ParametersViewModel.IsCorrectStage2(form_model.NewParam))
+                if (form_model.NextAddForm != null && form_model.NewParam != null)
                 {
-                    form_model.NextAddParameter(form_model);
+                    form_model.NextAddParameter();
                     if (!form_model.NewParam.MetaData.Is_var)
                     {
                         return RedirectTo<AddController>(a => a.Confirm(form_model));
@@ -82,6 +79,7 @@ namespace Health.Site.Areas.Parameters.Controllers
                     {
                         form_model.display_for = form_model.NextAddForm.NumVariant;
                         TempData["NewParam"] = form_model.NewParam;
+
                         return View(form_model);
                     }
                     
@@ -93,14 +91,18 @@ namespace Health.Site.Areas.Parameters.Controllers
             return View();
         }
 
-        public ActionResult Confirm([Bind(Include = "VarForm")] ParametersViewModel form_model)
+        public ActionResult Confirm(ParametersViewModel form_model)
         {
             if (ModelState.IsValid)
             {
 
-                form_model.NewParam = (Parameter)TempData["NewParam"];
-                ParametersViewModel Model = form_model.AddParameter(form_model);
-                bool result = CoreKernel.ParamRepo.Add(Model.NewParam);
+                form_model.NewParam = TempData["NewParam"] as Parameter;
+                TempData.Keep("NewParam");
+                if(form_model.NewParam == null)
+                    return RedirectTo<AddController>(a => a.Index());
+                if (form_model.VarForm != null)
+                    form_model.AddVariants();
+                bool result = CoreKernel.ParamRepo.Add(form_model.NewParam);
                 TempData["Result"] = result;
                 ViewData["Result"] = TempData["Result"];
                 TempData.Keep("Result");

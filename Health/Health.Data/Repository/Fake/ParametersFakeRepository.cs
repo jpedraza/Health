@@ -28,7 +28,6 @@ namespace Health.Data.Repository.Fake
                     Id_parent = null,
                     Obligation = true,
                     Is_childs = false,
-                    period = 12,
                     Variants = null
                 }
             });
@@ -46,7 +45,6 @@ namespace Health.Data.Repository.Fake
                         Id_parent = null,
                         Is_childs = false,
                         Obligation = true,
-                        period = 32,
                         Variants = new Variant[]{
                         new Variant{
                         Value = "Не болит",
@@ -67,7 +65,6 @@ namespace Health.Data.Repository.Fake
                     Id_cat = 1,
                     Is_var = false,
                     Obligation = true,
-                    period = null,
                     Is_childs = true,
                     Age = 0,
                     Id_parent = null,
@@ -85,7 +82,6 @@ namespace Health.Data.Repository.Fake
                     Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -125,7 +121,6 @@ namespace Health.Data.Repository.Fake
                     Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -165,7 +160,6 @@ namespace Health.Data.Repository.Fake
                     Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,
@@ -205,7 +199,6 @@ namespace Health.Data.Repository.Fake
                     Id_cat = null,
                     Is_var = true,
                     Obligation = true,
-                    period = null,
                     Is_childs = false,
                     Age = 0,
                     Id_parent = 1,

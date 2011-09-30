@@ -7,7 +7,6 @@ namespace Health.Core.Entities.POCO
     /// </summary>
     public class MetaData
     {
-        //Dictionary<string, CustomMeta> metadata;
         /// <summary>
         /// Показывает, есть ли на данный параметр варианты ответа
         /// </summary>
@@ -27,11 +26,6 @@ namespace Health.Core.Entities.POCO
         /// Обязательно или нет заполнять данный параметр, подавать или нет его в первичной анкете
         /// </summary>
         public bool Obligation { get; set; }
-
-        /// <summary>
-        /// Частота, с которой  необходимо заполнять данный параметр
-        /// </summary>
-        public Nullable<double> period { get; set; }
 
         /// <summary>
         /// Есть ли подпараметр?
