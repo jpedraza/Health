@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Health.Core.API.Repository;
 using Health.Site.Controllers;
 using Health.Core.API;
 using Health.Site.Attributes;
@@ -31,7 +32,6 @@ namespace Health.Site.Areas.Parameters.Controllers
         [PRGImport]
         public ActionResult Index()
         {
-            ClassMetadataBinder<Parameter, ParameterMetadata>();
             return View();
         }
 
@@ -102,7 +102,7 @@ namespace Health.Site.Areas.Parameters.Controllers
                     return RedirectTo<AddController>(a => a.Index());
                 if (form_model.VarForm != null)
                     form_model.AddVariants();
-                bool result = CoreKernel.ParamRepo.Add(form_model.NewParam);
+                bool result = Get<IParameterRepository>().Add(form_model.NewParam);
                 TempData["Result"] = result;
                 ViewData["Result"] = TempData["Result"];
                 TempData.Keep("Result");
