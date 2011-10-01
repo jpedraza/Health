@@ -169,7 +169,7 @@
     </Compile>
     <Compile Include="Helpers\Classes\MainMenu.cs" />
     <Compile Include="Helpers\HtmlElementsHelpers.cs" />
-    <Compile Include="Helpers\ParametersHelper.cs" />
+    <Compile Include="Helpers\RenderParameters.cs" />
     <Compile Include="Helpers\WidgetHelper.cs" />
     <Compile Include="Models\Binders\ParametersFormBinder.cs" />
     <Compile Include="Models\CoreViewModel.cs" />
