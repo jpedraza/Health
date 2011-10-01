@@ -356,7 +356,6 @@
     <Content Include="Areas\Parameters\Views\Add\Confirm.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Index.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Edit.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Error.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\ConfirmSave.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Deletevariant.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\ContinueEdit.cshtml" />
