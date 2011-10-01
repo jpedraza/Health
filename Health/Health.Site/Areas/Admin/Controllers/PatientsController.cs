@@ -6,6 +6,7 @@ using Health.Core.Entities.POCO;
 using Health.Site.Areas.Admin.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
+using Health.Site.Models.Metadata;
 
 namespace Health.Site.Areas.Admin.Controllers
 {
@@ -38,7 +39,7 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Add
 
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Add(PatientForm form)
         {
             form.Patient = form.Patient ?? new Patient();
@@ -46,7 +47,7 @@ namespace Health.Site.Areas.Admin.Controllers
             return View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult AddSubmit(PatientForm form)
         {
             if (ModelState.IsValid)
@@ -61,7 +62,7 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Edit
         
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Edit(int? id, PatientForm form)
         {
             if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
@@ -73,7 +74,7 @@ namespace Health.Site.Areas.Admin.Controllers
                     : View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult Edit(PatientForm form)
         {
             if (ModelState.IsValid)
@@ -110,13 +111,27 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Led Doctor
 
-        public ActionResult Led(int? id)
+        [PRGImport, ValidationModel(typeof(Patient), typeof(LedPatientMetadata))]
+        public ActionResult Led([PRGInRoute]int? id, PatientForm form)
         {
             if (!id.HasValue) return RedirectTo<PatientsController>(a => a.List());
             Patient patient = Get<IPatientRepository>().GetById(id.Value);
             if (patient == null) return RedirectTo<PatientsController>(a => a.List());
-            var form = new PatientForm {Patient = patient, Doctors = Get<IDoctorRepository>().GetAll()};
+            form.Patient = patient;
+            form.Doctors = Get<IDoctorRepository>().GetAll();
             return View(form);
+        }
+
+        [HttpPost, PRGExport, ValidationModel(typeof(Patient), typeof(LedPatientMetadata))]
+        public ActionResult Led(PatientForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                Get<IAttendingDoctorService>().SetLedDoctorForPatient(form.Patient.Doctor.Id, form.Patient.Id);
+                form.Patient = Get<IPatientRepository>().GetById(form.Patient.Id);
+                return RedirectTo<PatientsController>(a => a.Confirm(form));
+            }
+            return RedirectTo<PatientsController>(a => a.Led(form.Patient.Id, form));
         }
 
         #endregion

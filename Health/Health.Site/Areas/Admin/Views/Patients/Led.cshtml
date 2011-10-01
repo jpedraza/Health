@@ -6,3 +6,13 @@
 }
 
 <h2>Led</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    @Html.HiddenFor(m => m.Patient.Id)
+    <p>@Html.LabelFor(m => m.Patient.FullName): @Model.Patient.FullName</p>
+    <p>@Html.LabelFor(m => m.Patient.Card): @Model.Patient.Card</p>
+    <p>@Html.LabelFor(m => m.Patient.Policy): @Model.Patient.Policy</p>
+    <p>@Html.LabelFor(m => m.Patient.Doctor): @Html.DropDownListFor(m => m.Patient.Doctor.Id, Model.DoctorSelectList)</p>
+    <p><input type="submit" value="Send"/></p>
+}

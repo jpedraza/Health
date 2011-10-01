@@ -52,13 +52,11 @@ namespace Health.Site.Filters
             }
             IModelBinder binder = ModelBinders.Binders.GetBinder(model.GetType());
             var bindingContext = new ModelBindingContext
-                                                     {
-                ModelMetadata = modelMetadata,
-                ModelName = "",
-                ModelState = filterContext.Controller.ViewData.ModelState,
-                PropertyFilter = null,
-                ValueProvider = filterContext.Controller.ValueProvider
-            };
+                                     {
+                                         ModelMetadata = modelMetadata,
+                                         ModelState = filterContext.Controller.ViewData.ModelState,
+                                         ValueProvider = filterContext.Controller.ValueProvider
+                                     };
             binder.BindModel(filterContext.Controller.ControllerContext, bindingContext);
             filterContext.Controller.ViewData.Model = model;
         }

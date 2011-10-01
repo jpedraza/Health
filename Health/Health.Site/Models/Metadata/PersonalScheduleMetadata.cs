@@ -13,7 +13,6 @@ namespace Health.Site.Models.Metadata
         public virtual int Id { get; set; }
 
         [DisplayName("Пациент")]
-        [ClassMetadata(typeof(IfSubPatientMetadata))]
         public virtual Patient Patient { get; set; }
 
         [DisplayName("Параметр")]
@@ -44,9 +43,6 @@ namespace Health.Site.Models.Metadata
 
     public class PersonalScheduleFormMetadata : PersonalScheduleMetadata
     {
-        [Required(ErrorMessage = "Выберите расписание")]
-        public override int Id { get; set; }
-
         [Required(ErrorMessage = "Необходимо указать дату начала ввода параметра")]
         public override DateTime DateStart { get; set; }
 

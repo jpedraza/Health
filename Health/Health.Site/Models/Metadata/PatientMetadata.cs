@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Health.Core.Entities.POCO;
+using Health.Core.TypeProvider;
 
 namespace Health.Site.Models.Metadata
 {
@@ -67,17 +68,17 @@ namespace Health.Site.Models.Metadata
 
         [Required(ErrorMessage = "Укажите номер больничной карты")]
         public override string Card { get; set; }
+
+        [ClassMetadata(typeof(DoctorIdOnlyRequired))]
+        public override Doctor Doctor { get; set; }
     }
 
     public class LedPatientMetadata : PatientMetadata
     {
         [Required(ErrorMessage = "Укажите пациента")]
-        public override int Id { get { return base.Id; } set { base.Id = value; } }
-    }
-
-    public class IfSubPatientMetadata : PatientMetadata
-    {
-        [Required(ErrorMessage = "Выберите пользователя.")]
         public override int Id { get; set; }
+
+        [ClassMetadata(typeof(DoctorIdOnlyRequired))]
+        public override Doctor Doctor { get; set; }
     }
 }

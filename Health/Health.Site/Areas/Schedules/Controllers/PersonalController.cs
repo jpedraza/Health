@@ -10,7 +10,7 @@ namespace Health.Site.Areas.Schedules.Controllers
 {
     public class PersonalController : CoreController
     {
-        public PersonalController(IDIKernel di_kernel) : base(di_kernel)
+        public PersonalController(IDIKernel diKernel) : base(diKernel)
         {
         }
 
@@ -20,14 +20,12 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
             PersonalSchedule schedule = Get<IPersonalScheduleRepository>().GetById(id.Value);
+            if (schedule == null) return RedirectTo<PersonalController>(a => a.List());
             var form = new PersonalScheduleForm
                            {
                                PersonalSchedule = schedule
                            };
-            return
-                schedule == null
-                    ? RedirectTo<PersonalController>(a => a.List())
-                    : View(form);
+            return View(form);
         }
 
         public ActionResult List()
@@ -43,20 +41,19 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Edit
 
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Edit([PRGInRoute] int? id, PersonalScheduleForm form)
         {
             if (!id.HasValue) return RedirectTo<PersonalController>(a => a.List());
             PersonalSchedule schedule = form.PersonalSchedule ?? Get<IPersonalScheduleRepository>().GetById(id.Value);
+            if (schedule == null) return RedirectTo<PersonalController>(a => a.List());
             form.PersonalSchedule = schedule;
             form.Parameters = Get<IParameterRepository>().GetAll();
-            return
-                schedule == null
-                    ? RedirectTo<PersonalController>(a => a.List())
-                    : View(form);
+            form.Patients = Get<IPatientRepository>().GetAll();
+            return View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult Edit(PersonalScheduleForm form)
         {
             if (ModelState.IsValid)
@@ -72,7 +69,7 @@ namespace Health.Site.Areas.Schedules.Controllers
 
         #region Add
 
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Add(PersonalScheduleForm form)
         {
             form.Parameters = Get<IParameterRepository>().GetAll();
@@ -80,7 +77,7 @@ namespace Health.Site.Areas.Schedules.Controllers
             return View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult AddSubmit(PersonalScheduleForm form)
         {
             if (ModelState.IsValid)
@@ -102,14 +99,13 @@ namespace Health.Site.Areas.Schedules.Controllers
             if (!confirm.HasValue)
             {
                 PersonalSchedule schedule = Get<IPersonalScheduleRepository>().GetById(id.Value);
+                if (schedule == null) return RedirectTo<PersonalController>(a => a.List());
                 var form = new PersonalScheduleForm
                                {
                                    Message = "Точно удалить это расписание",
                                    PersonalSchedule = schedule
                                };
-                return schedule == null
-                           ? RedirectTo<PersonalController>(a => a.List())
-                           : View(form);
+                return View(form);
             }
             if (confirm.Value) Get<IPersonalScheduleRepository>().DeleteById(id.Value);
             return RedirectTo<PersonalController>(a => a.List());

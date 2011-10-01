@@ -1,15 +1,10 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
-using Health.Core.Entities.Virtual;
-using Health.Core.TypeProvider;
 using Health.Site.Areas.Schedules.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
-using Health.Site.Models.Metadata;
 
 namespace Health.Site.Areas.Schedules.Controllers
 {
@@ -25,14 +20,12 @@ namespace Health.Site.Areas.Schedules.Controllers
         {
             if (!id.HasValue) return RedirectTo<DefaultController>(a => a.List());
             DefaultSchedule schedule = Get<IDefaultScheduleRepository>().GetById(id.Value);
+            if (schedule == null) return RedirectTo<DefaultController>(a => a.List());
             var form = new DefaultScheduleForm
                            {
                                DefaultSchedule = schedule
                            };
-            return
-                schedule == null
-                    ? RedirectTo<DefaultController>(a => a.List())
-                    : View(form);
+            return View(form);
         }
 
         public ActionResult List()
@@ -51,17 +44,12 @@ namespace Health.Site.Areas.Schedules.Controllers
         [PRGImport, ValidationModel]
         public ActionResult Edit([PRGInRoute] int? id, DefaultScheduleForm form)
         {
-            Get<DynamicMetadataRepository>().Bind(typeof(Period), typeof(PeriodMetadata));
             if (!id.HasValue) return RedirectTo<DefaultController>(a => a.List());
             DefaultSchedule schedule = form.DefaultSchedule ?? Get<IDefaultScheduleRepository>().GetById(id.Value);
+            if (schedule == null) return RedirectTo<DefaultController>(a => a.List());
             form.DefaultSchedule = schedule;
             form.Parameters = Get<IParameterRepository>().GetAll();
-            TypeDescriptor.AddProviderTransparent(
-                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(Week), typeof(WeekMetadata)), form.DefaultSchedule.Week);
-            return
-                schedule == null
-                    ? RedirectTo<DefaultController>(a => a.List())
-                    : View(form);
+            return View(form);
         }
 
         [HttpPost, PRGExport, ValidationModel]
@@ -109,15 +97,13 @@ namespace Health.Site.Areas.Schedules.Controllers
             if (!confirm.HasValue)
             {
                 DefaultSchedule schedule = Get<IDefaultScheduleRepository>().GetById(id.Value);
+                if (schedule == null) return RedirectTo<DefaultController>(a => a.List());
                 var form = new DefaultScheduleForm
                                {
                                    DefaultSchedule = schedule,
                                    Message = "Точно удалить расписание?"
                                };
-                return
-                    schedule == null
-                        ? RedirectTo<DefaultController>(a => a.List())
-                        : View(form);
+                return View(form);
             }
             if (confirm.Value) Get<IDefaultScheduleRepository>().DeleteById(id.Value);
             return RedirectTo<DefaultController>(a => a.List());

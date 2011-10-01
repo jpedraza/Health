@@ -6,16 +6,37 @@ using System.Text;
 
 namespace Health.Core.TypeProvider
 {
+    /// <summary>
+    /// Контекст привязки типа модели к метаданным.
+    /// </summary>
     public class DynamicMetadataContext
     {
+        /// <summary>
+        /// Тип модели.
+        /// </summary>
         public Type For { get; set; }
+
+        /// <summary>
+        /// Тип метаданных.
+        /// </summary>
         public Type Use { get; set; }
     }
 
+    /// <summary>
+    /// Репозиторий динамических метаданных модели.
+    /// </summary>
     public class DynamicMetadataRepository
     {
+        /// <summary>
+        /// Контекст привязки метаданных.
+        /// </summary>
         private readonly IList<DynamicMetadataContext> _dynamicMetadataContexts = new List<DynamicMetadataContext>();
 
+        /// <summary>
+        /// Привязка метаданных.
+        /// </summary>
+        /// <param name="for">Тип модели.</param>
+        /// <param name="use">Тип метаданных.</param>
         public void Bind(Type @for, Type use)
         {
             if (@for == null || use == null)
@@ -34,6 +55,11 @@ namespace Health.Core.TypeProvider
             _dynamicMetadataContexts.Add(new DynamicMetadataContext{For = @for, Use = use});
         }
 
+        /// <summary>
+        /// Получить тип метаданных для типа модели.
+        /// </summary>
+        /// <param name="modelType">Тип модели.</param>
+        /// <returns>Тип метаданных.</returns>
         public Type GetMetadataType(Type modelType)
         {
             foreach (DynamicMetadataContext context in _dynamicMetadataContexts)

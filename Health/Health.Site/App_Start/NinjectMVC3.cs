@@ -124,6 +124,27 @@ namespace Health.Site.App_Start
 
             AddDisplayMetadata<Week, WeekMetadata>();
             AddDynamicMetadata<Week>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<Candidate, CandidateMetadata>();
+            AddDynamicMetadata<Candidate>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<Patient, PatientMetadata>();
+            AddDynamicMetadata<Patient>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<Doctor, DoctorMetadata>();
+            AddDynamicMetadata<Doctor>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<PersonalSchedule, PersonalScheduleMetadata>();
+            AddDynamicMetadata<PersonalSchedule>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<DefaultSchedule, DefaultScheduleMetadata>();
+            AddDynamicMetadata<DefaultSchedule>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<Parameter, ParameterMetadata>();
+            AddDynamicMetadata<Parameter>(kernel.Get<IDIKernel>());
+
+            AddDisplayMetadata<Day, DayMetadata>();
+            AddDisplayMetadata<Month, MonthMetadata>();
             // ~
         }
 

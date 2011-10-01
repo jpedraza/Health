@@ -1,15 +1,10 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq.Expressions;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.API.Repository;
-using Health.Core.API.Services;
 using Health.Core.Entities.POCO;
 using Health.Site.Areas.Admin.Models;
 using Health.Site.Attributes;
 using Health.Site.Controllers;
-using Ninject.Activation;
 
 namespace Health.Site.Areas.Admin.Controllers
 {
@@ -25,11 +20,9 @@ namespace Health.Site.Areas.Admin.Controllers
         {
             if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
             Doctor doctor = Get<IDoctorRepository>().GetById(id.Value);
+            if (doctor == null) return RedirectTo<DoctorsController>(a => a.List());
             var form = new DoctorForm {Doctor = doctor};
-            return 
-                doctor == null
-                    ? RedirectTo<DoctorsController>(a => a.List())
-                    : View(form);
+            return View(form);
         }
 
         public ActionResult List()
@@ -42,14 +35,14 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Add
 
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Add(DoctorForm form)
         {
             form.Specialties = DIKernel.Get<ISpecialtyRepository>().GetAll();
             return View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult AddSubmit(DoctorForm form)
         {
             if (ModelState.IsValid)
@@ -65,19 +58,17 @@ namespace Health.Site.Areas.Admin.Controllers
 
         #region Edit
 
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Edit(int? id, DoctorForm form)
         {
             if (!id.HasValue) return RedirectTo<DoctorsController>(a => a.List());
             form.Doctor = form.Doctor ?? Get<IDoctorRepository>().GetById(id.Value);
+            if (form.Doctor == null) return RedirectTo<DoctorsController>(a => a.List());
             form.Specialties = DIKernel.Get<ISpecialtyRepository>().GetAll();
-            return
-                form.Doctor == null
-                    ? RedirectTo<DoctorsController>(a => a.List())
-                    : View(form);
+            return View(form);
         }
 
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel]
         public ActionResult Edit(DoctorForm form)
         {
             if (ModelState.IsValid)
@@ -99,11 +90,9 @@ namespace Health.Site.Areas.Admin.Controllers
             if (!confirm.HasValue)
             {
                 Doctor doctor = DIKernel.Get<IDoctorRepository>().GetById(id.Value);
+                if (doctor == null) return RedirectTo<DoctorsController>(a => a.List());
                 var form = new DoctorForm {Doctor = doctor};
-                return
-                    doctor == null
-                        ? RedirectTo<DoctorsController>(a => a.List())
-                        : View(form);
+                return View(form);
             }
             if (confirm.Value) DIKernel.Get<IDoctorRepository>().DeleteById(id.Value);
             return RedirectTo<DoctorsController>(a => a.List());

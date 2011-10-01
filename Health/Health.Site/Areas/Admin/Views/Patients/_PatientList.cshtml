@@ -15,7 +15,7 @@ else
             <td>@Html.LabelFor(m => pat.Login)</td>
             <td>@Html.LabelFor(m => pat.FullName)</td>   
             <td>@Html.LabelFor(m => pat.Doctor)</td> 
-            <td colspan="3">Функции</td>        
+            <td colspan="4">Функции</td>        
         </tr>
         @foreach (Patient patient in Model)
         {
@@ -27,6 +27,7 @@ else
                 <td>@Html.RouteLink("Подробнее", "Admin_default", new {id = patient.Id, controller = "Patients", action = "Show"})</td>       
                 <td>@Html.RouteLink("Удалить", "Admin_delete", new {id = patient.Id, controller = "Patients"})</td>       
                 <td>@Html.RouteLink("Редактировать", "Admin_default", new{id = patient.Id, controller = "Patients", action = "Edit"})</td>  
+                <td>@Html.RouteLink("Изменить лечащего врача", "Admin_default", new{id = patient.Id, controller = "Patients", action = "Led"})</td>
             </tr>
         }
     </table>

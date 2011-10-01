@@ -6,8 +6,14 @@ using System.Reflection;
 
 namespace Health.Core.TypeProvider
 {
+    /// <summary>
+    /// Динамический дескриптор типа.
+    /// </summary>
     public class DynamicTypeDescriptor : CustomTypeDescriptor
     {
+        /// <summary>
+        /// Тип метаданных.
+        /// </summary>
         private readonly Type _metadataType;
 
         public DynamicTypeDescriptor(ICustomTypeDescriptor parent, Type metadataType) : base(parent)

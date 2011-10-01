@@ -9,10 +9,10 @@ namespace Health.Data.Repository.Fake
 {
     public class PersonalScheduleFakeRepository : CoreFakeRepository<PersonalSchedule>, IPersonalScheduleRepository
     {
-        public PersonalScheduleFakeRepository(IDIKernel di_kernel)
-            : base(di_kernel)
+        public PersonalScheduleFakeRepository(IDIKernel diKernel)
+            : base(diKernel)
         {
-            _entities.Add(new PersonalSchedule
+            Save(new PersonalSchedule
                               {
                                   Parameter = DIKernel.Get<IParameterRepository>().GetById(1),
                                   Patient = DIKernel.Get<IPatientRepository>().GetById(1),
@@ -25,7 +25,7 @@ namespace Health.Data.Repository.Fake
                                   TimeEnd = new TimeSpan(23, 0, 0)
                               });
 
-            _entities.Add(new PersonalSchedule
+            Save(new PersonalSchedule
                               {
                                   Parameter = DIKernel.Get<IParameterRepository>().GetById(2),
                                   Patient = DIKernel.Get<IPatientRepository>().GetById(2),
@@ -39,24 +39,24 @@ namespace Health.Data.Repository.Fake
                               });
         }
 
-        public PersonalSchedule GetById(int schedule_id)
+        public PersonalSchedule GetById(int scheduleId)
         {
-            return _entities.Where(e => e.Id == schedule_id).FirstOrDefault();
+            return _entities.Where(e => e.Id == scheduleId).FirstOrDefault();
         }
 
-        public override bool Save(PersonalSchedule entity)
+        public override sealed bool Save(PersonalSchedule entity)
         {
             entity.Patient = DIKernel.Get<IPatientRepository>().GetById(entity.Patient.Id);
             entity.Parameter = DIKernel.Get<IParameterRepository>().GetById(entity.Parameter.Id);
             return base.Save(entity);
         }
 
-        public bool DeleteById(int schedule_id)
+        public bool DeleteById(int scheduleId)
         {
             for (int i = 0; i < _entities.Count; i++)
             {
                 PersonalSchedule entity = _entities[i];
-                if (entity.Id == schedule_id)
+                if (entity.Id == scheduleId)
                 {
                     _entities.RemoveAt(i);
                     return true;

@@ -195,9 +195,6 @@
     <Compile Include="Repository\ValidationMetadataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ModelMetadata\TestModel.Model.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_Readme\Glimpse.Elmah.Readme.txt" />
     <Content Include="App_Readme\glimpse.mvc3.readme.txt" />
     <Content Include="App_Readme\glimpse.readme.txt" />
@@ -394,6 +391,7 @@
     <Content Include="Areas\Admin\Views\Patients\_PatientForm.cshtml" />
     <Content Include="Areas\Admin\Views\Doctors\Led.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Led.cshtml" />
+    <Content Include="Areas\Admin\Views\Candidates\AcceptBid.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

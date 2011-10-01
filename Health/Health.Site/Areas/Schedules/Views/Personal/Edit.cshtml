@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.ValidationSummary()
     @Html.HiddenFor(m => m.PersonalSchedule.Id)
     @Html.Partial("_PersonalScheduleForm")
     <p><input type="submit" value="Send" /></p>

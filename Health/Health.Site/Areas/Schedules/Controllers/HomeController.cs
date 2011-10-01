@@ -3,9 +3,9 @@ using Health.Site.Attributes;
 
 namespace Health.Site.Areas.Schedules.Controllers
 {
-    [Auth(AllowRoles = "Admin")]
     public class HomeController : Controller
     {
+        //[Auth(AllowRoles = "Admin")]
         public ActionResult Index()
         {
             return View();

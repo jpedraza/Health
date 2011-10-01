@@ -4,6 +4,9 @@ using Health.Core.API;
 
 namespace Health.Core.TypeProvider
 {
+    /// <summary>
+    /// Провайдер дескриптора динамических метаданных.
+    /// </summary>
     public class DynamicTypeDescriptorProvider : TypeDescriptionProvider
     {
         private readonly IDIKernel _diKernel;

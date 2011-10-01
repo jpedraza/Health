@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 namespace Health.Site.Attributes
 {
+    [AttributeUsage(AttributeTargets.Method,AllowMultiple = true)]
     public class ValidationModelAttribute : ActionFilterAttribute
     {
         public Type For { get; set; }

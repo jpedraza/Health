@@ -63,4 +63,10 @@ namespace Health.Site.Models.Metadata
         [Required]
         public override DateTime Birthday { get; set; }
     }
+
+    public class DoctorIdOnlyRequired
+    {
+        [Required]
+        public int Id { get; set; }
+    }
 }

@@ -14,9 +14,9 @@ namespace Health.Core.Services
     {
         protected Role DefaultCandidateRole;
 
-        public RegistrationService(IDIKernel di_kernel) : base(di_kernel)
+        public RegistrationService(IDIKernel diKernel) : base(diKernel)
         {
-            DefaultCandidateRole = di_kernel.Get<IRoleRepository>().GetByName("Patient");
+            DefaultCandidateRole = diKernel.Get<IRoleRepository>().GetByName("Patient");
         }
 
         #region IRegistrationService Members
@@ -25,10 +25,13 @@ namespace Health.Core.Services
         /// Принять заявку.
         /// </summary>
         /// <param name="candidate">Кандидат.</param>
-        public void AcceptBid(Candidate candidate)
+        /// <param name="doctor">Доктор.</param>
+        public void AcceptBid(Candidate candidate, Doctor doctor)
         {
+            candidate = Get<ICandidateRepository>().GetById(candidate.Id);
+            doctor = Get<IDoctorRepository>().GetById(doctor.Id);
+            if (candidate == null || doctor == null) throw new Exception("Невозможно принять заявку от пустого кандидата с несуществующим доктором.");
             Get<ICandidateRepository>().Delete(candidate);
-            if (candidate == null) throw new Exception("Невозможно принять заявку от пустого кандидата.");
             var patient = new Patient
                               {
                                   Id = candidate.Id,
@@ -41,7 +44,8 @@ namespace Health.Core.Services
                                   ThirdName = candidate.ThirdName,
                                   Policy = candidate.Policy,
                                   Token = candidate.Token,
-                                  Role = candidate.Role
+                                  Role = candidate.Role,
+                                  Doctor = doctor
                               };
             Get<IPatientRepository>().Save(patient);
             Logger.Info(String.Format("Заявка на регистрацию для {0} - принята.", candidate.Login));

@@ -12,7 +12,8 @@ namespace Health.Core.API.Services
         /// Принять заявку.
         /// </summary>
         /// <param name="candidate">Кандидат на регистрацию.</param>
-        void AcceptBid(Candidate candidate);
+        /// <param name="doctor">Доктор.</param>
+        void AcceptBid(Candidate candidate, Doctor doctor);
 
         /// <summary>
         /// Сохранить заявку.

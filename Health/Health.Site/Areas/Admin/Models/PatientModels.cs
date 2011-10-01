@@ -24,7 +24,7 @@ namespace Health.Site.Areas.Admin.Models
                 {
                     selectList.Add(new SelectListItem 
                     { 
-                        Selected = Patient.Doctor != null && doctor.Id == Patient.Doctor.Id,
+                        Selected = Patient != null && Patient.Doctor != null && doctor.Id == Patient.Doctor.Id,
                         Text = doctor.FullName,
                         Value = doctor.Id.ToString()
                     });
@@ -34,12 +34,6 @@ namespace Health.Site.Areas.Admin.Models
         }
 
         public string Message { get; set; }
-    }
-
-    public class LedPatientForm : PatientForm
-    {
-        //[ClassMetadata(typeof())]
-        public override Patient Patient { get; set; }
     }
 
     public class PatientList : CoreViewModel
