@@ -35,17 +35,6 @@
 
         <p>Обязат. : 
         @metadata.Obligation.ToString()</p>
-
-        <p>Период: 
-        @if(metadata.period == null)
-        {
-            __razor_helper_writer.WriteLine("Нет");           
-        }
-        else
-        {
-            @metadata.period            
-        }
-            </p>
         <p>Варианты: 
         @if(metadata.Is_var)
         {

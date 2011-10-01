@@ -32,39 +32,39 @@ namespace Health.Site.Areas.Parameters.Controllers
         // GET: /Parameters/Editing/Edit
         //TODO: сделать страницу и сообщения пользователю об ошибке; а также страницу подтверждения.
 
+        [PRGImport]
         public ActionResult Edit(int parameter_id)
         {
             Parameter parameter = Get<IParameterRepository>().GetById(parameter_id);
             if (parameter == null)
             {
-                var str = "Параметра с ID = " + parameter_id.ToString() + " не существует";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+                throw new Exception(String.Format("Параметра с ID = {0} не существует", parameter_id));
             }
             TempData["EditParameter"] = parameter;
-            return View(new ParametersViewModel
             {
-                EditParam = parameter,
-                EditingForm = new Models.Forms.EditingFormModel
+
+                return View(new ParametersViewModel
                 {
-                    Name = parameter.Name,
-                    Value = parameter.Value.ToString(),
-                    DefaultValue = parameter.DefaultValue.ToString(),
-                    Age = parameter.MetaData.Age.ToString(),
-                    Id_cat = parameter.MetaData.Id_cat,
-                    variants = parameter.MetaData.Variants
-                }
-            });
+                    EditParam = parameter,
+                    EditingForm = new Models.Forms.EditingFormModel
+                    {
+                        Name = parameter.Name,
+                        Value = parameter.Value.ToString(),
+                        DefaultValue = parameter.DefaultValue.ToString(),
+                        Age = parameter.MetaData.Age.ToString(),
+                        Id_cat = parameter.MetaData.Id_cat,
+                        variants = parameter.MetaData.Variants
+                    }
+                });
+            }
         }
 
         public ActionResult ContinueEdit()
         {
-            Parameter parameter = TempData["EditParameter"] as Parameter;
+            var parameter = TempData["EditParameter"] as Parameter;
             if (parameter == null)
             {
-                var str = "Ошибка, нет данных (параметра) для продолжения редактирования.";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+                throw new Exception("Ошибка, нет данных (параметра) для продолжения редактирования.");
             }
             // Следующая операция необходима для обновления параметра в модели.
             // А предыдущая нужна для получения ID обновляемого параметра
@@ -88,12 +88,9 @@ namespace Health.Site.Areas.Parameters.Controllers
             }
             else
             {
-                var str = "Ошибка, нет данных (параметра) для продолжения редактирования.";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+                throw new Exception("Ошибка, нет данных (параметра) для продолжения редактирования.");
             }
         }
-        //TODO: В методах модели пофиксить алгоритм, вместо return this, некоторые методы сделать через void.
 
         //TODO: Сделать так, чтоб при нажатии кнопки назад после confirm вернуться было нельзя.
         public ActionResult Save([Bind(Include = "EditingForm")] ParametersViewModel form_model)
@@ -108,34 +105,41 @@ namespace Health.Site.Areas.Parameters.Controllers
                 return RedirectTo<EditingController>(a => a.ConfirmSave());
             }
             else
-            {
-                var str = "Ошибка, нет данных для обновления параметра.";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+            {               
+                throw new Exception("Ошибка, нет данных для обновления параметра.");
             }
         }
 
-        public ActionResult AddVariant()
+        public ActionResult AddVariant(ParametersViewModel form_model)
         {
-            Parameter parameter = TempData["EditParameter"] as Parameter;
-            TempData.Keep("EditParameter");
+            var parameter = TempData["EditParameter"] as Parameter;
+            TempData.Keep("EditParameter");            
             if (parameter != null)
             {
+                if (form_model.EditingForm != null)
+                {
+                    parameter.DefaultValue = form_model.EditingForm.DefaultValue;
+                    parameter.MetaData.Id_cat = form_model.EditingForm.Id_cat;
+                    parameter.Name = form_model.EditingForm.Name;
+                    parameter.Value = form_model.EditingForm.Value;
+                    TempData["EditParameter"] = parameter;
+                }
+                //else
+                //В этом случае не надо выполнять никаких действий, а продолжить генерировать страницу
                 return View(new ParametersViewModel { EditParam = parameter});
             }
             else
-            {
-                var str = "Ошибка, нет данных (параметра) для добавления варианта ответа.";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+            {                
+                throw new Exception("Ошибка, нет данных (параметра) для добавления варианта ответа.");
             }
         }
 
-        public ActionResult SaveAddVariant([Bind(Include = "VarForm")] ParametersViewModel form_model)
+        [PRGExport]
+        public ActionResult SaveAddVariant(ParametersViewModel form_model)
         {
             form_model.EditParam = TempData["EditParameter"] as Parameter;
             TempData.Keep("EditParameter");
-            if (form_model.EditParam != null & form_model.VarForm.variants != null)
+            if (form_model.EditParam != null && form_model.VarForm.variants != null)
             {
                 form_model.AddVariant();
                 Get<IParameterRepository>().Edit(form_model.EditParam);
@@ -143,15 +147,13 @@ namespace Health.Site.Areas.Parameters.Controllers
             }
             else
             {
-                var str = "Ошибка, нет данных (параметра) для добавления варианта ответа.";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+                throw new Exception("Ошибка, нет данных (параметра) для добавления варианта ответа.");
             }
         }
 
         public ActionResult Deletevariant(int variant_id)
         {
-            Parameter parameter = TempData["EditParameter"] as Parameter;
+            var parameter = TempData["EditParameter"] as Parameter;
             TempData.Keep("EditParameter");
             if (parameter != null)
             {
@@ -162,21 +164,13 @@ namespace Health.Site.Areas.Parameters.Controllers
             }
             else
             {
-                var str = "Ошибка, нет данных (параметра) для удаления варианта ответа.";
-                TempData["Error"] = str;
-                return RedirectTo<EditingController>(a => a.Error());
+                throw new Exception("Ошибка, нет данных (параметра) для удаления варианта ответа.");
             }
         }
 
         public ActionResult ConfirmSave()
         {
             ViewData["Result"] = TempData["Result"];
-            return View();
-        }
-
-        public ActionResult Error()
-        {
-            ViewData["Message"] = TempData["Error"];
             return View();
         }
 

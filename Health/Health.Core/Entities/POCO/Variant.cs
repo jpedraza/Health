@@ -11,7 +11,7 @@ namespace Health.Core.Entities.POCO
     public class Variant
     {
         /// <summary>
-        /// Текстовое содержание параметра
+        /// Текстовое содержание варианта
         /// </summary>
         public string Value { get; set; }
         /// <summary>

@@ -64,12 +64,6 @@ namespace Health.Site.Areas.Parameters.Models.Forms
         public bool Obligation { get; set; }
 
         /// <summary>
-        /// Период заполнения
-        /// </summary>
-        [Required(ErrorMessage = "Введите, пожалуйста, период")]
-        public Nullable<double> Period { get; set; }
-
-        /// <summary>
         /// Число вариантов (если есть)
         /// </summary>
         public Nullable<int> NumVariant { get; set; }

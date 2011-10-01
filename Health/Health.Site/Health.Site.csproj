@@ -142,6 +142,7 @@
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Parameters\Controllers\TestController.cs" />
     <Compile Include="Areas\Parameters\Models\Forms\ParametersFormsModels.cs" />
     <Compile Include="Areas\Parameters\Models\ParametersViewModel.cs" />
     <Compile Include="Areas\Parameters\ParametersAreaRegistration.cs" />
@@ -336,7 +337,6 @@
     <Content Include="Areas\Parameters\Views\Add\Confirm.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Index.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Edit.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Error.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\ConfirmSave.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Deletevariant.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\ContinueEdit.cshtml" />
@@ -392,6 +392,7 @@
     <Content Include="Areas\Admin\Views\Doctors\Led.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Led.cshtml" />
     <Content Include="Areas\Admin\Views\Candidates\AcceptBid.cshtml" />
+    <Content Include="Areas\Parameters\Views\Test\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

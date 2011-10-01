@@ -39,19 +39,52 @@ namespace Health.Site.Areas.Parameters.Models
         /// <param name="Is_childs">Будет ли подпараметр?</param>
         /// <param name="Is_var">Есть ли варианты?</param>
         /// <returns>Какую форму подать следуюущей?</returns>
-        public virtual ParametersViewModel StartAddParameter(string Name, object Value, object DefaultValue, bool Is_childs, bool Is_var, bool Is_param, IParameterRepository ParamRepo)
+        public virtual void StartAddParameter(IParameterRepository ParamRepo)
         {
-            var res = 0;
-            var found_parametr = ParamRepo.GetByValue(Name);
+            var found_parametr = ParamRepo.GetByValue(StartAddForm.Name);
             if (found_parametr == null)
             {
-                NewParam = new Parameter
-                {
-                    Name = Name,
-                    Value = Value,
-                    DefaultValue = DefaultValue,
-                };
+                create_new_parameter(StartAddForm);
             }
+            else
+            { throw new Exception(String.Format("Параметр с именем {0} , уже существует", StartAddForm.Name)); }
+            var j = set_id(ParamRepo);
+            NewParam.MetaData = new MetaData { Is_childs = StartAddForm.Is_childs, Is_var = StartAddForm.Is_var };
+            if (StartAddForm.Is_param)
+            {
+                NewParam.MetaData.Age = null;
+                NewParam.MetaData.Obligation = true;
+                NewParam.MetaData.Id_cat = null;
+            }
+            else
+            {
+                NewParam.MetaData.Id_cat = j + 1;
+                NewParam.MetaData.Id_parent = null;
+                this.parameters = ParamRepo.GetAllParam();
+            }
+        }
+
+        /// <summary>
+        /// Создает новый параметр здоровья человека
+        /// </summary>
+        /// <param name="start_add_form">1-я форма ввода.</param>
+        private void create_new_parameter(StartAddFormModel start_add_form)
+        {
+            NewParam = new Parameter
+            {
+                Name = start_add_form.Name,
+                Value = start_add_form.Value,
+                DefaultValue = start_add_form.DefaultValue,
+            };
+        }
+
+        /// <summary>
+        /// Данный метод ищет для создаваемого параметра никем не занятый параметр
+        /// </summary>
+        /// <param name="ParamRepo">Репозиторий параметров</param>
+        /// <returns>Id нового параметра</returns>
+        private int set_id(IParameterRepository ParamRepo)
+        {
             var i = 0;
             var j = 0;
             var parameters = ParamRepo.GetAllParam();
@@ -63,24 +96,7 @@ namespace Health.Site.Areas.Parameters.Models
                     j = (int)item.MetaData.Id_cat;
             }
             NewParam.Id = i + 1;
-            NewParam.MetaData = new MetaData { Is_childs = Is_childs, Is_var = Is_var };
-            if (Is_param)
-            {
-                NewParam.MetaData.Age = null;
-                NewParam.MetaData.Obligation = true;
-                NewParam.MetaData.period = null;
-                NewParam.MetaData.Id_cat = null;
-                res = 2;
-            }
-            else
-            {
-                res = 1;
-                NewParam.MetaData.Id_cat = j + 1;
-                NewParam.MetaData.Id_parent = null;
-                this.parameters = ParamRepo.GetAllParam();
-            }
-
-            return this;
+            return j;
         }
 
         /// <summary>
@@ -88,13 +104,12 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// /// <param name="last_model_state">Преидущее состояние модели.</param>
         /// <returns>Обновленная модель</returns>
-        public virtual ParametersViewModel NextAddParameter(ParametersViewModel last_model_state)
+        public virtual void NextAddParameter()
         {
-            this.NewParam = last_model_state.NewParam;
-            this.NewParam.MetaData.Age = last_model_state.NextAddForm.Age;
-            this.NewParam.MetaData.Obligation = last_model_state.NextAddForm.Obligation;
-            this.NewParam.MetaData.period = last_model_state.NextAddForm.Period;
-            return this;
+            if (NewParam == null)
+            { throw new Exception("Срелняя стадия добавлени параметра. Данные о создаваемом вами параметры утеряны."); }
+            this.NewParam.MetaData.Age = NextAddForm.Age;
+            this.NewParam.MetaData.Obligation = NextAddForm.Obligation;
         }
         /// <summary>
         /// Данный метод оконочательно "досоздает" новый параметр (в виде поля NewParam)
@@ -103,18 +118,19 @@ namespace Health.Site.Areas.Parameters.Models
         /// </summary>
         /// <param name="last_model_state">Последнее состояние модели</param>
         /// <returns></returns>
-        public virtual ParametersViewModel AddParameter(ParametersViewModel last_model_state)
+        public virtual void AddVariants()
         {
-            this.NewParam = last_model_state.NewParam;
-            if (last_model_state.VarForm != null && last_model_state.VarForm.variants != null)
+            this.NewParam = NewParam;
+            if (VarForm != null && VarForm.variants != null)
             {
-                this.NewParam.MetaData.Variants = new Variant[last_model_state.VarForm.variants.Count];
+                this.NewParam.MetaData.Variants = new Variant[VarForm.variants.Count];
                 for (int i = 0; i < this.NewParam.MetaData.Variants.Length; i++)
                 {
-                    this.NewParam.MetaData.Variants[i] = new Variant(last_model_state.VarForm.variants[i].Value, last_model_state.VarForm.variants[i].Ball);
+                    this.NewParam.MetaData.Variants[i] = new Variant(VarForm.variants[i].Value, VarForm.variants[i].Ball);
                 }
             }
-            return this;
+            else
+                throw new Exception("Данные о создаваемом вами параметры утеряны.");
         }
         /// <summary>
         /// Стартовая форма добавления параметров
@@ -130,17 +146,7 @@ namespace Health.Site.Areas.Parameters.Models
         /// Форма для добавления вариантов ответа
         /// </summary>
         public VarFormModel VarForm { get; set; }
-
-        /// <summary>
-        /// Проверяет, правильно, ли заполнена форма?
-        /// </summary>
-        /// <param name="form1">Первая форма</param>
-        /// <returns></returns>
-        public static bool IsCorrectStage1(StartAddFormModel form1)
-        {
-            return (form1.DefaultValue != null && form1.Is_childs != null && form1.Is_param != null && form1.Is_var != null && form1.Name != null && form1.Value != null);
-        }
-
+               
         /// <summary>
         /// Проверяет корректность заполнения второй формы
         /// </summary>
