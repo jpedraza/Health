@@ -145,6 +145,10 @@ namespace Health.Site.App_Start
 
             AddDisplayMetadata<Day, DayMetadata>();
             AddDisplayMetadata<Month, MonthMetadata>();
+            AddDisplayMetadata<Variant, VariantMetadata>();
+            AddDynamicMetadata<Variant>(kernel.Get<IDIKernel>());
+            AddDisplayMetadata<MetaData, MetaDataMetadata>();
+            AddDynamicMetadata<MetaData>(kernel.Get<IDIKernel>());
             // ~
         }
 

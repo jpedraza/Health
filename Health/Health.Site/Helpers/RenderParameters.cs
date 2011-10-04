@@ -7,10 +7,24 @@ namespace Health.Site.Helpers
 {
     public static class RenderParameters
     {
-        public static HtmlString GetLayoutForParameter(this HtmlHelper helper, Parameter parameter, string name_prefix)
+        private static RenderingFactory Factory { get; set; }
+
+        public static HtmlString GetLayoutForParameterForPatient(this HtmlHelper helper, Parameter parameter, string name_prefix)
         {
-            var factory = new RenderingFactory(parameter, name_prefix);
-            return factory.GetLayout();
+            if (Factory == null)
+            {
+                Factory = new RenderingFactory(parameter, name_prefix);
+            }
+            return Factory.GetPatientParameterLayout();
+        }
+
+        public static HtmlString NewParameterDraw(this HtmlHelper helper, Parameter parameter, string name_prefix)
+        {
+            if (Factory == null)
+            {
+                Factory = new RenderingFactory(parameter, name_prefix);
+            }
+            return Factory.GetAddParameterLayout(parameter);
         }
     }
 }

@@ -14,11 +14,15 @@
    @Html.Encode(parameter.Name)</p>
 
    <p>DefaultValue = 
-   @Html.Encode(parameter.DefaultValue) </p>
+@*   @Html.Encode(parameter.DefaultValue)
+*@   
+    @Html.DisplayFor(x => parameter.DefaultValue) </p>
 
    <p>Value = 
-   @Html.Encode(parameter.Value)</p>
-   </td>
+@*   @Html.Encode(parameter.Value)</p>
+*@   
+
+@Html.DisplayFor(x => parameter.Value)</td>
     @ShowMetaData(parameter.MetaData)
 }
 

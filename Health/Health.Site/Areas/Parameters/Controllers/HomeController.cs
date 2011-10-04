@@ -30,6 +30,7 @@ namespace Health.Site.Areas.Parameters
             return View(new ParametersViewModel
             { 
                 parameters = Get<IParameterRepository>().GetAllParam()
+
             });
             //return View();
         }

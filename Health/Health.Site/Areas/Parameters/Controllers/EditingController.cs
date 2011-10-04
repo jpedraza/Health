@@ -9,6 +9,8 @@ using Health.Core.API;
 using Health.Site.Attributes;
 using Health.Site.Areas.Parameters.Models;
 using Health.Core.Entities.POCO;
+using Health.Site.Areas.Parameters;
+using Health.Site.Areas.Parameters.Models.Forms;
 
 namespace Health.Site.Areas.Parameters.Controllers
 {
@@ -22,6 +24,7 @@ namespace Health.Site.Areas.Parameters.Controllers
         //
         // GET: /Parameters/Editing/
 
+        
         public ActionResult Index()
         {
             ViewData["Parameters"] = Get<IParameterRepository>().GetAllParam();
@@ -31,7 +34,7 @@ namespace Health.Site.Areas.Parameters.Controllers
         //
         // GET: /Parameters/Editing/Edit
         //TODO: сделать страницу и сообщения пользователю об ошибке; а также страницу подтверждения.
-
+        
         [PRGImport]
         public ActionResult Edit(int parameter_id)
         {
@@ -40,25 +43,21 @@ namespace Health.Site.Areas.Parameters.Controllers
             {
                 throw new Exception(String.Format("Параметра с ID = {0} не существует", parameter_id));
             }
-            TempData["EditParameter"] = parameter;
             {
 
-                return View(new ParametersViewModel
-                {
-                    EditParam = parameter,
-                    EditingForm = new Models.Forms.EditingFormModel
-                    {
-                        Name = parameter.Name,
-                        Value = parameter.Value.ToString(),
-                        DefaultValue = parameter.DefaultValue.ToString(),
-                        Age = parameter.MetaData.Age.ToString(),
-                        Id_cat = parameter.MetaData.Id_cat,
-                        variants = parameter.MetaData.Variants
-                    }
-                });
+                return View(new AddFormModel()
+                                {
+                                    CheckBoxesParents = new List<bool>(),
+                                    CheckBoxesChildren = new List<bool>(),
+                                    NumValue = parameter.MetaData.Variants==null?0:parameter.MetaData.Variants.Length,
+                                    parameter = parameter,
+                                    Parameters = Get<IParameterRepository>().GetAllParam()
+                                }
+                              );
             }
         }
 
+        /*
         public ActionResult ContinueEdit()
         {
             var parameter = TempData["EditParameter"] as Parameter;
@@ -179,5 +178,6 @@ namespace Health.Site.Areas.Parameters.Controllers
             TempData["Result"] = Get<IParameterRepository>().DeleteParam(parameter_id);
             return RedirectTo<EditingController>(g => g.ConfirmSave());
         }
+         */
     }
 }

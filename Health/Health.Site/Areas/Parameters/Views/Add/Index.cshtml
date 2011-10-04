@@ -1,34 +1,75 @@
-﻿<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-@model Health.Site.Areas.Parameters.Models.ParametersViewModel
+﻿@model Health.Site.Areas.Parameters.Models.Forms.AddFormModel
 
 @{
     ViewBag.Title = "Начальная форма добавления параметра";
 }
 
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"> </script>
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"> </script>
+
 <h2>Заполните форму для создания нового параметра: </h2>
-@using (Html.BeginForm("NextAdd", "Add", new {Area = "Parameters"}))
+@using (Html.BeginForm("Add", "Add", new {Area = "Parameters"}))
 {
-    <p>@Html.LabelFor(x => x.StartAddForm.Name)</p>
-    <p>@Html.ValidationMessageFor(x =>x.StartAddForm.Name)</p>
-    <p>@Html.TextBoxFor(x => x.StartAddForm.Name)</p>
+    <p>@Html.LabelFor(x => x.parameter.Name)</p>
+    <p>@Html.ValidationMessageFor(x =>x.parameter.Name)</p>
+    <p>@Html.TextBoxFor(x => x.parameter.Name)</p>
     
-    <p>@Html.LabelFor(x => x.StartAddForm.Value)</p>
-    <p>@Html.ValidationMessageFor(x => x.StartAddForm.Value)</p>
-    <p>@Html.TextBoxFor(x => x.StartAddForm.Value)</p>
+    <p>@Html.LabelFor(x => x.parameter.Value)</p>
+    <p>@Html.ValidationMessageFor(x => x.parameter.Value)</p>
+    <p>@Html.TextBoxFor(x => x.parameter.Value)</p>
     
-    <p>@Html.LabelFor(x => x.StartAddForm.DefaultValue)</p>
-    <p>@Html.ValidationMessageFor(x => x.StartAddForm.DefaultValue)</p>
-    <p>@Html.TextBoxFor(x => x.StartAddForm.DefaultValue)</p>
+    <p>@Html.LabelFor(x => x.parameter.DefaultValue)</p>
+    <p>@Html.ValidationMessageFor(x => x.parameter.DefaultValue)</p>
+    <p>@Html.TextBoxFor(x => x.parameter.DefaultValue)</p>
     
-    <p>@Html.LabelFor(x => x.StartAddForm.Is_childs) 
-    @Html.CheckBoxFor(x => x.StartAddForm.Is_childs)</p>
+    <p>@Html.LabelFor(x => x.parameter.MetaData.Is_childs) 
+    @Html.CheckBoxFor(x => x.parameter.MetaData.Is_childs)</p>
     
-    <p>@Html.LabelFor(x => x.StartAddForm.Is_var)
-    @Html.CheckBoxFor(x => x.StartAddForm.Is_var)</p>
+    <p>@Html.LabelFor(x => x.parameter.MetaData.Is_var)
+    @Html.CheckBoxFor(x => x.parameter.MetaData.Is_var)
+    <br />
+    @Html.LabelFor(x => x.NumValue)
+    @Html.ValidationMessageFor(x => x.NumValue)
+    @Html.TextBoxFor(x => x.NumValue)
+    </p>
+   
     
-    <p>@Html.LabelFor(x => x.StartAddForm.Is_param)
-    @Html.CheckBoxFor(x => x.StartAddForm.Is_param)</p>    
+    <p>@Html.LabelFor(x => x.parameter.MetaData.Age)
+     @Html.ValidationMessageFor(x => x.parameter.MetaData.Age)
+    @Html.TextBoxFor(x => x.parameter.MetaData.Age)
+    </p>
+    
+    <p>@Html.LabelFor(x => x.parameter.MetaData.Id_cat)
+    @Html.TextBoxFor(x => x.parameter.MetaData.Id_cat)
+    </p>
+    
+    <p>@Html.LabelFor(x => x.parameter.MetaData.MaxValue)
+    @Html.TextBoxFor(x => x.parameter.MetaData.MaxValue)
+    </p>
+    
+    <p>@Html.LabelFor(x => x.parameter.MetaData.MinValue)
+    @Html.TextBoxFor(x => x.parameter.MetaData.MinValue)</p>
+
+    <h3>Отметьте для создаваемого вами параметра его подпараметры и параметры родители, если таковые есть.</h3>
+    <table>
+    <tr>
+    <th>Id</th>
+    <th>Имя параметра</th>
+    <th>Явл-ся парам.-род.</th>
+    <th>Явля-ся подпарам.</th>
+    </tr>
+    @for (int i = 0; i < Model.Parameters.Count; i++)
+    {
+        Model.CheckBoxesParents.Add(new bool());
+        Model.CheckBoxesChildren.Add(new bool());
+        <tr>
+        <td>@Html.DisplayTextFor(x => x.Parameters[i].Id)</td>
+        <td>@Html.DisplayTextFor(x => Model.Parameters[i].Name)</td>
+        <td>@Html.CheckBoxFor(x => x.CheckBoxesParents[i])</td>
+        <td>@Html.CheckBoxFor(x => x.CheckBoxesChildren[i])</td>
+        </tr>
+    }
+    </table>
     <input type="submit" value="Отправить" />
 }
 

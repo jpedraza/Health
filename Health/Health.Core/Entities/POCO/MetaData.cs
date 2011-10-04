@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
 using System;
 namespace Health.Core.Entities.POCO
-{
+{    
     /// <summary>
     /// Описывает мета-данные параметра (характеристики параметра здоровья)
     /// </summary>
     public class MetaData
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        public MetaData()
+        {
+            this.Childs = new List<int>();
+            this.Parents = new List<int>();
+        }
+        
         /// <summary>
         /// Показывает, есть ли на данный параметр варианты ответа
         /// </summary>
@@ -15,7 +24,26 @@ namespace Health.Core.Entities.POCO
         /// <summary>
         /// Возраст, при котором необходимо заполнять данный параметр
         /// </summary>
-        public object Age { get; set; }
+        public object Age
+        {
+            get
+            {
+                if(_age != null)
+                {
+                    var str = _age as string[];
+                    if(str != null)
+                    {
+                        return str[0];
+                    }
+                    return _age;
+                }
+                return _age;
+            }
+
+            set { _age = value; }
+        }
+
+        private object _age;
 
         /// <summary>
         /// Номер категории 
@@ -36,6 +64,63 @@ namespace Health.Core.Entities.POCO
         /// Показывает для данного параметра, параметр-родитель. В случае если это есть самостоятельный параметр, равно null.
         /// </summary>
         public Nullable<int> Id_parent { get; set; }
+
+        /// <summary>
+        /// Хранит Id родителей данного класса
+        /// </summary>
+        public IList<int> Parents { get; set; }
+
+        /// <summary>
+        /// Хранит Id детей данного класса
+        /// </summary>
+        public IList<int> Childs { get; set; }
+
+        /// <summary>
+        /// Минимальное значение параметра
+        /// </summary>
+        public object MinValue
+        {
+            get
+            {
+                if (_minValue != null)
+                {
+                    var str = _minValue as string[];
+                    if (str != null)
+                    {
+                        return str[0];
+                    }
+                    return _minValue;
+                }
+                return _minValue;
+            }
+
+            set { _minValue = value; }
+        }
+        private object _minValue;
+
+        /// <summary>
+        /// Максимальное значение параметра
+        /// </summary>
+        public object MaxValue
+        {
+            get
+            {
+                if (_maxValue != null)
+                {
+                    var str = _maxValue as string[];
+                    if (str != null)
+                    {
+                        return str[0];
+                    }
+                    return _maxValue;
+                }
+                return _maxValue;
+            }
+
+            set { _maxValue = value; }
+        }
+
+        private object _maxValue;
         /// <summary>
         /// Хранит варианты ответа на вопросы. Если Is_var == false, равно 0
         /// </summary>

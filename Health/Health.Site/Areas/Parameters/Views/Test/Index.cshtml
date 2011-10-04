@@ -5,7 +5,9 @@
 }
 
 <h2>Это тестовый контроллер</h2>
-<p>Проверка передачи данных из контроллера.</p>
+
+
+@*<p>Проверка передачи данных из контроллера.</p>
 @ViewData["text"]
 <p>Итак, проверим наш отрисовщик.</p>
 
@@ -19,4 +21,9 @@
 
           <div style="background-color: Green">
           @Html.GetLayoutForParameter(par2, "TestForm")
-          </div>
+          </div>*@
+
+<div>
+<p>Проверим вывод параметра</p>
+@Html.NewParameterDraw(new Health.Core.Entities.POCO.Parameter(), "Addform")
+</div>

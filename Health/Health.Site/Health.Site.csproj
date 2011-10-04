@@ -182,6 +182,7 @@
     <Compile Include="Models\Metadata\DayMetadata.cs" />
     <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\DoctorMetadata.cs" />
+    <Compile Include="Models\Metadata\MetaDataMetadata.cs" />
     <Compile Include="Models\Metadata\MonthMetadata.cs" />
     <Compile Include="Models\Metadata\ParameterMetadata.cs" />
     <Compile Include="Models\Metadata\PatientMetadata.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\Metadata\PersonalScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\TimeIntervalMetadata.cs" />
     <Compile Include="Models\Metadata\UserMetadata.cs" />
+    <Compile Include="Models\Metadata\VariantMetadata.cs" />
     <Compile Include="Models\Metadata\WeekMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CookieRepository.cs" />

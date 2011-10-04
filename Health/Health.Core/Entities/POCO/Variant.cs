@@ -8,6 +8,7 @@ namespace Health.Core.Entities.POCO
     /// <summary>
     /// Описывает вариант ответа на параметр, если последний является вопросом
     /// </summary>
+    
     public class Variant
     {
         /// <summary>
