@@ -1,11 +1,11 @@
-﻿@model Health.Site.Areas.Parameters.Models.ParametersViewModel
+﻿@model Health.Site.Areas.Parameters.Models.Forms.VarFormModel
 
 @{
     ViewBag.Title = "AddVariant";
 }
 
-<h2>Заполните соответствующие поля, для создания нового параметра</h2>
-@using (Html.BeginForm("SaveAddVariant", "Editing", new { area = "Parameters" }))
+<h2>На этой форме надо перечислить варианты ответов на параметр "@Html.Encode(Model.Parameter.Name)"</h2>
+@using (Html.BeginForm("Addingvariant", "Editing", new { area = "Parameters" }))
 {
     <table cellspacing="0">
     <tr>
@@ -13,16 +13,17 @@
     <th>Variants</th>
     <th>Balls</th>
     </tr>
-    @for (int i = 0; i < 1; i++)
+    @Html.HiddenFor(z => z.NumVariant)
+    @for (int i = 0; i < Model.Variants.Length; i++)
     {
         <tr>
         <td>Variant # @Html.Encode(i + 1)</td>
        
-        <td> @Html.ValidationMessageFor(x => x.VarForm.variants[i].Value)
-        @Html.TextBoxFor(x => x.VarForm.variants[i].Value)</td>
+        <td> @Html.ValidationMessageFor(x => x.Variants[i].Value)
+        @Html.TextBoxFor(x => x.Variants[i].Value)</td>
         <td>
-        @Html.ValidationMessageFor(x => x.VarForm.variants[i].Ball)
-        @Html.TextBoxFor(x => x.VarForm.variants[i].Ball)</td>
+        @Html.ValidationMessageFor(x => x.Variants[i].Ball)
+        @Html.TextBoxFor(x => x.Variants[i].Ball)</td>
         </tr>
     }
     </table>

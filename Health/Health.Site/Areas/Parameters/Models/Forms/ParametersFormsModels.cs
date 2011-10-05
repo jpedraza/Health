@@ -72,38 +72,43 @@ namespace Health.Site.Areas.Parameters.Models.Forms
     /// <summary>
     /// Модель формы редактирования уже существующего параметра.
     /// </summary>
-    public class EditingFormModel
+    public class EditingFormModel:CoreViewModel
     {
         /// <summary>
-        /// Название параметра здоровья
+        /// Добавляемый параметр.
         /// </summary>
-        [Required(ErrorMessage = "Введите название параметра")]
-        public string Name { get; set; }
+        [ClassMetadata(typeof(ParameterFormMetadata))]
+        public Parameter parameter { get; set; }
 
         /// <summary>
-        /// Значение параметра здоровья
+        /// Список всех доступных параметров
         /// </summary>
-        [Required(ErrorMessage = "Введите значение параметра")]
-        public string Value { get; set; }
+        public IList<Parameter> Parameters { get; set; }
 
         /// <summary>
-        /// Значение по-умолчанию
+        /// Список флажков для отметки параметров-родителей.
         /// </summary>
-        [Required(ErrorMessage = "Введите значение по-умолчанию")]
-        public string DefaultValue { get; set; }
+        public IList<bool> CheckBoxesParents { get; set; }
 
         /// <summary>
-        /// Возраст
+        /// Список флажков для отметки подпараметров.
         /// </summary>
-        [Required(ErrorMessage = "Введите возраст")]
-        public string Age { get; set; }
+        public IList<bool> CheckBoxesChildren { get; set; }
 
         /// <summary>
-        /// Id_cat
+        /// Служебная переменная - число вариантов ответа
         /// </summary>
-        public Nullable<int> Id_cat { get; set; }
+        [DisplayName("Число вариантов ответа на вопрос, если есть"),
+        Required(ErrorMessage = "Укажите корректное значение числа вариантов")]
+        public int NumValue { get; set; }
 
-        
-        public Variant[] variants { get; set; }
+        /// <summary>
+        /// Список флажков для отметки вариантов на удаление.
+        /// </summary>
+        public IList<bool> CheckBoxVariant { get; set; }
+        /// <summary>
+        /// Варианты ответа на параметр
+        /// </summary>
+        public Variant[] Variants { get; set; }
     }
 }

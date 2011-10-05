@@ -335,14 +335,9 @@
     <Content Include="Areas\Parameters\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Parameters\Views\Home\ShowAll.cshtml" />
     <Content Include="Areas\Parameters\Views\Add\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\Add\NextAdd.cshtml" />
     <Content Include="Areas\Parameters\Views\Add\Var.cshtml" />
     <Content Include="Areas\Parameters\Views\Add\Confirm.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Edit.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\ConfirmSave.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Deletevariant.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\ContinueEdit.cshtml" />
     <Content Include="Areas\Parameters\Views\Editing\AddVariant.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Add.cshtml" />
@@ -396,6 +391,8 @@
     <Content Include="Areas\Admin\Views\Patients\Led.cshtml" />
     <Content Include="Areas\Admin\Views\Candidates\AcceptBid.cshtml" />
     <Content Include="Areas\Parameters\Views\Test\Index.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\EditParam.cshtml" />
+    <Content Include="Areas\Parameters\Views\Editing\Confirm.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

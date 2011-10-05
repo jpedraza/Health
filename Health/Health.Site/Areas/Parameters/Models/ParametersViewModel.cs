@@ -70,6 +70,24 @@ namespace Health.Site.Areas.Parameters.Models
             }
         }
 
+        public void SaveParentsAndChildren()
+        {
+            for (var i = 0; i < EditingForm.Parameters.Count; i++)
+            {
+                if (EditingForm.CheckBoxesParents[i])
+                {
+                    EditingForm.Parameters[i].MetaData.Childs.Add(EditingForm.parameter.Id);
+                    EditingForm.parameter.MetaData.Parents.Add(EditingForm.Parameters[i].Id);
+                }
+
+                if (EditingForm.CheckBoxesChildren[i])
+                {
+                    EditingForm.parameter.MetaData.Childs.Add(EditingForm.Parameters[i].Id);
+                    EditingForm.Parameters[i].MetaData.Parents.Add(EditingForm.parameter.Id);
+                }
+            }
+        }
+
         void SetOther()
         {
             AddForm.parameter.MetaData.Id_cat = id_cat;
@@ -93,6 +111,7 @@ namespace Health.Site.Areas.Parameters.Models
         /// Редактируемый параметр здоровья человека
         /// </summary>
         public Parameter EditParam { get; set; }
+        /*
         /// <summary>
         /// Первая стадия добавления параметра
         /// </summary>

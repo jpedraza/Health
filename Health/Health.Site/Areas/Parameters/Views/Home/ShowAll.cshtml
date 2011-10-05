@@ -8,88 +8,30 @@
 {
    <td>
    <p>Id = 
-   @Html.Encode(parameter.Id)</p>
+   @Html.Encode(parameter.Id)</p></td>
 
+    <td>
    <p>Name: 
    @Html.Encode(parameter.Name)</p>
 
    <p>DefaultValue = 
-@*   @Html.Encode(parameter.DefaultValue)
-*@   
-    @Html.DisplayFor(x => parameter.DefaultValue) </p>
+ 
+    @parameter.DefaultValue </p>
 
    <p>Value = 
-@*   @Html.Encode(parameter.Value)</p>
-*@   
+  
 
-@Html.DisplayFor(x => parameter.Value)</td>
-    @ShowMetaData(parameter.MetaData)
+@parameter.Value</p>
+<strong>@Html.RouteLink("Ред.", "Parameters_Editing_Edit", new
+           {
+           parameter_id = parameter.Id})</strong>
+</td>
 }
 
-@helper ShowMetaData(Health.Core.Entities.POCO.MetaData metadata)
-{
-    <td>
-    @if(metadata.Id_parent == null)
-    {
-        <p>Категория: 
-        @metadata.Id_cat</p>
-
-        <p>Возраст: 
-        @metadata.Age</p>
-
-        <p>Обязат. : 
-        @metadata.Obligation.ToString()</p>
-        <p>Варианты: 
-        @if(metadata.Is_var)
-        {
-            __razor_helper_writer.WriteLine("Есть");
-        }
-        else
-        {
-            __razor_helper_writer.WriteLine("Нет");
-        }
-        </p>
-        
-        <p>Подпараметры: 
-        @if(metadata.Is_childs)
-        {
-            __razor_helper_writer.WriteLine("Есть");
-        }
-        else
-        {
-            __razor_helper_writer.WriteLine("Нет");
-        }
-        </p>
-    }
-    else
-    {
-        __razor_helper_writer.WriteLine("Является подпараметром.");
-    }
-    </td>
-     <td>
-        @if(metadata.Is_var)
-        {
-            @ShowVariant(metadata.Variants)
-        }
-        </td> 
-    
-}
-@helper ShowVariant(Health.Core.Entities.POCO.Variant[] vars)
-{
-    foreach(var item2 in vars)
-    {
-        <p>"@item2.Value"
-         - 
-        <b>@item2.Ball</b>
-        </p>
-    }
-    
-}
 <h2>Таблица просмотра всех параметров</h2>
 <table border="1" cellspacing="1">
-<tr><th>Общая характеристика параметра</th>
-<th>Мета-данные</th>
-<th>Варианты ответа (баллы)</th></tr>
+<tr><th>Id параметра здоровья</th>
+<th>Общие характристики параметра</th>
 @foreach (var item in Model.parameters)
 {
    <tr>

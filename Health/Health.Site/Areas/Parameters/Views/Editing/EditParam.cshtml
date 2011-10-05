@@ -1,18 +1,23 @@
-﻿@using Health.Core.Entities.POCO
-@model Health.Site.Areas.Parameters.Models.Forms.AddFormModel
+﻿@model Health.Site.Areas.Parameters.Models.Forms.EditingFormModel
 
 @{
-    ViewBag.Title = "Edit";
-    //TODO: В шапке таблицы вариантов прописать объединение последних двух столбцов
+    ViewBag.Title = "EditParam";
 }
 
 <h2>На этой странице можно отредактировать уже существующий параметр здоровья человека.</h2>
 @using (Html.BeginForm("SaveEdit", "Editing", new { Area = "Parameters" }))
 {
+    @Html.HiddenFor(x => x.parameter.Id);
     <p>@Html.LabelFor(x => x.parameter.Name)</p>
     <p>@Html.ValidationMessageFor(x => x.parameter.Name)</p>
-    <p>@Html.TextBoxFor(x => x.parameter.Name)</p>
-    
+    if (Model.parameter.Name.Length > 15)
+    {
+        <p>@Html.TextAreaFor(x => x.parameter.Name)</p>
+    }
+    else
+    {
+        <p>@Html.TextBoxFor(x => x.parameter.Name)</p>
+    }
     <p>@Html.LabelFor(x => x.parameter.Value)</p>
     <p>@Html.ValidationMessageFor(x => x.parameter.Value)</p>
     <p>@Html.TextBoxFor(x => x.parameter.Value)</p>
@@ -23,9 +28,55 @@
     
     <p>@Html.LabelFor(x => x.parameter.MetaData.Is_childs) 
     @Html.CheckBoxFor(x => x.parameter.MetaData.Is_childs)</p>
-
-    @ShowVariant(Model.parameter.MetaData.Is_var);
-                  
+    
+    if (Model.parameter.MetaData.Is_var)
+    {
+        <p>@Html.LabelFor(x => x.parameter.MetaData.Is_var)
+        @Html.CheckBoxFor(x => x.parameter.MetaData.Is_var)
+        <br />
+        <i>В случае снятия флажка, все параметры будут <strong>УДАЛЕНЫ</strong>.</i>
+        <br />
+        @*@Html.LabelFor(x => x.NumValue)
+        @Html.ValidationMessageFor(x => x.NumValue)
+        @Html.TextBoxFor(x => x.NumValue)*@
+        <table>
+        <tr>
+        <th>Вариант</th>
+        <th>Ответ</th>
+        <th>Балл</th>
+        <th>Удалить</th>
+        </tr>
+        @for (var i = 0; i < Model.Variants.Length; i++)
+        {
+            Model.CheckBoxVariant.Add(new bool());
+            <tr>            
+            <td>@i</td>
+            <td>@Html.TextBoxFor(x => x.Variants[i].Value)</td>
+            <td>@Html.TextBoxFor(x => x.Variants[i].Ball)</td>
+            <td>@if(i < Model.Variants.Length-1)
+                {
+                    @Html.CheckBoxFor(x => x.CheckBoxVariant[i])
+                }
+                else
+                {@Html.Encode("новый")}</td>
+            </tr>
+        }
+        </table>
+        <br />
+        </p>
+    }
+    else
+    {
+        <p>@Html.LabelFor(x => x.parameter.MetaData.Is_var)
+        @Html.CheckBoxFor(x => x.parameter.MetaData.Is_var)
+        <br />
+        @Html.LabelFor(x => x.NumValue)
+        @Html.ValidationMessageFor(x => x.NumValue)
+        @Html.TextBoxFor(x => x.NumValue)
+        <br />
+        <i>В случае установки флажка и задания числа вариантов, на следующей странице будет отображена форма, для добавления параметра.</i>
+    </p>
+    }                
     <p>@Html.LabelFor(x => x.parameter.MetaData.Age)
      @Html.ValidationMessageFor(x => x.parameter.MetaData.Age)
     @Html.TextBoxFor(x => x.parameter.MetaData.Age)
@@ -80,19 +131,4 @@
     }
     </table>
     <input type="submit" value="Отправить" />
-}
-
-@helper ShowVariant(bool flag)
-{
-    <div>
-    @if(flag == true)
-    {
-        
-    }
-    else
-    {
-        
-    }
-    
-    </div>
 }

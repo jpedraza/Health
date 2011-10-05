@@ -302,8 +302,13 @@ namespace Health.Data.Repository.Fake
                 var res = false;
                 try
                 {
-                    this.DeleteParam(Param.Id);
-                    res = Save(Param);
+                    for (var i = 0; i < _entities.Count; i++)
+                    {
+                        if(_entities[i].Id == Param.Id)
+                        {
+                            _entities[i] = Param;
+                        }
+                    }
                 }
                 catch (System.Exception)
                 {
@@ -322,15 +327,22 @@ namespace Health.Data.Repository.Fake
         //TODO: По возможности избавиться от метода удаления параметра через его ID
         public bool DeleteParam(int Id)
             {
-                Parameter requieredParameter = new Parameter();
                 var res = false;
-                IEnumerable<Parameter> found_parameter = (from parameter in _entities
-                                                          where parameter.Id == Id
-                                                          select parameter).ToList();
-                if (found_parameter.Count() == 1)
+                try
                 {
-                    requieredParameter = found_parameter.First();
-                    res = Delete(requieredParameter);                  
+                    for (var i = 0; i < _entities.Count; i++)
+                    {
+                        if (_entities[i].Id == Id)
+                        {
+                            _entities.RemoveAt(i);
+                        }
+                    }
+                    res = true;
+                }
+                catch (Exception)
+                {
+                    res = false;
+                    throw;
                 }
                 return res;
             }
