@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.Entities.POCO.Abstract;
@@ -11,7 +13,7 @@ namespace Health.Data.Repository.Fake
     {
         protected IList<TIEntity> _entities;
 
-        protected CoreFakeRepository(IDIKernel di_kernel) : base(di_kernel)
+        protected CoreFakeRepository(IDIKernel diKernel) : base(diKernel)
         {
             _entities = new List<TIEntity>();
         }
@@ -32,12 +34,12 @@ namespace Health.Data.Repository.Fake
         {
             if (entity is IKey)
             {
-                var max_id = 0;
-                foreach (IKey i_entity in _entities)
+                var maxId = 0;
+                foreach (IKey iEntity in _entities)
                 {
-                    max_id = i_entity.Id > max_id ? i_entity.Id : max_id;
+                    maxId = iEntity.Id > maxId ? iEntity.Id : maxId;
                 }
-                ((IKey) entity).Id = max_id + 1;
+                ((IKey) entity).Id = maxId + 1;
             }
             _entities.Add(entity);
             return true;
@@ -53,11 +55,11 @@ namespace Health.Data.Repository.Fake
         {
             if (entity is IKey)
             {
-                var key_entity = entity as IKey;
+                var keyEntity = entity as IKey;
                 for (int i = 0; i < _entities.Count; i++)
                 {
-                    var i_entity = (IKey)_entities[i];
-                    if (key_entity.Id == i_entity.Id)
+                    var iEntity = (IKey)_entities[i];
+                    if (keyEntity.Id == iEntity.Id)
                     {
                         _entities[i] = entity;
                         return true;
@@ -66,14 +68,19 @@ namespace Health.Data.Repository.Fake
             }
             for (int i = 0; i < _entities.Count; i++)
             {
-                TIEntity i_entity = _entities[i];
-                if (i_entity.Equals(entity))
+                TIEntity iEntity = _entities[i];
+                if (iEntity.Equals(entity))
                 {
                     _entities[i] = entity;
                     return true;
                 }
             }
             return false;
+        }
+
+        public IEnumerable<TIEntity> Find(Expression<Func<TIEntity, bool>> expression)
+        {
+            return _entities.Where(expression.Compile());
         }
 
         #endregion

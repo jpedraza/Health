@@ -44,6 +44,9 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Ведомые пациенты")]
         public virtual ICollection<Patient> Patients { get; set; }
+
+        [DisplayName("Рабочее расписание")]
+        public virtual WorkWeek WorkWeek { get; set; }
     }
 
     public class DoctorFormMetadata : DoctorMetadata

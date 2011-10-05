@@ -1,0 +1,62 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Models
+@model CoreViewModel
+@{
+    var date = (DateTime) ViewBag.Date;
+    ViewBag.Title = String.Format("Расписание доктора на {0}", date.ToShortDateString());
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h2>
+    @Html.RouteLink("Туда", "Default_Appointment_DoctorSchedule", new
+                                                                    {
+                                                                        controller = "Appointment",
+                                                                        action = "Doctor/Schedule",
+                                                                        doctorId = (int) ViewBag.DoctorId,
+                                                                        year = date.AddDays(1).Year,
+                                                                        month = date.AddDays(1).Month,
+                                                                        day = date.AddDays(1).Day
+                                                                    })
+    @if (date > DateTime.Now)
+    {
+        @Html.RouteLink("Сюда", "Default_Appointment_DoctorSchedule", new
+                                                                    {
+                                                                        controller = "Appointment",
+                                                                        action = "Doctor/Schedule",
+                                                                        doctorId = (int) ViewBag.DoctorId,
+                                                                        year = date.AddDays(-1).Year,
+                                                                        month = date.AddDays(-1).Month,
+                                                                        day = date.AddDays(-1).Day
+                                                                    })
+    }
+</h2>
+@{ IEnumerable<Appointment> appointments = ViewBag.Appointments; }
+@if (appointments.IsNullOrCountIsZero())
+{
+    <h2>К сожалению на @date.ToShortDateString() к доктору записи нет</h2>
+}
+else
+{
+    Appointment appo = appointments.ElementAt(0);
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => appo.Date)</td>            
+            <td>Статус</td>
+            <td>Запись</td>
+        </tr>
+        @foreach (Appointment appointment in appointments)
+        {
+            string status = appointment.Id == default(int) ? "Свободно" : "Занято";
+            <tr>
+                <td>@appointment.Date</td>
+                <td>@status</td>
+                <td>
+                    @using (Html.BeginForm())
+                    {
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

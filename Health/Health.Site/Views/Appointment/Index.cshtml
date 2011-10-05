@@ -1,0 +1,21 @@
+﻿@using Health.Site.Models
+@model AppointmentForm 
+
+@{
+    ViewBag.Title = "Быстрая авторизация";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    <p>@Html.LabelFor(m => m.Appointment.Patient.FirstName)</p>
+    <p>@Html.EditorFor(m => m.Appointment.Patient.FirstName) @Html.ValidationMessageFor(m => m.Appointment.Patient.FirstName)</p>
+    <p>@Html.LabelFor(m => m.Appointment.Patient.LastName)</p>
+    <p>@Html.EditorFor(m => m.Appointment.Patient.LastName) @Html.ValidationMessageFor(m => m.Appointment.Patient.LastName)</p>
+    <p>@Html.LabelFor(m => m.Appointment.Patient.Birthday)</p>
+    <p>@Html.EditorFor(m => m.Appointment.Patient.Birthday) @Html.ValidationMessageFor(m => m.Appointment.Patient.Birthday)</p>
+    <p>@Html.LabelFor(m => m.Appointment.Patient.Policy)</p>
+    <p>@Html.EditorFor(m => m.Appointment.Patient.Policy) @Html.ValidationMessageFor(m => m.Appointment.Patient.Policy)</p>
+    <input type="submit" value="Send" />
+}

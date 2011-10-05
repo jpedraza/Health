@@ -5,10 +5,10 @@
 <div id="page_container">    
     <div id="main_page_menu">
         <h2>Меню модуля</h2>
-        <p>@Html.ActionLink("Кандидаты", "List", "Candidates")</p>        
+        <p>@Html.RouteLink("Кандидаты", "Admin_default" , new { controller = "Candidates", action = "List" })</p>        
         <p>@Html.ActionLink("Пользователи", "List", "Users")</p>
         <p>@Html.ActionLink("Пациенты", "List", "Patients")</p>
-        <p>@Html.ActionLink("Доктора", "List", "Doctors")</p>
+        <p>@Html.RouteLink("Доктора", "Admin_default", new { controller = "Doctor", action = "List" })</p>
         @if (IsSectionDefined("page_menu"))
         {
             <div id="page_menu">

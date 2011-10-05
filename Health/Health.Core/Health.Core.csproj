@@ -65,6 +65,7 @@
     <Compile Include="API\ICore.cs" />
     <Compile Include="API\IDIKernel.cs" />
     <Compile Include="API\ILogger.cs" />
+    <Compile Include="API\Repository\IAppointmentRepository.cs" />
     <Compile Include="API\Repository\IDefaultScheduleRepository.cs" />
     <Compile Include="API\Repository\IActualCredentialRepository.cs" />
     <Compile Include="API\Repository\ICandidateRepository.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="API\Repository\Abstract\IScheduleRepository.cs" />
     <Compile Include="API\Repository\ISpecialtyRepository.cs" />
     <Compile Include="API\Repository\IUserRepository.cs" />
+    <Compile Include="API\Repository\IWorkWeekRepository.cs" />
     <Compile Include="API\Services\IAttendingDoctorService.cs" />
     <Compile Include="API\Services\IAuthorizationService.cs" />
     <Compile Include="API\Services\ICoreService.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Entities\POCO\Diagnosis.cs" />
     <Compile Include="Entities\POCO\Abstract\IEntity.cs" />
     <Compile Include="Entities\POCO\Doctor.cs" />
+    <Compile Include="Entities\POCO\Appointment.cs" />
     <Compile Include="Entities\POCO\MetaData.cs" />
     <Compile Include="Entities\POCO\Parameter.cs" />
     <Compile Include="Entities\POCO\Patient.cs" />
@@ -102,15 +105,16 @@
     <Compile Include="Entities\POCO\Specialty.cs" />
     <Compile Include="Entities\POCO\User.cs" />
     <Compile Include="Entities\POCO\Variant.cs" />
+    <Compile Include="Entities\POCO\WorkWeek.cs" />
     <Compile Include="Entities\UserCredential.cs" />
     <Compile Include="Entities\Virtual\Day.cs" />
     <Compile Include="Entities\Virtual\DaysInWeek.cs" />
     <Compile Include="Entities\Virtual\Month.cs" />
     <Compile Include="Entities\Virtual\MonthsInYear.cs" />
     <Compile Include="Entities\Virtual\Period.cs" />
-    <Compile Include="Entities\Virtual\TimeInterval.cs" />
     <Compile Include="Entities\Virtual\Week.cs" />
     <Compile Include="Entities\Virtual\WeeksInMonth.cs" />
+    <Compile Include="Entities\Virtual\WorkDay.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
     <Compile Include="Exceptions\RepositoryException.cs" />
     <Compile Include="Exceptions\ServiceException.cs" />

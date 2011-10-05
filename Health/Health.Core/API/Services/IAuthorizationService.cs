@@ -1,4 +1,5 @@
-﻿using Health.Core.API.Repository;
+﻿using System;
+using Health.Core.API.Repository;
 using Health.Core.Entities;
 
 namespace Health.Core.API.Services
@@ -19,14 +20,14 @@ namespace Health.Core.API.Services
         IPermanentCredentialRepository PermanentDataAccessor { get; set; }
 
         /// <summary>
-        /// Дефолтные роли пользователя.
-        /// </summary>
-        DefaultRoles DefaultRoles { get; set; }
-
-        /// <summary>
         /// Дефолтное имя переменной в сессии куда сохраняется мандат пользователя.
         /// </summary>
         string DefaultUserCredentialName { get; set; }
+
+        /// <summary>
+        /// Дефолтное имя быстрой сессии пользователя.
+        /// </summary>
+        string QuickUserCredentialName { get; set; }
 
         /// <summary>
         /// Дефолтный мандат пользователя.
@@ -48,9 +49,19 @@ namespace Health.Core.API.Services
         /// </summary>
         /// <param name="login">Логин.</param>
         /// <param name="password">Пароль.</param>
-        /// <param name="remember_me">Запоминать?</param>
+        /// <param name="rememberMe">Запоминать?</param>
         /// <returns>Результат авторизации.</returns>
-        bool Login(string login, string password, bool remember_me = false);
+        bool Login(string login, string password, bool rememberMe = false);
+
+        /// <summary>
+        /// Быстрая авторизация пользователя по имени, фамилии, дате рождения и полюсу.
+        /// </summary>
+        /// <param name="firstName">Имя.</param>
+        /// <param name="lastName">Фамилия.</param>
+        /// <param name="birthday">День рождения.</param>
+        /// <param name="policy">Полюс.</param>
+        /// <returns>Результат авторизации.</returns>
+        bool QuickLogin(string firstName, string lastName, DateTime birthday, string policy);
 
         /// <summary>
         /// Сброс сессии для пользователя.

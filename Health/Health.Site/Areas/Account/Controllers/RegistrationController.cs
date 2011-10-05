@@ -9,14 +9,14 @@ namespace Health.Site.Areas.Account.Controllers
 {
     public class RegistrationController : CoreController
     {
-        public RegistrationController(IDIKernel di_kernel) : base(di_kernel)
+        public RegistrationController(IDIKernel diKernel) : base(diKernel)
         {
         }
 
         /// <summary>
         /// Отображение формы регистрации
         /// </summary>
-        [PRGImport]
+        [PRGImport, ValidationModel]
         public ActionResult Registration(RegistrationForm form)
         {
             return View(form);
@@ -26,7 +26,7 @@ namespace Health.Site.Areas.Account.Controllers
         /// Обработка запроса на регистрацию
         /// </summary>
         /// <param name="form">Модель формы регистрации</param>
-        [HttpPost, PRGExport]
+        [HttpPost, PRGExport, ValidationModel, ActionName("Registration")]
         public ActionResult RegistrationSubmit(RegistrationForm form)
         {
             if (ModelState.IsValid)

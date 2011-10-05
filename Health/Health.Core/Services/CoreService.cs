@@ -8,10 +8,15 @@ namespace Health.Core.Services
     /// </summary>
     public class CoreService : Core, ICoreService
     {
-        protected CoreService(IDIKernel di_kernel) : base(di_kernel)
+        protected CoreService(IDIKernel diKernel) : base(diKernel)
         {
         }
 
+        /// <summary>
+        /// Получить экземпляр по интерфейсу.
+        /// </summary>
+        /// <typeparam name="T">Интерфейс.</typeparam>
+        /// <returns>Экземпляр.</returns>
         protected T Get<T>()
         {
             return DIKernel.Get<T>();

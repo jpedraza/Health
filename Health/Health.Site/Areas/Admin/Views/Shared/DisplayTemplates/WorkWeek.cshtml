@@ -1,0 +1,38 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Core.Entities.Virtual
+@using Health.Site.Extensions
+@model WorkWeek
+
+@if (Model.WorkDays.IsNullOrCountIsZero())
+{
+    <h2>Расписания нет</h2>
+}
+else
+{
+    WorkDay workDay = Model.WorkDays.ElementAt(0);
+    <table>
+        <tr>                        
+            <td>@Html.LabelFor(m => workDay.Day)</td>
+            <td>@Html.LabelFor(m => workDay.TimeStart)</td>
+            <td>@Html.LabelFor(m => workDay.TimeEnd)</td>
+            <td>@Html.LabelFor(m => workDay.AttendingHoursStart)</td>
+            <td>@Html.LabelFor(m => workDay.AttendingHoursEnd)</td>
+            <td>@Html.LabelFor(m => workDay.DinnerStart)</td>
+            <td>@Html.LabelFor(m => workDay.DinnerEnd)</td>
+            <td>@Html.LabelFor(m => workDay.IsWeekEndDay)</td>
+        </tr>
+        @foreach (WorkDay day in Model.WorkDays)
+        {
+            <tr>
+                <td>@day.Day.Name</td>
+                <td>@day.TimeStart</td>
+                <td>@day.TimeEnd</td>
+                <td>@day.AttendingHoursStart</td>
+                <td>@day.AttendingHoursEnd</td>
+                <td>@day.DinnerStart</td>
+                <td>@day.DinnerEnd</td>
+                <td>@Html.CheckBoxFor(m => day.IsWeekEndDay, new { disabled = true })</td>
+            </tr>
+        }
+    </table>
+}

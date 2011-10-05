@@ -1,35 +1,11 @@
-﻿using Health.Core.Entities.POCO;
-
-namespace Health.Core.Entities
+﻿namespace Health.Core.Entities
 {
-    public class DefaultRoles
+    public static class DefaultRoles
     {
-        private Role _all;
+        public const string All = "All";
 
-        private Role _guest;
+        public const string Guest = "Guest";
 
-        public Role All
-        {
-            get
-            {
-                return _all ?? (_all = new Role
-                                           {
-                                               Name = "All"
-                                           });
-            }
-            set { _all = value; }
-        }
-
-        public Role Guest
-        {
-            get
-            {
-                return _guest ?? (_guest = new Role
-                                               {
-                                                   Name = "Guest"
-                                               });
-            }
-            set { _guest = value; }
-        }
+        public const string QuickLogin = "QuickLogin";
     }
 }

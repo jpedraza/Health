@@ -1,16 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Health.Core.API;
-using Health.Core.Entities.Virtual;
 using Health.Site.App_Start;
+using Health.Site.Attributes;
 using Health.Site.Controllers;
 using Health.Site.Models;
-using Health.Site.Models.Metadata;
-using Health.Site.Repository;
 using Ninject;
 
 namespace Health.Site
@@ -39,25 +35,24 @@ namespace Health.Site
             routes.IgnoreRoute("Widget/{action}");
 
             routes.MapRoute(
-                "Default", // Имя маршрута
-                "{controller}/{action}/{id}", // URL-адрес с параметрами
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional}, // Параметры по умолчанию
+                "Appointment_DoctorSchedule",
+                "Appointment/{pre_action}/{post_action}/{doctorId}/{year}/{month}/{day}",
+                new { controller = "Appointment", format = "{0}/{1}" },
+                new[] { "Health.Site.Controllers" }
+                ).RouteHandler = new FormatActionName();
+
+            routes.MapRoute(
+                "Default_Appointment_DoctorSchedule",
+                "Appointment/{action}/{doctorId}/{year}/{month}/{day}",
+                new {controller = "Appointment"},
                 new[] {"Health.Site.Controllers"}
                 );
 
             routes.MapRoute(
-                "Home",
-                ""
-                );
-
-            routes.MapRoute(
-                "Admin",
-                "Admin/Index"
-                );
-
-            routes.MapRoute(
-                "Login",
-                "Account/Login"
+                "Default", // Имя маршрута
+                "{controller}/{action}/{id}", // URL-адрес с параметрами
+                new{controller = "Home", action = "Index", id = UrlParameter.Optional}, // Параметры по умолчанию
+                new[] {"Health.Site.Controllers"}
                 );
         }
 
@@ -67,26 +62,26 @@ namespace Health.Site
         protected void Application_Error()
         {
             Response.Clear();
-            Response.StatusCode = 500;
-            var last_exception = Server.GetLastError();
-            var exception = last_exception as HttpException;
+            Response.StatusCode = 503;
+            var lastException = Server.GetLastError();
+            var exception = lastException as HttpException;
             if (exception != null)
             {
                 Response.StatusCode = exception.GetHttpCode();
             }
-            var error_controller = new ErrorController(NinjectMVC3.Kernel.Get<IDIKernel>());
+            var errorController = new ErrorController(NinjectMVC3.Kernel.Get<IDIKernel>());
             var model = new ErrorViewModel
                             {
                                 ErrorModel = new ErrorModel
                                                  {
                                                      Message =
-                                                         last_exception.
+                                                         lastException.
                                                          Message,
                                                      Code =
                                                          Response.StatusCode
                                                  }
                             };
-            var route_data = new RouteData
+            var routeData = new RouteData
                                     {
                                         Values =
                                             {
@@ -97,25 +92,18 @@ namespace Health.Site
                                                     }
                                             }
                                     };
-            var request_context = new RequestContext(new HttpContextWrapper(Context), route_data);
-            var controller_context = new ControllerContext(request_context, error_controller);
-            var view_result = error_controller.Index(model);
-            view_result.ExecuteResult(controller_context);
+            var requestContext = new RequestContext(new HttpContextWrapper(Context), routeData);
+            var controllerContext = new ControllerContext(requestContext, errorController);
+            var viewResult = errorController.Index(model);
+            viewResult.ExecuteResult(controllerContext);
             Server.ClearError();
         }
 
         protected void Application_Start()
         {
-            
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-        }
-
-        protected void Application_EndRequest()
-        {
-            TypeDescriptor.RemoveProvider(
-                new AssociatedMetadataTypeTypeDescriptionProvider(typeof(Period), typeof(PeriodMetadata)), typeof(Period));
         }
     }
 }

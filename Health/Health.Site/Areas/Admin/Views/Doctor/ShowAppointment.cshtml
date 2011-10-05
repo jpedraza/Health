@@ -1,0 +1,65 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Site.Areas.Admin.Models
+@using Health.Site.Extensions
+@model AppointmentList
+
+@{
+    ViewBag.Title = "Расписание доктора на сегодня.";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@{ var date = (DateTime) ViewBag.Date; }
+<h2>
+    @Html.RouteLink("День сюда", "Admin_default_date", new
+                                                             {
+                                                                 id = (int) ViewBag.DoctorId,
+                                                                 year = date.AddDays(-1).Year,
+                                                                 month = date.AddDays(-1).Month,
+                                                                 day = date.AddDays(-1).Day
+                                                             })
+    @if (date.ToShortDateString() != DateTime.Now.ToShortDateString())
+    {
+        @Html.RouteLink("Сегодня", "Admin_default_date", new
+                                                                   {
+                                                                       id = (int) ViewBag.DoctorId,
+                                                                       year = DateTime.Now.Year,
+                                                                       month = DateTime.Now.Month,
+                                                                       day = DateTime.Now.Day
+                                                                   })
+    }        
+    @Html.RouteLink("День туда", "Admin_default_date", new
+                                                             {
+                                                                 id = (int) ViewBag.DoctorId,
+                                                                 year = date.AddDays(1).Year,
+                                                                 month = date.AddDays(1).Month,
+                                                                 day = date.AddDays(1).Day
+                                                             })
+</h2>
+@if (Model.Appointments.IsNullOrCountIsZero())
+{
+    <h2>На @date.ToShortDateString() записей нет.</h2>
+}
+else
+{
+    Appointment appo = Model.Appointments.ElementAt(0);
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => appo.Id)</td>
+            <td>@Html.LabelFor(m => appo.Patient.FullName)</td>
+            <td>@Html.LabelFor(m => appo.Patient.Policy)</td>
+            <td>@Html.LabelFor(m => appo.Patient.Card)</td>
+            <td>@Html.LabelFor(m => appo.Date)</td>
+        </tr>
+        @foreach (Appointment appointment in Model.Appointments)
+        {
+            <tr>
+                <td>@appointment.Id</td>
+                <td>@appointment.Patient.FullName</td>
+                <td>@appointment.Patient.Policy</td>
+                <td>@appointment.Patient.Card</td>
+                <td>@appointment.Date</td>
+            </tr>
+        }
+    </table>
+}

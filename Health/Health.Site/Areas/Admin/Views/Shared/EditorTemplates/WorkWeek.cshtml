@@ -1,0 +1,38 @@
+﻿@using Health.Core.Entities.POCO
+@using Health.Core.Entities.Virtual
+@using Health.Site.Extensions
+@model WorkWeek
+
+@if (Model.WorkDays.IsNullOrCountIsZero())
+{
+    <h2>Расписания нет</h2>
+}
+else
+{
+    WorkDay workDay = Model.WorkDays.ElementAt(0);
+    <table>        
+        <tr>                        
+            <td>@Html.LabelFor(m => workDay.Day)</td>
+            <td>@Html.LabelFor(m => workDay.TimeStart)</td>
+            <td>@Html.LabelFor(m => workDay.TimeEnd)</td>
+            <td>@Html.LabelFor(m => workDay.AttendingHoursStart)</td>
+            <td>@Html.LabelFor(m => workDay.AttendingHoursEnd)</td>
+            <td>@Html.LabelFor(m => workDay.DinnerStart)</td>
+            <td>@Html.LabelFor(m => workDay.DinnerEnd)</td>
+            <td>@Html.LabelFor(m => workDay.IsWeekEndDay)</td>
+        </tr>
+        @for (int i = 0; i < Model.WorkDays.Count; i++)
+        {
+            <tr>
+                <td>@Model.WorkDays[i].Day.Name</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].TimeStart)</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].TimeEnd)</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].AttendingHoursStart)</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].AttendingHoursEnd)</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].DinnerStart)</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].DinnerEnd)</td>
+                <td>@Html.EditorFor(m => m.WorkDays[i].IsWeekEndDay)</td>
+            </tr>
+        }
+    </table>
+}

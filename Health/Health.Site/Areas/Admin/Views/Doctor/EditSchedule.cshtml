@@ -1,0 +1,15 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model ScheduleForm
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.WorkWeek.Doctor.Id)
+    @Html.EditorFor(m => m.WorkWeek)
+    <input type="submit" value="Send"/>
+}

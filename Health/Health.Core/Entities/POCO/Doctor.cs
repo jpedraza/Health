@@ -15,6 +15,11 @@ namespace Health.Core.Entities.POCO
         /// <summary>
         /// Ведомые пациенты.
         /// </summary>
-        public ICollection<Patient> Patients { get; set; }
+        public IList<Patient> Patients { get; set; }
+
+        /// <summary>
+        /// Расписание доктора.
+        /// </summary>
+        public WorkWeek WorkWeek { get; set; }
     }
 }

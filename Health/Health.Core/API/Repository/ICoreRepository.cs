@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Health.Core.Entities;
-using Health.Core.Entities.POCO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Core.API.Repository
@@ -38,5 +38,12 @@ namespace Health.Core.API.Repository
         /// <param name="entity"></param>
         /// <returns></returns>
         bool Update(TEntity entity);
+
+        /// <summary>
+        /// Найти сущность используя linq запрос.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression);
     }
 }

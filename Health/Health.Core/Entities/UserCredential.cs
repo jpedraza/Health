@@ -1,5 +1,4 @@
 ﻿using System;
-using Health.Core.Entities.POCO;
 using Health.Core.Entities.POCO.Abstract;
 
 namespace Health.Core.Entities
@@ -23,11 +22,16 @@ namespace Health.Core.Entities
         /// <summary>
         /// Авторизован ли пользователь
         /// </summary>
-        public bool IsAuthirization { get; set; }
+        public bool IsAuthorization { get; set; }
 
         /// <summary>
         /// Запомнен ли пользователь
         /// </summary>
         public bool IsRemember { get; set; }
+
+        /// <summary>
+        /// Пользователь совершил быстрый вход?
+        /// </summary>
+        public bool IsQuickUser { get; set; }
     }
 }
