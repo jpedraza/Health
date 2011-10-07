@@ -10,7 +10,7 @@ using Health.Site.Models.Metadata;
 using Health.Site.Models;
 using System.ComponentModel;
 
-namespace Health.Site.Areas.Parameters.Models.Forms
+namespace Health.Site.Areas.Admin.Models.Forms
 {
     /// <summary>
     /// Модель формы начала добавления нового параметра
@@ -42,10 +42,10 @@ namespace Health.Site.Areas.Parameters.Models.Forms
         /// Служебная переменная - число вариантов ответа
         /// </summary>
         [DisplayName("Число вариантов ответа на вопрос, если есть"),
-        Required(ErrorMessage="Укажите корректное значение числа вариантов")]
+        Required(ErrorMessage = "Укажите корректное значение числа вариантов")]
         public int NumValue { get; set; }
     }
-    
+
     /// <summary>
     /// Форма для добавления вариантов ответа на вопросы
     /// </summary>
@@ -67,12 +67,12 @@ namespace Health.Site.Areas.Parameters.Models.Forms
         /// </summary>
         [ClassMetadata(typeof(VariantFormMetaData))]
         public Parameter Parameter { get; set; }
-    }   
+    }
 
     /// <summary>
     /// Модель формы редактирования уже существующего параметра.
     /// </summary>
-    public class EditingFormModel:CoreViewModel
+    public class EditingFormModel : CoreViewModel
     {
         /// <summary>
         /// Добавляемый параметр.

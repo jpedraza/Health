@@ -19,12 +19,17 @@
         {
             <tr><td>@parameter.Id</td>
             <td>@parameter.Name</td>
-            <td>@Html.RouteLink("Ред.", "Parameters_Editing_Edit", new
+            <td>@Html.RouteLink("Ред.", "Admin_default", new
            {
-           parameter_id = parameter.Id}) </td>
+               id = parameter.Id,
+               controller = "Parameters",
+               action = "Edit"
+           }) </td>
            <td>
-                @Html.RouteLink("Удал.", "Parameters_Editing_Delete" , new
-                {parameter_id = parameter.Id})</td></tr>
+                @Html.RouteLink("Удал.", "Admin_default", new
+                {id = parameter.Id,
+                controller = "Parameters",
+               action = "Delete"})</td></tr>
         }
     }
     else

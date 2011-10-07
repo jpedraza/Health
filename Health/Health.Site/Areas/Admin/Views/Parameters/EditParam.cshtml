@@ -1,11 +1,11 @@
-﻿@model Health.Site.Areas.Parameters.Models.Forms.EditingFormModel
+﻿@model Health.Site.Areas.Admin.Models.Forms.EditingFormModel
 
 @{
     ViewBag.Title = "EditParam";
 }
 
 <h2>На этой странице можно отредактировать уже существующий параметр здоровья человека.</h2>
-@using (Html.BeginForm("SaveEdit", "Editing", new { Area = "Parameters" }))
+@using (Html.BeginForm("SaveEdit", "Parameters", new { Area = "Admin" }))
 {
     @Html.HiddenFor(x => x.parameter.Id);
     <p>@Html.LabelFor(x => x.parameter.Name)</p>
@@ -35,10 +35,7 @@
         @Html.CheckBoxFor(x => x.parameter.MetaData.Is_var)
         <br />
         <i>В случае снятия флажка, все параметры будут <strong>УДАЛЕНЫ</strong>.</i>
-        <br />
-        @*@Html.LabelFor(x => x.NumValue)
-        @Html.ValidationMessageFor(x => x.NumValue)
-        @Html.TextBoxFor(x => x.NumValue)*@
+        <br />        
         <table>
         <tr>
         <th>Вариант</th>

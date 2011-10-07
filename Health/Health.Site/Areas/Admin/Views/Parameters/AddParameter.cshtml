@@ -1,4 +1,4 @@
-﻿@model Health.Site.Areas.Parameters.Models.Forms.AddFormModel
+﻿@model Health.Site.Areas.Admin.Models.Forms.AddFormModel
 
 @{
     ViewBag.Title = "Начальная форма добавления параметра";
@@ -8,7 +8,7 @@
         <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"> </script>
 
 <h2>Заполните форму для создания нового параметра: </h2>
-@using (Html.BeginForm("Add", "Add", new {Area = "Parameters"}))
+@using (Html.BeginForm("AddingParameter", "Parameters", new { Area = "Admin" }))
 {
     <p>@Html.LabelFor(x => x.parameter.Name)</p>
     <p>@Html.ValidationMessageFor(x =>x.parameter.Name)</p>
@@ -72,5 +72,3 @@
     </table>
     <input type="submit" value="Отправить" />
 }
-
-

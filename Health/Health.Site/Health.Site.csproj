@@ -133,19 +133,15 @@
     <Compile Include="Areas\Admin\Controllers\CandidatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoctorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ParametersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PatientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\CandidateModels.cs" />
     <Compile Include="Areas\Admin\Models\DoctorModels.cs" />
+    <Compile Include="Areas\Admin\Models\Forms\ParametersFormsModels.cs" />
+    <Compile Include="Areas\Admin\Models\ParametersViewModel.cs" />
     <Compile Include="Areas\Admin\Models\PatientModels.cs" />
     <Compile Include="Areas\Admin\Models\UserModels.cs" />
-    <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
-    <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
-    <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Parameters\Controllers\TestController.cs" />
-    <Compile Include="Areas\Parameters\Models\Forms\ParametersFormsModels.cs" />
-    <Compile Include="Areas\Parameters\Models\ParametersViewModel.cs" />
-    <Compile Include="Areas\Parameters\ParametersAreaRegistration.cs" />
     <Compile Include="Areas\Schedules\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Schedules\Controllers\HomeController.cs" />
     <Compile Include="Areas\Schedules\Controllers\PersonalController.cs" />
@@ -300,7 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Account\Views\Shared\" />
-    <Folder Include="Areas\Parameters\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -330,15 +325,6 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Account\Views\Interview\Confirm.cshtml" />
-    <Content Include="Areas\Parameters\Views\Web.config" />
-    <Content Include="Areas\Parameters\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Parameters\Views\Home\ShowAll.cshtml" />
-    <Content Include="Areas\Parameters\Views\Add\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\Add\Var.cshtml" />
-    <Content Include="Areas\Parameters\Views\Add\Confirm.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\AddVariant.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersList.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Add.cshtml" />
     <Content Include="Areas\Schedules\Views\Web.config" />
@@ -390,9 +376,15 @@
     <Content Include="Areas\Admin\Views\Doctors\Led.cshtml" />
     <Content Include="Areas\Admin\Views\Patients\Led.cshtml" />
     <Content Include="Areas\Admin\Views\Candidates\AcceptBid.cshtml" />
-    <Content Include="Areas\Parameters\Views\Test\Index.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\EditParam.cshtml" />
-    <Content Include="Areas\Parameters\Views\Editing\Confirm.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\ShowAll.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\AddParameter.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\AddConfirm.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\Var.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\StartEditing.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\EditParam.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\EditConfirm.cshtml" />
+    <Content Include="Areas\Admin\Views\Parameters\AddVariant.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

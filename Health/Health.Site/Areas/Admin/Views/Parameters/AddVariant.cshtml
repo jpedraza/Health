@@ -1,11 +1,12 @@
-﻿@model Health.Site.Areas.Parameters.Models.Forms.VarFormModel
+﻿@model Health.Site.Areas.Admin.Models.Forms.VarFormModel
 
 @{
     ViewBag.Title = "AddVariant";
 }
 
+<h2>AddVariant</h2>
 <h2>На этой форме надо перечислить варианты ответов на параметр "@Html.Encode(Model.Parameter.Name)"</h2>
-@using (Html.BeginForm("Addingvariant", "Editing", new { area = "Parameters" }))
+@using (Html.BeginForm("Addingvariant", "Parameters", new { area = "Admin" }))
 {
     <table cellspacing="0">
     <tr>

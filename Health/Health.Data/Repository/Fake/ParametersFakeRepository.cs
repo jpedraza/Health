@@ -267,7 +267,7 @@ namespace Health.Data.Repository.Fake
             public Parameter GetByValue(string Name)
             {
                 Parameter requieredParameter = new Parameter();
-                IEnumerable<Parameter> found_parameter = (from parameter in _entities
+                IList<Parameter> found_parameter = (from parameter in _entities
                                                           where parameter.Name == Name
                                                           select parameter).ToList();
                 if (found_parameter.Count() == 1)
