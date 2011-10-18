@@ -10,21 +10,21 @@ namespace Health.Site.Filters
     public class AuthFilter : IAuthorizationFilter
     {
         /// <summary>
-        /// Куда переадресуем если запрещен доступ
+        /// Куда переадресуем если запрещен доступ.
         /// </summary>
         protected readonly RedirectToRouteResult RedirectResult = new RedirectToRouteResult(
             new RouteValueDictionary(new {area = "Account", controller = "Authorization", action = "Login"}));
 
-        protected readonly RedirectToRouteResult RedirectResultForQuickLogin = new RedirectToRouteResult(
-            new RouteValueDictionary(new {area = "", controller = "Appointment", action = "Index"}));
+        protected readonly RedirectToRouteResult RedirectResultForQuickLogin = new RedirectToRouteResult("Default",
+            new RouteValueDictionary(new { area = "", controller = "Appointment", action = "Index" }));
 
         /// <summary>
-        /// Разрешенные роли (Приоритет выше, чем у DenyRoles)
+        /// Разрешенные роли (Приоритет выше, чем у DenyRoles).
         /// </summary>
         public string AllowRoles;
 
         /// <summary>
-        /// Запрещенные роли
+        /// Запрещенные роли.
         /// </summary>
         public string DenyRoles;
 
@@ -38,7 +38,7 @@ namespace Health.Site.Filters
         }
 
         /// <summary>
-        /// Роль пользователя
+        /// Роль пользователя.
         /// </summary>
         private string UserRole
         {
@@ -53,7 +53,7 @@ namespace Health.Site.Filters
         }
 
         /// <summary>
-        /// Центральный сервис
+        /// Центральный сервис.
         /// </summary>
         protected IDIKernel DIKernel { get; set; }
 
@@ -104,10 +104,10 @@ namespace Health.Site.Filters
         #endregion
 
         /// <summary>
-        /// Если заданы толь запрещающие привелегии
+        /// Если заданы толь запрещающие привелегии.
         /// </summary>
-        /// <param name="default">Результат действия в контроллере по-умолчанию</param>
-        /// <returns>Результат действия в контроллере</returns>
+        /// <param name="default">Результат действия в контроллере по-умолчанию.</param>
+        /// <returns>Результат действия в контроллере.</returns>
         private ActionResult OnlyDenyPermission(ActionResult @default)
         {
             string[] roles = DenyRoles.Split(',');
@@ -124,10 +124,10 @@ namespace Health.Site.Filters
         }
 
         /// <summary>
-        /// Если заданы толь разрешающие привелегии
+        /// Если заданы толь разрешающие привелегии.
         /// </summary>
-        /// <param name="default">Результат действия в контроллере по-умолчанию</param>
-        /// <returns>Результат действия в контроллере</returns>
+        /// <param name="default">Результат действия в контроллере по-умолчанию.</param>
+        /// <returns>Результат действия в контроллере.</returns>
         private ActionResult OnlyAllowPermission(ActionResult @default)
         {
             string[] roles = AllowRoles.Split(',');
@@ -138,7 +138,7 @@ namespace Health.Site.Filters
                 if (role == DefaultRoles.QuickLogin) isQuick = true;
                 if (role == UserRole) return @default;
             }
-            return  isQuick ? RedirectResultForQuickLogin : RedirectResult;
+            return isQuick ? RedirectResultForQuickLogin : RedirectResult;
         }
     }
 }

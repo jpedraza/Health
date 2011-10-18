@@ -4,6 +4,34 @@
 @{
     var date = (DateTime) ViewBag.Date;
     ViewBag.Title = String.Format("Расписание доктора на {0}", date.ToShortDateString());
+    Layout = "~/Views/Shared/_TwoColumns.cshtml";
+}
+@*<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $("#scheduleDatePicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function (dateText, inst) {
+                var date = new Date(dateText);
+                return  location(dateText);
+            }
+        }).datepicker("setDate", "@date.ToShortDateString()");
+    });
+</script>*@
+
+@section module_menu{
+    @{ DateTime nearDate = ViewBag.NearDate; }
+    @Html.RouteLink("Ближайший свободный день", "Default_Appointment_DoctorSchedule", new
+                                                                    {
+                                                                        controller = "Appointment",
+                                                                        action = "Doctor/Schedule",
+                                                                        doctorId = (int) ViewBag.DoctorId,
+                                                                        year = nearDate.AddDays(1).Year,
+                                                                        month = nearDate.AddDays(1).Month,
+                                                                        day = nearDate.AddDays(1).Day
+                                                                    })
+
+    @Html.MonthGrid(date)
 }
 
 <h2>@ViewBag.Title</h2>
@@ -18,7 +46,7 @@
                                                                         month = date.AddDays(1).Month,
                                                                         day = date.AddDays(1).Day
                                                                     })
-    @if (date > DateTime.Now)
+    @if (date > DateTime.Now.AddDays(1))
     {
         @Html.RouteLink("Сюда", "Default_Appointment_DoctorSchedule", new
                                                                     {
@@ -42,18 +70,26 @@ else
     <table>
         <tr>
             <td>@Html.LabelFor(m => appo.Date)</td>            
-            <td>Статус</td>
             <td>Запись</td>
         </tr>
         @foreach (Appointment appointment in appointments)
         {
-            string status = appointment.Id == default(int) ? "Свободно" : "Занято";
+            bool isFree = appointment.Id == default(int);
             <tr>
                 <td>@appointment.Date</td>
-                <td>@status</td>
-                <td>
-                    @using (Html.BeginForm())
+                <td>                    
+                    @if (isFree)
                     {
+                        using (Html.BeginRouteForm("Default", new { action = "Registration", controller = "Appointment" }))
+                        {
+                            @Html.Hidden("doctorId", (object)ViewBag.DoctorId)
+                            @Html.Hidden("date", appointment.Date)
+                            <input type="submit" value="Записаться" />
+                        }
+                    }
+                    else
+                    {
+                        @:Занято
                     }
                 </td>
             </tr>

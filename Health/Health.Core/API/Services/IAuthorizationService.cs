@@ -25,11 +25,6 @@ namespace Health.Core.API.Services
         string DefaultUserCredentialName { get; set; }
 
         /// <summary>
-        /// Дефолтное имя быстрой сессии пользователя.
-        /// </summary>
-        string QuickUserCredentialName { get; set; }
-
-        /// <summary>
         /// Дефолтный мандат пользователя.
         /// </summary>
         UserCredential DefaultUserCredential { get; set; }

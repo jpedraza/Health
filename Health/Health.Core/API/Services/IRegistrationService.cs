@@ -1,5 +1,4 @@
-﻿using Health.Core.Entities;
-using Health.Core.Entities.POCO;
+﻿using Health.Core.Entities.POCO;
 
 namespace Health.Core.API.Services
 {
@@ -11,9 +10,9 @@ namespace Health.Core.API.Services
         /// <summary>
         /// Принять заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат на регистрацию.</param>
-        /// <param name="doctor">Доктор.</param>
-        void AcceptBid(Candidate candidate, Doctor doctor);
+        /// <param name="сandidateId"></param>
+        /// <param name="doctorId"></param>
+        void AcceptBid(int сandidateId, int doctorId);
 
         /// <summary>
         /// Сохранить заявку.
@@ -24,7 +23,7 @@ namespace Health.Core.API.Services
         /// <summary>
         /// Отклонить заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат на регистрацию.</param>
-        void RejectBid(Candidate candidate);
+        /// <param name="candidateId">Идентификатор кандидата.</param>
+        void RejectBid(int candidateId);
     }
 }

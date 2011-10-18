@@ -76,6 +76,13 @@ namespace Health.Data.Repository.Fake
                     e => e.Doctor.Id == doctorId && e.Date.ToShortDateString() == date.ToShortDateString());
         }
 
+        public int CountAppointment(int doctorId, DateTime date)
+        {
+            return
+                _entities.Where(a => a.Doctor.Id == doctorId & a.Date.ToShortDateString() == date.ToShortDateString()).
+                    Count();
+        }
+
         #endregion
     }
 }

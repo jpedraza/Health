@@ -14,7 +14,7 @@ namespace Health.Site.Areas.Account.Controllers
         }
 
         /// <summary>
-        /// Отображение формы регистрации
+        /// Отображение формы регистрации.
         /// </summary>
         [PRGImport, ValidationModel]
         public ActionResult Registration(RegistrationForm form)
@@ -23,9 +23,9 @@ namespace Health.Site.Areas.Account.Controllers
         }
 
         /// <summary>
-        /// Обработка запроса на регистрацию
+        /// Обработка запроса на регистрацию.
         /// </summary>
-        /// <param name="form">Модель формы регистрации</param>
+        /// <param name="form">Модель формы регистрации.</param>
         [HttpPost, PRGExport, ValidationModel, ActionName("Registration")]
         public ActionResult RegistrationSubmit(RegistrationForm form)
         {

@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.ValidationMessage("LoginFalied")
     <p>@Html.LabelFor(m => m.Appointment.Patient.FirstName)</p>
     <p>@Html.EditorFor(m => m.Appointment.Patient.FirstName) @Html.ValidationMessageFor(m => m.Appointment.Patient.FirstName)</p>
     <p>@Html.LabelFor(m => m.Appointment.Patient.LastName)</p>

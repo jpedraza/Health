@@ -28,8 +28,8 @@ namespace Health.Core.Services
             Patient patient = Get<IPatientRepository>().GetByIdIfNotLedDoctor(patientId, doctorId);
             if (doctor != null && patient != null)
             {
-                doctor.Patients.ToList().Add(patient);
-                patient.Doctor.Patients.ToList().Remove(patient);
+                doctor.Patients.Add(patient);
+                patient.Doctor.Patients.Remove(patient);
                 patient.Doctor = doctor;
                 Get<IDoctorRepository>().Update(doctor);
                 Get<IDoctorRepository>().Update(patient.Doctor);
@@ -114,7 +114,7 @@ namespace Health.Core.Services
         /// <returns>Есть или нет свободные записи.</returns>
         public bool IssetFreeAppointmentForDoctor(int doctorId, DateTime date)
         {
-            Doctor doctor = Get<IDoctorRepository>().Find(d => d.Id == doctorId).FirstOrDefault();
+            Doctor doctor = Get<IDoctorRepository>().GetById(doctorId);
             if (doctor == null ||
                 doctor.WorkWeek == null ||
                 doctor.WorkWeek.WorkDays == null ||
@@ -122,18 +122,27 @@ namespace Health.Core.Services
             WorkDay workDay =
                 doctor.WorkWeek.WorkDays.Where(d => d.Day.InWeek == (int) date.DayOfWeek).FirstOrDefault();
             if (workDay == null) return false;
-            int countCurrentAppointment = Get<IAppointmentRepository>().Find(
-                a => a.Doctor.Id == doctorId & a.Date.ToShortDateString() == date.ToShortDateString()).Count();
+            int countCurrentAppointment = Get<IAppointmentRepository>().CountAppointment(doctorId, date);
             return countCurrentAppointment != workDay.CountAppointment;
         }
 
-        //public IEnumerable<Appointment> GetNearFreeAppointment(int doctorId)
-        //{
-        //    DateTime date = DateTime.Now;
-        //    for (int i = 1;; i++)
-        //    {
-        //        if (IssetFreeAppointmentForDoctor(doctorId, date.AddDays(i)))
-        //    }
-        //}
+        /// <summary>
+        /// Получит ближайшее свободную дату для записи к доктору.
+        /// </summary>
+        /// <param name="doctorId">Идентификатор доктора.</param>
+        /// <param name="startDate">Стартовая дата для поиска.</param>
+        /// <returns>Расписание для доктора.</returns>
+        public DateTime GetDateOfNearAppointment(int doctorId, DateTime startDate)
+        {
+            DateTime dateTime = startDate;
+            for (int i = 1; i < 10; i++)
+            {
+                if (IssetFreeAppointmentForDoctor(doctorId, dateTime.AddDays(i)))
+                {
+                    return dateTime;
+                }
+            }
+            return default(DateTime);
+        }
     }
 }

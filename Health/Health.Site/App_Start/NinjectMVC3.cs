@@ -242,7 +242,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(11, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(14, 0, 0)
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   },
                                                                               new WorkDay
                                                                                   {
@@ -255,7 +256,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(9, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(17, 0, 0)
+                                                                                          new TimeSpan(17, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   },
                                                                               new WorkDay
                                                                                   {
@@ -268,7 +270,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(11, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(14, 0, 0)
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   },
                                                                               new WorkDay
                                                                                   {
@@ -281,7 +284,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(11, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(14, 0, 0)
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   },
                                                                               new WorkDay
                                                                                   {
@@ -294,7 +298,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(11, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(14, 0, 0)
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   },
                                                                               new WorkDay
                                                                                   {
@@ -307,7 +312,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(11, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(14, 0, 0)
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   },
                                                                               new WorkDay
                                                                                   {
@@ -320,7 +326,8 @@ namespace Health.Site.App_Start
                                                                                       AttendingHoursStart =
                                                                                           new TimeSpan(11, 0, 0),
                                                                                       AttendingHoursEnd =
-                                                                                          new TimeSpan(14, 0, 0)
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
                                                                                   }
                                                                           }
                                                        });

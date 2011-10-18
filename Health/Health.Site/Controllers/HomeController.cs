@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 using Health.Core.API;
-using Health.Core.Entities;
-using Health.Site.Attributes;
 
 namespace Health.Site.Controllers
 {

@@ -51,7 +51,7 @@ namespace Health.Site.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 form.Candidate = Get<ICandidateRepository>().GetById(form.Candidate.Id);
-                Get<IRegistrationService>().AcceptBid(form.Candidate, form.Doctor);
+                Get<IRegistrationService>().AcceptBid(form.Candidate.Id, form.Doctor.Id);
                 const string message = "Заявка для кандидата принята.";
                 return RedirectTo<CandidatesController>(a => a.ConfirmBid(form.Candidate, message));
             }
@@ -61,7 +61,7 @@ namespace Health.Site.Areas.Admin.Controllers
         public ActionResult RejectBid(int id)
         {
             Candidate candidate = Get<ICandidateRepository>().GetById(id);
-            Get<IRegistrationService>().RejectBid(candidate);
+            Get<IRegistrationService>().RejectBid(id);
             const string message = "Заявка для кандидата отклонена.";
             return RedirectTo<CandidatesController>(a => a.ConfirmBid(candidate, message));
         }

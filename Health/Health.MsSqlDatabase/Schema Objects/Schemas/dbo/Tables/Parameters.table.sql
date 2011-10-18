@@ -2,5 +2,7 @@
 (
 	ParameterId int IDENTITY(1, 1) NOT NULL, 
 	Name nvarchar(MAX),
-	DefaultValue varbinary
+	DefaultValue varbinary,
+	Value varbinary,
+	Metadata varbinary
 )

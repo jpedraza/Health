@@ -55,6 +55,14 @@ namespace Health.Core.Entities.Virtual
         /// <summary>
         /// Число приемов у доктора в день.
         /// </summary>
-        public int CountAppointment { get { return (int) (AttendingHoursStart - AttendingHoursEnd).TotalMinutes/AttendingMinutes; } }
+        public int CountAppointment
+        {
+            get
+            {
+                return AttendingMinutes != 0
+                           ? (int) (AttendingHoursStart - AttendingHoursEnd).TotalMinutes/AttendingMinutes
+                           : 0;
+            }
+        }
     }
 }

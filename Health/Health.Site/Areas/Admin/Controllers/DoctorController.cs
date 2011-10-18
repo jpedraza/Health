@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Health.Core.API;
 using Health.Core.API.Repository;
@@ -42,7 +43,7 @@ namespace Health.Site.Areas.Admin.Controllers
         [PRGImport, ValidationModel]
         public ActionResult Add(DoctorForm form)
         {
-            form.Specialties = DIKernel.Get<ISpecialtyRepository>().GetAll();
+            form.Specialties = Get<ISpecialtyRepository>().GetAll();
             return View(form);
         }
 
@@ -140,7 +141,7 @@ namespace Health.Site.Areas.Admin.Controllers
             {
                 form.WorkWeek.Doctor = Get<IDoctorRepository>().GetById(form.WorkWeek.Doctor.Id);
                 Get<IWorkWeekRepository>().Update(form.WorkWeek);
-                return RedirectTo<DoctorController>(a => a.ShowSchedule(form.WorkWeek.Doctor.Id));
+                return RedirectTo<DoctorController>(a => a.ShowSchedule(form.WorkWeek.Doctor.Id), "Admin_default");
             }
             return RedirectTo<DoctorController>(a => a.EditSchedule(form.WorkWeek.Doctor.Id, form));
         }

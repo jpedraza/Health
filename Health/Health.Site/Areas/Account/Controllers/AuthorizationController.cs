@@ -9,7 +9,7 @@ namespace Health.Site.Areas.Account.Controllers
 {
     public class AuthorizationController : CoreController
     {
-        public AuthorizationController(IDIKernel di_kernel) : base(di_kernel)
+        public AuthorizationController(IDIKernel diKernel) : base(diKernel)
         {
         }
 

@@ -51,6 +51,21 @@ namespace Health.Data.Repository.Fake
             return true;
         }
 
+        /// <summary>
+        /// Удалить сущность по заданному критерию.
+        /// </summary>
+        /// <param name="expression">Критерий.</param>
+        /// <returns>Результат удаления.</returns>
+        public bool Delete(Expression<Func<TIEntity, bool>> expression)
+        {
+            IEnumerable<TIEntity> entities = Find(expression);
+            foreach (var entity in entities)
+            {
+                Delete(entity);
+            }
+            return true;
+        }
+
         public virtual bool Update(TIEntity entity)
         {
             if (entity is IKey)
@@ -81,6 +96,11 @@ namespace Health.Data.Repository.Fake
         public IEnumerable<TIEntity> Find(Expression<Func<TIEntity, bool>> expression)
         {
             return _entities.Where(expression.Compile());
+        }
+
+        public TIEntity First(Expression<Func<TIEntity, bool>> expression)
+        {
+            return Find(expression).FirstOrDefault();
         }
 
         #endregion

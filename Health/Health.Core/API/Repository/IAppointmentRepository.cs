@@ -30,5 +30,13 @@ namespace Health.Core.API.Repository
         /// <param name="date">Дата приема.</param>
         /// <returns>Записи на прием.</returns>
         IEnumerable<Appointment> GetAppointmentForDoctorByDate(int doctorId, DateTime date);
+
+        /// <summary>
+        /// Получить число записей к врачу согласно дате.
+        /// </summary>
+        /// <param name="doctorId">Идентификатор доктора.</param>
+        /// <param name="date">Дата.</param>
+        /// <returns>Чило записей.</returns>
+        int CountAppointment(int doctorId, DateTime date);
     }
 }

@@ -48,15 +48,6 @@ namespace Health.Core.Services
         }
 
         /// <summary>
-        /// Дефолтное имя быстрой сессии пользователя.
-        /// </summary>
-        public string QuickUserCredentialName
-        {
-            get { return "quickSessionName"; }
-            set { }
-        }
-
-        /// <summary>
         /// Дефолтный мандат пользователя.
         /// </summary>
         public UserCredential DefaultUserCredential
@@ -68,7 +59,8 @@ namespace Health.Core.Services
                                                  Login = DefaultRoles.Guest,
                                                  Role = DefaultRoles.Guest,
                                                  IsAuthorization = false,
-                                                 IsRemember = false
+                                                 IsRemember = false,
+                                                 IsQuickUser = false
                                              };
                 return defaultCredential;
             }
@@ -125,17 +117,15 @@ namespace Health.Core.Services
 
             if (user != null)
             {
-                ActualDataAccessor.Write(DefaultUserCredentialName, new UserCredential
-                                                                        {
-                                                                            Login =
-                                                                                user.Login,
-                                                                            Role =
-                                                                                user.Role.Name,
-                                                                            IsAuthorization
-                                                                                = true,
-                                                                            IsRemember =
-                                                                                rememberMe
-                                                                        });
+                var credential = new UserCredential
+                                     {
+                                         Login = user.Login,
+                                         Role = user.Role.Name,
+                                         IsAuthorization = true,
+                                         IsRemember = rememberMe,
+                                         IsQuickUser = false
+                                     };
+                ActualDataAccessor.Write(DefaultUserCredentialName, credential);
                 if (rememberMe)
                 {
                     RememberMe();
@@ -157,14 +147,12 @@ namespace Health.Core.Services
         /// <returns>Результат авторизации.</returns>
         public bool QuickLogin(string firstName, string lastName, DateTime birthday, string policy)
         {
-            Patient patient = Get<IPatientRepository>().Find(
-                p => p.FirstName == firstName
-                     && p.LastName == lastName
-                     && p.Birthday == birthday
-                     && p.Policy == policy).FirstOrDefault();
+            Patient patient = Get<IPatientRepository>().FindByFirstNameAndLastNameAndBirthdayAndPolicy(firstName,
+                                                                                                       lastName,
+                                                                                                       birthday, policy);
             if (patient != null)
             {
-                ActualDataAccessor.Write(QuickUserCredentialName, new UserCredential
+                ActualDataAccessor.Write(DefaultUserCredentialName, new UserCredential
                                                                       {
                                                                           IsAuthorization = true,
                                                                           IsRemember = false,

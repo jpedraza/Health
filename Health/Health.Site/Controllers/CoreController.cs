@@ -51,9 +51,10 @@ namespace Health.Site.Controllers
         /// </summary>
         /// <typeparam name="T">Тип контроллера.</typeparam>
         /// <param name="action">Действие контроллера.</param>
+        /// <param name="routeName">Имя роута для составления маршрута.</param>
         /// <param name="parametersHook">Передача параметров метода при редиректе.</param>
         /// <returns>Результат редиректа.</returns>
-        public ActionResult RedirectTo<T>(Expression<Action<T>> action, bool parametersHook = true)
+        public ActionResult RedirectTo<T>(Expression<Action<T>> action, string routeName = "", bool parametersHook = true)
             where T : Controller
         {
             var act = (MethodCallExpression)action.Body;
@@ -69,8 +70,24 @@ namespace Health.Site.Controllers
                 string[] temp = fullName.Split('.');
                 areaName = fullName.Contains("Areas") ? temp[3] : "";
             }
+
             // получаем результат редиректа...
-            RedirectToRouteResult result = RedirectToRoute(new { area = areaName, controller = controllerName, action = actionName });
+            RedirectToRouteResult result = RedirectToRoute(routeName,
+                                                               new
+                                                               {
+                                                                   area = areaName,
+                                                                   controller = controllerName,
+                                                                   action = actionName
+                                                               });
+            if (GetType() == typeof(T))
+            {
+                result = RedirectToRoute(routeName,
+                                                               new
+                                                               {
+                                                                   controller = controllerName,
+                                                                   action = actionName
+                                                               });
+            }
 
             // если разрешена передача параметров...
             if (parametersHook)

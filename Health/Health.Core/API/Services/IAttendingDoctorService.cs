@@ -53,5 +53,13 @@ namespace Health.Core.API.Services
         /// <param name="date">Дата</param>
         /// <returns>Есть или нет свободные записи.</returns>
         bool IssetFreeAppointmentForDoctor(int doctorId, DateTime date);
+
+        /// <summary>
+        /// Получит ближайшее свободную дату для записи к доктору.
+        /// </summary>
+        /// <param name="doctorId">Идентификатор доктора.</param>
+        /// <param name="startDate">Стартовая дата для поиска.</param>
+        /// <returns>Расписание для доктора.</returns>
+        DateTime GetDateOfNearAppointment(int doctorId, DateTime startDate);
     }
 }

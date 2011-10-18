@@ -25,16 +25,16 @@ namespace Health.Core.API
         /// <summary>
         /// Получить все объекты связанные с данным сервисом.
         /// </summary>
-        /// <param name="service_type"></param>
+        /// <param name="serviceType"></param>
         /// <returns></returns>
-        IEnumerable<object> GetServices(Type service_type);
+        IEnumerable<object> GetServices(Type serviceType);
 
         /// <summary>
         /// Получить экземпляр объекта с определенным набором параметров конструктора.
         /// </summary>
         /// <param name="type">Тип объекта.</param>
-        /// <param name="constructor_parameters">Параметры конструктора.</param>
+        /// <param name="constructorParameters">Параметры конструктора.</param>
         /// <returns>Экземпляр объекта.</returns>
-        object Get(Type type, params object[] constructor_parameters);
+        object Get(Type type, params object[] constructorParameters);
     }
 }

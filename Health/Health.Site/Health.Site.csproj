@@ -138,8 +138,6 @@
     <Compile Include="Areas\Admin\Models\PatientModels.cs" />
     <Compile Include="Areas\Admin\Models\UserModels.cs" />
     <Compile Include="Areas\Admin\Models\DoctorModels.cs" />
-    <Compile Include="Areas\DoctorCRUD\Controllers\HomeController.cs" />
-    <Compile Include="Areas\DoctorCRUD\DoctorCRUDAreaRegistration.cs" />
     <Compile Include="Areas\Parameters\Controllers\AddController.cs" />
     <Compile Include="Areas\Parameters\Controllers\EditingController.cs" />
     <Compile Include="Areas\Parameters\Controllers\HomeController.cs" />
@@ -302,8 +300,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Account\Views\Shared\" />
-    <Folder Include="Areas\DoctorCRUD\Models\" />
-    <Folder Include="Areas\DoctorCRUD\Views\Shared\" />
     <Folder Include="Areas\Parameters\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +397,6 @@
     <Content Include="Areas\Admin\Views\Doctor\EditSchedule.cshtml" />
     <Content Include="Areas\Parameters\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Doctor\ShowAppointment.cshtml" />
-    <Content Include="Areas\DoctorCRUD\Views\Web.config" />
-    <Content Include="Areas\DoctorCRUD\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\DoctorCRUD\Views\Home\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -416,6 +409,7 @@
     <Content Include="Views\Appointment\Doctors.cshtml" />
     <Content Include="Views\Appointment\DoctorSchedule.cshtml" />
     <Content Include="Views\Appointment\Confirm.cshtml" />
+    <Content Include="Views\Shared\_TwoColumns.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
