@@ -38,11 +38,11 @@ namespace Health.Site.DI
             return Kernel.Get(type);
         }
 
-        public IEnumerable<object> GetServices(Type service_type)
+        public IEnumerable<object> GetServices(Type serviceType)
         {
             try
             {
-                return Kernel.GetAll(service_type);
+                return Kernel.GetAll(serviceType);
             }
             catch (Exception)
             {
@@ -54,24 +54,24 @@ namespace Health.Site.DI
         /// Получить экземпляр объекта с определенным набором параметров конструктора.
         /// </summary>
         /// <param name="type">Тип объекта.</param>
-        /// <param name="constructor_parameters">Параметры конструктора.</param>
+        /// <param name="constructorParameters">Параметры конструктора.</param>
         /// <returns>Экземпляр объекта.</returns>
-        public object Get(Type type, params object[] constructor_parameters)
+        public object Get(Type type, params object[] constructorParameters)
         {
-            if (constructor_parameters == null || constructor_parameters.Length == 0) return Get(type);
-            var parameters = new ConstructorArgument[constructor_parameters.Length];
+            if (constructorParameters == null || constructorParameters.Length == 0) return Get(type);
+            var parameters = new ConstructorArgument[constructorParameters.Length];
             var types = new List<Type>();
-            foreach (object constructor_parameter in constructor_parameters)
+            foreach (object constructorParameter in constructorParameters)
             {
-                types.Add(constructor_parameter.GetType());
+                types.Add(constructorParameter.GetType());
             }
-            ConstructorInfo constructor_info = type.GetConstructor(types.ToArray());
-            if (constructor_info == null) throw new Exception("Не найден конструктор.");
-            ParameterInfo[] cstr_params = constructor_info.GetParameters();
-            for (int i = 0; i < constructor_parameters.Length; i++)
+            ConstructorInfo constructorInfo = type.GetConstructor(types.ToArray());
+            if (constructorInfo == null) throw new Exception("Не найден конструктор.");
+            ParameterInfo[] cstrParams = constructorInfo.GetParameters();
+            for (int i = 0; i < constructorParameters.Length; i++)
             {
-                object constructor_parameter = constructor_parameters[i];
-                parameters[i] = new ConstructorArgument(cstr_params[i].Name, constructor_parameter);
+                object constructorParameter = constructorParameters[i];
+                parameters[i] = new ConstructorArgument(cstrParams[i].Name, constructorParameter);
             }
             return Kernel.Get(type, parameters);
         }

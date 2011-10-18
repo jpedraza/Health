@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -88,8 +89,9 @@ namespace Health.Site.App_Start
             kernel.Bind<IPatientRepository>().To<PatientFakeRepository>().InSingletonScope();
             kernel.Bind<IDoctorRepository>().To<DoctorsFakeRepository>().InSingletonScope();
             kernel.Bind<ISpecialtyRepository>().To<SpecialtyFakeRepository>().InSingletonScope();
-            kernel.Bind<ValidationMetadataRepository>().ToSelf().InRequestScope();
             kernel.Bind<DynamicMetadataRepository>().ToSelf().InRequestScope();
+            kernel.Bind<IWorkWeekRepository>().To<WorkWeekFakeRepository>().InSingletonScope();
+            kernel.Bind<IAppointmentRepository>().To<AppointmentFakeRepository>().InSingletonScope();
             // ~
 
             // Сервисы
@@ -103,8 +105,8 @@ namespace Health.Site.App_Start
 
             // Фильтры для атрибутов
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0).WhenActionMethodHas<Auth>().
-                WithConstructorArgumentFromActionAttribute<Auth>("allow_roles", att => att.AllowRoles).
-                WithConstructorArgumentFromActionAttribute<Auth>("deny_roles", att => att.DenyRoles);
+                WithConstructorArgumentFromActionAttribute<Auth>("allowRoles", att => att.AllowRoles).
+                WithConstructorArgumentFromActionAttribute<Auth>("denyRoles", att => att.DenyRoles);
 
             kernel.BindFilter<ValidationModelAttributeFilter>(FilterScope.Controller, 0).WhenActionMethodHas
                 <ValidationModelAttribute>().
@@ -149,6 +151,8 @@ namespace Health.Site.App_Start
             AddDynamicMetadata<Variant>(kernel.Get<IDIKernel>());
             AddDisplayMetadata<MetaData, MetaDataMetadata>();
             AddDynamicMetadata<MetaData>(kernel.Get<IDIKernel>());
+            AddDisplayMetadata<WorkDay, WorkDayMetadata>();
+            AddDynamicMetadata<WorkDay>(kernel.Get<IDIKernel>());
             // ~
         }
 
@@ -224,6 +228,114 @@ namespace Health.Site.App_Start
             var patientRepository = kernel.Get<IPatientRepository>();
             patientRepository.Save(patient1);
             patientRepository.Save(patient2);
+
+            kernel.Get<IWorkWeekRepository>().Save(new WorkWeek
+                                                       {
+                                                           Doctor = kernel.Get<IDoctorRepository>().GetById(1),
+                                                           WorkDays = new List<WorkDay>
+                                                                          {
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Monday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  },
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Tuesday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(9, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(17, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  },
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Wednesday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  },
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Thursday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  },
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Friday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  },
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Sunday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  },
+                                                                              new WorkDay
+                                                                                  {
+                                                                                      Day = DaysInWeek.Saturday,
+                                                                                      TimeStart = new TimeSpan(6, 0, 0),
+                                                                                      TimeEnd = new TimeSpan(15, 0, 0),
+                                                                                      DinnerStart =
+                                                                                          new TimeSpan(10, 0, 0),
+                                                                                      DinnerEnd = new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursStart =
+                                                                                          new TimeSpan(11, 0, 0),
+                                                                                      AttendingHoursEnd =
+                                                                                          new TimeSpan(14, 0, 0),
+                                                                                      AttendingMinutes = 15
+                                                                                  }
+                                                                          }
+                                                       });
+            doctor1.WorkWeek = kernel.Get<IWorkWeekRepository>().GetByDoctorId(1);
+            kernel.Get<IDoctorRepository>().Update(doctor1);
         }
     }
 }

@@ -65,6 +65,20 @@ namespace Health.Data.Repository.Fake
             return false;
         }
 
+        public Patient FindByFirstNameAndLastNameAndBirthdayAndPolicy(string firstName, string lastName, DateTime birthday, string policy)
+        {
+            return _entities.Where(
+                p => p.FirstName == firstName
+                     && p.LastName == lastName
+                     && p.Birthday == birthday
+                     && p.Policy == policy).FirstOrDefault();
+        }
+
+        public Patient FindByLogin(string login)
+        {
+            return _entities.Where(e => e.Login == login).FirstOrDefault();
+        }
+
         public Patient GetByIdIfNotLedDoctor(int patientId, int doctorId)
         {
             return _entities.Where(p => p.Id == patientId && p.Doctor.Id != doctorId).FirstOrDefault();

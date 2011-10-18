@@ -3,38 +3,42 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Health.Core.API;
 using Health.Core.API.Services;
+using Health.Core.Entities;
 
 namespace Health.Site.Filters
 {
     public class AuthFilter : IAuthorizationFilter
     {
         /// <summary>
-        /// Куда переадресуем если запрещен доступ
+        /// Куда переадресуем если запрещен доступ.
         /// </summary>
         protected readonly RedirectToRouteResult RedirectResult = new RedirectToRouteResult(
             new RouteValueDictionary(new {area = "Account", controller = "Authorization", action = "Login"}));
 
+        protected readonly RedirectToRouteResult RedirectResultForQuickLogin = new RedirectToRouteResult("Default",
+            new RouteValueDictionary(new { area = "", controller = "Appointment", action = "Index" }));
+
         /// <summary>
-        /// Разрешенные роли (Приоритет выше, чем у DenyRoles)
+        /// Разрешенные роли (Приоритет выше, чем у DenyRoles).
         /// </summary>
         public string AllowRoles;
 
         /// <summary>
-        /// Запрещенные роли
+        /// Запрещенные роли.
         /// </summary>
         public string DenyRoles;
 
         private string _userRole;
 
-        public AuthFilter(IDIKernel di_kernel, string allow_roles, string deny_roles)
+        public AuthFilter(IDIKernel diKernel, string allowRoles, string denyRoles)
         {
-            DIKernel = di_kernel;
-            AllowRoles = allow_roles;
-            DenyRoles = deny_roles;
+            DIKernel = diKernel;
+            AllowRoles = allowRoles;
+            DenyRoles = denyRoles;
         }
 
         /// <summary>
-        /// Роль пользователя
+        /// Роль пользователя.
         /// </summary>
         private string UserRole
         {
@@ -49,13 +53,13 @@ namespace Health.Site.Filters
         }
 
         /// <summary>
-        /// Центральный сервис
+        /// Центральный сервис.
         /// </summary>
         protected IDIKernel DIKernel { get; set; }
 
         #region IAuthorizationFilter Members
 
-        public void OnAuthorization(AuthorizationContext filter_context)
+        public void OnAuthorization(AuthorizationContext filterContext)
         {
             // Если у пользователя вообще нет роли (никакой ?)
             if (String.IsNullOrEmpty(DIKernel.Get<IAuthorizationService>().UserCredential.Role))
@@ -68,9 +72,9 @@ namespace Health.Site.Filters
             if (String.IsNullOrEmpty(AllowRoles) & String.IsNullOrEmpty(DenyRoles))
             {
                 // Считаем что всем авторизованным пользователям разрешен доступ
-                if (!DIKernel.Get<IAuthorizationService>().UserCredential.IsAuthirization)
+                if (!DIKernel.Get<IAuthorizationService>().UserCredential.IsAuthorization)
                 {
-                    filter_context.Result = RedirectResult;
+                    filterContext.Result = RedirectResult;
                     return;
                 }
             }
@@ -78,39 +82,39 @@ namespace Health.Site.Filters
             // Если указаны только права на запрет доступа
             if (String.IsNullOrEmpty(AllowRoles) & !String.IsNullOrEmpty(DenyRoles))
             {
-                filter_context.Result = OnlyDenyPermission(filter_context.Result);
+                filterContext.Result = OnlyDenyPermission(filterContext.Result);
                 return;
             }
 
             // Если указаны права только на разрешение доступа
             if (!String.IsNullOrEmpty(AllowRoles) & String.IsNullOrEmpty(DenyRoles))
             {
-                filter_context.Result = OnlyAllowPermission(filter_context.Result);
+                filterContext.Result = OnlyAllowPermission(filterContext.Result);
                 return;
             }
 
 
             if (!String.IsNullOrEmpty(AllowRoles) & !String.IsNullOrEmpty(DenyRoles))
             {
-                filter_context.Result = OnlyDenyPermission(filter_context.Result);
-                filter_context.Result = OnlyAllowPermission(filter_context.Result);
+                filterContext.Result = OnlyDenyPermission(filterContext.Result);
+                filterContext.Result = OnlyAllowPermission(filterContext.Result);
             }
         }
 
         #endregion
 
         /// <summary>
-        /// Если заданы толь запрещающие привелегии
+        /// Если заданы толь запрещающие привелегии.
         /// </summary>
-        /// <param name="default">Результат действия в контроллере по-умолчанию</param>
-        /// <returns>Результат действия в контроллере</returns>
+        /// <param name="default">Результат действия в контроллере по-умолчанию.</param>
+        /// <returns>Результат действия в контроллере.</returns>
         private ActionResult OnlyDenyPermission(ActionResult @default)
         {
             string[] roles = DenyRoles.Split(',');
 
             foreach (string role in roles)
             {
-                if (role == UserRole || role == DIKernel.Get<IAuthorizationService>().DefaultRoles.All.Name)
+                if (role == UserRole || role == DefaultRoles.All)
                 {
                     return RedirectResult;
                 }
@@ -120,22 +124,21 @@ namespace Health.Site.Filters
         }
 
         /// <summary>
-        /// Если заданы толь разрешающие привелегии
+        /// Если заданы толь разрешающие привелегии.
         /// </summary>
-        /// <param name="default">Результат действия в контроллере по-умолчанию</param>
-        /// <returns>Результат действия в контроллере</returns>
+        /// <param name="default">Результат действия в контроллере по-умолчанию.</param>
+        /// <returns>Результат действия в контроллере.</returns>
         private ActionResult OnlyAllowPermission(ActionResult @default)
         {
             string[] roles = AllowRoles.Split(',');
 
+            bool isQuick = false;
             foreach (string role in roles)
             {
-                if (role == UserRole)
-                {
-                    return @default;
-                }
+                if (role == DefaultRoles.QuickLogin) isQuick = true;
+                if (role == UserRole) return @default;
             }
-            return RedirectResult;
+            return isQuick ? RedirectResultForQuickLogin : RedirectResult;
         }
     }
 }

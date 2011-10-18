@@ -1,0 +1,10 @@
+﻿@using Health.Site.Models
+@model AppointmentForm 
+
+@{
+    ViewBag.Title = "Подтверждение записи";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h2>@Model.Appointment.Patient.FullName, вы успешно записаны к врачу - @Model.Appointment.Doctor.FullName на @Model.Appointment.Date</h2>

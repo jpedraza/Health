@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Attributes\NotNullable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Fake\AppointmentFakeRepository.cs" />
     <Compile Include="Repository\Fake\CoreFakeRepository.cs" />
     <Compile Include="Repository\Fake\CandidatesFakeRepository.cs" />
     <Compile Include="Repository\Fake\DefaultScheduleFakeRepository.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Repository\Fake\RolesFakeRepository.cs" />
     <Compile Include="Repository\Fake\SpecialtyFakeRepository.cs" />
     <Compile Include="Repository\Fake\UsersFakeRepository.cs" />
+    <Compile Include="Repository\Fake\WorkWeekFakeRepository.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\ValidatorFactory.cs" />
   </ItemGroup>

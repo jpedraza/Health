@@ -4,29 +4,30 @@ using System.Linq;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.Entities.POCO;
+using Health.Core.Entities.Virtual;
 
 namespace Health.Data.Repository.Fake
 {
     public sealed class DoctorsFakeRepository : CoreFakeRepository<Doctor>, IDoctorRepository
     {
-        public DoctorsFakeRepository(IDIKernel di_kernel) : base(di_kernel)
+        public DoctorsFakeRepository(IDIKernel diKernel) : base(diKernel)
         {
             
         }
 
         #region Implementation of IDoctorRepository
 
-        public Doctor GetById(int doctor_id)
+        public Doctor GetById(int doctorId)
         {
-            return _entities.Where(e => e.Id == doctor_id).FirstOrDefault();
+            return _entities.Where(e => e.Id == doctorId).FirstOrDefault();
         }
 
-        public bool DeleteById(int doctor_id)
+        public bool DeleteById(int doctorId)
         {
             for (int i = 0; i < _entities.Count; i++)
             {
                 Doctor doctor = _entities[i];
-                if (doctor_id == doctor.Id)
+                if (doctorId == doctor.Id)
                 {
                     if (doctor.Patients.Count() != 0)
                     {
@@ -43,22 +44,46 @@ namespace Health.Data.Repository.Fake
 
         public override bool Save(Doctor entity)
         {
-            entity.Specialty = DIKernel.Get<ISpecialtyRepository>().GetById(entity.Specialty.Id);
-            return base.Save(entity);
+            entity.Specialty = Get<ISpecialtyRepository>().GetById(entity.Specialty.Id);
+            base.Save(entity);
+            Doctor doctor =
+                _entities.Where(
+                    d =>
+                    d.FullName == entity.FullName && d.Login == entity.Login &&
+                    d.Specialty.Name == entity.Specialty.Name).FirstOrDefault();
+            if (doctor != null)
+            {
+                doctor.WorkWeek = doctor.WorkWeek ?? new WorkWeek
+                                                         {
+                                                             Doctor = doctor,
+                                                             WorkDays = new List<WorkDay>
+                                                                            {
+                                                                                new WorkDay {Day = DaysInWeek.Monday},
+                                                                                new WorkDay {Day = DaysInWeek.Tuesday},
+                                                                                new WorkDay {Day = DaysInWeek.Wednesday},
+                                                                                new WorkDay {Day = DaysInWeek.Thursday},
+                                                                                new WorkDay {Day = DaysInWeek.Friday},
+                                                                                new WorkDay {Day = DaysInWeek.Saturday},
+                                                                                new WorkDay {Day = DaysInWeek.Sunday}
+                                                                            }
+                                                         };
+                return Update(doctor);
+            }
+            return false;
         }
 
         public override bool Update(Doctor entity)
         {
-            entity.Specialty = DIKernel.Get<ISpecialtyRepository>().GetById(entity.Specialty.Id);
+            entity.Specialty = Get<ISpecialtyRepository>().GetById(entity.Specialty.Id);
             return base.Update(entity);
         }
 
-        public Doctor GetByIdIfNotLedPatient(int doctor_id, int patient_id)
+        public Doctor GetByIdIfNotLedPatient(int doctorId, int patientId)
         {
             return _entities.Where(
-                        d => d.Id == doctor_id && 
+                        d => d.Id == doctorId && 
                         d.Patients.Where(
-                            p => p.Id == patient_id).FirstOrDefault() == null).FirstOrDefault();
+                            p => p.Id == patientId).FirstOrDefault() == null).FirstOrDefault();
         }
 
         public override bool Delete(Doctor entity)

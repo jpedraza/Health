@@ -44,12 +44,4 @@ namespace Health.Site.Areas.Account.Models
         [ClassMetadata(typeof(CandidateFormMetadata))]
         public Candidate Candidate { get; set; }
     }
-
-    /// <summary>
-    /// Форма опроса пользователя при первом входе в систему
-    /// </summary>
-    public class InterviewForm : CoreViewModel
-    {
-        public IList<Parameter> Parameters { get; set; }
-    }
 }

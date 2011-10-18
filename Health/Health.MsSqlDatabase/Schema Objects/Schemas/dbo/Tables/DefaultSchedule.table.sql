@@ -2,6 +2,7 @@
 -- [class DefaultSchedule]
 CREATE TABLE [dbo].[DefaultSchedule]
 (	
+	DefaultScheduleId int NOT NULL IDENTITY(1, 1),
 	ParameterId int, -- идентификатор параметра
 	DiagnosesId int, -- идентификатор диагноза
 

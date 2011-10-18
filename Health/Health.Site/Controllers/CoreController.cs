@@ -51,49 +51,69 @@ namespace Health.Site.Controllers
         /// </summary>
         /// <typeparam name="T">Тип контроллера.</typeparam>
         /// <param name="action">Действие контроллера.</param>
-        /// <param name="parameters_hook">Передача параметров метода при редиректе.</param>
+        /// <param name="routeName">Имя роута для составления маршрута.</param>
+        /// <param name="parametersHook">Передача параметров метода при редиректе.</param>
         /// <returns>Результат редиректа.</returns>
-        public ActionResult RedirectTo<T>(Expression<Action<T>> action, bool parameters_hook = true)
+        public ActionResult RedirectTo<T>(Expression<Action<T>> action, string routeName = "", bool parametersHook = true)
             where T : Controller
         {
             var act = (MethodCallExpression)action.Body;
-            string action_name = act.Method.Name;
-            string controller_name = typeof(T).Name.Replace("Controller", "");
-            string full_name = typeof(T).FullName;
-            string area_name = String.Empty;
-            if (full_name != null)
+            var actionNameInAttribute =
+                act.Method.GetCustomAttributes(typeof (ActionNameAttribute), true).FirstOrDefault() as
+                ActionNameAttribute;
+            string actionName = actionNameInAttribute == null ? act.Method.Name : actionNameInAttribute.Name;
+            string controllerName = typeof(T).Name.Replace("Controller", "");
+            string fullName = typeof(T).FullName;
+            string areaName = String.Empty;
+            if (fullName != null)
             {
-                string[] temp = full_name.Split('.');
-                area_name = full_name.Contains("Areas") ? temp[3] : "";
+                string[] temp = fullName.Split('.');
+                areaName = fullName.Contains("Areas") ? temp[3] : "";
             }
+
             // получаем результат редиректа...
-            RedirectToRouteResult result = RedirectToRoute(new { area = area_name, controller = controller_name, action = action_name });
+            RedirectToRouteResult result = RedirectToRoute(routeName,
+                                                               new
+                                                               {
+                                                                   area = areaName,
+                                                                   controller = controllerName,
+                                                                   action = actionName
+                                                               });
+            if (GetType() == typeof(T))
+            {
+                result = RedirectToRoute(routeName,
+                                                               new
+                                                               {
+                                                                   controller = controllerName,
+                                                                   action = actionName
+                                                               });
+            }
 
             // если разрешена передача параметров...
-            if (parameters_hook)
+            if (parametersHook)
             {
-                var prg_model_state = new PRGModelState{ParametersHook = true};
+                var prgModelState = new PRGModelState{ParametersHook = true};
                 // получаем список параметров...
 
-                IList<PRGParameter> prg_parameters = prg_model_state.GetExportModel(action);
-                if (prg_parameters.Count > 0)
+                IList<PRGParameter> prgParameters = prgModelState.GetExportModel(action);
+                if (prgParameters.Count > 0)
                 {
                     // перебираем параметры метода...
                     ParameterInfo[] parameters = act.Method.GetParameters();
-                    for (int i = 0; i < prg_parameters.Count(); i++)
+                    for (int i = 0; i < prgParameters.Count(); i++)
                     {
-                        prg_parameters[i].Name = parameters[i].Name;
+                        prgParameters[i].Name = parameters[i].Name;
                         // если параметр помечен PRGInRoute атрибутом...
                         var attr =
                             (PRGInRoute) parameters[i].GetCustomAttributes(typeof (PRGInRoute), false).FirstOrDefault();
                         if (attr != null)
                         {
                             // добавляем параметр в роут...
-                            result.RouteValues.Add(prg_parameters[i].Name, prg_parameters[i].Value);
+                            result.RouteValues.Add(prgParameters[i].Name, prgParameters[i].Value);
                         }
                     }
                     // сохраняем текущий список параметров...
-                    TempData[prg_model_state.PRGParametersKey] = prg_parameters;
+                    TempData[prgModelState.PRGParametersKey] = prgParameters;
                 }
             }
             // производим редирект...

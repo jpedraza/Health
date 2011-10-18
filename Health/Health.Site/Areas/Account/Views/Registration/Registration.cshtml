@@ -6,7 +6,7 @@
     ViewBag.Title = "Заявка на регистрацию";
     Model.Candidate = Model.Candidate ?? new Candidate();
 }
-@using (Html.BeginForm("RegistrationSubmit", "Registration", new {area = "Account"}))
+@using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
     <fieldset>

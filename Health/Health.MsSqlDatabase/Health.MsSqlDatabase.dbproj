@@ -161,49 +161,103 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Patients.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Patients.PatientsToUsers.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PatientsOTOUsers.fkey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Roles.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Roles.RolesPK.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Roles.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Candidates.CandiadtesPK.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Candiadtes.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Users.UsersPK.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Users.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Patients.PatientsPK.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Patients.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Users.ForeignKeyConstraint1.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\ForeignKeyConstraint1.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Candidates.CandidatesToRoles.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\CandidatesMTORoles.fkey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Parameters.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Parameters.ParametersPK.pkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Parameters.pkey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\DefaultSchedule.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DefaultSchedule.DefaultScheduleToParameters.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DefaultScheduleMTOParameters.fkey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\PersonalSchedule.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PersonalSchedule.PersonalScheduleMTOPatients.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PersonalScheduleMTOPatients.fkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PersonalSchedule.PersonalScheduleMTOParameters.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PersonalScheduleMTOParameters.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PersonalSchedule.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DefaultSchedule.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Appointments.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Appointments.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Diagnosis.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Diagnosis.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Doctors.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Doctors.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Specialties.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Specialties.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\WorkWeeks.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\WorkWeeksMTODoctors.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DoctorsMTOSpecialties.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\PatientsToDoctors.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PatientsMTMDoctors.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DoctorsOTOUsers.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\AppointmentsMTOPatients.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\AppointmentsMTODoctors.fkey.sql">
       <SubType>Code</SubType>
     </Build>
   </ItemGroup>

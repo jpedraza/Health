@@ -1,7 +1,4 @@
-﻿using System;
-using Health.Core.Entities.POCO.Abstract;
-
-namespace Health.Core.Entities.POCO
+﻿namespace Health.Core.Entities.POCO
 {
     /// <summary>
     /// Кандидат на регистрацию.

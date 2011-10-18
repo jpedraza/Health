@@ -8,6 +8,6 @@ namespace Health.Core.API.Repository
 {
     public interface ISpecialtyRepository : ICoreRepository<Specialty>
     {
-        Specialty GetById(int specialty_id);
+        Specialty GetById(int specialtyId);
     }
 }

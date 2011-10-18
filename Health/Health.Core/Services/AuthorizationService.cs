@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.API.Services;
@@ -15,14 +16,14 @@ namespace Health.Core.Services
         /// <summary>
         /// Инициализация репозиториев доступа к анным сессии.
         /// </summary>
-        /// <param name="actual_data_accessor">Репозиторий доступа к актуальным данным сессии.</param>
-        /// <param name="permanent_data_accessor">Репозиторий доступа к сохраняемым данным сессии.</param>
-        /// <param name="di_kernel"></param>
-        public AuthorizationService(IActualCredentialRepository actual_data_accessor,
-                                    IPermanentCredentialRepository permanent_data_accessor, IDIKernel di_kernel) : base(di_kernel)
+        /// <param name="actualDataAccessor">Репозиторий доступа к актуальным данным сессии.</param>
+        /// <param name="permanentDataAccessor">Репозиторий доступа к сохраняемым данным сессии.</param>
+        /// <param name="diKernel"></param>
+        public AuthorizationService(IActualCredentialRepository actualDataAccessor,
+                                    IPermanentCredentialRepository permanentDataAccessor, IDIKernel diKernel) : base(diKernel)
         {
-            ActualDataAccessor = actual_data_accessor;
-            PermanentDataAccessor = permanent_data_accessor;
+            ActualDataAccessor = actualDataAccessor;
+            PermanentDataAccessor = permanentDataAccessor;
         }
 
         #region IAuthorizationService Members
@@ -36,15 +37,6 @@ namespace Health.Core.Services
         /// Доступ к постоянному хранлищу сессии пользователя.
         /// </summary>
         public IPermanentCredentialRepository PermanentDataAccessor { get; set; }
-
-        /// <summary>
-        /// Дефолтные роли пользователя.
-        /// </summary>
-        public DefaultRoles DefaultRoles
-        {
-            get { return new DefaultRoles(); }
-            set { }
-        }
 
         /// <summary>
         /// Дефолтное имя переменной в сессии куда сохраняется мандат пользователя.
@@ -62,14 +54,15 @@ namespace Health.Core.Services
         {
             get
             {
-                var default_credential = new UserCredential
+                var defaultCredential = new UserCredential
                                              {
-                                                 Login = DefaultRoles.Guest.Name,
-                                                 Role = DefaultRoles.Guest.Name,
-                                                 IsAuthirization = false,
-                                                 IsRemember = false
+                                                 Login = DefaultRoles.Guest,
+                                                 Role = DefaultRoles.Guest,
+                                                 IsAuthorization = false,
+                                                 IsRemember = false,
+                                                 IsQuickUser = false
                                              };
-                return default_credential;
+                return defaultCredential;
             }
             set { }
         }
@@ -81,13 +74,13 @@ namespace Health.Core.Services
         {
             get
             {
-                UserCredential user_session_info = ActualDataAccessor.Read(DefaultUserCredentialName);
-                if (user_session_info == null)
+                UserCredential userSessionInfo = ActualDataAccessor.Read(DefaultUserCredentialName);
+                if (userSessionInfo == null)
                 {
                     SessionStartup();
                     return ActualDataAccessor.Read(DefaultUserCredentialName);
                 }
-                return user_session_info;
+                return userSessionInfo;
             }
             set { ActualDataAccessor.Write(DefaultUserCredentialName, value); }
         }
@@ -113,37 +106,64 @@ namespace Health.Core.Services
         /// </summary>
         /// <param name="login">Логин.</param>
         /// <param name="password">Пароль.</param>
-        /// <param name="remember_me">Запоминить?</param>
+        /// <param name="rememberMe">Запоминить?</param>
         /// <returns>Результат авторизации.</returns>
-        public virtual bool Login(string login, string password, bool remember_me = false)
+        public virtual bool Login(string login, string password, bool rememberMe = false)
         {
             Logger.Info(String.Format("Попытка авторизации пользователя: Логин - {0}, Пароль - {1}, Запоминать? - {2}.",
-                                      login, password, remember_me));
+                                      login, password, rememberMe));
 
             User user = Get<IUserRepository>().GetByLoginAndPassword(login, password);
 
             if (user != null)
             {
-                ActualDataAccessor.Write(DefaultUserCredentialName, new UserCredential
-                                                                        {
-                                                                            Login =
-                                                                                user.Login,
-                                                                            Role =
-                                                                                user.Role.Name,
-                                                                            IsAuthirization
-                                                                                = true,
-                                                                            IsRemember =
-                                                                                remember_me
-                                                                        });
-                if (remember_me)
+                var credential = new UserCredential
+                                     {
+                                         Login = user.Login,
+                                         Role = user.Role.Name,
+                                         IsAuthorization = true,
+                                         IsRemember = rememberMe,
+                                         IsQuickUser = false
+                                     };
+                ActualDataAccessor.Write(DefaultUserCredentialName, credential);
+                if (rememberMe)
                 {
                     RememberMe();
                 }
             }
 
             Logger.Info(String.Format("Результат авторизации пользователя {0} - {1} .", login,
-                                      UserCredential.IsAuthirization));
+                                      UserCredential.IsAuthorization));
             return user != null;
+        }
+
+        /// <summary>
+        /// Быстрая авторизация пользователя по имени, фамилии, дате рождения и полюсу.
+        /// </summary>
+        /// <param name="firstName">Имя.</param>
+        /// <param name="lastName">Фамилия.</param>
+        /// <param name="birthday">День рождения.</param>
+        /// <param name="policy">Полюс.</param>
+        /// <returns>Результат авторизации.</returns>
+        public bool QuickLogin(string firstName, string lastName, DateTime birthday, string policy)
+        {
+            Patient patient = Get<IPatientRepository>().FindByFirstNameAndLastNameAndBirthdayAndPolicy(firstName,
+                                                                                                       lastName,
+                                                                                                       birthday, policy);
+            if (patient != null)
+            {
+                ActualDataAccessor.Write(DefaultUserCredentialName, new UserCredential
+                                                                      {
+                                                                          IsAuthorization = true,
+                                                                          IsRemember = false,
+                                                                          Login = patient.Login,
+                                                                          Role = DefaultRoles.QuickLogin,
+                                                                          IsQuickUser = true
+                                                                      });
+                Logger.Info(String.Format("Пользователь {0} {1} совершил быстрый вход в систему.", patient.Id, patient.FullName));
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

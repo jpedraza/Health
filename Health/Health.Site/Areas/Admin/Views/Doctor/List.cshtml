@@ -1,0 +1,14 @@
+﻿@using Health.Site.Areas.Admin.Models
+@model DoctorList
+
+@{
+    ViewBag.Title = "Список докторов";
+}
+
+<h2>Список докторов</h2>
+
+@Html.Partial("_DoctorList", Model.Doctors)
+
+@section page_menu {
+    <p>@Html.ActionLink("Добавить доктора", "Add", "Doctor")</p>
+}

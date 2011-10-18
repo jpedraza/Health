@@ -2,9 +2,9 @@
 -- [class PersonalSchedule]
 CREATE TABLE [dbo].[PersonalSchedule]
 (
+	PersonalScheduleId int NOT NULL IDENTITY(1, 1),
 	PatientId int, -- идентификатор пользователя
 	ParameterId int, -- идентификатор параметра
-	DiagnosesId int, -- идентификатор диагноза
 
 	-- Период в течении которого отслеживается параметр
 		DateStart DateTime, -- начало периода

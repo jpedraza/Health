@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web.Mvc;
 using Health.Core.Entities.POCO;
@@ -26,19 +27,29 @@ namespace Health.Site.Areas.Admin.Models
         {
             get
             {
-                var select_list = new BindingList<SelectListItem>();
+                var selectList = new BindingList<SelectListItem>();
                 foreach (Specialty specialty in Specialties)
                 {
-                    select_list.Add(new SelectListItem
+                    selectList.Add(new SelectListItem
                                         {
                                             Text = specialty.Name,
                                             Value = specialty.Id.ToString()
                                         });
                 }
-                return select_list;
+                return selectList;
             }
         }
 
         public string Message { get; set; }
+    }
+
+    public class ScheduleForm : CoreViewModel
+    {
+        public WorkWeek WorkWeek { get; set; }
+    }
+
+    public class AppointmentList : CoreViewModel
+    {
+        public IEnumerable<Appointment> Appointments { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using Health.Core.API;
 using Health.Core.API.Repository;
 using Health.Core.API.Services;
-using Health.Core.Entities;
 using Health.Core.Entities.POCO;
 
 namespace Health.Core.Services
@@ -24,14 +23,15 @@ namespace Health.Core.Services
         /// <summary>
         /// Принять заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат.</param>
-        /// <param name="doctor">Доктор.</param>
-        public void AcceptBid(Candidate candidate, Doctor doctor)
+        /// <param name="candidateId"></param>
+        /// <param name="doctorId"></param>
+        public void AcceptBid(int candidateId, int doctorId)
         {
-            candidate = Get<ICandidateRepository>().GetById(candidate.Id);
-            doctor = Get<IDoctorRepository>().GetById(doctor.Id);
-            if (candidate == null || doctor == null) throw new Exception("Невозможно принять заявку от пустого кандидата с несуществующим доктором.");
-            Get<ICandidateRepository>().Delete(candidate);
+            Candidate candidate = Get<ICandidateRepository>().GetById(candidateId);
+            if (candidate == null) throw new Exception("Данный кандидат отсутствует.");
+            Doctor doctor = Get<IDoctorRepository>().GetById(doctorId);
+            if (candidate == null) throw new Exception("Данный доктор отсутствует.");
+            Get<ICandidateRepository>().DeleteById(candidateId);
             var patient = new Patient
                               {
                                   Id = candidate.Id,
@@ -65,11 +65,11 @@ namespace Health.Core.Services
         /// <summary>
         /// Отклонить заявку.
         /// </summary>
-        /// <param name="candidate">Кандидат.</param>
-        public void RejectBid(Candidate candidate)
+        /// <param name="candidateId">Идентификатор кандидата.</param>
+        public void RejectBid(int candidateId)
         {
-            Get<ICandidateRepository>().DeleteById(candidate.Id);
-            Logger.Info(String.Format("Заявка на регистрацию для {0} - отклонена.", candidate.Login));
+            Get<ICandidateRepository>().DeleteById(candidateId);
+            Logger.Info(String.Format("Заявка на регистрацию для {0} - отклонена.", candidateId));
         }
 
         #endregion
