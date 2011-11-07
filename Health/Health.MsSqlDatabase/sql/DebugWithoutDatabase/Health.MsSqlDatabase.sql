@@ -273,8 +273,11 @@ PRINT N'Выполняется создание [dbo].[Diagnosis]...';
 
 GO
 CREATE TABLE [dbo].[Diagnosis] (
-    [DiagnosisId] INT            IDENTITY (1, 1) NOT NULL,
-    [Name]        NVARCHAR (MAX) NULL
+    [DiagnosisId]         INT            IDENTITY (1, 1) NOT NULL,
+    [Name]                NVARCHAR (MAX) NULL,
+    [Code]                NVARCHAR (MAX) NULL,
+    [DiagnosisClassId]    INT            NOT NULL,
+    [DiagnosisSubClassId] INT            NOT NULL
 );
 
 
@@ -285,6 +288,27 @@ PRINT N'Выполняется создание DiagnosisPK...';
 GO
 ALTER TABLE [dbo].[Diagnosis]
     ADD CONSTRAINT [DiagnosisPK] PRIMARY KEY CLUSTERED ([DiagnosisId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[DiagnosisClass]...';
+
+
+GO
+CREATE TABLE [dbo].[DiagnosisClass] (
+    [DiagnosisClassId] INT            IDENTITY (1, 1) NOT NULL,
+    [Name]             NVARCHAR (MAX) NOT NULL,
+    [Code]             NVARCHAR (MAX) NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание DiagnosisClassPK...';
+
+
+GO
+ALTER TABLE [dbo].[DiagnosisClass]
+    ADD CONSTRAINT [DiagnosisClassPK] PRIMARY KEY CLUSTERED ([DiagnosisClassId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
 
 
 GO
@@ -349,6 +373,17 @@ PRINT N'Выполняется создание PatientsPK...';
 GO
 ALTER TABLE [dbo].[Patients]
     ADD CONSTRAINT [PatientsPK] PRIMARY KEY CLUSTERED ([PatientId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[PatientsToDiagnosis]...';
+
+
+GO
+CREATE TABLE [dbo].[PatientsToDiagnosis] (
+    [PatientId]   INT NOT NULL,
+    [DiagnosisId] INT NOT NULL
+);
 
 
 GO
@@ -515,6 +550,24 @@ ALTER TABLE [dbo].[DefaultSchedule] WITH NOCHECK
 
 
 GO
+PRINT N'Выполняется создание DiagnosisMTODiagnosisClass...';
+
+
+GO
+ALTER TABLE [dbo].[Diagnosis] WITH NOCHECK
+    ADD CONSTRAINT [DiagnosisMTODiagnosisClass] FOREIGN KEY ([DiagnosisClassId]) REFERENCES [dbo].[DiagnosisClass] ([DiagnosisClassId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание DiagnosisMTODiagnosisSubClass...';
+
+
+GO
+ALTER TABLE [dbo].[Diagnosis] WITH NOCHECK
+    ADD CONSTRAINT [DiagnosisMTODiagnosisSubClass] FOREIGN KEY ([DiagnosisSubClassId]) REFERENCES [dbo].[DiagnosisClass] ([DiagnosisClassId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
 PRINT N'Выполняется создание DoctorsMTOSpecialties...';
 
 
@@ -539,6 +592,24 @@ PRINT N'Выполняется создание PatientsOTOUsers...';
 GO
 ALTER TABLE [dbo].[Patients] WITH NOCHECK
     ADD CONSTRAINT [PatientsOTOUsers] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Users] ([UserId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание PatientsToDiagnosisMTMDiagnosis...';
+
+
+GO
+ALTER TABLE [dbo].[PatientsToDiagnosis] WITH NOCHECK
+    ADD CONSTRAINT [PatientsToDiagnosisMTMDiagnosis] FOREIGN KEY ([DiagnosisId]) REFERENCES [dbo].[Diagnosis] ([DiagnosisId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание PatientsToDiagnosisMTMPatients...';
+
+
+GO
+ALTER TABLE [dbo].[PatientsToDiagnosis] WITH NOCHECK
+    ADD CONSTRAINT [PatientsToDiagnosisMTMPatients] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Patients] ([PatientId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -670,11 +741,19 @@ ALTER TABLE [dbo].[Candidates] WITH CHECK CHECK CONSTRAINT [CandidatesMTORoles];
 
 ALTER TABLE [dbo].[DefaultSchedule] WITH CHECK CHECK CONSTRAINT [DefaultScheduleMTOParameters];
 
+ALTER TABLE [dbo].[Diagnosis] WITH CHECK CHECK CONSTRAINT [DiagnosisMTODiagnosisClass];
+
+ALTER TABLE [dbo].[Diagnosis] WITH CHECK CHECK CONSTRAINT [DiagnosisMTODiagnosisSubClass];
+
 ALTER TABLE [dbo].[Doctors] WITH CHECK CHECK CONSTRAINT [DoctorsMTOSpecialties];
 
 ALTER TABLE [dbo].[Doctors] WITH CHECK CHECK CONSTRAINT [DoctorsOTOUsers];
 
 ALTER TABLE [dbo].[Patients] WITH CHECK CHECK CONSTRAINT [PatientsOTOUsers];
+
+ALTER TABLE [dbo].[PatientsToDiagnosis] WITH CHECK CHECK CONSTRAINT [PatientsToDiagnosisMTMDiagnosis];
+
+ALTER TABLE [dbo].[PatientsToDiagnosis] WITH CHECK CHECK CONSTRAINT [PatientsToDiagnosisMTMPatients];
 
 ALTER TABLE [dbo].[PatientsToDoctors] WITH CHECK CHECK CONSTRAINT [PatientsMTMDoctorsToDoctors];
 
