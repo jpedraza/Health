@@ -10,8 +10,8 @@ SET NUMERIC_ROUNDABORT OFF;
 
 GO
 :setvar DatabaseName "Health.MsSqlDatabase"
-:setvar DefaultDataPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
-:setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
+:setvar DefaultDataPath ""
+:setvar DefaultLogPath ""
 
 GO
 :on error exit
@@ -36,10 +36,7 @@ END
 GO
 PRINT N'Выполняется создание $(DatabaseName)...'
 GO
-CREATE DATABASE [$(DatabaseName)]
-    ON 
-    PRIMARY(NAME = [Health_MsSqlDatabase], FILENAME = N'$(DefaultDataPath)Health_MsSqlDatabase.mdf')
-    LOG ON (NAME = [Health_MsSqlDatabase_log], FILENAME = N'$(DefaultLogPath)Health_MsSqlDatabase_log.ldf') COLLATE Cyrillic_General_CI_AS
+CREATE DATABASE [$(DatabaseName)] COLLATE Cyrillic_General_CI_AS
 GO
 EXECUTE sp_dbcmptlevel [$(DatabaseName)], 90;
 
@@ -164,15 +161,6 @@ GO
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
-GO
-PRINT N'Выполняется удаление Разрешения...';
-
-
-GO
-REVOKE CONNECT TO [dbo] CASCADE
-    AS [dbo];
-
 
 GO
 PRINT N'Выполняется удаление [AutoCreatedLocal]...';
@@ -787,6 +775,12 @@ IF EXISTS (SELECT 1
                 EXECUTE sp_db_vardecimal_storage_format N'$(DatabaseName)', 'ON';
             END
     END
+
+
+GO
+ALTER DATABASE [$(DatabaseName)]
+    SET MULTI_USER 
+    WITH ROLLBACK IMMEDIATE;
 
 
 GO
