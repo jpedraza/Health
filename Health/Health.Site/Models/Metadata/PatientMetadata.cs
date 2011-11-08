@@ -44,6 +44,12 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Лечащий врач")]
         public virtual Doctor Doctor { get; set; }
+
+        [DisplayName("ФИО матери пациента")]
+        public virtual string Mother { get; set; }
+
+        [DisplayName("ФИО отца пациента")]
+        public virtual string Father { get; set; }
     }
 
     public class PatientFormMetadata : PatientMetadata
@@ -71,6 +77,12 @@ namespace Health.Site.Models.Metadata
 
         [ClassMetadata(typeof(DoctorIdOnlyRequired))]
         public override Doctor Doctor { get; set; }
+
+        [Required(ErrorMessage = "Укажите ФИО матери пациента")]
+        public override string Mother { get; set; }
+
+        [Required(ErrorMessage = "Укажите ФИО отца пациента")]
+        public override string Father { get; set; }
     }
 
     public class LedPatientMetadata : PatientMetadata

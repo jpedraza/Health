@@ -14,9 +14,10 @@ GO
 :setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
 
 GO
-:on error exit
-GO
 USE [master]
+
+GO
+:on error exit
 GO
 IF (DB_ID(N'$(DatabaseName)') IS NOT NULL
     AND DATABASEPROPERTYEX(N'$(DatabaseName)','Status') <> N'ONLINE')
@@ -147,6 +148,7 @@ ELSE
 
 GO
 USE [$(DatabaseName)]
+
 GO
 IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
     EXECUTE sp_fulltext_database 'enable';
@@ -170,7 +172,7 @@ PRINT N'Выполняется удаление Разрешения...';
 
 
 GO
-REVOKE CONNECT TO [dbo] CASCADE
+REVOKE CONNECT TO [dbo]
     AS [dbo];
 
 

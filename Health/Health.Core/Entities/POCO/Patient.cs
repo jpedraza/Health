@@ -9,5 +9,6 @@
         /// Лечащий врач.
         /// </summary>
         public Doctor Doctor { get; set; }
+                
     }
 }

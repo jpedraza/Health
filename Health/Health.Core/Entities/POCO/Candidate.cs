@@ -14,5 +14,15 @@
         /// Номер больничной карты.
         /// </summary>
         public string Card { get; set; }
+
+        /// <summary>
+        /// Мать пациента
+        /// </summary>
+        public string Mother { get; set; }
+
+        /// <summary>
+        /// Отец пациента
+        /// </summary>
+        public string Father { get; set; }
     }
 }

@@ -40,6 +40,12 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("Номер больничной карты")]
         public virtual string Card { get; set; }
+
+        [DisplayName("ФИО матери пациента")]
+        public virtual string Mother { get; set; }
+
+        [DisplayName("ФИО отца пациента")]
+        public virtual string Father { get; set; }
     }
 
     public class CandidateFormMetadata : CandidateMetadata
@@ -64,5 +70,11 @@ namespace Health.Site.Models.Metadata
 
         [Required(ErrorMessage = "Укажите номер больничной карты")]
         public override string Card { get; set; }
+
+        [Required(ErrorMessage = "Укажите ФИО матери пациента")]
+        public override string Mother { get; set; }
+
+        [Required(ErrorMessage = "Укажите ФИО отца пациента")]
+        public override string Father { get; set; }
     }
 }

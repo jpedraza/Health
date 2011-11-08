@@ -21,7 +21,9 @@ namespace Health.Data.Repository.Fake
                          Password = "cand1",
                          Policy = "some policy number",
                          Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
-                         ThirdName = "cand1"
+                         ThirdName = "cand1",
+                         Mother = "mother1",
+                         Father = "father1"
                      });
             Save(new Candidate
                      {
@@ -33,7 +35,9 @@ namespace Health.Data.Repository.Fake
                          Password = "cand2",
                          Policy = "some policy number",
                          Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
-                         ThirdName = "cand2"
+                         ThirdName = "cand2",
+                         Mother = "mother2",
+                         Father = "father2"
                      });
         }
 

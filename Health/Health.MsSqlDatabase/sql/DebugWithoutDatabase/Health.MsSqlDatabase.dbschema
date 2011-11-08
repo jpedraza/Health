@@ -17,7 +17,7 @@
 			<Metadata Name="CompatibilityMode" Value="90" />
 		</CustomData>
 		<CustomData Category="Permissions" Type="XmlPermissions">
-			<Metadata Name="FileName" Value="D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
+			<Metadata Name="FileName" Value="C:\SOME_HEALTH\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
 		</CustomData>
 	</Header>
 	<Model>
@@ -1057,6 +1057,7 @@
 			</Relationship>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetParametersForPatientNowDate]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 BEGIN
@@ -1089,7 +1090,6 @@ BEGIN
 	select @is_even_week, @week_day
 END]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[datetime]" />

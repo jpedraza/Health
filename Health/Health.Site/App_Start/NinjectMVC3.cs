@@ -193,7 +193,9 @@ namespace Health.Site.App_Start
                 Policy = "some policy number",
                 Role = kernel.Get<IRoleRepository>().GetByName("Patient"),
                 ThirdName = "patient1",
-                Doctor = doctor1
+                Doctor = doctor1,
+                Mother = "mother1",
+                Father = "father1"
             };
             doctor1.Patients = new List<Patient> { patient1 };
 
@@ -220,7 +222,9 @@ namespace Health.Site.App_Start
                 Policy = "some policy number",
                 Role = kernel.Get<IRoleRepository>().GetByName("Patient"),
                 ThirdName = "patient2",
-                Doctor = doctor2
+                Doctor = doctor2,
+                Mother = "mother2",
+                Father = "father2"
             };
             doctor2.Patients = new List<Patient> { patient2 };
             kernel.Get<IDoctorRepository>().Save(doctor1);
