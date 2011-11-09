@@ -20,5 +20,12 @@ namespace Health.Core.Entities.POCO
         /// Имя диагноза.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Код диагноза по международной классификации
+        /// </summary>
+        public string Code { get; set; }
+
+
     }
 }
