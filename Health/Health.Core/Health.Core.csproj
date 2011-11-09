@@ -95,6 +95,8 @@
     <Compile Include="Entities\POCO\DefaultSchedule.cs" />
     <Compile Include="Entities\POCO\Diagnosis.cs" />
     <Compile Include="Entities\POCO\Abstract\IEntity.cs" />
+    <Compile Include="Entities\POCO\DiagnosisBlock.cs" />
+    <Compile Include="Entities\POCO\DiagnosisClass.cs" />
     <Compile Include="Entities\POCO\Doctor.cs" />
     <Compile Include="Entities\POCO\Appointment.cs" />
     <Compile Include="Entities\POCO\MetaData.cs" />

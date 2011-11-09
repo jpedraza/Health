@@ -176,6 +176,9 @@
     <Compile Include="Models\Metadata\CandidateMetadata.cs" />
     <Compile Include="Models\Metadata\DayMetadata.cs" />
     <Compile Include="Models\Metadata\DefaultScheduleMetadata.cs" />
+    <Compile Include="Models\Metadata\DiagnosisBlockMetadata.cs" />
+    <Compile Include="Models\Metadata\DiagnosisClassMetadata.cs" />
+    <Compile Include="Models\Metadata\DiagnosisMetadata.cs" />
     <Compile Include="Models\Metadata\DoctorMetadata.cs" />
     <Compile Include="Models\Metadata\MetaDataMetadata.cs" />
     <Compile Include="Models\Metadata\MonthMetadata.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Health.Core.Entities.POCO
 {
-    class DiagnosisBlock : IEntity, IKey
+    public class DiagnosisBlock : IEntity, IKey
     {
         #region Implementation of Key
 

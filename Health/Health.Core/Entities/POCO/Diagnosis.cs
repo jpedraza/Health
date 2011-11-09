@@ -26,6 +26,5 @@ namespace Health.Core.Entities.POCO
         /// </summary>
         public string Code { get; set; }
 
-
     }
 }
