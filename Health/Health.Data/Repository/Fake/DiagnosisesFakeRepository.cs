@@ -14,37 +14,66 @@ namespace Health.Data.Repository.Fake
         {
             #region Fake Data
 
-            this.Save(new Diagnosis() { 
-            Id = 0,
-            Code = "",
-            Name = ""
+            this.Save(new Diagnosis() {
+                Code = "Q21.8",
+                Name = "Другие врожденные пороки сердца",
+                Id = 0
             });
 
             this.Save(new Diagnosis()
             {
                 Id = 1,
-                Code = "",
-                Name = ""
+                Code = "Q21.0",
+                Name = "Дефект межжелудочковой перегородки"
             });
 
             this.Save(new Diagnosis()
             {
-                Id = 2,
-                Code = "",
-                Name = ""
+                Code = "I97.1",
+                Name = "Другие функциональные нарушения после операций на сердце",
+                Id = 2
             });
 
             this.Save(new Diagnosis()
             {
-                Id = 3,
-                Code = "",
-                Name = ""
+                Code = "Q25.1",
+                Name = "Коарктация аорты",
+                Id = 3
             });
+
             this.Save(new Diagnosis()
             {
-                Id = 4,
-                Code = "",
-                Name = ""
+                Code = "I97.8",
+                Name = "Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках",
+                Id = 4
+            });
+
+            this.Save(new Diagnosis()
+            {
+                Id = 8,
+                Code = "I97.8",
+                Name = "Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках",
+            });
+                       
+            this.Save(new Diagnosis()
+            {
+                Code = "Q21.3",
+                Name = "Тетрада Фалло",
+                Id = 9
+            });
+
+            this.Save(new Diagnosis()
+            {
+                Id = 10,
+                Code = "Q21.1",
+                Name = "Дефект предсердной перегородки"
+            });
+
+            this.Save(new Diagnosis()
+            {
+                Code = "Q23.1",
+                Name = "Врожденная недостаточность аортального клапана",
+                Id = 11
             });
             #endregion
         }

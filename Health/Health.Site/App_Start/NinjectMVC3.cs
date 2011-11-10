@@ -292,7 +292,7 @@ namespace Health.Site.App_Start
             var realPatient4 = new Patient
             {
                 Birthday = new DateTime(2008, 08, 01),
-                MainDiagnosis = new Diagnosis { Id = 5, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" },
+                MainDiagnosis = new Diagnosis { Id = 1, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" },
                 Mother = "ФИО4",
                 Card = "000000",
                 FirstName = "Фамилия4",
@@ -302,7 +302,7 @@ namespace Health.Site.App_Start
                 SecondaryDiagnosises = new List<Diagnosis>()
             };
             realPatient4.SecondaryDiagnosises.Add(
-                new Diagnosis { Id = 6, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" });
+                new Diagnosis { Id = 1, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" });
 
             var realPatient5 = new Patient
             {
@@ -311,7 +311,7 @@ namespace Health.Site.App_Start
                 {
                     Code = "Q21.2",
                     Name = "Дефект предсердно-желудочковой перегородки",
-                    Id = 7
+                    Id = 5
                 },
                 Mother = "ФИО5",
                 Card = "000000",
