@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Health.Core.Entities.POCO;
 using Health.Core.TypeProvider;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Health.Site.Models.Metadata
 {
@@ -50,6 +52,12 @@ namespace Health.Site.Models.Metadata
 
         [DisplayName("ФИО отца пациента")]
         public virtual string Father { get; set; }
+
+        [DisplayName("Основной диагноз пациента")]
+        public virtual Diagnosis MainDiagnosis { get; set; }
+
+        [DisplayName("Вторичные диагнозы")]
+        public virtual IList<Diagnosis> SecondaryDiagnosises { get; set; }
     }
 
     public class PatientFormMetadata : PatientMetadata
