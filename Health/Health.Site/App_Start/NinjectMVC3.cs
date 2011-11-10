@@ -92,6 +92,7 @@ namespace Health.Site.App_Start
             kernel.Bind<DynamicMetadataRepository>().ToSelf().InRequestScope();
             kernel.Bind<IWorkWeekRepository>().To<WorkWeekFakeRepository>().InSingletonScope();
             kernel.Bind<IAppointmentRepository>().To<AppointmentFakeRepository>().InSingletonScope();
+            kernel.Bind<IDiagnosisRepository>().To<DiagnosisesFakeRepository>().InSingletonScope();
             // ~
 
             // Сервисы

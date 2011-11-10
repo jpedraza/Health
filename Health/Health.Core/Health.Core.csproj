@@ -70,6 +70,7 @@
     <Compile Include="API\Repository\IActualCredentialRepository.cs" />
     <Compile Include="API\Repository\ICandidateRepository.cs" />
     <Compile Include="API\Repository\ICoreRepository.cs" />
+    <Compile Include="API\Repository\IDiagnosisRepository.cs" />
     <Compile Include="API\Repository\IDoctorRepository.cs" />
     <Compile Include="API\Repository\IParameterRepository.cs" />
     <Compile Include="API\Repository\IPatientRepository.cs" />

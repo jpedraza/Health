@@ -62,6 +62,7 @@
     <Compile Include="Repository\Fake\CoreFakeRepository.cs" />
     <Compile Include="Repository\Fake\CandidatesFakeRepository.cs" />
     <Compile Include="Repository\Fake\DefaultScheduleFakeRepository.cs" />
+    <Compile Include="Repository\Fake\DiagnosisesFakeRepository.cs" />
     <Compile Include="Repository\Fake\DoctorsFakeRepository.cs" />
     <Compile Include="Repository\Fake\FakeActualCredentialRepository.cs" />
     <Compile Include="Repository\Fake\FakePermanentCredentialRepository.cs" />
