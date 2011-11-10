@@ -9,6 +9,11 @@
 <p>@Html.EditorFor(m => m.Patient.ThirdName) @Html.ValidationMessageFor(m => m.Patient.ThirdName)</p>
 <p>@Html.LabelFor(m => m.Patient.Doctor)</p>
 <p>@Html.DropDownListFor(m => m.Patient.Doctor.Id, Model.DoctorSelectList)</p>
+<p>@Html.LabelFor(m => m.Patient.MainDiagnosis)</p>
+
+<p>@Html.DropDownListFor(m => m.Patient.MainDiagnosis.Id,Model.DiagnosisSelectList)</p>
+
+
 <p>@Html.LabelFor(m => m.Patient.Birthday)</p>
 <p>@Html.EditorFor(m => m.Patient.Birthday) @Html.ValidationMessageFor(m => m.Patient.Birthday)</p>
 <p>@Html.LabelFor(m => m.Patient.Mother) @Html.ValidationMessageFor(m => m.Patient.Mother)</p>

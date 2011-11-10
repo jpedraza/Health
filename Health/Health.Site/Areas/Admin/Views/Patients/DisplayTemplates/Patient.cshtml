@@ -6,6 +6,22 @@
 <p>@Html.LabelFor(m => m.LastName): @Model.LastName</p>
 <p>@Html.LabelFor(m => m.ThirdName): @Model.ThirdName</p>
 <p>@Html.LabelFor(m => m.Doctor): @Model.Doctor.FullName</p>
+<p>@Html.LabelFor(m => m.MainDiagnosis): @Model.MainDiagnosis.Name</p>
+<p>@Html.LabelFor(m => m.SecondaryDiagnosises): 
+@if (Model.SecondaryDiagnosises != null)
+{
+<ul>
+@foreach (Diagnosis diagnosis in Model.SecondaryDiagnosises)
+{
+    <li>@diagnosis.Name</li>
+}
+</ul>
+}
+else
+{
+    <strong> - отсутствуют</strong>
+}
+</p>
 <p>@Html.LabelFor(m => m.Mother): @Model.Mother</p>
 <p>@Html.LabelFor(m => m.Father): @Model.Father</p>
 <p>@Html.LabelFor(m => m.Card): @Model.Card</p>

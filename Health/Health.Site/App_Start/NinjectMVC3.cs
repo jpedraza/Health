@@ -171,6 +171,7 @@ namespace Health.Site.App_Start
         
         internal static void InitializeData(IKernel kernel)
         {
+            #region Initialize test Doctor's and test Patient's
             var doctor1 = new Doctor
             {
                 FirstName = "Анатолий",
@@ -227,13 +228,160 @@ namespace Health.Site.App_Start
                 Mother = "mother2",
                 Father = "father2"
             };
-            doctor2.Patients = new List<Patient> { patient2 };
+
+            #endregion
+
+            #region Initialize Real Patients
+            var realPatient1 = new Patient
+            {
+                Birthday = new DateTime(1998, 09, 21),
+                MainDiagnosis = new Diagnosis
+                {
+                    Code = "Q21.8",
+                    Name = "Другие врожденные пороки сердца",
+                    Id = 0
+                },
+                Mother = "ФИО1",
+                Card = "0000000",
+                FirstName = "Фамилия1",
+                LastName = "Имя1",
+                ThirdName = "Отчество1",
+                Doctor = doctor1,
+                SecondaryDiagnosises = null
+            };
+
+            var realPatient2 = new Patient
+            {
+                Birthday = new DateTime(2008, 05, 26),
+                MainDiagnosis = new Diagnosis { Id = 1, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" },
+                Mother = "ФИО2",
+                Card = "000000",
+                FirstName = "Фамилия2",
+                LastName = "Имя2",
+                ThirdName = "Отчество2",
+                Doctor = doctor1,
+                SecondaryDiagnosises = new List<Diagnosis>()
+            };
+            realPatient2.SecondaryDiagnosises.Add(
+                new Diagnosis()
+                {
+                    Code = "I97.1",
+                    Name = "Другие функциональные нарушения после операций на сердце",
+                    Id = 2
+                });
+
+            var realPatient3 = new Patient
+            {
+                Birthday = new DateTime(2006, 06, 06),
+                MainDiagnosis = new Diagnosis { Code = "Q25.1", Name = "Коарктация аорты", Id = 3 },
+                Mother = "ФИО3",
+                Card = "000000",
+                FirstName = "Фамилия3",
+                LastName = "Имя3",
+                ThirdName = "Отчество3",
+                Doctor = doctor1,
+                SecondaryDiagnosises = new List<Diagnosis>()
+            };
+            realPatient3.SecondaryDiagnosises.Add(new Diagnosis
+            {
+                Code = "I97.8",
+                Name = "Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках",
+                Id = 4
+            });
+
+            var realPatient4 = new Patient
+            {
+                Birthday = new DateTime(2008, 08, 01),
+                MainDiagnosis = new Diagnosis { Id = 5, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" },
+                Mother = "ФИО4",
+                Card = "000000",
+                FirstName = "Фамилия4",
+                LastName = "Имя4",
+                ThirdName = "Отчество4",
+                Doctor = doctor1,
+                SecondaryDiagnosises = new List<Diagnosis>()
+            };
+            realPatient4.SecondaryDiagnosises.Add(
+                new Diagnosis { Id = 6, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" });
+
+            var realPatient5 = new Patient
+            {
+                Birthday = new DateTime(2008, 03, 25),
+                MainDiagnosis = new Diagnosis
+                {
+                    Code = "Q21.2",
+                    Name = "Дефект предсердно-желудочковой перегородки",
+                    Id = 7
+                },
+                Mother = "ФИО5",
+                Card = "000000",
+                FirstName = "Фамилия5",
+                LastName = "Имя5",
+                ThirdName = "Отчество5",
+                Doctor = doctor1,
+                SecondaryDiagnosises = new List<Diagnosis>()
+            };
+            realPatient5.SecondaryDiagnosises.Add(new Diagnosis
+            {
+                Id = 8,
+                Code = "I97.8",
+                Name = "Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках",
+            });
+
+            var realPatient6 = new Patient
+            {
+                Birthday = new DateTime(2007, 04, 16),
+                MainDiagnosis = new Diagnosis
+                {
+                    Code = "Q21.3",
+                    Name = "Тетрада Фалло",
+                    Id = 9
+                },
+                Mother = "ФИО6",
+                Card = "000000",
+                FirstName = "Фамилия6",
+                LastName = "Имя6",
+                ThirdName = "Отчество6",
+                Doctor = doctor1,
+                SecondaryDiagnosises = new List<Diagnosis>()
+            };
+            realPatient6.SecondaryDiagnosises.Add(new Diagnosis
+            {
+                Id = 2,
+                Code = "I97.1",
+                Name = "Другие функциональные нарушения после операций на сердце"
+            });
+
+            realPatient6.SecondaryDiagnosises.Add(new Diagnosis
+            {
+                Id = 10,
+                Code = "Q21.1",
+                Name = "Дефект предсердной перегородки"
+            });
+            realPatient6.SecondaryDiagnosises.Add(new Diagnosis
+            {
+                Code = "Q21.3",
+                Name = "Тетрада Фалло",
+                Id = 9
+            });
+            realPatient6.SecondaryDiagnosises.Add(new Diagnosis
+            {
+                Code = "Q23.1",
+                Name = "Врожденная недостаточность аортального клапана",
+                Id = 11
+            });
+            #endregion
             kernel.Get<IDoctorRepository>().Save(doctor1);
             kernel.Get<IDoctorRepository>().Save(doctor2);
             var patientRepository = kernel.Get<IPatientRepository>();
             patientRepository.Save(patient1);
             patientRepository.Save(patient2);
-
+            patientRepository.Save(realPatient1);
+            patientRepository.Save(realPatient2);
+            patientRepository.Save(realPatient3);
+            patientRepository.Save(realPatient4);
+            patientRepository.Save(realPatient5);
+            patientRepository.Save(realPatient6);
             kernel.Get<IWorkWeekRepository>().Save(new WorkWeek
                                                        {
                                                            Doctor = kernel.Get<IDoctorRepository>().GetById(1),

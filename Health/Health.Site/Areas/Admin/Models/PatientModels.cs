@@ -15,6 +15,8 @@ namespace Health.Site.Areas.Admin.Models
 
         public IEnumerable<Doctor> Doctors { get; set; }
 
+        public IEnumerable<Diagnosis> Diagnosises { get; set; }
+
         public IEnumerable<SelectListItem> DoctorSelectList 
         {
             get
@@ -27,6 +29,22 @@ namespace Health.Site.Areas.Admin.Models
                         Selected = Patient != null && Patient.Doctor != null && doctor.Id == Patient.Doctor.Id,
                         Text = doctor.FullName,
                         Value = doctor.Id.ToString()
+                    });
+                }
+                return selectList;
+            }
+        }
+
+        public IEnumerable<SelectListItem> DiagnosisSelectList
+        {
+            get {
+                var selectList = new BindingList<SelectListItem>();
+                foreach (Diagnosis diagnosis in this.Diagnosises)
+                {
+                    selectList.Add(new SelectListItem {
+                    Selected = Patient != null && Patient.MainDiagnosis != null && Patient.MainDiagnosis.Id == diagnosis.Id,
+                    Text = diagnosis.Name,
+                    Value = diagnosis.Id.ToString()
                     });
                 }
                 return selectList;
