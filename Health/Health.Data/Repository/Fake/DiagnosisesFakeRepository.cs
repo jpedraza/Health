@@ -75,6 +75,25 @@ namespace Health.Data.Repository.Fake
                 Name = "Врожденная недостаточность аортального клапана",
                 Id = 11
             });
+
+            this.Save(new Diagnosis()
+            {
+                Code = "Q23.2",
+                Name = "Врожденный митральный стеноз",
+                Id = 12
+            });
+            this.Save(new Diagnosis()
+            {
+                Code = "Q23.3",
+                Name = "Врожденная митральная недостаточность",
+                Id = 12
+            });
+            this.Save(new Diagnosis()
+            {
+                Code = "Q23.4",
+                Name = "Синдром левосторонней гипоплазии сердца",
+                Id = 14
+            });
             #endregion
         }
 
