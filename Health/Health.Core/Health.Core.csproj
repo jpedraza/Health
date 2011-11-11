@@ -104,6 +104,7 @@
     <Compile Include="Entities\POCO\MetaData.cs" />
     <Compile Include="Entities\POCO\Parameter.cs" />
     <Compile Include="Entities\POCO\Patient.cs" />
+    <Compile Include="Entities\POCO\PatientSurgery.cs" />
     <Compile Include="Entities\POCO\PersonalSchedule.cs" />
     <Compile Include="Entities\POCO\Role.cs" />
     <Compile Include="Entities\POCO\Specialty.cs" />

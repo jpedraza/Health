@@ -184,6 +184,7 @@
     <Compile Include="Models\Metadata\MonthMetadata.cs" />
     <Compile Include="Models\Metadata\ParameterMetadata.cs" />
     <Compile Include="Models\Metadata\PatientMetadata.cs" />
+    <Compile Include="Models\Metadata\PatientSurgeryMetadata.cs" />
     <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\PersonalScheduleMetadata.cs" />
     <Compile Include="Models\Metadata\SurgeryMetadata.cs" />
