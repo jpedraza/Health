@@ -186,6 +186,7 @@
     <Compile Include="Models\Metadata\PatientMetadata.cs" />
     <Compile Include="Models\Metadata\PeriodMetadata.cs" />
     <Compile Include="Models\Metadata\PersonalScheduleMetadata.cs" />
+    <Compile Include="Models\Metadata\SurgeryMetadata.cs" />
     <Compile Include="Models\Metadata\TimeIntervalMetadata.cs" />
     <Compile Include="Models\Metadata\UserMetadata.cs" />
     <Compile Include="Models\Metadata\VariantMetadata.cs" />

@@ -71,6 +71,7 @@
     <Compile Include="Repository\Fake\PersonalScheduleFakeRepository.cs" />
     <Compile Include="Repository\Fake\RolesFakeRepository.cs" />
     <Compile Include="Repository\Fake\SpecialtyFakeRepository.cs" />
+    <Compile Include="Repository\Fake\SurgerysFakeRepository.cs" />
     <Compile Include="Repository\Fake\UsersFakeRepository.cs" />
     <Compile Include="Repository\Fake\WorkWeekFakeRepository.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />

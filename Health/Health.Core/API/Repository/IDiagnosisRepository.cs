@@ -62,7 +62,7 @@ namespace Health.Core.API.Repository
         /// <summary>
         /// Удаление дигноза
         /// </summary>
-        /// <param name="deleteDiagnosis">Удаление дигноза</param>
+        /// <param name="deleteDiagnosis">Удаляемый дигноз</param>
         /// <returns>Результат удаления
         /// (true - успешно удален, false - не удален, 
         /// где-то произошла ошибка)</returns>
