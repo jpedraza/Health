@@ -91,6 +91,9 @@ namespace Health.Site.Models.Metadata
 
         [Required(ErrorMessage = "Укажите ФИО отца пациента")]
         public override string Father { get; set; }
+
+        [ClassMetadata(typeof(DiagnosisFormMetadata))]
+        public override Diagnosis MainDiagnosis { get; set; }
     }
 
     public class LedPatientMetadata : PatientMetadata
@@ -100,5 +103,8 @@ namespace Health.Site.Models.Metadata
 
         [ClassMetadata(typeof(DoctorIdOnlyRequired))]
         public override Doctor Doctor { get; set; }
+
+      
+      
     }
 }

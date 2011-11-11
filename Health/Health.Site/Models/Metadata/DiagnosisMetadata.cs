@@ -22,7 +22,8 @@ namespace Health.Site.Models.Metadata
 
     public class DiagnosisFormMetadata : DiagnosisMetadata
     {
-        [Required]        public override string Name { get; set; }
+        [Required]
+        public override string Name { get; set; }
 
         [Required]
         public override string Code { get; set; }
