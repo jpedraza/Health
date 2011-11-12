@@ -7,7 +7,7 @@ using Health.Core.Entities.POCO.Abstract;
 namespace Health.Core.Entities.POCO
 {
     /// <summary>
-    /// Сущность, описывающая медицинскую операцию или лечение
+    /// Хирургическое воздействие
     /// </summary>
     public class Surgery : IEntity, IKey
     {

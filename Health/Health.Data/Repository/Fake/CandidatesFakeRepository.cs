@@ -14,30 +14,30 @@ namespace Health.Data.Repository.Fake
             Save(new Candidate
                      {
                          Birthday = new DateTime(1980, 12, 2),
-                         Card = "some card number",
+                         //Card = "some card number",
                          FirstName = "cand1",
                          LastName = "cand1",
                          Login = "cand1",
                          Password = "cand1",
-                         Policy = "some policy number",
+                         //Policy = "some policy number",
                          Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
                          ThirdName = "cand1",
                          Mother = "mother1",
-                         Father = "father1"
+                         //Father = "father1"
                      });
             Save(new Candidate
                      {
                          Birthday = new DateTime(1980, 12, 2),
-                         Card = "some card number",
+                         //Card = "some card number",
                          FirstName = "cand2",
                          LastName = "cand2",
                          Login = "cand2",
                          Password = "cand2",
-                         Policy = "some policy number",
+                         //Policy = "some policy number",
                          Role = di_kernel.Get<IRoleRepository>().GetByName("Patient"),
                          ThirdName = "cand2",
                          Mother = "mother2",
-                         Father = "father2"
+                         //Father = "father2"
                      });
         }
 

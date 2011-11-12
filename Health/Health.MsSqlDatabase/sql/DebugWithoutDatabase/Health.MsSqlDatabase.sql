@@ -212,17 +212,21 @@ PRINT N'Выполняется создание [dbo].[Candidates]...';
 
 GO
 CREATE TABLE [dbo].[Candidates] (
-    [CandidateId] INT            IDENTITY (1, 1) NOT NULL,
-    [FirstName]   NVARCHAR (MAX) NOT NULL,
-    [LastName]    NVARCHAR (MAX) NOT NULL,
-    [ThirdName]   NVARCHAR (MAX) NOT NULL,
-    [Login]       NVARCHAR (MAX) NOT NULL,
-    [Password]    NVARCHAR (MAX) NOT NULL,
-    [RoleId]      INT            NOT NULL,
-    [Birthday]    DATETIME       NOT NULL,
-    [Token]       NVARCHAR (MAX) NOT NULL,
-    [Policy]      NVARCHAR (MAX) NOT NULL,
-    [Card]        NVARCHAR (MAX) NOT NULL
+    [CandidateId]            INT            IDENTITY (1, 1) NOT NULL,
+    [FirstName]              NVARCHAR (MAX) NOT NULL,
+    [LastName]               NVARCHAR (MAX) NOT NULL,
+    [ThirdName]              NVARCHAR (MAX) NOT NULL,
+    [Login]                  NVARCHAR (MAX) NOT NULL,
+    [Password]               NVARCHAR (MAX) NOT NULL,
+    [RoleId]                 INT            NOT NULL,
+    [Birthday]               DATETIME       NOT NULL,
+    [Token]                  NVARCHAR (MAX) NOT NULL,
+    [Policy]                 NVARCHAR (MAX) NOT NULL,
+    [Card]                   NVARCHAR (MAX) NOT NULL,
+    [Mother]                 NVARCHAR (MAX) NOT NULL,
+    [StartDateOfObservation] DATETIME       NOT NULL,
+    [Phone1]                 INT            NULL,
+    [Phone2]                 INT            NULL
 );
 
 
@@ -363,9 +367,13 @@ PRINT N'Выполняется создание [dbo].[Patients]...';
 
 GO
 CREATE TABLE [dbo].[Patients] (
-    [PatientId] INT            NOT NULL,
-    [Policy]    NVARCHAR (MAX) NOT NULL,
-    [Card]      NVARCHAR (MAX) NOT NULL
+    [PatientId]              INT            NOT NULL,
+    [Policy]                 NVARCHAR (MAX) NOT NULL,
+    [Card]                   NVARCHAR (MAX) NOT NULL,
+    [Mother]                 NVARCHAR (MAX) NOT NULL,
+    [StartDateOfObservation] DATETIME       NOT NULL,
+    [Phone1]                 INT            NULL,
+    [Phone2]                 INT            NULL
 );
 
 

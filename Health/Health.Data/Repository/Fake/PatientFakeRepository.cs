@@ -71,7 +71,7 @@ namespace Health.Data.Repository.Fake
                 p => p.FirstName == firstName
                      && p.LastName == lastName
                      && p.Birthday == birthday
-                     && p.Policy == policy).FirstOrDefault();
+                     /*&& p.Policy == policy*/).FirstOrDefault();
         }
 
         public Patient FindByLogin(string login)

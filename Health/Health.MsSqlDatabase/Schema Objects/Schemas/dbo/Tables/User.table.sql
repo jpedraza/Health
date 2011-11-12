@@ -8,5 +8,6 @@
 	Password nvarchar(MAX) NOT NULL,
 	RoleId int NOT NULL,
 	Birthday datetime NOT NULL,
-	Token nvarchar(MAX) NOT NULL
+	Token nvarchar(MAX) NOT NULL,
+
 )

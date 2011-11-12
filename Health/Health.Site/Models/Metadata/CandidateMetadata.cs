@@ -44,8 +44,6 @@ namespace Health.Site.Models.Metadata
         [DisplayName("ФИО матери пациента")]
         public virtual string Mother { get; set; }
 
-        [DisplayName("ФИО отца пациента")]
-        public virtual string Father { get; set; }
     }
 
     public class CandidateFormMetadata : CandidateMetadata
@@ -74,7 +72,6 @@ namespace Health.Site.Models.Metadata
         [Required(ErrorMessage = "Укажите ФИО матери пациента")]
         public override string Mother { get; set; }
 
-        [Required(ErrorMessage = "Укажите ФИО отца пациента")]
-        public override string Father { get; set; }
+       
     }
 }

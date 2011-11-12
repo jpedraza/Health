@@ -187,17 +187,17 @@ namespace Health.Site.App_Start
             var patient1 = new Patient
             {
                 Birthday = new DateTime(1980, 12, 2),
-                Card = "some card number",
+                //Card = "some card number",
                 FirstName = "patient1",
                 LastName = "patient1",
                 Login = "patient1",
                 Password = "patient1",
-                Policy = "some policy number",
+                //Policy = "some policy number",
                 Role = kernel.Get<IRoleRepository>().GetByName("Patient"),
                 ThirdName = "patient1",
                 Doctor = doctor1,
                 Mother = "mother1",
-                Father = "father1"
+                //Father = "father1"
             };
             doctor1.Patients = new List<Patient> { patient1 };
 
@@ -216,17 +216,17 @@ namespace Health.Site.App_Start
             var patient2 = new Patient
             {
                 Birthday = new DateTime(1980, 12, 2),
-                Card = "some card number",
+                //Card = "some card number",
                 FirstName = "patient2",
                 LastName = "patient2",
                 Login = "patient2",
                 Password = "patient2",
-                Policy = "some policy number",
+                //Policy = "some policy number",
                 Role = kernel.Get<IRoleRepository>().GetByName("Patient"),
                 ThirdName = "patient2",
                 Doctor = doctor2,
                 Mother = "mother2",
-                Father = "father2"
+                //Father = "father2"
             };
 
             #endregion
@@ -242,7 +242,7 @@ namespace Health.Site.App_Start
                     Id = 0
                 },
                 Mother = "ФИО1",
-                Card = "0000000",
+                //Card = "0000000",
                 FirstName = "Фамилия1",
                 LastName = "Имя1",
                 ThirdName = "Отчество1",
@@ -255,7 +255,7 @@ namespace Health.Site.App_Start
                 Birthday = new DateTime(2008, 05, 26),
                 MainDiagnosis = new Diagnosis { Id = 1, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" },
                 Mother = "ФИО2",
-                Card = "000000",
+                //Card = "000000",
                 FirstName = "Фамилия2",
                 LastName = "Имя2",
                 ThirdName = "Отчество2",
@@ -275,7 +275,7 @@ namespace Health.Site.App_Start
                 Birthday = new DateTime(2006, 06, 06),
                 MainDiagnosis = new Diagnosis { Code = "Q25.1", Name = "Коарктация аорты", Id = 3 },
                 Mother = "ФИО3",
-                Card = "000000",
+                //Card = "000000",
                 FirstName = "Фамилия3",
                 LastName = "Имя3",
                 ThirdName = "Отчество3",
@@ -294,7 +294,7 @@ namespace Health.Site.App_Start
                 Birthday = new DateTime(2008, 08, 01),
                 MainDiagnosis = new Diagnosis { Id = 1, Code = "Q21.0", Name = "Дефект межжелудочковой перегородки" },
                 Mother = "ФИО4",
-                Card = "000000",
+                //Card = "000000",
                 FirstName = "Фамилия4",
                 LastName = "Имя4",
                 ThirdName = "Отчество4",
@@ -314,7 +314,7 @@ namespace Health.Site.App_Start
                     Id = 5
                 },
                 Mother = "ФИО5",
-                Card = "000000",
+                //Card = "000000",
                 FirstName = "Фамилия5",
                 LastName = "Имя5",
                 ThirdName = "Отчество5",
@@ -338,7 +338,7 @@ namespace Health.Site.App_Start
                     Id = 9
                 },
                 Mother = "ФИО6",
-                Card = "000000",
+                //Card = "000000",
                 FirstName = "Фамилия6",
                 LastName = "Имя6",
                 ThirdName = "Отчество6",
