@@ -49,7 +49,7 @@ namespace Support.ExcelParser
                     adapter.Fill(dataTable);
                     DataRow[] rows = dataTable.Select();
                     const string insert_format =
-                        "insert into [dbo].[DiagnosisClass] (Name, Code, [Level]) values ('{0}', '{1}', {2})";
+                        "insert into [dbo].[DiagnosisClass] (Name, Code, Parent) values ('{0}', '{1}', {2})";
                     var inserted = new List<DiagnosisClass>();
                     using (var sqlConnection = new SqlConnection(_sqlConnectionString))
                     {
@@ -76,21 +76,23 @@ namespace Support.ExcelParser
                             }
                             if (inserted.Where(i => i.Name == row[2].ToString() && i.Code == row[3].ToString()).Count() == 0)
                             {
-                                insertCommand.CommandText = String.Format(insert_format, row[3], row[2].ToString().Replace("(", "").Replace(")", ""), 1);
+                                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                                sqlCommand.CommandText =
+                                    String.Format(
+                                        "select DiagnosisClassId from [dbo].[DiagnosisClass] where Code = '{0}'", row[0]);
+                                uint parent = Convert.ToUInt32(sqlCommand.ExecuteScalar());
+                                insertCommand.CommandText = String.Format(insert_format, row[3], row[2].ToString().Replace("(", "").Replace(")", ""), parent);
                                 insertCommand.ExecuteNonQuery();
                                 Console.WriteLine("Insert diagnosis class: {0}", row[2]);
                                 inserted.Add(new DiagnosisClass{ Name = row[2].ToString(), Code = row[3].ToString()});
                             }
                             SqlCommand selectCommand = sqlConnection.CreateCommand();
                             selectCommand.CommandText = String.Format(
-                                "select DiagnosisClassId from [dbo].[DiagnosisClass] where Code = '{0}'", row[0]);
-                            var diagnosisClassId = Convert.ToUInt32(selectCommand.ExecuteScalar());
-                            selectCommand.CommandText = String.Format(
                                 "select DiagnosisClassId from [dbo].[DiagnosisClass] where Code = '{0}'", row[2].ToString().Replace("(", "").Replace(")", ""));
-                            var diagnosisSubClassid = Convert.ToUInt32(selectCommand.ExecuteScalar());
+                            var diagnosisClassid = Convert.ToUInt32(selectCommand.ExecuteScalar());
                             insertCommand.CommandText = String.Format(
-                                "insert into [dbo].[Diagnosis] (Name, Code, DiagnosisClassId, DiagnosisSubClassid) values ('{0}', '{1}', {2}, {3})",
-                                row[5].ToString().Replace("'", ""), row[4].ToString().Replace("'", ""), diagnosisClassId, diagnosisSubClassid);
+                                "insert into [dbo].[Diagnosis] (Name, Code, DiagnosisClassId) values ('{0}', '{1}', {2})",
+                                row[5].ToString().Replace("'", ""), row[4].ToString().Replace("'", ""), diagnosisClassid);
                             insertCommand.ExecuteNonQuery();
                             Console.WriteLine("Insert diagnosis: {0}", row[5]);
                         }

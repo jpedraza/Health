@@ -14,10 +14,9 @@ GO
 :setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
 
 GO
-USE [master]
-
-GO
 :on error exit
+GO
+USE [master]
 GO
 IF (DB_ID(N'$(DatabaseName)') IS NOT NULL
     AND DATABASEPROPERTYEX(N'$(DatabaseName)','Status') <> N'ONLINE')
@@ -148,7 +147,6 @@ ELSE
 
 GO
 USE [$(DatabaseName)]
-
 GO
 IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
     EXECUTE sp_fulltext_database 'enable';
@@ -172,7 +170,7 @@ PRINT N'Выполняется удаление Разрешения...';
 
 
 GO
-REVOKE CONNECT TO [dbo]
+REVOKE CONNECT TO [dbo] CASCADE
     AS [dbo];
 
 
@@ -279,11 +277,10 @@ PRINT N'Выполняется создание [dbo].[Diagnosis]...';
 
 GO
 CREATE TABLE [dbo].[Diagnosis] (
-    [DiagnosisId]         INT            IDENTITY (1, 1) NOT NULL,
-    [Name]                NVARCHAR (MAX) NULL,
-    [Code]                NVARCHAR (MAX) NULL,
-    [DiagnosisClassId]    INT            NOT NULL,
-    [DiagnosisSubClassId] INT            NOT NULL
+    [DiagnosisId]      INT            IDENTITY (1, 1) NOT NULL,
+    [Name]             NVARCHAR (MAX) NULL,
+    [Code]             NVARCHAR (MAX) NULL,
+    [DiagnosisClassId] INT            NOT NULL
 );
 
 
@@ -305,7 +302,7 @@ CREATE TABLE [dbo].[DiagnosisClass] (
     [DiagnosisClassId] INT            IDENTITY (1, 1) NOT NULL,
     [Name]             NVARCHAR (MAX) NOT NULL,
     [Code]             NVARCHAR (MAX) NOT NULL,
-    [Level]            INT            NOT NULL
+    [Parent]           INT            NOT NULL
 );
 
 
@@ -336,6 +333,59 @@ PRINT N'Выполняется создание DoctorsPK...';
 GO
 ALTER TABLE [dbo].[Doctors]
     ADD CONSTRAINT [DoctorsPK] PRIMARY KEY CLUSTERED ([DoctorId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[FunctionalClasses]...';
+
+
+GO
+CREATE TABLE [dbo].[FunctionalClasses] (
+    [FunctionalClassesId] INT            IDENTITY (1, 1) NOT NULL,
+    [Code]                NVARCHAR (MAX) NOT NULL,
+    [Description]         VARCHAR (MAX)  NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание FunctionalClassesPK...';
+
+
+GO
+ALTER TABLE [dbo].[FunctionalClasses]
+    ADD CONSTRAINT [FunctionalClassesPK] PRIMARY KEY CLUSTERED ([FunctionalClassesId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[FunctionalDisorders]...';
+
+
+GO
+CREATE TABLE [dbo].[FunctionalDisorders] (
+    [FunctionalDisordersId] INT            IDENTITY (1, 1) NOT NULL,
+    [Name]                  NVARCHAR (MAX) NOT NULL,
+    [Parent]                INT            NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание FunctionalDisordersPK...';
+
+
+GO
+ALTER TABLE [dbo].[FunctionalDisorders]
+    ADD CONSTRAINT [FunctionalDisordersPK] PRIMARY KEY CLUSTERED ([FunctionalDisordersId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[FunctionalDisordersToPatients]...';
+
+
+GO
+CREATE TABLE [dbo].[FunctionalDisordersToPatients] (
+    [FunctionalDisordersId] INT NOT NULL,
+    [PatientId]             INT NOT NULL
+);
 
 
 GO
@@ -373,7 +423,8 @@ CREATE TABLE [dbo].[Patients] (
     [Mother]                 NVARCHAR (MAX) NOT NULL,
     [StartDateOfObservation] DATETIME       NOT NULL,
     [Phone1]                 INT            NULL,
-    [Phone2]                 INT            NULL
+    [Phone2]                 INT            NULL,
+    [FunctionalClassesId]    INT            NULL
 );
 
 
@@ -604,12 +655,12 @@ ALTER TABLE [dbo].[Diagnosis] WITH NOCHECK
 
 
 GO
-PRINT N'Выполняется создание DiagnosisMTODiagnosisSubClass...';
+PRINT N'Выполняется создание DiagnosisClassMTO...';
 
 
 GO
-ALTER TABLE [dbo].[Diagnosis] WITH NOCHECK
-    ADD CONSTRAINT [DiagnosisMTODiagnosisSubClass] FOREIGN KEY ([DiagnosisSubClassId]) REFERENCES [dbo].[DiagnosisClass] ([DiagnosisClassId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE [dbo].[DiagnosisClass] WITH NOCHECK
+    ADD CONSTRAINT [DiagnosisClassMTO] FOREIGN KEY ([Parent]) REFERENCES [dbo].[DiagnosisClass] ([DiagnosisClassId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -628,6 +679,42 @@ PRINT N'Выполняется создание DoctorsOTOUsers...';
 GO
 ALTER TABLE [dbo].[Doctors] WITH NOCHECK
     ADD CONSTRAINT [DoctorsOTOUsers] FOREIGN KEY ([DoctorId]) REFERENCES [dbo].[Users] ([UserId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание FunctionalDisordersMTO...';
+
+
+GO
+ALTER TABLE [dbo].[FunctionalDisorders] WITH NOCHECK
+    ADD CONSTRAINT [FunctionalDisordersMTO] FOREIGN KEY ([Parent]) REFERENCES [dbo].[FunctionalDisorders] ([FunctionalDisordersId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание FunctionalDisordersToDiagnosisMTOFunctionalDisorders...';
+
+
+GO
+ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH NOCHECK
+    ADD CONSTRAINT [FunctionalDisordersToDiagnosisMTOFunctionalDisorders] FOREIGN KEY ([FunctionalDisordersId]) REFERENCES [dbo].[FunctionalDisorders] ([FunctionalDisordersId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание FunctionalDisordersToDiagnosisMTOPatients...';
+
+
+GO
+ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH NOCHECK
+    ADD CONSTRAINT [FunctionalDisordersToDiagnosisMTOPatients] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Patients] ([PatientId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание PatientsMTOFunctionalClasses...';
+
+
+GO
+ALTER TABLE [dbo].[Patients] WITH NOCHECK
+    ADD CONSTRAINT [PatientsMTOFunctionalClasses] FOREIGN KEY ([FunctionalClassesId]) REFERENCES [dbo].[FunctionalClasses] ([FunctionalClassesId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -806,11 +893,19 @@ ALTER TABLE [dbo].[DefaultSchedule] WITH CHECK CHECK CONSTRAINT [DefaultSchedule
 
 ALTER TABLE [dbo].[Diagnosis] WITH CHECK CHECK CONSTRAINT [DiagnosisMTODiagnosisClass];
 
-ALTER TABLE [dbo].[Diagnosis] WITH CHECK CHECK CONSTRAINT [DiagnosisMTODiagnosisSubClass];
+ALTER TABLE [dbo].[DiagnosisClass] WITH CHECK CHECK CONSTRAINT [DiagnosisClassMTO];
 
 ALTER TABLE [dbo].[Doctors] WITH CHECK CHECK CONSTRAINT [DoctorsMTOSpecialties];
 
 ALTER TABLE [dbo].[Doctors] WITH CHECK CHECK CONSTRAINT [DoctorsOTOUsers];
+
+ALTER TABLE [dbo].[FunctionalDisorders] WITH CHECK CHECK CONSTRAINT [FunctionalDisordersMTO];
+
+ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH CHECK CHECK CONSTRAINT [FunctionalDisordersToDiagnosisMTOFunctionalDisorders];
+
+ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH CHECK CHECK CONSTRAINT [FunctionalDisordersToDiagnosisMTOPatients];
+
+ALTER TABLE [dbo].[Patients] WITH CHECK CHECK CONSTRAINT [PatientsMTOFunctionalClasses];
 
 ALTER TABLE [dbo].[Patients] WITH CHECK CHECK CONSTRAINT [PatientsOTOUsers];
 
