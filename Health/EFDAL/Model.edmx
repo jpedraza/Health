@@ -1,0 +1,1560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Health.MsSqlDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="HealthMsSqlDatabaseModelStoreContainer">
+          <EntitySet Name="Appointments" EntityType="Health.MsSqlDatabaseModel.Store.Appointments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Candidates" EntityType="Health.MsSqlDatabaseModel.Store.Candidates" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DefaultSchedule" EntityType="Health.MsSqlDatabaseModel.Store.DefaultSchedule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Diagnosis" EntityType="Health.MsSqlDatabaseModel.Store.Diagnosis" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DiagnosisClass" EntityType="Health.MsSqlDatabaseModel.Store.DiagnosisClass" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Doctors" EntityType="Health.MsSqlDatabaseModel.Store.Doctors" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FunctionalClasses" EntityType="Health.MsSqlDatabaseModel.Store.FunctionalClasses" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FunctionalDisorders" EntityType="Health.MsSqlDatabaseModel.Store.FunctionalDisorders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FunctionalDisordersToPatients" EntityType="Health.MsSqlDatabaseModel.Store.FunctionalDisordersToPatients" store:Type="Tables" store:Schema="dbo" store:Name="FunctionalDisordersToPatients">
+            <DefiningQuery>SELECT 
+      [FunctionalDisordersToPatients].[FunctionalDisordersId] AS [FunctionalDisordersId], 
+      [FunctionalDisordersToPatients].[PatientId] AS [PatientId]
+      FROM [dbo].[FunctionalDisordersToPatients] AS [FunctionalDisordersToPatients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Parameters" EntityType="Health.MsSqlDatabaseModel.Store.Parameters" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Patients" EntityType="Health.MsSqlDatabaseModel.Store.Patients" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PatientsToDiagnosis" EntityType="Health.MsSqlDatabaseModel.Store.PatientsToDiagnosis" store:Type="Tables" store:Schema="dbo" store:Name="PatientsToDiagnosis">
+            <DefiningQuery>SELECT 
+      [PatientsToDiagnosis].[PatientId] AS [PatientId], 
+      [PatientsToDiagnosis].[DiagnosisId] AS [DiagnosisId]
+      FROM [dbo].[PatientsToDiagnosis] AS [PatientsToDiagnosis]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PatientsToDoctors" EntityType="Health.MsSqlDatabaseModel.Store.PatientsToDoctors" store:Type="Tables" store:Schema="dbo" store:Name="PatientsToDoctors">
+            <DefiningQuery>SELECT 
+      [PatientsToDoctors].[DoctorId] AS [DoctorId], 
+      [PatientsToDoctors].[PatientId] AS [PatientId]
+      FROM [dbo].[PatientsToDoctors] AS [PatientsToDoctors]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PatientsToSurgerys" EntityType="Health.MsSqlDatabaseModel.Store.PatientsToSurgerys" store:Type="Tables" store:Schema="dbo" store:Name="PatientsToSurgerys">
+            <DefiningQuery>SELECT 
+      [PatientsToSurgerys].[SurgeryId] AS [SurgeryId], 
+      [PatientsToSurgerys].[PatientId] AS [PatientId], 
+      [PatientsToSurgerys].[SurgeryDate] AS [SurgeryDate], 
+      [PatientsToSurgerys].[SurgeryStatus] AS [SurgeryStatus]
+      FROM [dbo].[PatientsToSurgerys] AS [PatientsToSurgerys]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PersonalSchedule" EntityType="Health.MsSqlDatabaseModel.Store.PersonalSchedule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="Health.MsSqlDatabaseModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Specialties" EntityType="Health.MsSqlDatabaseModel.Store.Specialties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Surgerys" EntityType="Health.MsSqlDatabaseModel.Store.Surgerys" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="Health.MsSqlDatabaseModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="WorkWeeks" EntityType="Health.MsSqlDatabaseModel.Store.WorkWeeks" store:Type="Tables" store:Schema="dbo" store:Name="WorkWeeks">
+            <DefiningQuery>SELECT 
+      [WorkWeeks].[DoctorId] AS [DoctorId], 
+      [WorkWeeks].[IsWeekEndDay] AS [IsWeekEndDay], 
+      [WorkWeeks].[DayInWeek] AS [DayInWeek], 
+      [WorkWeeks].[TimeStart] AS [TimeStart], 
+      [WorkWeeks].[TimeEnd] AS [TimeEnd], 
+      [WorkWeeks].[DinnerStart] AS [DinnerStart], 
+      [WorkWeeks].[DinnerEnd] AS [DinnerEnd], 
+      [WorkWeeks].[AttendingHoursStart] AS [AttendingHoursStart], 
+      [WorkWeeks].[AttendingHoursEnd] AS [AttendingHoursEnd], 
+      [WorkWeeks].[AttendingMinutes] AS [AttendingMinutes]
+      FROM [dbo].[WorkWeeks] AS [WorkWeeks]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="AppointmentsMTODoctors" Association="Health.MsSqlDatabaseModel.Store.AppointmentsMTODoctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentsMTOPatients" Association="Health.MsSqlDatabaseModel.Store.AppointmentsMTOPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="CandidatesMTORoles" Association="Health.MsSqlDatabaseModel.Store.CandidatesMTORoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Candidates" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="DefaultScheduleMTOParameters" Association="Health.MsSqlDatabaseModel.Store.DefaultScheduleMTOParameters">
+            <End Role="Parameters" EntitySet="Parameters" />
+            <End Role="DefaultSchedule" EntitySet="DefaultSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="DiagnosisClassMTO" Association="Health.MsSqlDatabaseModel.Store.DiagnosisClassMTO">
+            <End Role="DiagnosisClass" EntitySet="DiagnosisClass" />
+            <End Role="DiagnosisClass1" EntitySet="DiagnosisClass" />
+          </AssociationSet>
+          <AssociationSet Name="DiagnosisMTODiagnosisClass" Association="Health.MsSqlDatabaseModel.Store.DiagnosisMTODiagnosisClass">
+            <End Role="DiagnosisClass" EntitySet="DiagnosisClass" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="DoctorsMTOSpecialties" Association="Health.MsSqlDatabaseModel.Store.DoctorsMTOSpecialties">
+            <End Role="Specialties" EntitySet="Specialties" />
+            <End Role="Doctors" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="DoctorsOTOUsers" Association="Health.MsSqlDatabaseModel.Store.DoctorsOTOUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Doctors" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FunctionalDisordersMTO" Association="Health.MsSqlDatabaseModel.Store.FunctionalDisordersMTO">
+            <End Role="FunctionalDisorders" EntitySet="FunctionalDisorders" />
+            <End Role="FunctionalDisorders1" EntitySet="FunctionalDisorders" />
+          </AssociationSet>
+          <AssociationSet Name="FunctionalDisordersToDiagnosisMTOFunctionalDisorders" Association="Health.MsSqlDatabaseModel.Store.FunctionalDisordersToDiagnosisMTOFunctionalDisorders">
+            <End Role="FunctionalDisorders" EntitySet="FunctionalDisorders" />
+            <End Role="FunctionalDisordersToPatients" EntitySet="FunctionalDisordersToPatients" />
+          </AssociationSet>
+          <AssociationSet Name="FunctionalDisordersToDiagnosisMTOPatients" Association="Health.MsSqlDatabaseModel.Store.FunctionalDisordersToDiagnosisMTOPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="FunctionalDisordersToPatients" EntitySet="FunctionalDisordersToPatients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsMTMDoctorsToDoctors" Association="Health.MsSqlDatabaseModel.Store.PatientsMTMDoctorsToDoctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="PatientsToDoctors" EntitySet="PatientsToDoctors" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsMTMDoctorsToPatients" Association="Health.MsSqlDatabaseModel.Store.PatientsMTMDoctorsToPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsToDoctors" EntitySet="PatientsToDoctors" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsMTOFunctionalClasses" Association="Health.MsSqlDatabaseModel.Store.PatientsMTOFunctionalClasses">
+            <End Role="FunctionalClasses" EntitySet="FunctionalClasses" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsOTOUsers" Association="Health.MsSqlDatabaseModel.Store.PatientsOTOUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToDiagnosisMTMDiagnosis" Association="Health.MsSqlDatabaseModel.Store.PatientsToDiagnosisMTMDiagnosis">
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+            <End Role="PatientsToDiagnosis" EntitySet="PatientsToDiagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToDiagnosisMTMPatients" Association="Health.MsSqlDatabaseModel.Store.PatientsToDiagnosisMTMPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsToDiagnosis" EntitySet="PatientsToDiagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToSurgerysMTMPatients" Association="Health.MsSqlDatabaseModel.Store.PatientsToSurgerysMTMPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsToSurgerys" EntitySet="PatientsToSurgerys" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToSurgerysMTMSurgerys" Association="Health.MsSqlDatabaseModel.Store.PatientsToSurgerysMTMSurgerys">
+            <End Role="Surgerys" EntitySet="Surgerys" />
+            <End Role="PatientsToSurgerys" EntitySet="PatientsToSurgerys" />
+          </AssociationSet>
+          <AssociationSet Name="PersonalScheduleMTOParameters" Association="Health.MsSqlDatabaseModel.Store.PersonalScheduleMTOParameters">
+            <End Role="Parameters" EntitySet="Parameters" />
+            <End Role="PersonalSchedule" EntitySet="PersonalSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="PersonalScheduleMTOPatients" Association="Health.MsSqlDatabaseModel.Store.PersonalScheduleMTOPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PersonalSchedule" EntitySet="PersonalSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="UsersMTORoles" Association="Health.MsSqlDatabaseModel.Store.UsersMTORoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="WorkWeeksMTODoctors" Association="Health.MsSqlDatabaseModel.Store.WorkWeeksMTODoctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="WorkWeeks" EntitySet="WorkWeeks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ThirdName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" Nullable="false" />
+          <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Policy" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Card" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mother" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartDateOfObservation" Type="datetime" Nullable="false" />
+          <Property Name="Phone1" Type="int" />
+          <Property Name="Phone2" Type="int" />
+        </EntityType>
+        <EntityType Name="DefaultSchedule">
+          <Key>
+            <PropertyRef Name="DefaultScheduleId" />
+          </Key>
+          <Property Name="DefaultScheduleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ParameterId" Type="int" />
+          <Property Name="DiagnosesId" Type="int" />
+          <Property Name="Years" Type="int" />
+          <Property Name="Months" Type="int" />
+          <Property Name="Weeks" Type="int" />
+          <Property Name="Days" Type="int" />
+          <Property Name="Hours" Type="int" />
+          <Property Name="Minutes" Type="int" />
+          <Property Name="TimeStart" Type="time" />
+          <Property Name="TimeEnd" Type="time" />
+          <Property Name="DayOfWeek" Type="int" />
+          <Property Name="DayOfMonth" Type="int" />
+          <Property Name="MonthOfYear" Type="int" />
+          <Property Name="WeekOfMonth" Type="int" />
+          <Property Name="WeekParity" Type="int" />
+        </EntityType>
+        <EntityType Name="Diagnosis">
+          <Key>
+            <PropertyRef Name="DiagnosisId" />
+          </Key>
+          <Property Name="DiagnosisId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="DiagnosisClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiagnosisClass">
+          <Key>
+            <PropertyRef Name="DiagnosisClassId" />
+          </Key>
+          <Property Name="DiagnosisClassId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Parent" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="SpecialtyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FunctionalClasses">
+          <Key>
+            <PropertyRef Name="FunctionalClassesId" />
+          </Key>
+          <Property Name="FunctionalClassesId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FunctionalDisorders">
+          <Key>
+            <PropertyRef Name="FunctionalDisordersId" />
+          </Key>
+          <Property Name="FunctionalDisordersId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Parent" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "Health.MsSqlDatabase.dbo.FunctionalDisordersToPatients" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+        <EntityType Name="FunctionalDisordersToPatients">
+          <Key>
+            <PropertyRef Name="FunctionalDisordersId" />
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="FunctionalDisordersId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parameters">
+          <Key>
+            <PropertyRef Name="ParameterId" />
+          </Key>
+          <Property Name="ParameterId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="DefaultValue" Type="varbinary" MaxLength="1" />
+          <Property Name="Value" Type="varbinary" MaxLength="1" />
+          <Property Name="Metadata" Type="varbinary" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="Policy" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Card" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mother" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartDateOfObservation" Type="datetime" Nullable="false" />
+          <Property Name="Phone1" Type="int" />
+          <Property Name="Phone2" Type="int" />
+          <Property Name="FunctionalClassesId" Type="int" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "Health.MsSqlDatabase.dbo.PatientsToDiagnosis" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+        <EntityType Name="PatientsToDiagnosis">
+          <Key>
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="DiagnosisId" />
+          </Key>
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="DiagnosisId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "Health.MsSqlDatabase.dbo.PatientsToDoctors" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+        <EntityType Name="PatientsToDoctors">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "Health.MsSqlDatabase.dbo.PatientsToSurgerys" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+        <EntityType Name="PatientsToSurgerys">
+          <Key>
+            <PropertyRef Name="SurgeryId" />
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="SurgeryDate" />
+          </Key>
+          <Property Name="SurgeryId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="SurgeryDate" Type="datetime" Nullable="false" />
+          <Property Name="SurgeryStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="PersonalSchedule">
+          <Key>
+            <PropertyRef Name="PersonalScheduleId" />
+          </Key>
+          <Property Name="PersonalScheduleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="int" />
+          <Property Name="ParameterId" Type="int" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="TimeStart" Type="time" />
+          <Property Name="TimeEnd" Type="time" />
+          <Property Name="DayOfWeek" Type="int" />
+          <Property Name="DayOfMonth" Type="int" />
+          <Property Name="MonthOfYear" Type="int" />
+          <Property Name="WeekOfMonth" Type="int" />
+          <Property Name="WeekParity" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specialties">
+          <Key>
+            <PropertyRef Name="SpecialtyId" />
+          </Key>
+          <Property Name="SpecialtyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Surgerys">
+          <Key>
+            <PropertyRef Name="SurgeryId" />
+          </Key>
+          <Property Name="SurgeryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SurgeryDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ThirdName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" Nullable="false" />
+          <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+      предупреждение 6002: В таблице или представлении "Health.MsSqlDatabase.dbo.WorkWeeks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.
+      -->
+        <EntityType Name="WorkWeeks">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="IsWeekEndDay" />
+            <PropertyRef Name="DayInWeek" />
+            <PropertyRef Name="TimeStart" />
+            <PropertyRef Name="TimeEnd" />
+            <PropertyRef Name="DinnerStart" />
+            <PropertyRef Name="DinnerEnd" />
+            <PropertyRef Name="AttendingHoursStart" />
+            <PropertyRef Name="AttendingHoursEnd" />
+            <PropertyRef Name="AttendingMinutes" />
+          </Key>
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="IsWeekEndDay" Type="bit" Nullable="false" />
+          <Property Name="DayInWeek" Type="int" Nullable="false" />
+          <Property Name="TimeStart" Type="time" Nullable="false" />
+          <Property Name="TimeEnd" Type="time" Nullable="false" />
+          <Property Name="DinnerStart" Type="time" Nullable="false" />
+          <Property Name="DinnerEnd" Type="time" Nullable="false" />
+          <Property Name="AttendingHoursStart" Type="time" Nullable="false" />
+          <Property Name="AttendingHoursEnd" Type="time" Nullable="false" />
+          <Property Name="AttendingMinutes" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="AppointmentsMTODoctors">
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Store.Doctors" Multiplicity="1" />
+          <End Role="Appointments" Type="Health.MsSqlDatabaseModel.Store.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentsMTOPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="1" />
+          <End Role="Appointments" Type="Health.MsSqlDatabaseModel.Store.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CandidatesMTORoles">
+          <End Role="Roles" Type="Health.MsSqlDatabaseModel.Store.Roles" Multiplicity="1" />
+          <End Role="Candidates" Type="Health.MsSqlDatabaseModel.Store.Candidates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Candidates">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DefaultScheduleMTOParameters">
+          <End Role="Parameters" Type="Health.MsSqlDatabaseModel.Store.Parameters" Multiplicity="0..1" />
+          <End Role="DefaultSchedule" Type="Health.MsSqlDatabaseModel.Store.DefaultSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameters">
+              <PropertyRef Name="ParameterId" />
+            </Principal>
+            <Dependent Role="DefaultSchedule">
+              <PropertyRef Name="ParameterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DiagnosisClassMTO">
+          <End Role="DiagnosisClass" Type="Health.MsSqlDatabaseModel.Store.DiagnosisClass" Multiplicity="1" />
+          <End Role="DiagnosisClass1" Type="Health.MsSqlDatabaseModel.Store.DiagnosisClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiagnosisClass">
+              <PropertyRef Name="DiagnosisClassId" />
+            </Principal>
+            <Dependent Role="DiagnosisClass1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DiagnosisMTODiagnosisClass">
+          <End Role="DiagnosisClass" Type="Health.MsSqlDatabaseModel.Store.DiagnosisClass" Multiplicity="1" />
+          <End Role="Diagnosis" Type="Health.MsSqlDatabaseModel.Store.Diagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiagnosisClass">
+              <PropertyRef Name="DiagnosisClassId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="DiagnosisClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoctorsMTOSpecialties">
+          <End Role="Specialties" Type="Health.MsSqlDatabaseModel.Store.Specialties" Multiplicity="1" />
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Store.Doctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialties">
+              <PropertyRef Name="SpecialtyId" />
+            </Principal>
+            <Dependent Role="Doctors">
+              <PropertyRef Name="SpecialtyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoctorsOTOUsers">
+          <End Role="Users" Type="Health.MsSqlDatabaseModel.Store.Users" Multiplicity="1" />
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Store.Doctors" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FunctionalDisordersMTO">
+          <End Role="FunctionalDisorders" Type="Health.MsSqlDatabaseModel.Store.FunctionalDisorders" Multiplicity="1" />
+          <End Role="FunctionalDisorders1" Type="Health.MsSqlDatabaseModel.Store.FunctionalDisorders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FunctionalDisorders">
+              <PropertyRef Name="FunctionalDisordersId" />
+            </Principal>
+            <Dependent Role="FunctionalDisorders1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FunctionalDisordersToDiagnosisMTOFunctionalDisorders">
+          <End Role="FunctionalDisorders" Type="Health.MsSqlDatabaseModel.Store.FunctionalDisorders" Multiplicity="1" />
+          <End Role="FunctionalDisordersToPatients" Type="Health.MsSqlDatabaseModel.Store.FunctionalDisordersToPatients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FunctionalDisorders">
+              <PropertyRef Name="FunctionalDisordersId" />
+            </Principal>
+            <Dependent Role="FunctionalDisordersToPatients">
+              <PropertyRef Name="FunctionalDisordersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FunctionalDisordersToDiagnosisMTOPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="1" />
+          <End Role="FunctionalDisordersToPatients" Type="Health.MsSqlDatabaseModel.Store.FunctionalDisordersToPatients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="FunctionalDisordersToPatients">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsMTMDoctorsToDoctors">
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Store.Doctors" Multiplicity="1" />
+          <End Role="PatientsToDoctors" Type="Health.MsSqlDatabaseModel.Store.PatientsToDoctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="PatientsToDoctors">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsMTMDoctorsToPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="1" />
+          <End Role="PatientsToDoctors" Type="Health.MsSqlDatabaseModel.Store.PatientsToDoctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PatientsToDoctors">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsMTOFunctionalClasses">
+          <End Role="FunctionalClasses" Type="Health.MsSqlDatabaseModel.Store.FunctionalClasses" Multiplicity="0..1" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FunctionalClasses">
+              <PropertyRef Name="FunctionalClassesId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="FunctionalClassesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsOTOUsers">
+          <End Role="Users" Type="Health.MsSqlDatabaseModel.Store.Users" Multiplicity="1" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsToDiagnosisMTMDiagnosis">
+          <End Role="Diagnosis" Type="Health.MsSqlDatabaseModel.Store.Diagnosis" Multiplicity="1" />
+          <End Role="PatientsToDiagnosis" Type="Health.MsSqlDatabaseModel.Store.PatientsToDiagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnosis">
+              <PropertyRef Name="DiagnosisId" />
+            </Principal>
+            <Dependent Role="PatientsToDiagnosis">
+              <PropertyRef Name="DiagnosisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsToDiagnosisMTMPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="1" />
+          <End Role="PatientsToDiagnosis" Type="Health.MsSqlDatabaseModel.Store.PatientsToDiagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PatientsToDiagnosis">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsToSurgerysMTMPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="1" />
+          <End Role="PatientsToSurgerys" Type="Health.MsSqlDatabaseModel.Store.PatientsToSurgerys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PatientsToSurgerys">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsToSurgerysMTMSurgerys">
+          <End Role="Surgerys" Type="Health.MsSqlDatabaseModel.Store.Surgerys" Multiplicity="1" />
+          <End Role="PatientsToSurgerys" Type="Health.MsSqlDatabaseModel.Store.PatientsToSurgerys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Surgerys">
+              <PropertyRef Name="SurgeryId" />
+            </Principal>
+            <Dependent Role="PatientsToSurgerys">
+              <PropertyRef Name="SurgeryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonalScheduleMTOParameters">
+          <End Role="Parameters" Type="Health.MsSqlDatabaseModel.Store.Parameters" Multiplicity="0..1" />
+          <End Role="PersonalSchedule" Type="Health.MsSqlDatabaseModel.Store.PersonalSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameters">
+              <PropertyRef Name="ParameterId" />
+            </Principal>
+            <Dependent Role="PersonalSchedule">
+              <PropertyRef Name="ParameterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonalScheduleMTOPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Store.Patients" Multiplicity="0..1" />
+          <End Role="PersonalSchedule" Type="Health.MsSqlDatabaseModel.Store.PersonalSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PersonalSchedule">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersMTORoles">
+          <End Role="Roles" Type="Health.MsSqlDatabaseModel.Store.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Health.MsSqlDatabaseModel.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkWeeksMTODoctors">
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Store.Doctors" Multiplicity="1" />
+          <End Role="WorkWeeks" Type="Health.MsSqlDatabaseModel.Store.WorkWeeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="WorkWeeks">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Health.MsSqlDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appointments" EntityType="Health.MsSqlDatabaseModel.Appointments" />
+          <EntitySet Name="Candidates" EntityType="Health.MsSqlDatabaseModel.Candidates" />
+          <EntitySet Name="DefaultSchedule" EntityType="Health.MsSqlDatabaseModel.DefaultSchedule" />
+          <EntitySet Name="Diagnosis" EntityType="Health.MsSqlDatabaseModel.Diagnosis" />
+          <EntitySet Name="DiagnosisClass" EntityType="Health.MsSqlDatabaseModel.DiagnosisClass" />
+          <EntitySet Name="Doctors" EntityType="Health.MsSqlDatabaseModel.Doctors" />
+          <EntitySet Name="FunctionalClasses" EntityType="Health.MsSqlDatabaseModel.FunctionalClasses" />
+          <EntitySet Name="FunctionalDisorders" EntityType="Health.MsSqlDatabaseModel.FunctionalDisorders" />
+          <EntitySet Name="Parameters" EntityType="Health.MsSqlDatabaseModel.Parameters" />
+          <EntitySet Name="Patients" EntityType="Health.MsSqlDatabaseModel.Patients" />
+          <EntitySet Name="PatientsToSurgerys" EntityType="Health.MsSqlDatabaseModel.PatientsToSurgerys" />
+          <EntitySet Name="PersonalSchedule" EntityType="Health.MsSqlDatabaseModel.PersonalSchedule" />
+          <EntitySet Name="Roles" EntityType="Health.MsSqlDatabaseModel.Roles" />
+          <EntitySet Name="Specialties" EntityType="Health.MsSqlDatabaseModel.Specialties" />
+          <EntitySet Name="Surgerys" EntityType="Health.MsSqlDatabaseModel.Surgerys" />
+          <EntitySet Name="Users" EntityType="Health.MsSqlDatabaseModel.Users" />
+          <EntitySet Name="WorkWeeks" EntityType="Health.MsSqlDatabaseModel.WorkWeeks" />
+          <AssociationSet Name="AppointmentsMTODoctors" Association="Health.MsSqlDatabaseModel.AppointmentsMTODoctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentsMTOPatients" Association="Health.MsSqlDatabaseModel.AppointmentsMTOPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="CandidatesMTORoles" Association="Health.MsSqlDatabaseModel.CandidatesMTORoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Candidates" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="DefaultScheduleMTOParameters" Association="Health.MsSqlDatabaseModel.DefaultScheduleMTOParameters">
+            <End Role="Parameters" EntitySet="Parameters" />
+            <End Role="DefaultSchedule" EntitySet="DefaultSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="DiagnosisMTODiagnosisClass" Association="Health.MsSqlDatabaseModel.DiagnosisMTODiagnosisClass">
+            <End Role="DiagnosisClass" EntitySet="DiagnosisClass" />
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+          </AssociationSet>
+          <AssociationSet Name="DiagnosisClassMTO" Association="Health.MsSqlDatabaseModel.DiagnosisClassMTO">
+            <End Role="DiagnosisClass" EntitySet="DiagnosisClass" />
+            <End Role="DiagnosisClass1" EntitySet="DiagnosisClass" />
+          </AssociationSet>
+          <AssociationSet Name="DoctorsMTOSpecialties" Association="Health.MsSqlDatabaseModel.DoctorsMTOSpecialties">
+            <End Role="Specialties" EntitySet="Specialties" />
+            <End Role="Doctors" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="DoctorsOTOUsers" Association="Health.MsSqlDatabaseModel.DoctorsOTOUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Doctors" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="WorkWeeksMTODoctors" Association="Health.MsSqlDatabaseModel.WorkWeeksMTODoctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="WorkWeeks" EntitySet="WorkWeeks" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsMTOFunctionalClasses" Association="Health.MsSqlDatabaseModel.PatientsMTOFunctionalClasses">
+            <End Role="FunctionalClasses" EntitySet="FunctionalClasses" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FunctionalDisordersMTO" Association="Health.MsSqlDatabaseModel.FunctionalDisordersMTO">
+            <End Role="FunctionalDisorders" EntitySet="FunctionalDisorders" />
+            <End Role="FunctionalDisorders1" EntitySet="FunctionalDisorders" />
+          </AssociationSet>
+          <AssociationSet Name="PersonalScheduleMTOParameters" Association="Health.MsSqlDatabaseModel.PersonalScheduleMTOParameters">
+            <End Role="Parameters" EntitySet="Parameters" />
+            <End Role="PersonalSchedule" EntitySet="PersonalSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsOTOUsers" Association="Health.MsSqlDatabaseModel.PatientsOTOUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToSurgerysMTMPatients" Association="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PatientsToSurgerys" EntitySet="PatientsToSurgerys" />
+          </AssociationSet>
+          <AssociationSet Name="PersonalScheduleMTOPatients" Association="Health.MsSqlDatabaseModel.PersonalScheduleMTOPatients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="PersonalSchedule" EntitySet="PersonalSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToSurgerysMTMSurgerys" Association="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMSurgerys">
+            <End Role="Surgerys" EntitySet="Surgerys" />
+            <End Role="PatientsToSurgerys" EntitySet="PatientsToSurgerys" />
+          </AssociationSet>
+          <AssociationSet Name="UsersMTORoles" Association="Health.MsSqlDatabaseModel.UsersMTORoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FunctionalDisordersToPatients" Association="Health.MsSqlDatabaseModel.FunctionalDisordersToPatients">
+            <End Role="FunctionalDisorders" EntitySet="FunctionalDisorders" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToDiagnosis" Association="Health.MsSqlDatabaseModel.PatientsToDiagnosis">
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="PatientsToDoctors" Association="Health.MsSqlDatabaseModel.PatientsToDoctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Doctors" Relationship="Health.MsSqlDatabaseModel.AppointmentsMTODoctors" FromRole="Appointments" ToRole="Doctors" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.AppointmentsMTOPatients" FromRole="Appointments" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ThirdName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Policy" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Card" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Mother" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="StartDateOfObservation" Type="DateTime" Nullable="false" />
+          <Property Name="Phone1" Type="Int32" />
+          <Property Name="Phone2" Type="Int32" />
+          <NavigationProperty Name="Roles" Relationship="Health.MsSqlDatabaseModel.CandidatesMTORoles" FromRole="Candidates" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="DefaultSchedule">
+          <Key>
+            <PropertyRef Name="DefaultScheduleId" />
+          </Key>
+          <Property Name="DefaultScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParameterId" Type="Int32" />
+          <Property Name="DiagnosesId" Type="Int32" />
+          <Property Name="Years" Type="Int32" />
+          <Property Name="Months" Type="Int32" />
+          <Property Name="Weeks" Type="Int32" />
+          <Property Name="Days" Type="Int32" />
+          <Property Name="Hours" Type="Int32" />
+          <Property Name="Minutes" Type="Int32" />
+          <Property Name="TimeStart" Type="Time" />
+          <Property Name="TimeEnd" Type="Time" />
+          <Property Name="DayOfWeek" Type="Int32" />
+          <Property Name="DayOfMonth" Type="Int32" />
+          <Property Name="MonthOfYear" Type="Int32" />
+          <Property Name="WeekOfMonth" Type="Int32" />
+          <Property Name="WeekParity" Type="Int32" />
+          <NavigationProperty Name="Parameters" Relationship="Health.MsSqlDatabaseModel.DefaultScheduleMTOParameters" FromRole="DefaultSchedule" ToRole="Parameters" />
+        </EntityType>
+        <EntityType Name="Diagnosis">
+          <Key>
+            <PropertyRef Name="DiagnosisId" />
+          </Key>
+          <Property Name="DiagnosisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Code" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DiagnosisClassId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DiagnosisClass" Relationship="Health.MsSqlDatabaseModel.DiagnosisMTODiagnosisClass" FromRole="Diagnosis" ToRole="DiagnosisClass" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.PatientsToDiagnosis" FromRole="Diagnosis" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="DiagnosisClass">
+          <Key>
+            <PropertyRef Name="DiagnosisClassId" />
+          </Key>
+          <Property Name="DiagnosisClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Parent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Diagnosis" Relationship="Health.MsSqlDatabaseModel.DiagnosisMTODiagnosisClass" FromRole="DiagnosisClass" ToRole="Diagnosis" />
+          <NavigationProperty Name="DiagnosisClass1" Relationship="Health.MsSqlDatabaseModel.DiagnosisClassMTO" FromRole="DiagnosisClass" ToRole="DiagnosisClass1" />
+          <NavigationProperty Name="DiagnosisClass2" Relationship="Health.MsSqlDatabaseModel.DiagnosisClassMTO" FromRole="DiagnosisClass1" ToRole="DiagnosisClass" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="SpecialtyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Appointments" Relationship="Health.MsSqlDatabaseModel.AppointmentsMTODoctors" FromRole="Doctors" ToRole="Appointments" />
+          <NavigationProperty Name="Specialties" Relationship="Health.MsSqlDatabaseModel.DoctorsMTOSpecialties" FromRole="Doctors" ToRole="Specialties" />
+          <NavigationProperty Name="Users" Relationship="Health.MsSqlDatabaseModel.DoctorsOTOUsers" FromRole="Doctors" ToRole="Users" />
+          <NavigationProperty Name="WorkWeeks" Relationship="Health.MsSqlDatabaseModel.WorkWeeksMTODoctors" FromRole="Doctors" ToRole="WorkWeeks" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.PatientsToDoctors" FromRole="Doctors" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="FunctionalClasses">
+          <Key>
+            <PropertyRef Name="FunctionalClassesId" />
+          </Key>
+          <Property Name="FunctionalClassesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.PatientsMTOFunctionalClasses" FromRole="FunctionalClasses" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="FunctionalDisorders">
+          <Key>
+            <PropertyRef Name="FunctionalDisordersId" />
+          </Key>
+          <Property Name="FunctionalDisordersId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Parent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FunctionalDisorders1" Relationship="Health.MsSqlDatabaseModel.FunctionalDisordersMTO" FromRole="FunctionalDisorders" ToRole="FunctionalDisorders1" />
+          <NavigationProperty Name="FunctionalDisorders2" Relationship="Health.MsSqlDatabaseModel.FunctionalDisordersMTO" FromRole="FunctionalDisorders1" ToRole="FunctionalDisorders" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.FunctionalDisordersToPatients" FromRole="FunctionalDisorders" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Parameters">
+          <Key>
+            <PropertyRef Name="ParameterId" />
+          </Key>
+          <Property Name="ParameterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DefaultValue" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="Value" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="Metadata" Type="Binary" MaxLength="1" FixedLength="false" />
+          <NavigationProperty Name="DefaultSchedule" Relationship="Health.MsSqlDatabaseModel.DefaultScheduleMTOParameters" FromRole="Parameters" ToRole="DefaultSchedule" />
+          <NavigationProperty Name="PersonalSchedule" Relationship="Health.MsSqlDatabaseModel.PersonalScheduleMTOParameters" FromRole="Parameters" ToRole="PersonalSchedule" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="Policy" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Card" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Mother" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="StartDateOfObservation" Type="DateTime" Nullable="false" />
+          <Property Name="Phone1" Type="Int32" />
+          <Property Name="Phone2" Type="Int32" />
+          <Property Name="FunctionalClassesId" Type="Int32" />
+          <NavigationProperty Name="Appointments" Relationship="Health.MsSqlDatabaseModel.AppointmentsMTOPatients" FromRole="Patients" ToRole="Appointments" />
+          <NavigationProperty Name="FunctionalClasses" Relationship="Health.MsSqlDatabaseModel.PatientsMTOFunctionalClasses" FromRole="Patients" ToRole="FunctionalClasses" />
+          <NavigationProperty Name="Users" Relationship="Health.MsSqlDatabaseModel.PatientsOTOUsers" FromRole="Patients" ToRole="Users" />
+          <NavigationProperty Name="PatientsToSurgerys" Relationship="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMPatients" FromRole="Patients" ToRole="PatientsToSurgerys" />
+          <NavigationProperty Name="PersonalSchedule" Relationship="Health.MsSqlDatabaseModel.PersonalScheduleMTOPatients" FromRole="Patients" ToRole="PersonalSchedule" />
+          <NavigationProperty Name="FunctionalDisorders" Relationship="Health.MsSqlDatabaseModel.FunctionalDisordersToPatients" FromRole="Patients" ToRole="FunctionalDisorders" />
+          <NavigationProperty Name="Diagnosis" Relationship="Health.MsSqlDatabaseModel.PatientsToDiagnosis" FromRole="Patients" ToRole="Diagnosis" />
+          <NavigationProperty Name="Doctors" Relationship="Health.MsSqlDatabaseModel.PatientsToDoctors" FromRole="Patients" ToRole="Doctors" />
+        </EntityType>
+        <EntityType Name="PatientsToSurgerys">
+          <Key>
+            <PropertyRef Name="SurgeryId" />
+            <PropertyRef Name="PatientId" />
+            <PropertyRef Name="SurgeryDate" />
+          </Key>
+          <Property Name="SurgeryId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="SurgeryDate" Type="DateTime" Nullable="false" />
+          <Property Name="SurgeryStatus" Type="Boolean" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMPatients" FromRole="PatientsToSurgerys" ToRole="Patients" />
+          <NavigationProperty Name="Surgerys" Relationship="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMSurgerys" FromRole="PatientsToSurgerys" ToRole="Surgerys" />
+        </EntityType>
+        <EntityType Name="PersonalSchedule">
+          <Key>
+            <PropertyRef Name="PersonalScheduleId" />
+          </Key>
+          <Property Name="PersonalScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" />
+          <Property Name="ParameterId" Type="Int32" />
+          <Property Name="DateStart" Type="DateTime" />
+          <Property Name="DateEnd" Type="DateTime" />
+          <Property Name="TimeStart" Type="Time" />
+          <Property Name="TimeEnd" Type="Time" />
+          <Property Name="DayOfWeek" Type="Int32" />
+          <Property Name="DayOfMonth" Type="Int32" />
+          <Property Name="MonthOfYear" Type="Int32" />
+          <Property Name="WeekOfMonth" Type="Int32" />
+          <Property Name="WeekParity" Type="Int32" />
+          <NavigationProperty Name="Parameters" Relationship="Health.MsSqlDatabaseModel.PersonalScheduleMTOParameters" FromRole="PersonalSchedule" ToRole="Parameters" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.PersonalScheduleMTOPatients" FromRole="PersonalSchedule" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Candidates" Relationship="Health.MsSqlDatabaseModel.CandidatesMTORoles" FromRole="Roles" ToRole="Candidates" />
+          <NavigationProperty Name="Users" Relationship="Health.MsSqlDatabaseModel.UsersMTORoles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Specialties">
+          <Key>
+            <PropertyRef Name="SpecialtyId" />
+          </Key>
+          <Property Name="SpecialtyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Doctors" Relationship="Health.MsSqlDatabaseModel.DoctorsMTOSpecialties" FromRole="Specialties" ToRole="Doctors" />
+        </EntityType>
+        <EntityType Name="Surgerys">
+          <Key>
+            <PropertyRef Name="SurgeryId" />
+          </Key>
+          <Property Name="SurgeryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SurgeryDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="PatientsToSurgerys" Relationship="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMSurgerys" FromRole="Surgerys" ToRole="PatientsToSurgerys" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ThirdName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Doctors" Relationship="Health.MsSqlDatabaseModel.DoctorsOTOUsers" FromRole="Users" ToRole="Doctors" />
+          <NavigationProperty Name="Patients" Relationship="Health.MsSqlDatabaseModel.PatientsOTOUsers" FromRole="Users" ToRole="Patients" />
+          <NavigationProperty Name="Roles" Relationship="Health.MsSqlDatabaseModel.UsersMTORoles" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="WorkWeeks">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="IsWeekEndDay" />
+            <PropertyRef Name="DayInWeek" />
+            <PropertyRef Name="TimeStart" />
+            <PropertyRef Name="TimeEnd" />
+            <PropertyRef Name="DinnerStart" />
+            <PropertyRef Name="DinnerEnd" />
+            <PropertyRef Name="AttendingHoursStart" />
+            <PropertyRef Name="AttendingHoursEnd" />
+            <PropertyRef Name="AttendingMinutes" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="IsWeekEndDay" Type="Boolean" Nullable="false" />
+          <Property Name="DayInWeek" Type="Int32" Nullable="false" />
+          <Property Name="TimeStart" Type="Time" Nullable="false" />
+          <Property Name="TimeEnd" Type="Time" Nullable="false" />
+          <Property Name="DinnerStart" Type="Time" Nullable="false" />
+          <Property Name="DinnerEnd" Type="Time" Nullable="false" />
+          <Property Name="AttendingHoursStart" Type="Time" Nullable="false" />
+          <Property Name="AttendingHoursEnd" Type="Time" Nullable="false" />
+          <Property Name="AttendingMinutes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Doctors" Relationship="Health.MsSqlDatabaseModel.WorkWeeksMTODoctors" FromRole="WorkWeeks" ToRole="Doctors" />
+        </EntityType>
+        <Association Name="AppointmentsMTODoctors">
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Doctors" Multiplicity="1" />
+          <End Role="Appointments" Type="Health.MsSqlDatabaseModel.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentsMTOPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="1" />
+          <End Role="Appointments" Type="Health.MsSqlDatabaseModel.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CandidatesMTORoles">
+          <End Role="Roles" Type="Health.MsSqlDatabaseModel.Roles" Multiplicity="1" />
+          <End Role="Candidates" Type="Health.MsSqlDatabaseModel.Candidates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Candidates">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DefaultScheduleMTOParameters">
+          <End Role="Parameters" Type="Health.MsSqlDatabaseModel.Parameters" Multiplicity="0..1" />
+          <End Role="DefaultSchedule" Type="Health.MsSqlDatabaseModel.DefaultSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameters">
+              <PropertyRef Name="ParameterId" />
+            </Principal>
+            <Dependent Role="DefaultSchedule">
+              <PropertyRef Name="ParameterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DiagnosisMTODiagnosisClass">
+          <End Role="DiagnosisClass" Type="Health.MsSqlDatabaseModel.DiagnosisClass" Multiplicity="1" />
+          <End Role="Diagnosis" Type="Health.MsSqlDatabaseModel.Diagnosis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiagnosisClass">
+              <PropertyRef Name="DiagnosisClassId" />
+            </Principal>
+            <Dependent Role="Diagnosis">
+              <PropertyRef Name="DiagnosisClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DiagnosisClassMTO">
+          <End Role="DiagnosisClass" Type="Health.MsSqlDatabaseModel.DiagnosisClass" Multiplicity="1" />
+          <End Role="DiagnosisClass1" Type="Health.MsSqlDatabaseModel.DiagnosisClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiagnosisClass">
+              <PropertyRef Name="DiagnosisClassId" />
+            </Principal>
+            <Dependent Role="DiagnosisClass1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoctorsMTOSpecialties">
+          <End Role="Specialties" Type="Health.MsSqlDatabaseModel.Specialties" Multiplicity="1" />
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Doctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialties">
+              <PropertyRef Name="SpecialtyId" />
+            </Principal>
+            <Dependent Role="Doctors">
+              <PropertyRef Name="SpecialtyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoctorsOTOUsers">
+          <End Role="Users" Type="Health.MsSqlDatabaseModel.Users" Multiplicity="1" />
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Doctors" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkWeeksMTODoctors">
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Doctors" Multiplicity="1" />
+          <End Role="WorkWeeks" Type="Health.MsSqlDatabaseModel.WorkWeeks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="WorkWeeks">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsMTOFunctionalClasses">
+          <End Role="FunctionalClasses" Type="Health.MsSqlDatabaseModel.FunctionalClasses" Multiplicity="0..1" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FunctionalClasses">
+              <PropertyRef Name="FunctionalClassesId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="FunctionalClassesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FunctionalDisordersMTO">
+          <End Role="FunctionalDisorders" Type="Health.MsSqlDatabaseModel.FunctionalDisorders" Multiplicity="1" />
+          <End Role="FunctionalDisorders1" Type="Health.MsSqlDatabaseModel.FunctionalDisorders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FunctionalDisorders">
+              <PropertyRef Name="FunctionalDisordersId" />
+            </Principal>
+            <Dependent Role="FunctionalDisorders1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonalScheduleMTOParameters">
+          <End Role="Parameters" Type="Health.MsSqlDatabaseModel.Parameters" Multiplicity="0..1" />
+          <End Role="PersonalSchedule" Type="Health.MsSqlDatabaseModel.PersonalSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameters">
+              <PropertyRef Name="ParameterId" />
+            </Principal>
+            <Dependent Role="PersonalSchedule">
+              <PropertyRef Name="ParameterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsOTOUsers">
+          <End Role="Users" Type="Health.MsSqlDatabaseModel.Users" Multiplicity="1" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsToSurgerysMTMPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="1" />
+          <End Role="PatientsToSurgerys" Type="Health.MsSqlDatabaseModel.PatientsToSurgerys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PatientsToSurgerys">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonalScheduleMTOPatients">
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="0..1" />
+          <End Role="PersonalSchedule" Type="Health.MsSqlDatabaseModel.PersonalSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="PersonalSchedule">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientsToSurgerysMTMSurgerys">
+          <End Role="Surgerys" Type="Health.MsSqlDatabaseModel.Surgerys" Multiplicity="1" />
+          <End Role="PatientsToSurgerys" Type="Health.MsSqlDatabaseModel.PatientsToSurgerys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Surgerys">
+              <PropertyRef Name="SurgeryId" />
+            </Principal>
+            <Dependent Role="PatientsToSurgerys">
+              <PropertyRef Name="SurgeryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersMTORoles">
+          <End Role="Roles" Type="Health.MsSqlDatabaseModel.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Health.MsSqlDatabaseModel.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FunctionalDisordersToPatients">
+          <End Role="FunctionalDisorders" Type="Health.MsSqlDatabaseModel.FunctionalDisorders" Multiplicity="*" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="*" />
+        </Association>
+        <Association Name="PatientsToDiagnosis">
+          <End Role="Diagnosis" Type="Health.MsSqlDatabaseModel.Diagnosis" Multiplicity="*" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="*" />
+        </Association>
+        <Association Name="PatientsToDoctors">
+          <End Role="Doctors" Type="Health.MsSqlDatabaseModel.Doctors" Multiplicity="*" />
+          <End Role="Patients" Type="Health.MsSqlDatabaseModel.Patients" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HealthMsSqlDatabaseModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Appointments"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Appointments"><MappingFragment StoreEntitySet="Appointments">
+            <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+            <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+            <ScalarProperty Name="Date" ColumnName="Date" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Candidates"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Candidates"><MappingFragment StoreEntitySet="Candidates">
+            <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
+            <ScalarProperty Name="Login" ColumnName="Login" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+            <ScalarProperty Name="Token" ColumnName="Token" />
+            <ScalarProperty Name="Policy" ColumnName="Policy" />
+            <ScalarProperty Name="Card" ColumnName="Card" />
+            <ScalarProperty Name="Mother" ColumnName="Mother" />
+            <ScalarProperty Name="StartDateOfObservation" ColumnName="StartDateOfObservation" />
+            <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+            <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DefaultSchedule"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.DefaultSchedule"><MappingFragment StoreEntitySet="DefaultSchedule">
+            <ScalarProperty Name="DefaultScheduleId" ColumnName="DefaultScheduleId" />
+            <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+            <ScalarProperty Name="DiagnosesId" ColumnName="DiagnosesId" />
+            <ScalarProperty Name="Years" ColumnName="Years" />
+            <ScalarProperty Name="Months" ColumnName="Months" />
+            <ScalarProperty Name="Weeks" ColumnName="Weeks" />
+            <ScalarProperty Name="Days" ColumnName="Days" />
+            <ScalarProperty Name="Hours" ColumnName="Hours" />
+            <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+            <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+            <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+            <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+            <ScalarProperty Name="DayOfMonth" ColumnName="DayOfMonth" />
+            <ScalarProperty Name="MonthOfYear" ColumnName="MonthOfYear" />
+            <ScalarProperty Name="WeekOfMonth" ColumnName="WeekOfMonth" />
+            <ScalarProperty Name="WeekParity" ColumnName="WeekParity" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Diagnosis"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Diagnosis"><MappingFragment StoreEntitySet="Diagnosis">
+            <ScalarProperty Name="DiagnosisId" ColumnName="DiagnosisId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Code" ColumnName="Code" />
+            <ScalarProperty Name="DiagnosisClassId" ColumnName="DiagnosisClassId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DiagnosisClass"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.DiagnosisClass"><MappingFragment StoreEntitySet="DiagnosisClass">
+            <ScalarProperty Name="DiagnosisClassId" ColumnName="DiagnosisClassId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Code" ColumnName="Code" />
+            <ScalarProperty Name="Parent" ColumnName="Parent" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Doctors"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Doctors"><MappingFragment StoreEntitySet="Doctors">
+            <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+            <ScalarProperty Name="SpecialtyId" ColumnName="SpecialtyId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="FunctionalClasses"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.FunctionalClasses"><MappingFragment StoreEntitySet="FunctionalClasses">
+            <ScalarProperty Name="FunctionalClassesId" ColumnName="FunctionalClassesId" />
+            <ScalarProperty Name="Code" ColumnName="Code" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="FunctionalDisorders"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.FunctionalDisorders"><MappingFragment StoreEntitySet="FunctionalDisorders">
+            <ScalarProperty Name="FunctionalDisordersId" ColumnName="FunctionalDisordersId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Parent" ColumnName="Parent" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Parameters"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Parameters"><MappingFragment StoreEntitySet="Parameters">
+            <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="DefaultValue" ColumnName="DefaultValue" />
+            <ScalarProperty Name="Value" ColumnName="Value" />
+            <ScalarProperty Name="Metadata" ColumnName="Metadata" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Patients"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Patients"><MappingFragment StoreEntitySet="Patients">
+            <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            <ScalarProperty Name="Policy" ColumnName="Policy" />
+            <ScalarProperty Name="Card" ColumnName="Card" />
+            <ScalarProperty Name="Mother" ColumnName="Mother" />
+            <ScalarProperty Name="StartDateOfObservation" ColumnName="StartDateOfObservation" />
+            <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+            <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+            <ScalarProperty Name="FunctionalClassesId" ColumnName="FunctionalClassesId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PatientsToSurgerys"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.PatientsToSurgerys"><MappingFragment StoreEntitySet="PatientsToSurgerys">
+            <ScalarProperty Name="SurgeryId" ColumnName="SurgeryId" />
+            <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            <ScalarProperty Name="SurgeryDate" ColumnName="SurgeryDate" />
+            <ScalarProperty Name="SurgeryStatus" ColumnName="SurgeryStatus" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PersonalSchedule"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.PersonalSchedule"><MappingFragment StoreEntitySet="PersonalSchedule">
+            <ScalarProperty Name="PersonalScheduleId" ColumnName="PersonalScheduleId" />
+            <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            <ScalarProperty Name="ParameterId" ColumnName="ParameterId" />
+            <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+            <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+            <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+            <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+            <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+            <ScalarProperty Name="DayOfMonth" ColumnName="DayOfMonth" />
+            <ScalarProperty Name="MonthOfYear" ColumnName="MonthOfYear" />
+            <ScalarProperty Name="WeekOfMonth" ColumnName="WeekOfMonth" />
+            <ScalarProperty Name="WeekParity" ColumnName="WeekParity" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Roles"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Roles"><MappingFragment StoreEntitySet="Roles">
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Specialties"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Specialties"><MappingFragment StoreEntitySet="Specialties">
+            <ScalarProperty Name="SpecialtyId" ColumnName="SpecialtyId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Surgerys"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Surgerys"><MappingFragment StoreEntitySet="Surgerys">
+            <ScalarProperty Name="SurgeryId" ColumnName="SurgeryId" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="SurgeryDescription" ColumnName="SurgeryDescription" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.Users"><MappingFragment StoreEntitySet="Users">
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
+            <ScalarProperty Name="Login" ColumnName="Login" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+            <ScalarProperty Name="Token" ColumnName="Token" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="WorkWeeks"><EntityTypeMapping TypeName="Health.MsSqlDatabaseModel.WorkWeeks"><MappingFragment StoreEntitySet="WorkWeeks">
+            <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+            <ScalarProperty Name="IsWeekEndDay" ColumnName="IsWeekEndDay" />
+            <ScalarProperty Name="DayInWeek" ColumnName="DayInWeek" />
+            <ScalarProperty Name="TimeStart" ColumnName="TimeStart" />
+            <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+            <ScalarProperty Name="DinnerStart" ColumnName="DinnerStart" />
+            <ScalarProperty Name="DinnerEnd" ColumnName="DinnerEnd" />
+            <ScalarProperty Name="AttendingHoursStart" ColumnName="AttendingHoursStart" />
+            <ScalarProperty Name="AttendingHoursEnd" ColumnName="AttendingHoursEnd" />
+            <ScalarProperty Name="AttendingMinutes" ColumnName="AttendingMinutes" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FunctionalDisordersToPatients" TypeName="Health.MsSqlDatabaseModel.FunctionalDisordersToPatients" StoreEntitySet="FunctionalDisordersToPatients">
+            <EndProperty Name="FunctionalDisorders">
+              <ScalarProperty Name="FunctionalDisordersId" ColumnName="FunctionalDisordersId" />
+            </EndProperty>
+            <EndProperty Name="Patients">
+              <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PatientsToDiagnosis" TypeName="Health.MsSqlDatabaseModel.PatientsToDiagnosis" StoreEntitySet="PatientsToDiagnosis">
+            <EndProperty Name="Diagnosis">
+              <ScalarProperty Name="DiagnosisId" ColumnName="DiagnosisId" />
+            </EndProperty>
+            <EndProperty Name="Patients">
+              <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PatientsToDoctors" TypeName="Health.MsSqlDatabaseModel.PatientsToDoctors" StoreEntitySet="PatientsToDoctors">
+            <EndProperty Name="Doctors">
+              <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+            </EndProperty>
+            <EndProperty Name="Patients">
+              <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model">
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Appointments" Width="1.5" PointX="7.5" PointY="12.25" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Candidates" Width="1.5" PointX="3" PointY="6.75" Height="4.0956022135416665" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.DefaultSchedule" Width="1.5" PointX="15.75" PointY="6.125" Height="4.2879036458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Diagnosis" Width="1.5" PointX="8.25" PointY="8.5" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.DiagnosisClass" Width="1.5" PointX="6" PointY="8.375" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Doctors" Width="1.5" PointX="5.25" PointY="12.125" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.FunctionalClasses" Width="1.5" PointX="8.25" PointY="15.5" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.FunctionalDisorders" Width="2.375" PointX="8.25" PointY="24" Height="2.172587890624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Parameters" Width="1.5" PointX="13.5" PointY="8.125" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Patients" Width="1.5" PointX="10.5" PointY="11.25" Height="4.0956022135416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.PatientsToSurgerys" Width="1.5" PointX="12.75" PointY="12.25" Height="2.1725878906250031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.PersonalSchedule" Width="1.5" PointX="15.75" PointY="11.5" Height="3.7109993489583317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Roles" Width="1.5" PointX="0.75" PointY="10" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Specialties" Width="1.5" PointX="3" PointY="16.5" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Surgerys" Width="1.5" PointX="10.5" PointY="8.375" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.Users" Width="1.5" PointX="3" PointY="11.625" Height="3.3263964843750031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Health.MsSqlDatabaseModel.WorkWeeks" Width="1.5" PointX="7.5" PointY="19.5" Height="3.1340950520833388" IsExpanded="true" />
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.AppointmentsMTODoctors" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="13.3362939453125" />
+          <ConnectorPoint PointX="7.5" PointY="13.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.AppointmentsMTOPatients" ManuallyRouted="false">
+          <ConnectorPoint PointX="10.5" PointY="13.3362939453125" />
+          <ConnectorPoint PointX="10.208330833333333" PointY="13.3362939453125" />
+          <ConnectorPoint PointX="10.041664166666665" PointY="13.3362939453125" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="13.3362939453125" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="13.3362939453125" />
+          <ConnectorPoint PointX="9" PointY="13.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.CandidatesMTORoles" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="10.422801106770834" />
+          <ConnectorPoint PointX="3" PointY="10.422801106770834" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.DefaultScheduleMTOParameters" ManuallyRouted="false">
+          <ConnectorPoint PointX="15" PointY="9.2689518229166659" />
+          <ConnectorPoint PointX="15.75" PointY="9.2689518229166659" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.DiagnosisMTODiagnosisClass" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="9.5862939453125" />
+          <ConnectorPoint PointX="8.25" PointY="9.5862939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.DiagnosisClassMTO" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.5319230769230767" PointY="10.739889322916667" />
+          <ConnectorPoint PointX="6.5319230769230767" PointY="10.989889322916667" />
+          <ConnectorPoint PointX="6.9784615384615378" PointY="10.989889322916667" />
+          <ConnectorPoint PointX="6.9784615384615378" PointY="10.739889322916667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.DoctorsMTOSpecialties" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="17.297841796875" />
+          <ConnectorPoint PointX="6" PointY="17.297841796875" />
+          <ConnectorPoint PointX="6" PointY="14.489889322916667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.DoctorsOTOUsers" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="13.307444661458334" />
+          <ConnectorPoint PointX="5.25" PointY="13.307444661458334" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.WorkWeeksMTODoctors" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.4062525" PointY="14.489889322916667" />
+          <ConnectorPoint PointX="6.4062525" PointY="21.067047526041669" />
+          <ConnectorPoint PointX="7.5" PointY="21.067047526041669" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PatientsMTOFunctionalClasses" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="16.393992513020834" />
+          <ConnectorPoint PointX="10.041664166666665" PointY="16.393992513020834" />
+          <ConnectorPoint PointX="10.208330833333333" PointY="16.393992513020834" />
+          <ConnectorPoint PointX="11.25" PointY="16.393992513020834" />
+          <ConnectorPoint PointX="11.25" PointY="15.345602213541667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.FunctionalDisordersMTO" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.08894180438702" PointY="26.172587890624996" />
+          <ConnectorPoint PointX="9.08894180438702" PointY="26.422587890624996" />
+          <ConnectorPoint PointX="9.8026562049278851" PointY="26.422587890624996" />
+          <ConnectorPoint PointX="9.8026562049278851" PointY="26.172587890624996" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PersonalScheduleMTOParameters" ManuallyRouted="false">
+          <ConnectorPoint PointX="14.65625" PointY="10.489889322916667" />
+          <ConnectorPoint PointX="14.65625" PointY="14.848043619791667" />
+          <ConnectorPoint PointX="15.75" PointY="14.848043619791667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PatientsOTOUsers" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="11.84375" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="11.84375" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="11.84375" />
+          <ConnectorPoint PointX="10.041664166666665" PointY="11.84375" />
+          <ConnectorPoint PointX="10.208330833333333" PointY="11.84375" />
+          <ConnectorPoint PointX="10.5" PointY="11.84375" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMPatients" ManuallyRouted="false">
+          <ConnectorPoint PointX="12" PointY="13.336293945312502" />
+          <ConnectorPoint PointX="12.75" PointY="13.336293945312502" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PersonalScheduleMTOPatients" ManuallyRouted="false">
+          <ConnectorPoint PointX="12" PointY="11.84375" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="11.84375" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="11.84375" />
+          <ConnectorPoint PointX="14.572916666666666" PointY="11.84375" />
+          <ConnectorPoint PointX="14.739583333333334" PointY="11.84375" />
+          <ConnectorPoint PointX="15.75" PointY="11.84375" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PatientsToSurgerysMTMSurgerys" ManuallyRouted="false">
+          <ConnectorPoint PointX="12" PointY="10.162985026041667" />
+          <ConnectorPoint PointX="12.375" PointY="10.537985026041667" />
+          <ConnectorPoint PointX="12.375" PointY="12.761894972656251" />
+          <ConnectorPoint PointX="12.75" PointY="12.761894972656251" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.UsersMTORoles" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="11.787985026041667" />
+          <ConnectorPoint PointX="1.5" PointY="13.369691255208334" />
+          <ConnectorPoint PointX="3" PointY="13.369691255208334" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.FunctionalDisordersToPatients" ManuallyRouted="false">
+          <ConnectorPoint PointX="10.1249975" PointY="24" />
+          <ConnectorPoint PointX="10.1249975" PointY="11.515622500000006" />
+          <ConnectorPoint PointX="10.5" PointY="11.515622500000006" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PatientsToDiagnosis" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.40625" PointY="10.672587890625" />
+          <ConnectorPoint PointX="9.40625" PointY="14.915345052083334" />
+          <ConnectorPoint PointX="10.041664166666665" PointY="14.915345052083334" />
+          <ConnectorPoint PointX="10.208330833333333" PointY="14.915345052083334" />
+          <ConnectorPoint PointX="10.5" PointY="14.915345052083334" />
+        </AssociationConnector>
+        <AssociationConnector Association="Health.MsSqlDatabaseModel.PatientsToDoctors" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="12.15625" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="12.15625" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="12.15625" />
+          <ConnectorPoint PointX="10.041664166666665" PointY="12.15625" />
+          <ConnectorPoint PointX="10.208330833333333" PointY="12.15625" />
+          <ConnectorPoint PointX="10.5" PointY="12.15625" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
