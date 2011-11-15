@@ -1,49 +1,84 @@
-﻿using System.Windows.Forms;
-using EFDAL;
+﻿using System;
+using System.Collections.Generic;
 using Prototype.Forms;
+using System.Windows.Forms;
+using Prototype.HealthDatabaseDataSetTableAdapters;
 
 namespace Prototype
 {
     internal class YApplication : ApplicationContext
     {
-        internal MainForm _mainForm;
-        internal readonly AuthorizationForm _authorizationForm;
-        internal Entities _entities;
+        private readonly AuthorizationForm _authorizationForm;
 
         internal YApplication()
         {
-            _entities = new Entities();
-            _authorizationForm = new AuthorizationForm(_entities)
-                                     {
-                                         OnAuthorize = OnAuthorize,
-                                         Closed = OnAuthorizationFormClosed,
-                                         StartPosition = FormStartPosition.CenterScreen
-                                     };
+            _authorizationForm = new AuthorizationForm
+                                        {
+                                            OnAuthorize = OnAuthorize,
+                                            OnClose = Close
+                                        };
             _authorizationForm.Show();
         }
 
-        internal void OnAuthorizationFormClosed(bool isAuthorize)
+        internal void Close()
         {
-            if (_mainForm != null) _mainForm.Close();
-            if (!isAuthorize)
+            if (!YIoc.Get<YAuthorization>().IsAuthorize)
             {
-                ExitThread();
                 Application.Exit();
             }
         }
 
-        internal void OnAuthorize(bool isAuthorize)
+        internal string OnAuthorize(string login, string password)
         {
-            if (isAuthorize)
+            try
+            {
+                YIoc.Get<YAuthorization>().Authorize(login, password);
+            }
+            catch (Exception)
+            {
+                return "sorry, database error.";
+            }
+            if (YIoc.Get<YAuthorization>().IsAuthorize)
             {
                 _authorizationForm.Close();
-                _mainForm = new MainForm(_entities)
-                                {
-                                    StartPosition = FormStartPosition.CenterScreen
-                                };
-                MainForm = _mainForm;
-                _mainForm.Show();
+                MainForm = new MainForm();
+                MainForm.Show();
+                return string.Empty;
             }
+            return "authorization failed.";
+        }
+    }
+
+    internal class YAuthorization
+    {
+        public bool IsAuthorize { get; private set; }
+
+        internal void Authorize(string login, string password)
+        {
+            int count = Convert.ToInt32(YIoc.Get<UsersTableAdapter>().AuthorizeByLoginAndPassword(login, password));
+            IsAuthorize = count == 1;
+        }
+    }
+
+    internal static class YIoc
+    {
+        private static readonly IDictionary<Type, object> _cache;
+
+        static YIoc()
+        {
+            _cache = new Dictionary<Type, object>();
+        }
+
+        internal static T Get<T>() where T : class, new()
+        {
+            Type tt = typeof (T);
+            if (_cache.ContainsKey(tt))
+            {
+                return _cache[tt] as T;
+            }
+            var obj = new T();
+            _cache.Add(tt, obj);
+            return obj;
         }
     }
 }

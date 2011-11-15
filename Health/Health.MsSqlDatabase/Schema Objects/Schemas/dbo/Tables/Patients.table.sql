@@ -7,5 +7,5 @@
 	StartDateOfObservation datetime NOT NULL,
 	Phone1 int,
 	Phone2 int,
-	FunctionalClassesId int NULL
+	FunctionalClassesId int NOT NULL
 )

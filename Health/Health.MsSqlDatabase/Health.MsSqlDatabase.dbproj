@@ -311,8 +311,13 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FunctionalClasses.pkey.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\SomeTableOrView.PatientsMTOFunctionalClasses.fkey.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PatientsMTOFunctionalClasses.fkey.sql">
       <SubType>Code</SubType>
     </Build>
+  </ItemGroup>
+  <ItemGroup>
+    <NotInBuild Include="Data Generation Plans\DataGenerationPlan.dgen">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>

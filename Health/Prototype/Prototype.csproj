@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BB94C50F-39A4-4803-89CF-7A32644B1BCB}</ProjectGuid>
+    <ProjectGuid>{B63ADB02-CAF9-40CA-BC07-C6656353692B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Prototype</RootNamespace>
@@ -36,7 +36,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,11 +46,83 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AppointmentsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AppointmentsEditForm.Designer.cs">
+      <DependentUpon>AppointmentsEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AuthorizationForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AuthorizationForm.Designer.cs">
       <DependentUpon>AuthorizationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CandidatesEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CandidatesEditForm.Designer.cs">
+      <DependentUpon>CandidatesEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DiagnosisClassEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DiagnosisClassEditForm.Designer.cs">
+      <DependentUpon>DiagnosisClassEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DiagnosisEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DiagnosisEditForm.Designer.cs">
+      <DependentUpon>DiagnosisEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DoctorsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DoctorsEditForm.Designer.cs">
+      <DependentUpon>DoctorsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FunctionalClassEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FunctionalClassEditForm.Designer.cs">
+      <DependentUpon>FunctionalClassEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FunctionalDisordersEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FunctionalDisordersEditForm.Designer.cs">
+      <DependentUpon>FunctionalDisordersEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FunctionalDisordersToPatientsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FunctionalDisordersToPatientsEditForm.Designer.cs">
+      <DependentUpon>FunctionalDisordersToPatientsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PatientsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PatientsEditForm.Designer.cs">
+      <DependentUpon>PatientsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PatientsToDiagnosisEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PatientsToDiagnosisEditForm.Designer.cs">
+      <DependentUpon>PatientsToDiagnosisEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PatientsToDoctorsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PatientsToDoctorsEditForm.Designer.cs">
+      <DependentUpon>PatientsToDoctorsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PatientsToSurgerysEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PatientsToSurgerysEditForm.Designer.cs">
+      <DependentUpon>PatientsToSurgerysEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RolesEditForm.cs">
       <SubType>Form</SubType>
@@ -59,8 +130,32 @@
     <Compile Include="Forms\RolesEditForm.Designer.cs">
       <DependentUpon>RolesEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\YForm.cs">
+    <Compile Include="Forms\SpecialitiesEditForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpecialitiesEditForm.Designer.cs">
+      <DependentUpon>SpecialitiesEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SurgerysEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SurgerysEditForm.Designer.cs">
+      <DependentUpon>SurgerysEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UsersEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UsersEditForm.Designer.cs">
+      <DependentUpon>UsersEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HealthDatabaseDataSet.cs">
+      <DependentUpon>HealthDatabaseDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HealthDatabaseDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HealthDatabaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -71,11 +166,56 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YApplication.cs" />
+    <EmbeddedResource Include="Forms\AppointmentsEditForm.resx">
+      <DependentUpon>AppointmentsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuthorizationForm.resx">
       <DependentUpon>AuthorizationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CandidatesEditForm.resx">
+      <DependentUpon>CandidatesEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DiagnosisClassEditForm.resx">
+      <DependentUpon>DiagnosisClassEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DiagnosisEditForm.resx">
+      <DependentUpon>DiagnosisEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DoctorsEditForm.resx">
+      <DependentUpon>DoctorsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FunctionalClassEditForm.resx">
+      <DependentUpon>FunctionalClassEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FunctionalDisordersEditForm.resx">
+      <DependentUpon>FunctionalDisordersEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FunctionalDisordersToPatientsEditForm.resx">
+      <DependentUpon>FunctionalDisordersToPatientsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PatientsEditForm.resx">
+      <DependentUpon>PatientsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PatientsToDiagnosisEditForm.resx">
+      <DependentUpon>PatientsToDiagnosisEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PatientsToDoctorsEditForm.resx">
+      <DependentUpon>PatientsToDoctorsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PatientsToSurgerysEditForm.resx">
+      <DependentUpon>PatientsToSurgerysEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RolesEditForm.resx">
       <DependentUpon>RolesEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SpecialitiesEditForm.resx">
+      <DependentUpon>SpecialitiesEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SurgerysEditForm.resx">
+      <DependentUpon>SurgerysEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UsersEditForm.resx">
+      <DependentUpon>UsersEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -89,25 +229,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="App.Config" />
-    <None Include="Properties\DataSources\EFDAL.Appointments.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Candidates.datasource" />
-    <None Include="Properties\DataSources\EFDAL.DefaultSchedule.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Diagnosis.datasource" />
-    <None Include="Properties\DataSources\EFDAL.DiagnosisClass.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Doctors.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Entities.datasource" />
-    <None Include="Properties\DataSources\EFDAL.FunctionalClasses.datasource" />
-    <None Include="Properties\DataSources\EFDAL.FunctionalDisorders.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Parameters.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Patients.datasource" />
-    <None Include="Properties\DataSources\EFDAL.PatientsToSurgerys.datasource" />
-    <None Include="Properties\DataSources\EFDAL.PersonalSchedule.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Roles.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Specialties.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Surgerys.datasource" />
-    <None Include="Properties\DataSources\EFDAL.Users.datasource" />
-    <None Include="Properties\DataSources\EFDAL.WorkWeeks.datasource" />
+    <None Include="app.config" />
+    <None Include="HealthDatabaseDataSet.xsc">
+      <DependentUpon>HealthDatabaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="HealthDatabaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HealthDatabaseDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="HealthDatabaseDataSet.xss">
+      <DependentUpon>HealthDatabaseDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,12 +250,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EFDAL\EFDAL.csproj">
-      <Project>{21173974-7391-4FBC-9F74-4DCBC63B01E9}</Project>
-      <Name>EFDAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

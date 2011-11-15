@@ -3,13 +3,13 @@ using System.Windows.Forms;
 
 namespace Prototype
 {
-    public static class Program
+    static class Program
     {
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
-        [MTAThread]
-        internal static void Main()
+        [STAThread]
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

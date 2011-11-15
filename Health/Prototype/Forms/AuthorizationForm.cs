@@ -1,44 +1,34 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using EFDAL;
+﻿using System.Windows.Forms;
 
 namespace Prototype.Forms
 {
-    public partial class AuthorizationForm : YForm
+    public partial class AuthorizationForm : Form
     {
-        private bool _isAuth;
-        internal MainForm MainForm { get; set; }
+        public delegate string YAuthorize(string login, string password);
 
-        internal delegate void Authorize(bool isAuthorize);
-        internal Authorize OnAuthorize;
+        public YAuthorize OnAuthorize;
 
-        internal delegate void ClosedDelegate(bool isAuthorize);
-        internal new ClosedDelegate Closed;
+        public delegate void YClose();
+
+        public YClose OnClose;
 
         public AuthorizationForm()
         {
-
+            InitializeComponent();
         }
 
-        public AuthorizationForm(Entities entities) : base(entities)
+        private void BtnLoginClick(object sender, System.EventArgs e)
         {
-            
-        }
-
-        private void LoginButtonClick(object sender, EventArgs e)
-        {
-            string login = loginTextBox.Text;
-            string password = passwordTextBox.Text;
-
-            int count = _entities.Users.Where(a => a.Login == login && a.Password == password).Count();
-            _isAuth = count == 1;
-            OnAuthorize(_isAuth);
+            string login = txbLogin.Text;
+            string password = txbPassword.Text;
+            string status = OnAuthorize(login, password);
+            const string format = "Status: {0}";
+            tsslLoginStatus.Text = string.Format(format, status);
         }
 
         private void AuthorizationFormFormClosed(object sender, FormClosedEventArgs e)
         {
-            Closed(_isAuth);
+            OnClose();
         }
     }
 }

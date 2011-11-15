@@ -69,7 +69,7 @@ namespace Support.ExcelParser
                             SqlCommand insertCommand = sqlConnection.CreateCommand();
                             if (inserted.Where(i => i.Name == row[0].ToString() && i.Code == row[1].ToString()).Count() == 0)
                             {
-                                insertCommand.CommandText = String.Format(insert_format, row[1], row[0], 0);
+                                insertCommand.CommandText = String.Format(insert_format, row[1], row[0], "NULL");
                                 insertCommand.ExecuteNonQuery();
                                 Console.WriteLine("Insert diagnosis class: {0}", row[1]);
                                 inserted.Add(new DiagnosisClass { Name = row[0].ToString(), Code = row[1].ToString() });

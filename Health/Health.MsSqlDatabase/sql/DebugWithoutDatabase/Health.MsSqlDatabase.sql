@@ -302,7 +302,7 @@ CREATE TABLE [dbo].[DiagnosisClass] (
     [DiagnosisClassId] INT            IDENTITY (1, 1) NOT NULL,
     [Name]             NVARCHAR (MAX) NOT NULL,
     [Code]             NVARCHAR (MAX) NOT NULL,
-    [Parent]           INT            NOT NULL
+    [Parent]           INT            NULL
 );
 
 
@@ -364,7 +364,7 @@ GO
 CREATE TABLE [dbo].[FunctionalDisorders] (
     [FunctionalDisordersId] INT            IDENTITY (1, 1) NOT NULL,
     [Name]                  NVARCHAR (MAX) NOT NULL,
-    [Parent]                INT            NOT NULL
+    [Parent]                INT            NULL
 );
 
 
@@ -424,7 +424,7 @@ CREATE TABLE [dbo].[Patients] (
     [StartDateOfObservation] DATETIME       NOT NULL,
     [Phone1]                 INT            NULL,
     [Phone2]                 INT            NULL,
-    [FunctionalClassesId]    INT            NULL
+    [FunctionalClassesId]    INT            NOT NULL
 );
 
 

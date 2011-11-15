@@ -26,20 +26,22 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        protected override void InitializeComponent()
+        private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.loginTextBox = new System.Windows.Forms.TextBox();
-            this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.loginButton = new System.Windows.Forms.Button();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.txbLogin = new System.Windows.Forms.TextBox();
+            this.txbPassword = new System.Windows.Forms.TextBox();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsslLoginStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 24);
+            this.label1.Location = new System.Drawing.Point(13, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(33, 13);
             this.label1.TabIndex = 0;
@@ -48,58 +50,71 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 54);
+            this.label2.Location = new System.Drawing.Point(13, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Password";
             // 
-            // loginTextBox
+            // txbLogin
             // 
-            this.loginTextBox.Location = new System.Drawing.Point(78, 24);
-            this.loginTextBox.Name = "loginTextBox";
-            this.loginTextBox.Size = new System.Drawing.Size(100, 20);
-            this.loginTextBox.TabIndex = 2;
+            this.txbLogin.Location = new System.Drawing.Point(66, 31);
+            this.txbLogin.Name = "txbLogin";
+            this.txbLogin.Size = new System.Drawing.Size(170, 20);
+            this.txbLogin.TabIndex = 2;
             // 
-            // passwordTextBox
+            // txbPassword
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(78, 51);
-            this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
-            this.passwordTextBox.TabIndex = 3;
+            this.txbPassword.Location = new System.Drawing.Point(66, 61);
+            this.txbPassword.Name = "txbPassword";
+            this.txbPassword.Size = new System.Drawing.Size(170, 20);
+            this.txbPassword.TabIndex = 3;
             // 
-            // loginButton
+            // btnLogin
             // 
-            this.loginButton.Location = new System.Drawing.Point(13, 88);
-            this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(75, 23);
-            this.loginButton.TabIndex = 4;
-            this.loginButton.Text = "Login";
-            this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.LoginButtonClick);
+            this.btnLogin.Location = new System.Drawing.Point(16, 87);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(220, 23);
+            this.btnLogin.TabIndex = 4;
+            this.btnLogin.Text = "Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.BtnLoginClick);
             // 
-            // statusStrip
+            // statusStrip1
             // 
-            this.statusStrip.Location = new System.Drawing.Point(0, 128);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(234, 22);
-            this.statusStrip.TabIndex = 5;
-            this.statusStrip.Text = "statusStrip1";
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslLoginStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 126);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(252, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsslLoginStatus
+            // 
+            this.tsslLoginStatus.Name = "tsslLoginStatus";
+            this.tsslLoginStatus.Size = new System.Drawing.Size(42, 17);
+            this.tsslLoginStatus.Text = "Status:";
             // 
             // AuthorizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(234, 150);
-            this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.loginButton);
-            this.Controls.Add(this.passwordTextBox);
-            this.Controls.Add(this.loginTextBox);
+            this.ClientSize = new System.Drawing.Size(252, 148);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.btnLogin);
+            this.Controls.Add(this.txbPassword);
+            this.Controls.Add(this.txbLogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "AuthorizationForm";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AuthorizationForm";
+            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AuthorizationFormFormClosed);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,9 +124,10 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox loginTextBox;
-        private System.Windows.Forms.TextBox passwordTextBox;
-        private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.TextBox txbLogin;
+        private System.Windows.Forms.TextBox txbPassword;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsslLoginStatus;
     }
 }

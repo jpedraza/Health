@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Problems>
+  <Problem>
+    <Rule>Microsoft.Rules.Data.SR0014</Rule>
+    <ProblemDescription>Типы данных DateTime и Integer неявно несовместимы. Необходимо использовать функцию CONVERT или CAST.</ProblemDescription>
+    <SourceFile>D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\SCHEMA OBJECTS\SCHEMAS\DBO\PROGRAMMABILITY\STORED PROCEDURES\GETPARAMETERSFORPATIENTNOWDATE.PROC.SQL</SourceFile>
+    <Line>8</Line>
+    <Column>6</Column>
+    <Severity>Предупреждение</Severity>
+  </Problem>
+  <Problem>
+    <Rule>Microsoft.Rules.Data.SR0014</Rule>
+    <ProblemDescription>Во время приведения из Int на Bit могут быть утеряны данные.</ProblemDescription>
+    <SourceFile>D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\SCHEMA OBJECTS\SCHEMAS\DBO\PROGRAMMABILITY\STORED PROCEDURES\GETPARAMETERSFORPATIENTNOWDATE.PROC.SQL</SourceFile>
+    <Line>15</Line>
+    <Column>30</Column>
+    <Severity>Предупреждение</Severity>
+  </Problem>
+  <Problem>
+    <Rule>Microsoft.Rules.Data.SR0009</Rule>
+    <ProblemDescription>Не следует использовать VARBINARY только из один элемент.</ProblemDescription>
+    <SourceFile>D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\SCHEMA OBJECTS\SCHEMAS\DBO\TABLES\PARAMETERS.TABLE.SQL</SourceFile>
+    <Line>5</Line>
+    <Column>15</Column>
+    <Severity>Предупреждение</Severity>
+  </Problem>
+  <Problem>
+    <Rule>Microsoft.Rules.Data.SR0009</Rule>
+    <ProblemDescription>Не следует использовать VARBINARY только из один элемент.</ProblemDescription>
+    <SourceFile>D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\SCHEMA OBJECTS\SCHEMAS\DBO\TABLES\PARAMETERS.TABLE.SQL</SourceFile>
+    <Line>6</Line>
+    <Column>8</Column>
+    <Severity>Предупреждение</Severity>
+  </Problem>
+  <Problem>
+    <Rule>Microsoft.Rules.Data.SR0009</Rule>
+    <ProblemDescription>Не следует использовать VARBINARY только из один элемент.</ProblemDescription>
+    <SourceFile>D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\SCHEMA OBJECTS\SCHEMAS\DBO\TABLES\PARAMETERS.TABLE.SQL</SourceFile>
+    <Line>7</Line>
+    <Column>11</Column>
+    <Severity>Предупреждение</Severity>
+  </Problem>
+</Problems>
