@@ -49,15 +49,19 @@
             this.tsmiDiagnosisClass = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFunctionalClasses = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFunctionalDisorders = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSurgerys = new System.Windows.Forms.ToolStripMenuItem();
             this.пациентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFunctionalDisordersToPatients = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPatientsToDiagnosis = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPatientsToDoctors = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPatientsToSurgerys = new System.Windows.Forms.ToolStripMenuItem();
+            this.сериализацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSerializationMetadata = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDeserializationMetadata = new System.Windows.Forms.ToolStripMenuItem();
+            this.answerTypeControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.tsmiSurgerys = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +71,8 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.windowsMenu,
             this.администрированиеToolStripMenuItem,
-            this.пациентыToolStripMenuItem});
+            this.пациентыToolStripMenuItem,
+            this.сериализацияToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -226,6 +231,13 @@
             this.tsmiFunctionalDisorders.Text = "Фннкциональные нарушения";
             this.tsmiFunctionalDisorders.Click += new System.EventHandler(this.TsmiFunctionalDisordersClick);
             // 
+            // tsmiSurgerys
+            // 
+            this.tsmiSurgerys.Name = "tsmiSurgerys";
+            this.tsmiSurgerys.Size = new System.Drawing.Size(238, 22);
+            this.tsmiSurgerys.Text = "Виды операций";
+            this.tsmiSurgerys.Click += new System.EventHandler(this.TsmiSurgerysClick);
+            // 
             // пациентыToolStripMenuItem
             // 
             this.пациентыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -265,6 +277,37 @@
             this.tsmiPatientsToSurgerys.Text = "Привязка операций";
             this.tsmiPatientsToSurgerys.Click += new System.EventHandler(this.TsmiPatientsToSurgerysClick);
             // 
+            // сериализацияToolStripMenuItem
+            // 
+            this.сериализацияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSerializationMetadata,
+            this.tsmiDeserializationMetadata,
+            this.answerTypeControlToolStripMenuItem});
+            this.сериализацияToolStripMenuItem.Name = "сериализацияToolStripMenuItem";
+            this.сериализацияToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
+            this.сериализацияToolStripMenuItem.Text = "Сериализация";
+            // 
+            // tsmiSerializationMetadata
+            // 
+            this.tsmiSerializationMetadata.Name = "tsmiSerializationMetadata";
+            this.tsmiSerializationMetadata.Size = new System.Drawing.Size(234, 22);
+            this.tsmiSerializationMetadata.Text = "Сериализация метаданных";
+            this.tsmiSerializationMetadata.Click += new System.EventHandler(this.TsmiSerializationMetadataClick);
+            // 
+            // tsmiDeserializationMetadata
+            // 
+            this.tsmiDeserializationMetadata.Name = "tsmiDeserializationMetadata";
+            this.tsmiDeserializationMetadata.Size = new System.Drawing.Size(234, 22);
+            this.tsmiDeserializationMetadata.Text = "Десериализация метаданных";
+            this.tsmiDeserializationMetadata.Click += new System.EventHandler(this.TsmiDeserializationMetadataClick);
+            // 
+            // answerTypeControlToolStripMenuItem
+            // 
+            this.answerTypeControlToolStripMenuItem.Name = "answerTypeControlToolStripMenuItem";
+            this.answerTypeControlToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.answerTypeControlToolStripMenuItem.Text = "AnswerTypeControl";
+            this.answerTypeControlToolStripMenuItem.Click += new System.EventHandler(this.AnswerTypeControlToolStripMenuItemClick);
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -280,13 +323,6 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
-            // 
-            // tsmiSurgerys
-            // 
-            this.tsmiSurgerys.Name = "tsmiSurgerys";
-            this.tsmiSurgerys.Size = new System.Drawing.Size(238, 22);
-            this.tsmiSurgerys.Text = "Виды операций";
-            this.tsmiSurgerys.Click += new System.EventHandler(this.TsmiSurgerysClick);
             // 
             // MainForm
             // 
@@ -340,6 +376,10 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiPatientsToDoctors;
         private System.Windows.Forms.ToolStripMenuItem tsmiPatientsToSurgerys;
         private System.Windows.Forms.ToolStripMenuItem tsmiSurgerys;
+        private System.Windows.Forms.ToolStripMenuItem сериализацияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSerializationMetadata;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDeserializationMetadata;
+        private System.Windows.Forms.ToolStripMenuItem answerTypeControlToolStripMenuItem;
     }
 }
 
