@@ -7319,8 +7319,6 @@ namespace Prototype {
             
             private global::System.Data.DataColumn columnDoctorId;
             
-            private global::System.Data.DataColumn columnIsWeekEndDay;
-            
             private global::System.Data.DataColumn columnDayInWeek;
             
             private global::System.Data.DataColumn columnTimeStart;
@@ -7375,14 +7373,6 @@ namespace Prototype {
             public global::System.Data.DataColumn DoctorIdColumn {
                 get {
                     return this.columnDoctorId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn IsWeekEndDayColumn {
-                get {
-                    return this.columnIsWeekEndDay;
                 }
             }
             
@@ -7487,11 +7477,10 @@ namespace Prototype {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public WorkWeeksRow AddWorkWeeksRow(DoctorsRow parentDoctorsRowByWorkWeeksMTODoctors, bool IsWeekEndDay, int DayInWeek, System.TimeSpan TimeStart, System.TimeSpan TimeEnd, System.TimeSpan DinnerStart, System.TimeSpan DinnerEnd, System.TimeSpan AttendingHoursStart, System.TimeSpan AttendingHoursEnd, int AttendingMinutes) {
+            public WorkWeeksRow AddWorkWeeksRow(DoctorsRow parentDoctorsRowByWorkWeeksMTODoctors, int DayInWeek, System.TimeSpan TimeStart, System.TimeSpan TimeEnd, System.TimeSpan DinnerStart, System.TimeSpan DinnerEnd, System.TimeSpan AttendingHoursStart, System.TimeSpan AttendingHoursEnd, int AttendingMinutes) {
                 WorkWeeksRow rowWorkWeeksRow = ((WorkWeeksRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        IsWeekEndDay,
                         DayInWeek,
                         TimeStart,
                         TimeEnd,
@@ -7526,7 +7515,6 @@ namespace Prototype {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnDoctorId = base.Columns["DoctorId"];
-                this.columnIsWeekEndDay = base.Columns["IsWeekEndDay"];
                 this.columnDayInWeek = base.Columns["DayInWeek"];
                 this.columnTimeStart = base.Columns["TimeStart"];
                 this.columnTimeEnd = base.Columns["TimeEnd"];
@@ -7542,8 +7530,6 @@ namespace Prototype {
             private void InitClass() {
                 this.columnDoctorId = new global::System.Data.DataColumn("DoctorId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDoctorId);
-                this.columnIsWeekEndDay = new global::System.Data.DataColumn("IsWeekEndDay", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIsWeekEndDay);
                 this.columnDayInWeek = new global::System.Data.DataColumn("DayInWeek", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDayInWeek);
                 this.columnTimeStart = new global::System.Data.DataColumn("TimeStart", typeof(global::System.TimeSpan), null, global::System.Data.MappingType.Element);
@@ -7561,7 +7547,6 @@ namespace Prototype {
                 this.columnAttendingMinutes = new global::System.Data.DataColumn("AttendingMinutes", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAttendingMinutes);
                 this.columnDoctorId.AllowDBNull = false;
-                this.columnIsWeekEndDay.AllowDBNull = false;
                 this.columnDayInWeek.AllowDBNull = false;
                 this.columnTimeStart.AllowDBNull = false;
                 this.columnTimeEnd.AllowDBNull = false;
@@ -10352,17 +10337,6 @@ namespace Prototype {
                 }
                 set {
                     this[this.tableWorkWeeks.DoctorIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWeekEndDay {
-                get {
-                    return ((bool)(this[this.tableWorkWeeks.IsWeekEndDayColumn]));
-                }
-                set {
-                    this[this.tableWorkWeeks.IsWeekEndDayColumn] = value;
                 }
             }
             
@@ -18582,7 +18556,6 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "WorkWeeks";
             tableMapping.ColumnMappings.Add("DoctorId", "DoctorId");
-            tableMapping.ColumnMappings.Add("IsWeekEndDay", "IsWeekEndDay");
             tableMapping.ColumnMappings.Add("DayInWeek", "DayInWeek");
             tableMapping.ColumnMappings.Add("TimeStart", "TimeStart");
             tableMapping.ColumnMappings.Add("TimeEnd", "TimeEnd");
@@ -18594,10 +18567,9 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[WorkWeeks] ([DoctorId], [IsWeekEndDay], [DayInWeek], [TimeStart], [TimeEnd], [DinnerStart], [DinnerEnd], [AttendingHoursStart], [AttendingHoursEnd], [AttendingMinutes]) VALUES (@DoctorId, @IsWeekEndDay, @DayInWeek, @TimeStart, @TimeEnd, @DinnerStart, @DinnerEnd, @AttendingHoursStart, @AttendingHoursEnd, @AttendingMinutes)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [WorkWeeks] ([DoctorId], [DayInWeek], [TimeStart], [TimeEnd], [DinnerStart], [DinnerEnd], [AttendingHoursStart], [AttendingHoursEnd], [AttendingMinutes]) VALUES (@DoctorId, @DayInWeek, @TimeStart, @TimeEnd, @DinnerStart, @DinnerEnd, @AttendingHoursStart, @AttendingHoursEnd, @AttendingMinutes)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DoctorId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DoctorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsWeekEndDay", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IsWeekEndDay", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DayInWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DayInWeek", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TimeStart", global::System.Data.SqlDbType.Time, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStart", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TimeEnd", global::System.Data.SqlDbType.Time, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TimeEnd", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -18621,9 +18593,8 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT DoctorId, IsWeekEndDay, DayInWeek, TimeStart, TimeEnd, DinnerStart, Dinner" +
-                "End, AttendingHoursStart, AttendingHoursEnd, AttendingMinutes FROM dbo.WorkWeeks" +
-                "";
+            this._commandCollection[0].CommandText = "SELECT DoctorId, DayInWeek, TimeStart, TimeEnd, DinnerStart, DinnerEnd, Attending" +
+                "HoursStart, AttendingHoursEnd, AttendingMinutes FROM WorkWeeks";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -18684,17 +18655,16 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int DoctorId, bool IsWeekEndDay, int DayInWeek, System.TimeSpan TimeStart, System.TimeSpan TimeEnd, System.TimeSpan DinnerStart, System.TimeSpan DinnerEnd, System.TimeSpan AttendingHoursStart, System.TimeSpan AttendingHoursEnd, int AttendingMinutes) {
+        public virtual int Insert(int DoctorId, int DayInWeek, System.TimeSpan TimeStart, System.TimeSpan TimeEnd, System.TimeSpan DinnerStart, System.TimeSpan DinnerEnd, System.TimeSpan AttendingHoursStart, System.TimeSpan AttendingHoursEnd, int AttendingMinutes) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(DoctorId));
-            this.Adapter.InsertCommand.Parameters[1].Value = ((bool)(IsWeekEndDay));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(DayInWeek));
-            this.Adapter.InsertCommand.Parameters[3].Value = ((System.TimeSpan)(TimeStart));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((System.TimeSpan)(TimeEnd));
-            this.Adapter.InsertCommand.Parameters[5].Value = ((System.TimeSpan)(DinnerStart));
-            this.Adapter.InsertCommand.Parameters[6].Value = ((System.TimeSpan)(DinnerEnd));
-            this.Adapter.InsertCommand.Parameters[7].Value = ((System.TimeSpan)(AttendingHoursStart));
-            this.Adapter.InsertCommand.Parameters[8].Value = ((System.TimeSpan)(AttendingHoursEnd));
-            this.Adapter.InsertCommand.Parameters[9].Value = ((int)(AttendingMinutes));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(DayInWeek));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((System.TimeSpan)(TimeStart));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((System.TimeSpan)(TimeEnd));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((System.TimeSpan)(DinnerStart));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((System.TimeSpan)(DinnerEnd));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((System.TimeSpan)(AttendingHoursStart));
+            this.Adapter.InsertCommand.Parameters[7].Value = ((System.TimeSpan)(AttendingHoursEnd));
+            this.Adapter.InsertCommand.Parameters[8].Value = ((int)(AttendingMinutes));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19251,6 +19221,15 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._specialtiesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Specialties.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._specialtiesTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._diagnosisClassTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.DiagnosisClass.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -19258,15 +19237,6 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                             && (0 < updatedRows.Length))) {
                     this.SortSelfReferenceRows(updatedRows, dataSet.Relations["DiagnosisClassMTO"], false);
                     result = (result + this._diagnosisClassTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._specialtiesTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Specialties.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._specialtiesTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -19279,12 +19249,13 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._usersTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._functionalDisordersTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.FunctionalDisorders.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._usersTableAdapter.Update(updatedRows));
+                    this.SortSelfReferenceRows(updatedRows, dataSet.Relations["FunctionalDisordersMTO"], false);
+                    result = (result + this._functionalDisordersTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -19303,16 +19274,6 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._patientsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._functionalDisordersTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.FunctionalDisorders.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    this.SortSelfReferenceRows(updatedRows, dataSet.Relations["FunctionalDisordersMTO"], false);
-                    result = (result + this._functionalDisordersTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -19358,6 +19319,15 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._workWeeksTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._usersTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._usersTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -19442,20 +19412,20 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allAddedRows.AddRange(addedRows);
                 }
             }
+            if ((this._specialtiesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Specialties.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._specialtiesTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._diagnosisClassTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.DiagnosisClass.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     this.SortSelfReferenceRows(addedRows, dataSet.Relations["DiagnosisClassMTO"], false);
                     result = (result + this._diagnosisClassTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._specialtiesTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Specialties.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._specialtiesTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -19467,11 +19437,12 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._usersTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._functionalDisordersTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.FunctionalDisorders.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._usersTableAdapter.Update(addedRows));
+                    this.SortSelfReferenceRows(addedRows, dataSet.Relations["FunctionalDisordersMTO"], false);
+                    result = (result + this._functionalDisordersTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -19488,15 +19459,6 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._patientsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._functionalDisordersTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.FunctionalDisorders.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    this.SortSelfReferenceRows(addedRows, dataSet.Relations["FunctionalDisordersMTO"], false);
-                    result = (result + this._functionalDisordersTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -19537,6 +19499,14 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._workWeeksTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._usersTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._usersTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -19662,6 +19632,14 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._usersTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._usersTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._workWeeksTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.WorkWeeks.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -19702,15 +19680,6 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._functionalDisordersTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.FunctionalDisorders.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    this.SortSelfReferenceRows(deletedRows, dataSet.Relations["FunctionalDisordersMTO"], true);
-                    result = (result + this._functionalDisordersTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._patientsTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Patients.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -19727,11 +19696,12 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._usersTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._functionalDisordersTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.FunctionalDisorders.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._usersTableAdapter.Update(deletedRows));
+                    this.SortSelfReferenceRows(deletedRows, dataSet.Relations["FunctionalDisordersMTO"], true);
+                    result = (result + this._functionalDisordersTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -19743,20 +19713,20 @@ SELECT UserId, FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._specialtiesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Specialties.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._specialtiesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._diagnosisClassTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.DiagnosisClass.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     this.SortSelfReferenceRows(deletedRows, dataSet.Relations["DiagnosisClassMTO"], true);
                     result = (result + this._diagnosisClassTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._specialtiesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Specialties.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._specialtiesTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

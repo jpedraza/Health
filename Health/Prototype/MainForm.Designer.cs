@@ -49,6 +49,7 @@
             this.tsmiDiagnosisClass = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFunctionalClasses = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFunctionalDisorders = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSurgerys = new System.Windows.Forms.ToolStripMenuItem();
             this.пациентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFunctionalDisordersToPatients = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPatientsToDiagnosis = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.tsmiSurgerys = new System.Windows.Forms.ToolStripMenuItem();
+            this.рабочийДеньДоктораToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -131,7 +132,8 @@
             this.tsmiDiagnosisClass,
             this.tsmiFunctionalClasses,
             this.tsmiFunctionalDisorders,
-            this.tsmiSurgerys});
+            this.tsmiSurgerys,
+            this.рабочийДеньДоктораToolStripMenuItem});
             this.администрированиеToolStripMenuItem.Name = "администрированиеToolStripMenuItem";
             this.администрированиеToolStripMenuItem.Size = new System.Drawing.Size(134, 20);
             this.администрированиеToolStripMenuItem.Text = "Администрирование";
@@ -226,6 +228,13 @@
             this.tsmiFunctionalDisorders.Text = "Фннкциональные нарушения";
             this.tsmiFunctionalDisorders.Click += new System.EventHandler(this.TsmiFunctionalDisordersClick);
             // 
+            // tsmiSurgerys
+            // 
+            this.tsmiSurgerys.Name = "tsmiSurgerys";
+            this.tsmiSurgerys.Size = new System.Drawing.Size(238, 22);
+            this.tsmiSurgerys.Text = "Виды операций";
+            this.tsmiSurgerys.Click += new System.EventHandler(this.TsmiSurgerysClick);
+            // 
             // пациентыToolStripMenuItem
             // 
             this.пациентыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -281,12 +290,12 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
             // 
-            // tsmiSurgerys
+            // рабочийДеньДоктораToolStripMenuItem
             // 
-            this.tsmiSurgerys.Name = "tsmiSurgerys";
-            this.tsmiSurgerys.Size = new System.Drawing.Size(238, 22);
-            this.tsmiSurgerys.Text = "Виды операций";
-            this.tsmiSurgerys.Click += new System.EventHandler(this.TsmiSurgerysClick);
+            this.рабочийДеньДоктораToolStripMenuItem.Name = "рабочийДеньДоктораToolStripMenuItem";
+            this.рабочийДеньДоктораToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.рабочийДеньДоктораToolStripMenuItem.Text = "Рабочий день доктора";
+            this.рабочийДеньДоктораToolStripMenuItem.Click += new System.EventHandler(this.рабочийДеньДоктораToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -340,6 +349,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiPatientsToDoctors;
         private System.Windows.Forms.ToolStripMenuItem tsmiPatientsToSurgerys;
         private System.Windows.Forms.ToolStripMenuItem tsmiSurgerys;
+        private System.Windows.Forms.ToolStripMenuItem рабочийДеньДоктораToolStripMenuItem;
     }
 }
 

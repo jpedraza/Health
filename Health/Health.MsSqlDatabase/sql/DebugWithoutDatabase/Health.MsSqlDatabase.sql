@@ -14,9 +14,10 @@ GO
 :setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
 
 GO
-:on error exit
-GO
 USE [master]
+
+GO
+:on error exit
 GO
 IF (DB_ID(N'$(DatabaseName)') IS NOT NULL
     AND DATABASEPROPERTYEX(N'$(DatabaseName)','Status') <> N'ONLINE')
@@ -147,6 +148,7 @@ ELSE
 
 GO
 USE [$(DatabaseName)]
+
 GO
 IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
     EXECUTE sp_fulltext_database 'enable';
@@ -170,7 +172,7 @@ PRINT N'Выполняется удаление Разрешения...';
 
 
 GO
-REVOKE CONNECT TO [dbo] CASCADE
+REVOKE CONNECT TO [dbo]
     AS [dbo];
 
 
@@ -597,7 +599,6 @@ PRINT N'Выполняется создание [dbo].[WorkWeeks]...';
 GO
 CREATE TABLE [dbo].[WorkWeeks] (
     [DoctorId]            INT      NOT NULL,
-    [IsWeekEndDay]        BIT      NOT NULL,
     [DayInWeek]           INT      NOT NULL,
     [TimeStart]           TIME (7) NOT NULL,
     [TimeEnd]             TIME (7) NOT NULL,
@@ -816,6 +817,36 @@ ALTER TABLE [dbo].[WorkWeeks] WITH NOCHECK
     ADD CONSTRAINT [WorkWeeksMTODoctors] FOREIGN KEY ([DoctorId]) REFERENCES [dbo].[Doctors] ([DoctorId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
+GO
+PRINT N'Выполняется создание [dbo].[InsertWorkDayOfDoctors]...';
+
+
+GO
+CREATE TRIGGER [dbo].[InsertWorkDayOfDoctors]
+ON [dbo].[WorkWeeks]
+AFTER INSERT 
+AS 
+BEGIN	
+	DECLARE @DAYINWEEK INT
+	DECLARE @DOCTORID INT
+	DECLARE @EXISTS_IN_TABLE INT
+	SET @DAYINWEEK = (SELECT inserted.DayInWeek FROM inserted)
+	SET @DOCTORID = (SELECT inserted.DoctorId FROM inserted)
+	SET @EXISTS_IN_TABLE = (SELECT WorkWeeks.DoctorId FROM WorkWeeks
+	WHERE WorkWeeks.DayInWeek = @DAYINWEEK AND
+	WorkWeeks.DoctorId = @DOCTORID
+	)
+	PRINT @EXISTS_IN_TABLE
+	IF EXISTS (SELECT*FROM [WorkWeeks] 
+	WHERE @DAYINWEEK = WorkWeeks.DayInWeek
+	AND
+	@DOCTORID = WorkWeeks.DoctorId
+	)
+	BEGIN
+	ROLLBACK TRAN
+	PRINT 'Для данного дня и доктора уже существует расписание'
+	END
+END
 GO
 PRINT N'Выполняется создание [dbo].[GetParametersForPatientNowDate]...';
 

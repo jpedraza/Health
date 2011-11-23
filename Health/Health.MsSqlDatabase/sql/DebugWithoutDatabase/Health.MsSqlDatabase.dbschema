@@ -17,7 +17,7 @@
 			<Metadata Name="CompatibilityMode" Value="90" />
 		</CustomData>
 		<CustomData Category="Permissions" Type="XmlPermissions">
-			<Metadata Name="FileName" Value="D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
+			<Metadata Name="FileName" Value="C:\SOME_HEALTH\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
 		</CustomData>
 	</Header>
 	<Model>
@@ -1367,6 +1367,7 @@
 			</Relationship>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetParametersForPatientNowDate]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 BEGIN
@@ -1399,7 +1400,6 @@ BEGIN
 	select @is_even_week, @week_day
 END]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[datetime]" />
@@ -1471,6 +1471,69 @@ END]]></Value>
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetParametersForPatientNowDate]&#xD;&#xA;&#x9;@patient_id int,&#xD;&#xA;&#x9;@date datetime = 0&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql90DmlTrigger" Name="[dbo].[InsertWorkDayOfDoctors4]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="SqlTriggerType" Value="2" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[ 
+BEGIN	
+	DECLARE @DAYINWEEK INT
+	DECLARE @DOCTORID INT
+	DECLARE @ROWS_IN_TABLE INT
+	
+	SET @DAYINWEEK = (SELECT inserted.DayInWeek FROM inserted)
+	SET @DOCTORID = (SELECT inserted.DoctorId FROM inserted)
+	
+	SET @ROWS_IN_TABLE = (SELECT COUNT(*) FROM WorkWeeks
+	WHERE WorkWeeks.DayInWeek = @DAYINWEEK AND
+	WorkWeeks.DoctorId = @DOCTORID)
+	
+	IF @ROWS_IN_TABLE > 1 
+	BEGIN
+	ROLLBACK TRAN
+	PRINT 'ОШИБКА. У доктора не может быть несколько расписаний на один рабочий день'
+	END
+END]]></Value>
+			</Property>
+			<Property Name="IsInsertTrigger" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[WorkWeeks].[DayInWeek]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[WorkWeeks].[DoctorId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[WorkWeeks]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[WorkWeeks].[DayInWeek]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[WorkWeeks].[DoctorId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parent">
+				<Entry>
+					<References Name="[dbo].[WorkWeeks]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="581" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE TRIGGER [dbo].[InsertWorkDayOfDoctors4]&#xD;&#xA;ON [dbo].[WorkWeeks]&#xD;&#xA;AFTER INSERT &#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[Parameters]">
@@ -2741,22 +2804,6 @@ END]]></Value>
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="ISql100SimpleColumn" Name="[dbo].[WorkWeeks].[IsWeekEndDay]">
-						<Property Name="IsNullable" Value="False" />
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="ISql90TypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[bit]" />
 										</Entry>
 									</Relationship>
 								</Element>

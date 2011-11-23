@@ -148,6 +148,12 @@
     <Compile Include="Forms\UsersEditForm.Designer.cs">
       <DependentUpon>UsersEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\WorkWeeksEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WorkWeeksEditForm.Designer.cs">
+      <DependentUpon>WorkWeeksEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HealthDatabaseDataSet.cs">
       <DependentUpon>HealthDatabaseDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UsersEditForm.resx">
       <DependentUpon>UsersEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WorkWeeksEditForm.resx">
+      <DependentUpon>WorkWeeksEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

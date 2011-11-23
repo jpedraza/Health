@@ -314,6 +314,9 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\PatientsMTOFunctionalClasses.fkey.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Triggers\InsertWorkDayOfDoctors.ddltrigger.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <NotInBuild Include="Data Generation Plans\DataGenerationPlan.dgen">

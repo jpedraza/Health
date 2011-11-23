@@ -139,5 +139,10 @@ namespace Prototype
         {
             ShowFormByType<SurgerysEditForm>();
         }
+
+        private void рабочийДеньДоктораToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowFormByType<WorkWeeksEditForm>();
+        }
     }
 }
