@@ -5,6 +5,8 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Reflection;
 
 namespace Support.ExcelParser
 {
@@ -98,6 +100,19 @@ namespace Support.ExcelParser
                         }
                     }
                 }
+            }
+            
+            using (var sqlConnection = new SqlConnection(_sqlConnectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand preCommand = sqlConnection.CreateCommand();
+                string directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
+                string exDir = directoryName.Replace(@"file:\", "");
+                string fileDir = exDir + @"\..\..\..\..\Health\Health.MsSqlDatabase\Scripts\Post-Deployment\SetDiagnosis.sql";
+                FileInfo file = new FileInfo(fileDir);
+                string script = file.OpenText().ReadToEnd();
+                preCommand.CommandText = script;
+                preCommand.ExecuteNonQuery();
             }
         }
     }

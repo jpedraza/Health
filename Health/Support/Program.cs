@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using Support.ExcelParser;
+using System.Data.SqlClient;
 
 namespace Support
 {
@@ -16,8 +17,9 @@ namespace Support
                 string fileDir = exDir + @"\..\..\..\..\Materials\ICD10RUS.xls";
                 Console.WriteLine(fileDir);
                 var icdParser = new ICDParser(fileDir);
-                icdParser.Parse();
+                icdParser.Parse();               
             }
+           
             Console.ReadLine();
         }
     }
