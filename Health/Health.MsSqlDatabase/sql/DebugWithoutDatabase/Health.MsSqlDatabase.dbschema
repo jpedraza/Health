@@ -17,7 +17,7 @@
 			<Metadata Name="CompatibilityMode" Value="90" />
 		</CustomData>
 		<CustomData Category="Permissions" Type="XmlPermissions">
-			<Metadata Name="FileName" Value="C:\SOME_HEALTH\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
+			<Metadata Name="FileName" Value="D:\PC-NB\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
 		</CustomData>
 	</Header>
 	<Model>

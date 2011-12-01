@@ -3,6 +3,8 @@ using System.IO;
 using System.Reflection;
 using Support.ExcelParser;
 using System.Data.SqlClient;
+using System.Collections.Generic;
+using Support.Tasks;
 
 namespace Support
 {
@@ -10,17 +12,15 @@ namespace Support
     {
         static void Main(string[] args)
         {
-            string directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
-            if (directoryName != null)
-            {
-                string exDir = directoryName.Replace(@"file:\", "");
-                string fileDir = exDir + @"\..\..\..\..\Materials\ICD10RUS.xls";
-                Console.WriteLine(fileDir);
-                var icdParser = new ICDParser(fileDir);
-                icdParser.Parse();               
-            }
-           
-            Console.ReadLine();
+            SupportManager sp = SupportManager.Instance();
+            sp.ConnectionString = "Data Source=.;Initial Catalog=Health.MsSqlDatabase;User Id=user;Password=zzz;";
+            sp.AddIncludePath(@"\..\..\..\..\Materials\");
+            sp.AddIncludePath(@"\..\..\..\..\Health\Support\Scripts\");
+
+            sp.AddTask("Очистка базы", new ExecuteFileScriptTask("ClearDatabase.sql"));
+            sp.AddTask("Вставка диагнозов", new ICDParser("ICD10RUS.xls"));
+            sp.AddTask("Вставка тестовых данных", new ExecuteFileScriptTask("TestData.sql"));
+            sp.ProcessAvailableTasks();
         }
     }
 }

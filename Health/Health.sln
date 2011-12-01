@@ -112,6 +112,7 @@ Global
 		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.Debug|x86.ActiveCfg = Debug|x86
 		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.Debug|x86.Build.0 = Debug|x86
 		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.DebugWithoutDatabase|Any CPU.ActiveCfg = Debug|x86
+		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.DebugWithoutDatabase|Any CPU.Build.0 = Debug|x86
 		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.DebugWithoutDatabase|Mixed Platforms.ActiveCfg = Debug|x86
 		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.DebugWithoutDatabase|Mixed Platforms.Build.0 = Debug|x86
 		{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}.DebugWithoutDatabase|x86.ActiveCfg = Debug|x86
@@ -127,6 +128,7 @@ Global
 		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.Debug|x86.ActiveCfg = Debug|x86
 		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.Debug|x86.Build.0 = Debug|x86
 		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.DebugWithoutDatabase|Any CPU.ActiveCfg = Debug|x86
+		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.DebugWithoutDatabase|Any CPU.Build.0 = Debug|x86
 		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.DebugWithoutDatabase|Mixed Platforms.ActiveCfg = Debug|x86
 		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.DebugWithoutDatabase|Mixed Platforms.Build.0 = Debug|x86
 		{B63ADB02-CAF9-40CA-BC07-C6656353692B}.DebugWithoutDatabase|x86.ActiveCfg = Debug|x86
