@@ -330,7 +330,6 @@
         private System.Windows.Forms.BindingSource workWeeksBindingSource;
         private HealthDatabaseDataSetTableAdapters.WorkWeeksTableAdapter workWeeksTableAdapter;
         private HealthDatabaseDataSetTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;

@@ -47,8 +47,7 @@ namespace Support
 
         internal static SupportManager Instance()
         {
-            if (_dbManager == null) _dbManager = new SupportManager();
-            return _dbManager;
+            return _dbManager ?? (_dbManager = new SupportManager());
         }
 
         private SupportManager()
@@ -69,7 +68,7 @@ namespace Support
 
         public void ExecuteTasks()
         {
-            for (int i = 1; i < _tasks.Count + 1; ++i)
+            for (int i = 0; i < _tasks.Count; ++i)
             {
                 ExecuteTask(i);
             }
@@ -125,7 +124,7 @@ namespace Support
             }
             Console.WriteLine("{0}. {1}.".f((_tasks.Count + 1).ToString(), "Все"));
             Console.WriteLine("{0}.".f("Для выхода наберите x"));
-            string inc = String.Empty;
+            string inc;
             do
             {
                 Console.Write("Номер задачи: ");
@@ -144,7 +143,7 @@ namespace Support
                     }
                 }
             }
-            while (inc.ToLower() != "x");
+            while (inc != null && inc.ToLower() != "x");
         }
     }
 }

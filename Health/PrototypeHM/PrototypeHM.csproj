@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E41B1B52-35E8-44D9-A8B2-5DF8CC56C82C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PrototypeHM</RootNamespace>
+    <AssemblyName>PrototypeHM</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prototype|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Prototype\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\PrototypeHM.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Client\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\MultiSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\MultiSelector.Designer.cs">
+      <DependentUpon>MultiSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\SingleSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\SingleSelector.Designer.cs">
+      <DependentUpon>SingleSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\YDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\YDataGridViewWithControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\YDataGridViewWithControl.Designer.cs">
+      <DependentUpon>YDataGridViewWithControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Attributes\DisplayAttributes.cs" />
+    <Compile Include="DB\Attributes\IDisplayAttribute.cs" />
+    <Compile Include="DB\Attributes\IMapAttribute.cs" />
+    <Compile Include="DB\Attributes\IValidateAttribute.cs" />
+    <Compile Include="DB\Attributes\NotAttributes.cs" />
+    <Compile Include="DB\QueryRepository.cs" />
+    <Compile Include="DB\DB.cs" />
+    <Compile Include="DB\DI\DIKernel.cs" />
+    <Compile Include="DB\DI\IDIInjected.cs" />
+    <Compile Include="DB\DI\IDIKernel.cs" />
+    <Compile Include="DB\IQueryResult.cs" />
+    <Compile Include="DB\ISqlMapper.cs" />
+    <Compile Include="DB\Mappers\PropertyToColumnMapper.cs" />
+    <Compile Include="DB\OperationsRepository.cs" />
+    <Compile Include="DB\Repository.cs" />
+    <Compile Include="Diagnosis\DiagnosisEntities.cs" />
+    <Compile Include="Diagnosis\DiagnosisRepository.cs" />
+    <Compile Include="Doctor\DoctorEntities.cs" />
+    <Compile Include="Doctor\DoctorRepository.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Forms\DIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DIMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DIMainForm.Designer.cs">
+      <DependentUpon>DIMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ListForm.Designer.cs">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DB\QueryStatus.cs" />
+    <Compile Include="Forms\DetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DetailForm.Designer.cs">
+      <DependentUpon>DetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patient\PatientEntities.cs" />
+    <Compile Include="Patient\PatientRepository.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specialty\SpecialtyEntities.cs" />
+    <Compile Include="Specialty\SpecialtyRepository.cs" />
+    <Compile Include="User\UserEntities.cs" />
+    <Compile Include="User\UserRepository.cs" />
+    <Compile Include="YApplication.cs" />
+    <Compile Include="YMessageBox.cs" />
+    <EmbeddedResource Include="Components\MultiSelector.resx">
+      <DependentUpon>MultiSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\SingleSelector.resx">
+      <DependentUpon>SingleSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\YDataGridViewWithControl.resx">
+      <DependentUpon>YDataGridViewWithControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DIMainForm.resx">
+      <DependentUpon>DIMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ListForm.resx">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DetailForm.resx">
+      <DependentUpon>DetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

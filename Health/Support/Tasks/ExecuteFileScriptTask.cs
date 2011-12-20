@@ -17,8 +17,6 @@ namespace Support.Tasks
         public void Process(SqlConnection connection)
         {
             SqlCommand preCommand = connection.CreateCommand();
-            string directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
-            string exDir = directoryName.Replace(@"file:\", "");
             string fileDir = String.Empty;
             SupportManager sp = SupportManager.Instance();
             foreach (string path in sp.IncludePaths)
@@ -28,7 +26,7 @@ namespace Support.Tasks
                     fileDir = path + _fileName;
                 }
             }
-            FileInfo file = new FileInfo(fileDir);
+            var file = new FileInfo(fileDir);
             string script = file.OpenText().ReadToEnd();
             preCommand.CommandText = script;
             preCommand.ExecuteNonQuery();

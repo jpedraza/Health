@@ -1,8 +1,6 @@
 ﻿CREATE TABLE [dbo].[Parameters]
 (
 	ParameterId int IDENTITY(1, 1) NOT NULL, 
-	Name nvarchar(MAX),
-	DefaultValue varbinary,
-	Value varbinary,
-	Metadata varbinary
+	Name nvarchar(MAX) NOT NULL,
+	DefaultValue varbinary
 )

@@ -14,10 +14,9 @@ GO
 :setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
 
 GO
-USE [master]
-
-GO
 :on error exit
+GO
+USE [master]
 GO
 IF (DB_ID(N'$(DatabaseName)') IS NOT NULL
     AND DATABASEPROPERTYEX(N'$(DatabaseName)','Status') <> N'ONLINE')
@@ -148,7 +147,6 @@ ELSE
 
 GO
 USE [$(DatabaseName)]
-
 GO
 IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
     EXECUTE sp_fulltext_database 'enable';
@@ -172,7 +170,7 @@ PRINT N'Выполняется удаление Разрешения...';
 
 
 GO
-REVOKE CONNECT TO [dbo]
+REVOKE CONNECT TO [dbo] CASCADE
     AS [dbo];
 
 
@@ -391,6 +389,19 @@ CREATE TABLE [dbo].[FunctionalDisordersToPatients] (
 
 
 GO
+PRINT N'Выполняется создание [dbo].[ParameterMetadata]...';
+
+
+GO
+CREATE TABLE [dbo].[ParameterMetadata] (
+    [ParameterId] INT             NOT NULL,
+    [Key]         NVARCHAR (MAX)  NOT NULL,
+    [Value]       VARBINARY (MAX) NULL,
+    [ValueTypeId] INT             NOT NULL
+);
+
+
+GO
 PRINT N'Выполняется создание [dbo].[Parameters]...';
 
 
@@ -531,7 +542,7 @@ PRINT N'Выполняется создание [dbo].[Specialties]...';
 GO
 CREATE TABLE [dbo].[Specialties] (
     [SpecialtyId] INT            IDENTITY (1, 1) NOT NULL,
-    [Name]        NVARCHAR (MAX) NULL
+    [Name]        NVARCHAR (MAX) NOT NULL
 );
 
 
@@ -542,6 +553,26 @@ PRINT N'Выполняется создание SpecialtiesPK...';
 GO
 ALTER TABLE [dbo].[Specialties]
     ADD CONSTRAINT [SpecialtiesPK] PRIMARY KEY CLUSTERED ([SpecialtyId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[Status]...';
+
+
+GO
+CREATE TABLE [dbo].[Status] (
+    [Code]    INT            NOT NULL,
+    [Message] NVARCHAR (MAX) NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание StatusPK...';
+
+
+GO
+ALTER TABLE [dbo].[Status]
+    ADD CONSTRAINT [StatusPK] PRIMARY KEY CLUSTERED ([Code] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
 
 
 GO
@@ -590,6 +621,26 @@ PRINT N'Выполняется создание UsersPK...';
 GO
 ALTER TABLE [dbo].[Users]
     ADD CONSTRAINT [UsersPK] PRIMARY KEY CLUSTERED ([UserId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[ValueTypes]...';
+
+
+GO
+CREATE TABLE [dbo].[ValueTypes] (
+    [ValueTypeId] INT            IDENTITY (1, 1) NOT NULL,
+    [Name]        NVARCHAR (MAX) NOT NULL
+);
+
+
+GO
+PRINT N'Выполняется создание ValueTypesPK...';
+
+
+GO
+ALTER TABLE [dbo].[ValueTypes]
+    ADD CONSTRAINT [ValueTypesPK] PRIMARY KEY CLUSTERED ([ValueTypeId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
 
 
 GO
@@ -707,6 +758,24 @@ PRINT N'Выполняется создание FunctionalDisordersToDiagnosisMT
 GO
 ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH NOCHECK
     ADD CONSTRAINT [FunctionalDisordersToDiagnosisMTOPatients] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Patients] ([PatientId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание ParameterMetadataMTOParameter...';
+
+
+GO
+ALTER TABLE [dbo].[ParameterMetadata] WITH NOCHECK
+    ADD CONSTRAINT [ParameterMetadataMTOParameter] FOREIGN KEY ([ParameterId]) REFERENCES [dbo].[Parameters] ([ParameterId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание ParameterMetadataMTOValueTypes...';
+
+
+GO
+ALTER TABLE [dbo].[ParameterMetadata] WITH NOCHECK
+    ADD CONSTRAINT [ParameterMetadataMTOValueTypes] FOREIGN KEY ([ValueTypeId]) REFERENCES [dbo].[ValueTypes] ([ValueTypeId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 GO
@@ -845,6 +914,17 @@ BEGIN
 	END
 END
 GO
+PRINT N'Выполняется создание [dbo].[GetAllShowDataByRoleName]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllShowDataByRoleName]
+	@param1 int = 0, 
+	@param2 int
+AS
+	SELECT @param1, @param2
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[GetParametersForPatientNowDate]...';
 
 
@@ -883,6 +963,189 @@ BEGIN
 	select @is_even_week, @week_day
 END
 GO
+PRINT N'Выполняется создание [dbo].[DeleteDoctor]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[DeleteDoctor]
+	@doctorId int = 0
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	if exists(select * from Doctors where DoctorId = @doctorId)
+	begin		
+		if exists(select * from PatientsToDoctors where DoctorId = @doctorId)
+		begin
+			set @status = 0
+			set @statusMessage = dbo.GSM(2001000)
+		end
+		else 
+		begin		
+			delete from Doctors where DoctorId = @doctorId
+		end
+	end
+	else 
+	begin
+		set @status = 0
+		set @statusMessage = dbo.GSM(3001001)
+	end	
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[FullUpdateDoctor]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[FullUpdateDoctor]
+	@Id int, 
+	@FirstName nvarchar(MAX), 
+	@LastName nvarchar(MAX), 
+	@ThirdName nvarchar(MAX), 
+	@Login nvarchar(MAX), 
+	@Password nvarchar(MAX),
+	@Birthday datetime,
+	@Token nvarchar(MAX),
+	@SpecialtyId int
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update Doctors
+			set SpecialtyId=@SpecialtyId
+			where DoctorId=@Id
+		update Users
+			set FirstName=@FirstName,
+				LastName=@LastName,
+				ThirdName=@ThirdName,
+				Login=@Login,
+				Password=@Password,
+				Birthday=@Birthday,
+				Token=@Token
+			where UserId=@Id
+			set @status = 1
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(3001001)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage	
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetAllDiagnosis]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllDiagnosis]
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	SELECT d.DiagnosisId as Id,
+		   d.Name,
+		   d.Code,
+		   dc.Name as ClassName,
+		   @status as Status, @statusMessage as StatusMessage
+		   from Diagnosis as d
+		   join DiagnosisClass as dc on d.DiagnosisClassId = dc.DiagnosisClassId
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetAllDoctorShowData]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllDoctorShowData]
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	select us.UserId as Id, 
+		   FirstName, 
+		   LastName, 
+		   ThirdName, 
+		   Login, 
+		   Password, 
+		   ro.Name as Role, 
+		   Birthday,
+		   Token,
+		   sp.Name as Specialty,
+		   @status as Status, @statusMessage as StatusMessage
+		   from Users as us 
+		   JOIN Doctors as do ON us.UserId = do.DoctorId
+		   JOIN Roles as ro ON us.RoleId = ro.RoleId
+		   JOIN Specialties as sp ON do.SpecialtyId = sp.SpecialtyId			   
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetAllUserShowData]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllUserShowData]
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	select us.UserId as Id, 
+		   FirstName, 
+		   LastName, 
+		   ThirdName, 
+		   Login, 
+		   Password, 
+		   ro.Name as Role, 
+		   Birthday,
+		   Token,
+		   @status as Status, @statusMessage as StatusMessage
+		   from Users as us 
+		   JOIN Roles as ro ON us.RoleId = ro.RoleId
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetDoctorShowData]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetDoctorShowData]
+	@doctorId int = 0
+AS
+	declare @status int
+	declare @statusMessage nvarchar(MAX)
+	if exists(select * from Doctors where DoctorId = @doctorId)
+	begin
+		set @status = 1	
+		set @statusMessage = dbo.GSM(0000001)		
+	end
+	else 
+	begin
+		set @status = 0
+		set @statusMessage = dbo.GSM(3001001)
+	end	
+	select  us.UserId as Id, 
+			FirstName, 
+			LastName, 
+			ThirdName, 
+			Login, 
+			Password, 
+			ro.Name as Role, 
+			Birthday,
+			Token,
+			sp.Name as Specialty,
+			@status as Status, @statusMessage as StatusMessage
+			from Users as us 
+			JOIN Doctors as do ON us.UserId = do.DoctorId
+			JOIN Roles as ro ON us.RoleId = ro.RoleId
+			JOIN Specialties as sp ON do.SpecialtyId = sp.SpecialtyId	
+			WHERE do.DoctorId = @doctorId		
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GSM]...';
+
+
+GO
+CREATE FUNCTION [dbo].[GSM]
+(
+	@code int
+)
+RETURNS nvarchar(MAX)
+AS
+BEGIN
+	RETURN (select Message from Status where Code = @code)
+END
+GO
 -- Выполняется этап рефакторинга для обновления развернутых журналов транзакций на целевом сервере
 CREATE TABLE  [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
 GO
@@ -901,6 +1164,235 @@ GO
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+/*
+Шаблон скрипта после развертывания							
+------------------------------------------------------------------------------------//
+ В данном файле содержатся операторы SQL, которые будут добавлены в скрипт построения.		
+ Используйте синтаксис SQLCMD для включения файла в скрипт после развертывания.			
+ Пример:      :r .\myfile.sql								
+ Используйте синтаксис SQLCMD для создания ссылки на переменную в скрипте после развертывания.		
+ Пример:      :setvar TableName MyTable							
+			   SELECT * FROM [$(TableName)]					
+------------------------------------------------------------------------------------//
+*/
+USE [Health.MsSqlDatabase]
+/*Заполняем роли*/
+insert into Roles (Name) values('Пациент')
+insert into Roles (Name) values('Доктор')
+insert into Roles (Name) values('Администратор')
+
+/*заполняем пользователей сайта*/
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Селигеров', 'Павел', 'Васильевич', 'логин', 'пароль', 1, '1991/12/04', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Швецова', 'Мария', 'Сергеевна', 'логин', 'пароль', 1, '1991/11/11', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Иванов', 'Сергей', 'Иванович', 'логин', 'пароль', 1, '1992/07/10', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Васнецов', 'Иван', 'Львович', 'логин', 'пароль', 1, '2001/04/03', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Иванов', 'Иван', 'Степанович', 'логин', 'пароль', 1, '1999/12/04', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Гаус', 'Никита', 'Анисимович', 'логин', 'пароль', 1, '2002/12/09', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Сухарев', 'Иван', 'Дмитриевич', 'логин', 'пароль', 1, '2003/12/11', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Иванов', 'Олег', 'Юрьевич', 'логин', 'пароль', 1, '2000/02/08', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Старосельцев', 'Олег', 'Александрович', 'логин', 'пароль', 1, '1997/11/01', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Энштейн', 'Альберт', 'Петрович', 'логин', 'пароль', 1, '1991/12/10', 'token_value')
+
+/*Заполняем работников: */
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Энштейн', 'Альберт', 'Витальевич', 'админ', 'фдмин', 3, '1975/12/10', 'token_value')
+
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
+	values('Дроздов', 'Евгений', 'Павлович', 'логин', 'пароль', 2, '1956/10/08', 'token_value')
+
+/*Заполняем специальности*/
+insert into Specialties(Name) values('Врач/кардиолог')
+insert into Specialties(Name) values('Врач/терапевт')
+
+/*Заполняем докторов*/
+insert into Doctors(DoctorId, SpecialtyId) values(12, 1)
+
+/*Заполняем функциональные классы*/
+insert into FunctionalClasses(Code, Description)
+	 values('Функциональный класс I', 'пациенты с заболеванием сердца,
+	  у которых обычные физические нагрузки не вызывают одышки, утомления или сердцебиения.')
+
+insert into FunctionalClasses(Code, Description)
+	 values('Функциональный класс II', 'пациенты с заболеванием сердца и умеренным ограничением
+	  физической активности. При обычных физических нагрузках наблюдаются одышка, усталость и сердцебиение.')
+
+insert into FunctionalClasses(Code, Description)
+	 values('Функциональный класс III', 'пациенты с заболеванием сердца и выраженным ограничением
+	  физической активности. В состоянии покоя жалобы отсутствуют, но даже при незначительных физических
+	   нагрузках появляются одышка, усталость и сердцебиение.')
+
+insert into FunctionalClasses(Code, Description)
+	 values('Функциональный класс IV', 'пациенты с заболеванием сердца, у которых любой
+	  уровень физической активности вызывает указанные выше субъективные симптомы.
+	   Последние возникают и в состоянии покоя.')
+
+/*Заполняем пациентов*/
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 3, 'Анастасия Сергеевна', 1, 34435, 32333, '78935632', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 2, 'Евгения Павловна', 2, 34435, 32333, '64273642', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 1, 'Лидия Петровна', 3, 34435, 32333, '65426953', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 1, 'Алла Васильевна', 4, 34435, 32333, '5467253', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 4, 'Юлия Владимировна', 5, 34435, 32333, '5465421', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 3, 'Александра Дмитриевна', 6, 34435, 32333, '87684213', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 2, 'Светлана Тимофеевна', 7, 34435, 32333, '42362389', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 1, 'Анна Игоревна', 8, 34435, 32333, '5234423', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 1, 'Татьяна Петровна', 9, 34435, 32333, '2346274', '2001/09/21')
+
+insert Patients(Card, FunctionalClassesId, Mother, PatientId, Phone1, Phone2, Policy, StartDateOfObservation)
+	values('---/', 1, 'Марья Ивановна', 10, 34435, 32333, '453259482', '2001/09/21')
+
+/*Заполняем виды операций*/
+insert Surgerys(Name, SurgeryDescription) values
+('Surgery1',
+'Пластика ДМЖП по методике двойной заплаты в условиях ИК.')
+
+insert Surgerys(Name, SurgeryDescription) values
+('Surgery2',
+' Пластика ДМПП,ДМЖП,ИСЛА,аномалия Эбштейна,радик.коррекц. тетрады Фалло.')
+
+insert Surgerys(Name, SurgeryDescription) values
+('Surgery3',
+'Реконструкции пути оттока от ПЖ.')
+
+/*Связываем пациентов с их операциями*/
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(1, 1, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(2, 2, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(3, 3, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(4, 1, 0, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(5, 2, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(6, 3, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(7, 1, 0, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(8, 2, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(9, 3, 1, '2001/12/06')
+
+insert PatientsToSurgerys(PatientId, SurgeryId, SurgeryStatus, SurgeryDate) values
+(10, 1, 0, '2001/12/06')
+
+/*Добавляем для пациентов их докторов*/
+insert PatientsToDoctors(PatientId, DoctorId) values(1, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(2, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(3, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(4, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(5, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(6, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(7, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(8, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(9, 12)
+
+insert PatientsToDoctors(PatientId, DoctorId) values(10, 12)
+
+/*Добавить кандидатов*/
+insert Candidates(Birthday, Card, LastName, FirstName, ThirdName, Login, Password, Mother, Phone1,
+Policy, RoleId, Phone2, Token, StartDateOfObservation) values
+('1992/07/25', '---', 'Сидоров', 'Андрей', 'Тихвинович',
+ 'log', 'pass', '', 212, '---', 1, 1232, 'token_value', '1998/07/12')
+
+insert Candidates(Birthday, Card, LastName, FirstName, ThirdName, Login, Password, Mother, Phone1,
+Policy, RoleId, Phone2, Token, StartDateOfObservation) values
+('1992/07/25', '---', 'Сосницкий', 'Иван', 'Павлович',
+ 'log', 'pass', '', 212, '---', 1, 1232, 'token_value', '1998/09/12')
+
+insert into DiagnosisClass(Name, Code) values('Болезни системы кровообращения', 'IX')
+insert into DiagnosisClass(Name, Code) values('Врожденные аномалии [пороки крови], деформации и хромосомные нарушения', 'XVII')
+
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие функциональные нарушения после операций на сердце', 'I97.1', 1)
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках', 'I97.8', 1)
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Дефект предсердной перегородки', 'Q21.1', 2)
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Врожденный порок сердца неуточненный', 'Q24.9', 2)
+
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 1)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 2)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 3)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 4)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 4)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 5)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 6)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 7)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 7)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 8)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 9)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 10)
+-- =============================================
+-- Script Template
+-- =============================================
+/*
+Правила формирования кодов статусов:
+	Используется семизначный код 0000000, где
+	- первая цифра - тип статуса 
+		0 - статус
+		1 - сообщение
+		2 - предупреждение
+		3 - ошибка
+		4 - критическая ошибка
+	- затем 3 цифры - класс ошибки
+	- остальные 3 цифры - уникальный код ошибки, для родителя равен 0000
+*/
+insert into Status values(0000000, 'Все плохо!')
+insert into Status values(0000001, 'Все хорошо!')
+
+insert into Status values(2001000, 'У доктора есть ведомые пациенты.')
+insert into Status values(3001000, 'Отсутствует запись в базе для данного идентификатора.')
+insert into Status values(3001001, 'Отсутствует информация о докторе в базе.')
 
 GO
 PRINT N'Существующие данные проверяются относительно вновь созданных ограничений';
@@ -932,6 +1424,10 @@ ALTER TABLE [dbo].[FunctionalDisorders] WITH CHECK CHECK CONSTRAINT [FunctionalD
 ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH CHECK CHECK CONSTRAINT [FunctionalDisordersToDiagnosisMTOFunctionalDisorders];
 
 ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH CHECK CHECK CONSTRAINT [FunctionalDisordersToDiagnosisMTOPatients];
+
+ALTER TABLE [dbo].[ParameterMetadata] WITH CHECK CHECK CONSTRAINT [ParameterMetadataMTOParameter];
+
+ALTER TABLE [dbo].[ParameterMetadata] WITH CHECK CHECK CONSTRAINT [ParameterMetadataMTOValueTypes];
 
 ALTER TABLE [dbo].[Patients] WITH CHECK CHECK CONSTRAINT [PatientsMTOFunctionalClasses];
 

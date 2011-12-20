@@ -1,12 +1,23 @@
 ﻿/*
 Шаблон скрипта после развертывания							
-------------------------------------------------------------------------------------//
+--------------------------------------------------------------------------------------
  В данном файле содержатся операторы SQL, которые будут добавлены в скрипт построения.		
  Используйте синтаксис SQLCMD для включения файла в скрипт после развертывания.			
  Пример:      :r .\myfile.sql								
  Используйте синтаксис SQLCMD для создания ссылки на переменную в скрипте после развертывания.		
  Пример:      :setvar TableName MyTable							
                SELECT * FROM [$(TableName)]					
+--------------------------------------------------------------------------------------
+*/
+/*
+Шаблон скрипта после развертывания							
+------------------------------------------------------------------------------------//
+ В данном файле содержатся операторы SQL, которые будут добавлены в скрипт построения.		
+ Используйте синтаксис SQLCMD для включения файла в скрипт после развертывания.			
+ Пример:      :r .\myfile.sql								
+ Используйте синтаксис SQLCMD для создания ссылки на переменную в скрипте после развертывания.		
+ Пример:      :setvar TableName MyTable							
+			   SELECT * FROM [$(TableName)]					
 ------------------------------------------------------------------------------------//
 */
 USE [Health.MsSqlDatabase]
@@ -16,45 +27,46 @@ insert into Roles (Name) values('Доктор')
 insert into Roles (Name) values('Администратор')
 
 /*заполняем пользователей сайта*/
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Селигеров', 'Павел', 'Васильевич', 'логин', 'пароль', 1, '1991/12/04', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Швецова', 'Мария', 'Сергеевна', 'логин', 'пароль', 1, '1991/11/11', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Иванов', 'Сергей', 'Иванович', 'логин', 'пароль', 1, '1992/07/10', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Васнецов', 'Иван', 'Львович', 'логин', 'пароль', 1, '2001/04/03', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Иванов', 'Иван', 'Степанович', 'логин', 'пароль', 1, '1999/12/04', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Гаус', 'Никита', 'Анисимович', 'логин', 'пароль', 1, '2002/12/09', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Сухарев', 'Иван', 'Дмитриевич', 'логин', 'пароль', 1, '2003/12/11', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Иванов', 'Олег', 'Юрьевич', 'логин', 'пароль', 1, '2000/02/08', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Старосельцев', 'Олег', 'Александрович', 'логин', 'пароль', 1, '1997/11/01', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Энштейн', 'Альберт', 'Петрович', 'логин', 'пароль', 1, '1991/12/10', 'token_value')
 
 /*Заполняем работников: */
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Энштейн', 'Альберт', 'Витальевич', 'админ', 'фдмин', 3, '1975/12/10', 'token_value')
 
-insert into Users (FirstName, LastName, ThirdName, Login, Password, RoleId, Birthday, Token)
+insert into Users (LastName, FirstName, ThirdName, Login, Password, RoleId, Birthday, Token)
 	values('Дроздов', 'Евгений', 'Павлович', 'логин', 'пароль', 2, '1956/10/08', 'token_value')
 
 /*Заполняем специальности*/
 insert into Specialties(Name) values('Врач/кардиолог')
+insert into Specialties(Name) values('Врач/терапевт')
 
 /*Заполняем докторов*/
 insert into Doctors(DoctorId, SpecialtyId) values(12, 1)
@@ -175,25 +187,67 @@ insert PatientsToDoctors(PatientId, DoctorId) values(9, 12)
 insert PatientsToDoctors(PatientId, DoctorId) values(10, 12)
 
 /*Добавить кандидатов*/
-insert Candidates(Birthday, Card, FirstName, LastName, ThirdName, Login, Password, Mother, Phone1,
+insert Candidates(Birthday, Card, LastName, FirstName, ThirdName, Login, Password, Mother, Phone1,
 Policy, RoleId, Phone2, Token, StartDateOfObservation) values
 ('1992/07/25', '---', 'Сидоров', 'Андрей', 'Тихвинович',
  'log', 'pass', '', 212, '---', 1, 1232, 'token_value', '1998/07/12')
 
-insert Candidates(Birthday, Card, FirstName, LastName, ThirdName, Login, Password, Mother, Phone1,
+insert Candidates(Birthday, Card, LastName, FirstName, ThirdName, Login, Password, Mother, Phone1,
 Policy, RoleId, Phone2, Token, StartDateOfObservation) values
 ('1992/07/25', '---', 'Сосницкий', 'Иван', 'Павлович',
  'log', 'pass', '', 212, '---', 1, 1232, 'token_value', '1998/09/12')
 
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (7540, 1)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (7573, 2)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (4258, 3)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (7540, 4)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (4258, 4)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (4258, 5)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (7540, 6)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (7573, 7)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (4256, 7)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (4256, 8)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (7540, 9)
-insert PatientsToDiagnosis(DiagnosisId, PatientId) values (4256, 10)
+insert into DiagnosisClass(Name, Code) values('Болезни системы кровообращения', 'IX')
+insert into DiagnosisClass(Name, Code) values('Врожденные аномалии [пороки крови], деформации и хромосомные нарушения', 'XVII')
+
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие функциональные нарушения после операций на сердце', 'I97.1', 1)
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках', 'I97.8', 1)
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Дефект предсердной перегородки', 'Q21.1', 2)
+insert into Diagnosis(Name, Code, DiagnosisClassId) values('Врожденный порок сердца неуточненный', 'Q24.9', 2)
+
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 1)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 2)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 3)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 4)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 4)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 5)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 6)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 7)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 7)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 8)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 9)
+insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 10)
+-- =============================================
+-- Script Template
+-- =============================================
+/*
+Правила формирования кодов статусов:
+	Используется семизначный код 0000000, где
+	- первая цифра - тип статуса 
+		0 - статус
+		1 - сообщение
+		2 - предупреждение
+		3 - ошибка
+		4 - критическая ошибка
+	- затем 3 цифры - класс ошибки
+	- остальные 3 цифры - уникальный код ошибки, для родителя равен 0000
+*/
+
+-- Общие
+insert into Status values(0000000, 'Все плохо!')
+insert into Status values(0000001, 'Все хорошо!')
+
+-- Общие ошибки
+insert into Status values(3001000, 'Отсутствует запись в базе для данного идентификатора.')
+
+-- Доктора
+	-- Сообщения
+	insert into Status values(1001001, 'У доктора нет ведомых пациентов.')
+	-- Предупреждения
+	insert into Status values(2001001, 'У доктора есть ведомые пациенты.')	
+	-- Ошибки
+	insert into Status values(3001001, 'Отсутствует информация о докторе в базе.')
+
+-- Пациенты
+	-- Ошибки
+	insert into Status values(3001002, 'Отсутствует информация о пациенте в базе.')
