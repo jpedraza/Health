@@ -9,6 +9,7 @@ using PrototypeHM.Forms;
 using PrototypeHM.Patient;
 using PrototypeHM.Specialty;
 using PrototypeHM.User;
+using PrototypeHM.Parameter;
 
 namespace PrototypeHM
 {
@@ -45,6 +46,8 @@ namespace PrototypeHM
             _kernel.Bind<DoctorRepository>().ToSelf().InSingletonScope();
             _kernel.Bind<DiagnosisRepository>().ToSelf().InSingletonScope();
             _kernel.Bind<OperationsRepository>().ToSelf().InSingletonScope();
+            _kernel.Bind<Parameter.ParameterRepository>().ToSelf().InSingletonScope();
+
         }
 
         internal void BindCommand()
@@ -54,6 +57,9 @@ namespace PrototypeHM
             _kernel.Get<QueryRepository>().AddProcedure("GetAllDiagnosis");
             _kernel.Get<QueryRepository>().Add("DeleteDoctor", "exec [dbo].[DeleteDoctor] [doctorId]");
             _kernel.Get<QueryRepository>().Add("GetAllPatientsForDoctor", "exec [dbo].[GetAllPatientsForDoctor] [doctorId]");
+            _kernel.Get<QueryRepository>().AddProcedure("GetAllParameterShowData");
+            _kernel.Get<QueryRepository>().Add("GetAllMetadataForParameter", "[dbo].[GetAllMetadataForParameter] [parameterId]");
+            
         }
 
         internal void BindOperations()
@@ -72,6 +78,11 @@ namespace PrototypeHM
                                                                    {
                                                                        Load = _kernel.Get<SpecialtyRepository>().GetAll
                                                                    });
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterFullData>
+            {                
+                Detail = _kernel.Get<ParameterRepository>().Detail,
+                Load = _kernel.Get<ParameterRepository>().GetAll
+            });
         }
     }
 }

@@ -45,7 +45,9 @@ namespace PrototypeHM.Forms
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.multiSelector1 = new PrototypeHM.Components.MultiSelector();
+            this.пациентуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.вводПараметровToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.параметрыЗдоровьяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -55,7 +57,8 @@ namespace PrototypeHM.Forms
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.windowsMenu,
             this.списикиToolStripMenuItem,
-            this.тестыУдалитьToolStripMenuItem});
+            this.тестыУдалитьToolStripMenuItem,
+            this.пациентуToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -115,29 +118,31 @@ namespace PrototypeHM.Forms
             this.списикиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiDoctors,
             this.tsmiUser,
-            this.tsmiDiagnosis});
+            this.tsmiDiagnosis,
+            this.параметрыЗдоровьяToolStripMenuItem});
             this.списикиToolStripMenuItem.Name = "списикиToolStripMenuItem";
-            this.списикиToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.списикиToolStripMenuItem.Text = "Списики";
+            this.списикиToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.списикиToolStripMenuItem.Text = "Администратору";
+            this.списикиToolStripMenuItem.Click += new System.EventHandler(this.списикиToolStripMenuItem_Click);
             // 
             // tsmiDoctors
             // 
             this.tsmiDoctors.Name = "tsmiDoctors";
-            this.tsmiDoctors.Size = new System.Drawing.Size(152, 22);
+            this.tsmiDoctors.Size = new System.Drawing.Size(191, 22);
             this.tsmiDoctors.Text = "Доктора";
             this.tsmiDoctors.Click += new System.EventHandler(this.TsmiDoctorsClick);
             // 
             // tsmiUser
             // 
             this.tsmiUser.Name = "tsmiUser";
-            this.tsmiUser.Size = new System.Drawing.Size(152, 22);
+            this.tsmiUser.Size = new System.Drawing.Size(191, 22);
             this.tsmiUser.Text = "Пользователи";
             this.tsmiUser.Click += new System.EventHandler(this.TsmiUserClick);
             // 
             // tsmiDiagnosis
             // 
             this.tsmiDiagnosis.Name = "tsmiDiagnosis";
-            this.tsmiDiagnosis.Size = new System.Drawing.Size(152, 22);
+            this.tsmiDiagnosis.Size = new System.Drawing.Size(191, 22);
             this.tsmiDiagnosis.Text = "Диагнозы";
             this.tsmiDiagnosis.Click += new System.EventHandler(this.TsmiDiagnosisClick);
             // 
@@ -172,21 +177,32 @@ namespace PrototypeHM.Forms
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
             // 
-            // multiSelector1
+            // пациентуToolStripMenuItem
             // 
-            this.multiSelector1.LeftToRightMove = null;
-            this.multiSelector1.Location = new System.Drawing.Point(113, 120);
-            this.multiSelector1.Name = "multiSelector1";
-            this.multiSelector1.RightToLeftMove = null;
-            this.multiSelector1.Size = new System.Drawing.Size(300, 400);
-            this.multiSelector1.TabIndex = 4;
+            this.пациентуToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.вводПараметровToolStripMenuItem});
+            this.пациентуToolStripMenuItem.Name = "пациентуToolStripMenuItem";
+            this.пациентуToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.пациентуToolStripMenuItem.Text = "Пациенту";
+            // 
+            // вводПараметровToolStripMenuItem
+            // 
+            this.вводПараметровToolStripMenuItem.Name = "вводПараметровToolStripMenuItem";
+            this.вводПараметровToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.вводПараметровToolStripMenuItem.Text = "Ввод параметров";
+            // 
+            // параметрыЗдоровьяToolStripMenuItem
+            // 
+            this.параметрыЗдоровьяToolStripMenuItem.Name = "параметрыЗдоровьяToolStripMenuItem";
+            this.параметрыЗдоровьяToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.параметрыЗдоровьяToolStripMenuItem.Text = "Параметры здоровья";
+            this.параметрыЗдоровьяToolStripMenuItem.Click += new System.EventHandler(this.параметрыЗдоровьяToolStripMenuItem_Click);
             // 
             // DIMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1072, 727);
-            this.Controls.Add(this.multiSelector1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
@@ -220,7 +236,9 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem tsmiDiagnosis;
         private System.Windows.Forms.ToolStripMenuItem тестыУдалитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem созданиеToolStripMenuItem;
-        private Components.MultiSelector multiSelector1;
+        private System.Windows.Forms.ToolStripMenuItem параметрыЗдоровьяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem пациентуToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem вводПараметровToolStripMenuItem;
     }
 }
 

@@ -14,9 +14,10 @@ GO
 :setvar DefaultLogPath "C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\"
 
 GO
-:on error exit
-GO
 USE [master]
+
+GO
+:on error exit
 GO
 IF (DB_ID(N'$(DatabaseName)') IS NOT NULL
     AND DATABASEPROPERTYEX(N'$(DatabaseName)','Status') <> N'ONLINE')
@@ -147,6 +148,7 @@ ELSE
 
 GO
 USE [$(DatabaseName)]
+
 GO
 IF fulltextserviceproperty(N'IsFulltextInstalled') = 1
     EXECUTE sp_fulltext_database 'enable';
@@ -170,7 +172,7 @@ PRINT N'Выполняется удаление Разрешения...';
 
 
 GO
-REVOKE CONNECT TO [dbo] CASCADE
+REVOKE CONNECT TO [dbo]
     AS [dbo];
 
 
@@ -408,10 +410,8 @@ PRINT N'Выполняется создание [dbo].[Parameters]...';
 GO
 CREATE TABLE [dbo].[Parameters] (
     [ParameterId]  INT            IDENTITY (1, 1) NOT NULL,
-    [Name]         NVARCHAR (MAX) NULL,
-    [DefaultValue] VARBINARY (1)  NULL,
-    [Value]        VARBINARY (1)  NULL,
-    [Metadata]     VARBINARY (1)  NULL
+    [Name]         NVARCHAR (MAX) NOT NULL,
+    [DefaultValue] VARBINARY (1)  NULL
 );
 
 
@@ -422,6 +422,19 @@ PRINT N'Выполняется создание ParametersPK...';
 GO
 ALTER TABLE [dbo].[Parameters]
     ADD CONSTRAINT [ParametersPK] PRIMARY KEY CLUSTERED ([ParameterId] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+
+
+GO
+PRINT N'Выполняется создание [dbo].[ParametersForPatients]...';
+
+
+GO
+CREATE TABLE [dbo].[ParametersForPatients] (
+    [ParameterId] INT             NOT NULL,
+    [PatientId]   INT             NOT NULL,
+    [Value]       VARBINARY (MAX) NOT NULL,
+    [Date]        DATETIME        NOT NULL
+);
 
 
 GO
@@ -779,6 +792,24 @@ ALTER TABLE [dbo].[ParameterMetadata] WITH NOCHECK
 
 
 GO
+PRINT N'Выполняется создание ParametersMTOPatientsParameter...';
+
+
+GO
+ALTER TABLE [dbo].[ParametersForPatients] WITH NOCHECK
+    ADD CONSTRAINT [ParametersMTOPatientsParameter] FOREIGN KEY ([ParameterId]) REFERENCES [dbo].[Parameters] ([ParameterId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Выполняется создание ParametersMTOPatientsPatient...';
+
+
+GO
+ALTER TABLE [dbo].[ParametersForPatients] WITH NOCHECK
+    ADD CONSTRAINT [ParametersMTOPatientsPatient] FOREIGN KEY ([PatientId]) REFERENCES [dbo].[Patients] ([PatientId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
 PRINT N'Выполняется создание PatientsMTOFunctionalClasses...';
 
 
@@ -914,6 +945,23 @@ BEGIN
 	END
 END
 GO
+PRINT N'Выполняется создание [dbo].[GetAllMetadataForParameter]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllMetadataForParameter]
+	@parameterId int
+AS
+	select 
+	pm.ParameterId,
+	pm.Value,
+	pm.ValueTypeId,
+	pm.[Key]
+	from ParameterMetadata as pm
+	where
+	pm.ParameterId=@parameterId
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[GetAllShowDataByRoleName]...';
 
 
@@ -977,7 +1025,7 @@ AS
 		if exists(select * from PatientsToDoctors where DoctorId = @doctorId)
 		begin
 			set @status = 0
-			set @statusMessage = dbo.GSM(2001000)
+			set @statusMessage = dbo.GSM(2001001)
 		end
 		else 
 		begin		
@@ -1073,6 +1121,56 @@ AS
 		   JOIN Specialties as sp ON do.SpecialtyId = sp.SpecialtyId			   
 RETURN 0
 GO
+PRINT N'Выполняется создание [dbo].[GetAllParameterShowData]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllParameterShowData]
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	select
+	pa.ParameterId,
+	Name,
+	@status as Status, @statusMessage as StatusMessage
+	from Parameters as pa
+
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetAllPatientsForDoctor]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllPatientsForDoctor]
+	@doctorId int = 0
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	if not(exists(select * from Doctors where DoctorId = @doctorId))
+	begin
+		set @statusMessage = dbo.GSM(3001001)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	if not(exists(select * from PatientsToDoctors where DoctorId = @doctorId))
+	begin
+		set @StatusMessage = dbo.GSM(1001001)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	select u.UserId as Id,
+		   u.FirstName,
+		   u.LastName,
+		   u.ThirdName,
+		   p.Card,
+		   p.Policy,
+		   @status as Status, @statusMessage as StatusMessage
+		   from Users as u
+		   join Patients as p on u.UserId = p.PatientId
+		   join PatientsToDoctors as ptd on ptd.PatientId = p.PatientId
+		   where ptd.DoctorId = @doctorId
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[GetAllUserShowData]...';
 
 
@@ -1130,6 +1228,45 @@ AS
 			JOIN Roles as ro ON us.RoleId = ro.RoleId
 			JOIN Specialties as sp ON do.SpecialtyId = sp.SpecialtyId	
 			WHERE do.DoctorId = @doctorId		
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetPatientFullDataById]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetPatientFullDataById]
+	@patientId int = 0
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	if not(exists(select * from Patients where PatientId = @patientId))
+	begin
+		set @statusMessage = dbo.GSM(3001002)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	select p.PatientId as Id,
+		   p.Card,
+		   p.Policy,
+		   p.Mother,
+		   p.Phone1,
+		   p.Phone2,
+		   p.StartDateOfObservation,
+		   fc.Code as FunctionalClassCode,
+		   fc.Description as FunctionalClassDescription,
+		   u.FirstName,
+		   u.LastName,
+		   u.ThirdName,
+		   u.Login,
+		   u.Password,
+		   u.Token,
+		   r.Name as Role,
+		   @status as Status, @statusMessage as StatusMessage		   	   
+		   from Patients as p
+		   join FunctionalClasses as fc on p.FunctionalClassesId = fc.FunctionalClassesId
+		   join Users as u on p.PatientId = u.UserId
+		   join Roles as r on u.RoleId = r.RoleId
+		   where p.PatientId = @patientId
 RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[GSM]...';
@@ -1360,6 +1497,9 @@ insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие нар�
 insert into Diagnosis(Name, Code, DiagnosisClassId) values('Дефект предсердной перегородки', 'Q21.1', 2)
 insert into Diagnosis(Name, Code, DiagnosisClassId) values('Врожденный порок сердца неуточненный', 'Q24.9', 2)
 
+insert into Parameters(Name, DefaultValue) values('Сатурация', 0)
+insert into Parameters(Name, DefaultValue) values('Пульс', 0)
+
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 1)
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 2)
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 3)
@@ -1387,12 +1527,25 @@ insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 10)
 	- затем 3 цифры - класс ошибки
 	- остальные 3 цифры - уникальный код ошибки, для родителя равен 0000
 */
+
+-- Общие
 insert into Status values(0000000, 'Все плохо!')
 insert into Status values(0000001, 'Все хорошо!')
 
-insert into Status values(2001000, 'У доктора есть ведомые пациенты.')
+-- Общие ошибки
 insert into Status values(3001000, 'Отсутствует запись в базе для данного идентификатора.')
-insert into Status values(3001001, 'Отсутствует информация о докторе в базе.')
+
+-- Доктора
+	-- Сообщения
+	insert into Status values(1001001, 'У доктора нет ведомых пациентов.')
+	-- Предупреждения
+	insert into Status values(2001001, 'У доктора есть ведомые пациенты.')	
+	-- Ошибки
+	insert into Status values(3001001, 'Отсутствует информация о докторе в базе.')
+
+-- Пациенты
+	-- Ошибки
+	insert into Status values(3001002, 'Отсутствует информация о пациенте в базе.')
 
 GO
 PRINT N'Существующие данные проверяются относительно вновь созданных ограничений';
@@ -1428,6 +1581,10 @@ ALTER TABLE [dbo].[FunctionalDisordersToPatients] WITH CHECK CHECK CONSTRAINT [F
 ALTER TABLE [dbo].[ParameterMetadata] WITH CHECK CHECK CONSTRAINT [ParameterMetadataMTOParameter];
 
 ALTER TABLE [dbo].[ParameterMetadata] WITH CHECK CHECK CONSTRAINT [ParameterMetadataMTOValueTypes];
+
+ALTER TABLE [dbo].[ParametersForPatients] WITH CHECK CHECK CONSTRAINT [ParametersMTOPatientsParameter];
+
+ALTER TABLE [dbo].[ParametersForPatients] WITH CHECK CHECK CONSTRAINT [ParametersMTOPatientsPatient];
 
 ALTER TABLE [dbo].[Patients] WITH CHECK CHECK CONSTRAINT [PatientsMTOFunctionalClasses];
 

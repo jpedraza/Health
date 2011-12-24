@@ -142,6 +142,7 @@
     <Folder Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\User" />
     <Folder Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Diagnosis" />
     <Folder Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Patient" />
+    <Folder Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter" />
   </ItemGroup>
   <ItemGroup>
     <PropertiesFile Include="Properties\Database.sqlsettings">
@@ -387,6 +388,12 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\ParametersMTOPatients.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetAllParameterShowData.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetAllMetadataForParameter.proc.sql">
       <SubType>Code</SubType>
     </Build>
   </ItemGroup>

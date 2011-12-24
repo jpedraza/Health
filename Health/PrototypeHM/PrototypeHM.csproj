@@ -135,6 +135,8 @@
     <Compile Include="Forms\DetailForm.Designer.cs">
       <DependentUpon>DetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parameter\ParameterEntities.cs" />
+    <Compile Include="Parameter\ParameterRepository.cs" />
     <Compile Include="Patient\PatientEntities.cs" />
     <Compile Include="Patient\PatientRepository.cs" />
     <Compile Include="Program.cs" />

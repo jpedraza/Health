@@ -17,7 +17,7 @@
 			<Metadata Name="CompatibilityMode" Value="90" />
 		</CustomData>
 		<CustomData Category="Permissions" Type="XmlPermissions">
-			<Metadata Name="FileName" Value="D:\BACKUP\FTP\PROJECTS\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
+			<Metadata Name="FileName" Value="C:\SOME_HEALTH\HEALTH\HEALTH\HEALTH.MSSQLDATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
 		</CustomData>
 	</Header>
 	<Model>
@@ -768,6 +768,7 @@
 			</Relationship>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[DeleteDoctor]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	declare @status int = 1
@@ -777,7 +778,7 @@
 		if exists(select * from PatientsToDoctors where DoctorId = @doctorId)
 		begin
 			set @status = 0
-			set @statusMessage = dbo.GSM(2001000)
+			set @statusMessage = dbo.GSM(2001001)
 		end
 		else 
 		begin		
@@ -792,7 +793,6 @@
 	select @status as Status, @statusMessage as StatusMessage
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -1193,6 +1193,7 @@ RETURN 0]]></Value>
 			</Relationship>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[FullUpdateDoctor]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	declare @status int = 1
@@ -1219,7 +1220,6 @@ RETURN 0]]></Value>
 	select @status as Status, @statusMessage as StatusMessage	
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -1714,6 +1714,7 @@ RETURN 0]]></Value>
 			</Relationship>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetAllDiagnosis]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	declare @status int = 1
@@ -1727,7 +1728,6 @@ RETURN 0]]></Value>
 		   join DiagnosisClass as dc on d.DiagnosisClassId = dc.DiagnosisClassId
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -1776,6 +1776,7 @@ RETURN 0]]></Value>
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetAllDoctorShowData]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	declare @status int = 1
@@ -1797,7 +1798,6 @@ RETURN 0]]></Value>
 		   JOIN Specialties as sp ON do.SpecialtyId = sp.SpecialtyId			   
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -1881,13 +1881,253 @@ RETURN 0]]></Value>
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllDoctorShowData]&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetAllMetadataForParameter]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	select 
+	pm.ParameterId,
+	pm.Value,
+	pm.ValueTypeId,
+	pm.[Key]
+	from ParameterMetadata as pm
+	where
+	pm.ParameterId=@parameterId
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Value]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Key]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetAllMetadataForParameter].[@parameterId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[GetAllMetadataForParameter].[@parameterId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="222" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllMetadataForParameter]&#xD;&#xA;&#x9;@parameterId int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetAllParameterShowData]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	select
+	pa.ParameterId,
+	Name,
+	@status as Status, @statusMessage as StatusMessage
+	from Parameters as pa
+
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[Name]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="260" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllParameterShowData]&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetAllPatientsForDoctor]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	if not(exists(select * from Doctors where DoctorId = @doctorId))
+	begin
+		set @statusMessage = dbo.GSM(3001001)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	if not(exists(select * from PatientsToDoctors where DoctorId = @doctorId))
+	begin
+		set @StatusMessage = dbo.GSM(1001001)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	select u.UserId as Id,
+		   u.FirstName,
+		   u.LastName,
+		   u.ThirdName,
+		   p.Card,
+		   p.Policy,
+		   @status as Status, @statusMessage as StatusMessage
+		   from Users as u
+		   join Patients as p on u.UserId = p.PatientId
+		   join PatientsToDoctors as ptd on ptd.PatientId = p.PatientId
+		   where ptd.DoctorId = @doctorId
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Doctors]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Doctors].[DoctorId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetAllPatientsForDoctor].[@doctorId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PatientsToDoctors]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PatientsToDoctors].[DoctorId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[UserId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PatientsToDoctors]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PatientsToDoctors].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[UserId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[FirstName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[LastName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[ThirdName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Card]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Policy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PatientsToDoctors].[DoctorId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[GetAllPatientsForDoctor].[@doctorId]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[0]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="907" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllPatientsForDoctor]&#xD;&#xA;&#x9;@doctorId int = 0&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetAllShowDataByRoleName]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	SELECT @param1, @param2
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References Name="[dbo].[GetAllShowDataByRoleName].[@param1]" />
@@ -1944,6 +2184,7 @@ RETURN 0]]></Value>
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetAllUserShowData]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	declare @status int = 1
@@ -1962,7 +2203,6 @@ RETURN 0]]></Value>
 		   JOIN Roles as ro ON us.RoleId = ro.RoleId
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -2026,6 +2266,7 @@ RETURN 0]]></Value>
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetDoctorShowData]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 	declare @status int
@@ -2058,7 +2299,6 @@ RETURN 0]]></Value>
 			WHERE do.DoctorId = @doctorId		
 RETURN 0]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
@@ -2175,6 +2415,7 @@ RETURN 0]]></Value>
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetParametersForPatientNowDate]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
 BEGIN
@@ -2207,7 +2448,6 @@ BEGIN
 	select @is_even_week, @week_day
 END]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[datetime]" />
@@ -2281,6 +2521,175 @@ END]]></Value>
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetParametersForPatientNowDate]&#xD;&#xA;&#x9;@patient_id int,&#xD;&#xA;&#x9;@date datetime = 0&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetPatientFullDataById]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	if not(exists(select * from Patients where PatientId = @patientId))
+	begin
+		set @statusMessage = dbo.GSM(3001002)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	select p.PatientId as Id,
+		   p.Card,
+		   p.Policy,
+		   p.Mother,
+		   p.Phone1,
+		   p.Phone2,
+		   p.StartDateOfObservation,
+		   fc.Code as FunctionalClassCode,
+		   fc.Description as FunctionalClassDescription,
+		   u.FirstName,
+		   u.LastName,
+		   u.ThirdName,
+		   u.Login,
+		   u.Password,
+		   u.Token,
+		   r.Name as Role,
+		   @status as Status, @statusMessage as StatusMessage		   	   
+		   from Patients as p
+		   join FunctionalClasses as fc on p.FunctionalClassesId = fc.FunctionalClassesId
+		   join Users as u on p.PatientId = u.UserId
+		   join Roles as r on u.RoleId = r.RoleId
+		   where p.PatientId = @patientId
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetPatientFullDataById].[@patientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FunctionalClasses]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[FunctionalClassesId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FunctionalClasses].[FunctionalClassesId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[UserId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Roles]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[RoleId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Roles].[RoleId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Card]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Policy]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Mother]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Phone1]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[Phone2]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[StartDateOfObservation]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FunctionalClasses].[Code]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FunctionalClasses].[Description]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[FirstName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[LastName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[ThirdName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[Login]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[Password]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Users].[Token]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Roles].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[GetPatientFullDataById].[@patientId]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[0]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="1022" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetPatientFullDataById]&#xD;&#xA;&#x9;@patientId int = 0&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
 		<Element Type="ISql100ScalarFunction" Name="[dbo].[GSM]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="BodyDependencies">
@@ -2351,6 +2760,7 @@ END]]></Value>
 			</Relationship>
 		</Element>
 		<Element Type="ISql90DmlTrigger" Name="[dbo].[InsertWorkDayOfDoctors4]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="SqlTriggerType" Value="2" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[ 
@@ -2373,7 +2783,6 @@ BEGIN
 	END
 END]]></Value>
 			</Property>
-			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="IsInsertTrigger" Value="True" />
 			<Relationship Name="BodyDependencies">
 				<Entry>
@@ -2554,6 +2963,7 @@ END]]></Value>
 				</Entry>
 				<Entry>
 					<Element Type="ISql100SimpleColumn" Name="[dbo].[Parameters].[Name]">
+						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="ISql90TypeSpecifier">
@@ -2584,12 +2994,55 @@ END]]></Value>
 						</Relationship>
 					</Element>
 				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
 				<Entry>
-					<Element Type="ISql100SimpleColumn" Name="[dbo].[Parameters].[Value]">
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="ISql100Table" Name="[dbo].[ParametersForPatients]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[ParametersForPatients].[ParameterId]">
+						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="ISql90TypeSpecifier">
-									<Property Name="Length" Value="1" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[ParametersForPatients].[PatientId]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[ParametersForPatients].[Value]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
 									<Relationship Name="Type">
 										<Entry>
 											<References ExternalSource="BuiltIns" Name="[varbinary]" />
@@ -2601,14 +3054,14 @@ END]]></Value>
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="ISql100SimpleColumn" Name="[dbo].[Parameters].[Metadata]">
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[ParametersForPatients].[Date]">
+						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="ISql90TypeSpecifier">
-									<Property Name="Length" Value="1" />
 									<Relationship Name="Type">
 										<Entry>
-											<References ExternalSource="BuiltIns" Name="[varbinary]" />
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -2620,6 +3073,50 @@ END]]></Value>
 			<Relationship Name="Owner">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="ISql90ForeignKeyConstraint" Name="[dbo].[ParametersMTOPatientsParameter]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[ParametersForPatients].[ParameterId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[ParametersForPatients]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Parameters].[ParameterId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Parameters]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="ISql90ForeignKeyConstraint" Name="[dbo].[ParametersMTOPatientsPatient]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[ParametersForPatients].[PatientId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[ParametersForPatients]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Patients]" />
 				</Entry>
 			</Relationship>
 		</Element>

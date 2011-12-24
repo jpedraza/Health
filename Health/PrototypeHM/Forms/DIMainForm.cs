@@ -5,6 +5,7 @@ using PrototypeHM.DB.DI;
 using PrototypeHM.Diagnosis;
 using PrototypeHM.Doctor;
 using PrototypeHM.User;
+using PrototypeHM.Parameter;
 
 namespace PrototypeHM.Forms
 {
@@ -18,16 +19,7 @@ namespace PrototypeHM.Forms
         public DIMainForm(IDIKernel diKernel) : base(diKernel)
         {
             InitializeComponent();
-            IList<DoctorFullData> doctors = Get<DoctorRepository>().GetAll();
-            multiSelector1.SetData(doctors.ToListOfObjects(), null);
-            multiSelector1.LeftToRightMove = (list, control) =>
-                                                 {
-
-                                                 };
-            multiSelector1.RightToLeftMove = (list, control) =>
-                                                 {
-
-                                                 };
+            
         }
 
         private void CascadeToolStripMenuItemClick(object sender, EventArgs e)
@@ -95,6 +87,21 @@ namespace PrototypeHM.Forms
             var form = new AddForm<DoctorDetail>(DIKernel) { MdiParent = this };
             form.InitializeForm();
             form.Show();
+        }
+
+        private void ñïèñèêèToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ïàðàìåòðûÇäîðîâüÿToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var listForm = DIKernel.Get<ListForm<ParameterFullData>>();
+            listForm.MdiParent = this;
+            listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAll;
+            listForm.InitializeOperations();
+            listForm.Show();
+            listForm.Activate();
         }
     }
 }

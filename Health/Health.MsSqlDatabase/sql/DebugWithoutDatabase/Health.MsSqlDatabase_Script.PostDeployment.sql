@@ -205,6 +205,9 @@ insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие нар�
 insert into Diagnosis(Name, Code, DiagnosisClassId) values('Дефект предсердной перегородки', 'Q21.1', 2)
 insert into Diagnosis(Name, Code, DiagnosisClassId) values('Врожденный порок сердца неуточненный', 'Q24.9', 2)
 
+insert into Parameters(Name, DefaultValue) values('Сатурация', 0)
+insert into Parameters(Name, DefaultValue) values('Пульс', 0)
+
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 1)
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 2)
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 3)
@@ -232,9 +235,22 @@ insert PatientsToDiagnosis(DiagnosisId, PatientId) values (2, 10)
 	- затем 3 цифры - класс ошибки
 	- остальные 3 цифры - уникальный код ошибки, для родителя равен 0000
 */
+
+-- Общие
 insert into Status values(0000000, 'Все плохо!')
 insert into Status values(0000001, 'Все хорошо!')
 
-insert into Status values(2001000, 'У доктора есть ведомые пациенты.')
+-- Общие ошибки
 insert into Status values(3001000, 'Отсутствует запись в базе для данного идентификатора.')
-insert into Status values(3001001, 'Отсутствует информация о докторе в базе.')
+
+-- Доктора
+	-- Сообщения
+	insert into Status values(1001001, 'У доктора нет ведомых пациентов.')
+	-- Предупреждения
+	insert into Status values(2001001, 'У доктора есть ведомые пациенты.')	
+	-- Ошибки
+	insert into Status values(3001001, 'Отсутствует информация о докторе в базе.')
+
+-- Пациенты
+	-- Ошибки
+	insert into Status values(3001002, 'Отсутствует информация о пациенте в базе.')

@@ -194,6 +194,9 @@ insert into Diagnosis(Name, Code, DiagnosisClassId) values('Другие нар�
 insert into Diagnosis(Name, Code, DiagnosisClassId) values('Дефект предсердной перегородки', 'Q21.1', 2)
 insert into Diagnosis(Name, Code, DiagnosisClassId) values('Врожденный порок сердца неуточненный', 'Q24.9', 2)
 
+insert into Parameters(Name, DefaultValue) values('Сатурация', 0)
+insert into Parameters(Name, DefaultValue) values('Пульс', 0)
+
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 1)
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 2)
 insert PatientsToDiagnosis(DiagnosisId, PatientId) values (1, 3)
