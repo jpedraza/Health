@@ -4,24 +4,43 @@ using PrototypeHM.DB;
 using PrototypeHM.DB.Attributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PrototypeHM.Parameter
 {
-    public class ParameterFullData : QueryStatus
+    public class ParameterBaseData : QueryStatus, IIdentity
     {
         [DisplayName(@"Идентификатор"), Hide]
-        public int ParameterId { get; set; }
+        public int ParameterId { get; set; }        
 
-        [DisplayName(@"Название")]
+        [NotDisplay, NotEdit]
+        public int Id { get { return ParameterId; } set { ParameterId = value; } }
+
+        [DisplayName(@"Назв. параметра")]
         public string Name { get; set; }
+
+        [DisplayName(@"Знач. по умолч.")]
+        public string DefaultValue { get; set; }
+
     }
 
-    internal class ParameterDetail : Parameter.ParameterFullData {
-        [DisplayName(@"Мета-данные параметра")]
+    public class ParameterDetail : ParameterBaseData {        
+                
+        [DisplayName(@"Мета-данные параметра"), DinamicCollectionModel(typeof(MetadataForParameter))]
         public IList<MetadataForParameter> Metadata { get; set; }
+
+        public ParameterDetail()
+        {
+            //this.Metadata = new List<MetadataForParameter>();
+        }
+
+        public void AddRow()
+        {
+            this.Metadata.Add(new MetadataForParameter());
+        }
     }
 
-    internal class MetadataForParameter {
+    public class MetadataForParameter {
         [DisplayName(@"Идентификатор"), Hide]
         public int ParameterId { get; set; }
 
@@ -34,11 +53,11 @@ namespace PrototypeHM.Parameter
         [DisplayName(@"Тип данных значения")]
         public ValueTypeOfMetadata ValueType { get; set; }
     }
-    internal class ValueTypeOfMetadata {
+    public class ValueTypeOfMetadata {
         [DisplayName(@"Идентификатор"), Hide]
         public int ValueTypeId { get; set; }
 
-        [DisplayName(@"Название")]
+        [DisplayName(@"Название типа")]
         public string Name { get; set; }
     }
 }

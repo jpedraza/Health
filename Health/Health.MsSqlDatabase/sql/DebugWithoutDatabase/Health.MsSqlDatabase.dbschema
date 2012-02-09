@@ -2414,6 +2414,60 @@ RETURN 0]]></Value>
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetDoctorShowData]&#xD;&#xA;&#x9;@doctorId int = 0&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetParameterById]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	SELECT ParameterId, Name, DefaultValue from 
+	Parameters where ParameterId = @parameterId
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[Parameters]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[DefaultValue]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetParameterById].[@parameterId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[GetParameterById].[@parameterId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="167" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetParameterById]&#xD;&#xA;&#x9;@parameterId int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetParametersForPatientNowDate]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
@@ -2820,6 +2874,191 @@ END]]></Value>
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE TRIGGER [dbo].[InsertWorkDayOfDoctors4]&#xD;&#xA;ON [dbo].[WorkWeeks]&#xD;&#xA;AFTER INSERT &#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[NewParameter]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	insert into Parameters(Name, DefaultValue) values(@nameParameter, @defaultValue)
+	
+	
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[Parameters]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[DefaultValue]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewParameter].[@nameParameter]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewParameter].[@defaultValue]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewParameter].[@nameParameter]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewParameter].[@defaultValue]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="Length" Value="1" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varbinary]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="202" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[NewParameter]&#xD;&#xA;&#x9;@nameParameter nvarchar(max), &#xD;&#xA;&#x9;@defaultValue varbinary(1)&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[NewParameterMetadata]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	insert ParameterMetadata (ParameterId, [Key], Value, ValueTypeId) 
+	values (@ParameterId, @Key, @Value, @ValueTypeId)
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Key]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Value]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewParameterMetadata].[@ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewParameterMetadata].[@Key]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewParameterMetadata].[@Value]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewParameterMetadata].[@ValueTypeId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewParameterMetadata].[@ParameterId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewParameterMetadata].[@Key]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewParameterMetadata].[@Value]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varbinary]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewParameterMetadata].[@ValueTypeId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="266" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[NewParameterMetadata]&#xD;&#xA;&#x9;@ParameterId int,&#xD;&#xA;&#x9;@Key nvarchar(max),&#xD;&#xA;&#x9;@Value varbinary(max),&#xD;&#xA;&#x9;@ValueTypeId int&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[ParameterMetadata]">

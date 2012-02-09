@@ -45,4 +45,23 @@ namespace PrototypeHM.DB.Attributes
             SourceProperty = sourceProperty;
         }
     }
+
+    /// <summary>
+    /// Определяет значение-коллекцию с динамическим иземенением содержащихся в ней элементов
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
+    public class DinamicCollectionModelAttribute : Attribute, IDisplayAttribute {
+
+        /// <summary>
+        /// тип данных элементов коллекции
+        /// </summary>
+        public Type TypeOfCollectionElement;
+
+        public DinamicCollectionModelAttribute() { }
+
+        public DinamicCollectionModelAttribute(Type typeOfCollectionElement)
+        {
+            this.TypeOfCollectionElement = typeOfCollectionElement;
+        }
+    }
 }

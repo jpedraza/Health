@@ -5,7 +5,7 @@ using PrototypeHM.DB.Attributes;
 
 namespace PrototypeHM.User
 {
-    public class UserFullData : QueryStatus
+    public class UserFullData : QueryStatus, IIdentity
     {
         [DisplayName(@"Идентификатор"), Hide]
         public int Id { get; set; }
@@ -33,5 +33,6 @@ namespace PrototypeHM.User
 
         [DisplayName(@"Токен"), Hide]
         public string Token { get; set; }
+
     }
 }

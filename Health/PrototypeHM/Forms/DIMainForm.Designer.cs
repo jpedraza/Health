@@ -40,14 +40,16 @@ namespace PrototypeHM.Forms
             this.tsmiDoctors = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDiagnosis = new System.Windows.Forms.ToolStripMenuItem();
+            this.параметрыЗдоровьяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.тестыУдалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.созданиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пациентуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.вводПараметровToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.пациентуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.вводПараметровToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.параметрыЗдоровьяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.просмотрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.новыйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -146,6 +148,16 @@ namespace PrototypeHM.Forms
             this.tsmiDiagnosis.Text = "Диагнозы";
             this.tsmiDiagnosis.Click += new System.EventHandler(this.TsmiDiagnosisClick);
             // 
+            // параметрыЗдоровьяToolStripMenuItem
+            // 
+            this.параметрыЗдоровьяToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.просмотрToolStripMenuItem,
+            this.новыйToolStripMenuItem});
+            this.параметрыЗдоровьяToolStripMenuItem.Name = "параметрыЗдоровьяToolStripMenuItem";
+            this.параметрыЗдоровьяToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.параметрыЗдоровьяToolStripMenuItem.Text = "Параметры здоровья";
+            this.параметрыЗдоровьяToolStripMenuItem.Click += new System.EventHandler(this.параметрыЗдоровьяToolStripMenuItem_Click);
+            // 
             // тестыУдалитьToolStripMenuItem
             // 
             this.тестыУдалитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -160,6 +172,20 @@ namespace PrototypeHM.Forms
             this.созданиеToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.созданиеToolStripMenuItem.Text = "Создание";
             this.созданиеToolStripMenuItem.Click += new System.EventHandler(this.созданиеToolStripMenuItem_Click);
+            // 
+            // пациентуToolStripMenuItem
+            // 
+            this.пациентуToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.вводПараметровToolStripMenuItem});
+            this.пациентуToolStripMenuItem.Name = "пациентуToolStripMenuItem";
+            this.пациентуToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.пациентуToolStripMenuItem.Text = "Пациенту";
+            // 
+            // вводПараметровToolStripMenuItem
+            // 
+            this.вводПараметровToolStripMenuItem.Name = "вводПараметровToolStripMenuItem";
+            this.вводПараметровToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.вводПараметровToolStripMenuItem.Text = "Ввод параметров";
             // 
             // statusStrip
             // 
@@ -177,26 +203,19 @@ namespace PrototypeHM.Forms
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
             // 
-            // пациентуToolStripMenuItem
+            // просмотрToolStripMenuItem
             // 
-            this.пациентуToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.вводПараметровToolStripMenuItem});
-            this.пациентуToolStripMenuItem.Name = "пациентуToolStripMenuItem";
-            this.пациентуToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.пациентуToolStripMenuItem.Text = "Пациенту";
+            this.просмотрToolStripMenuItem.Name = "просмотрToolStripMenuItem";
+            this.просмотрToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.просмотрToolStripMenuItem.Text = "Просмотр";
+            this.просмотрToolStripMenuItem.Click += new System.EventHandler(this.просмотрToolStripMenuItem_Click);
             // 
-            // вводПараметровToolStripMenuItem
+            // новыйToolStripMenuItem
             // 
-            this.вводПараметровToolStripMenuItem.Name = "вводПараметровToolStripMenuItem";
-            this.вводПараметровToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.вводПараметровToolStripMenuItem.Text = "Ввод параметров";
-            // 
-            // параметрыЗдоровьяToolStripMenuItem
-            // 
-            this.параметрыЗдоровьяToolStripMenuItem.Name = "параметрыЗдоровьяToolStripMenuItem";
-            this.параметрыЗдоровьяToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.параметрыЗдоровьяToolStripMenuItem.Text = "Параметры здоровья";
-            this.параметрыЗдоровьяToolStripMenuItem.Click += new System.EventHandler(this.параметрыЗдоровьяToolStripMenuItem_Click);
+            this.новыйToolStripMenuItem.Name = "новыйToolStripMenuItem";
+            this.новыйToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.новыйToolStripMenuItem.Text = "Новый";
+            this.новыйToolStripMenuItem.Click += new System.EventHandler(this.новыйToolStripMenuItem_Click);
             // 
             // DIMainForm
             // 
@@ -239,6 +258,8 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem параметрыЗдоровьяToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem пациентуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem вводПараметровToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem просмотрToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem новыйToolStripMenuItem;
     }
 }
 

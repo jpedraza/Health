@@ -6,6 +6,7 @@ using PrototypeHM.Diagnosis;
 using PrototypeHM.Doctor;
 using PrototypeHM.User;
 using PrototypeHM.Parameter;
+using PrototypeHM.DB;
 
 namespace PrototypeHM.Forms
 {
@@ -96,12 +97,25 @@ namespace PrototypeHM.Forms
 
         private void ïàðàìåòðûÇäîðîâüÿToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var listForm = DIKernel.Get<ListForm<ParameterFullData>>();
+           
+        }
+
+        private void ïðîñìîòðToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var listForm = new ListForm<ParameterDetail>(DIKernel);
             listForm.MdiParent = this;
             listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAll;
             listForm.InitializeOperations();
             listForm.Show();
             listForm.Activate();
+        }
+
+        private void íîâûéToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var editForm = new AddForm<ParameterDetail>(DIKernel, -1) { MdiParent = this };
+            
+            editForm.InitializeForm();
+            editForm.Show();
         }
     }
 }

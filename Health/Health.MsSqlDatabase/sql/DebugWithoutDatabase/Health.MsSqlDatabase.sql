@@ -973,6 +973,17 @@ AS
 	SELECT @param1, @param2
 RETURN 0
 GO
+PRINT N'Выполняется создание [dbo].[GetParameterById]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetParameterById]
+	@parameterId int
+AS
+	SELECT ParameterId, Name, DefaultValue from 
+	Parameters where ParameterId = @parameterId
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[GetParametersForPatientNowDate]...';
 
 
@@ -1010,6 +1021,33 @@ BEGIN
 	*/
 	select @is_even_week, @week_day
 END
+GO
+PRINT N'Выполняется создание [dbo].[NewParameter]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[NewParameter]
+	@nameParameter nvarchar(max), 
+	@defaultValue varbinary(1)
+AS
+	insert into Parameters(Name, DefaultValue) values(@nameParameter, @defaultValue)
+	
+	
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[NewParameterMetadata]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[NewParameterMetadata]
+	@ParameterId int,
+	@Key nvarchar(max),
+	@Value varbinary(max),
+	@ValueTypeId int
+AS
+	insert ParameterMetadata (ParameterId, [Key], Value, ValueTypeId) 
+	values (@ParameterId, @Key, @Value, @ValueTypeId)
+RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[DeleteDoctor]...';
 

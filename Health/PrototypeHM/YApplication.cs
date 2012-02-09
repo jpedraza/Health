@@ -59,6 +59,8 @@ namespace PrototypeHM
             _kernel.Get<QueryRepository>().Add("GetAllPatientsForDoctor", "exec [dbo].[GetAllPatientsForDoctor] [doctorId]");
             _kernel.Get<QueryRepository>().AddProcedure("GetAllParameterShowData");
             _kernel.Get<QueryRepository>().Add("GetAllMetadataForParameter", "[dbo].[GetAllMetadataForParameter] [parameterId]");
+            _kernel.Get<QueryRepository>().Add("NewParameter", "[dbo].[NewParameter] [nameParameter] [defaultValue]");
+            _kernel.Get<QueryRepository>().Add("GetParameterById", "[dbo].[GetParameterById] [parameterId]");
             
         }
 
@@ -78,11 +80,22 @@ namespace PrototypeHM
                                                                    {
                                                                        Load = _kernel.Get<SpecialtyRepository>().GetAll
                                                                    });
-            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterFullData>
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterBaseData>
             {                
-                Detail = _kernel.Get<ParameterRepository>().Detail,
-                Load = _kernel.Get<ParameterRepository>().GetAll
+                
+                            
             });
+
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
+            Save = _kernel.Get<ParameterRepository>().Save
+            });
+
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
+            Save = _kernel.Get<ParameterRepository>().Save,
+            Detail = _kernel.Get<ParameterRepository>().Detail,
+            Load = _kernel.Get<ParameterRepository>().GetAll,   
+            });
+
         }
     }
 }

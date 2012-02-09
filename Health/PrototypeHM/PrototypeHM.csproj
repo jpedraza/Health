@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\DinamicCollection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\DinamicCollection.Designer.cs">
+      <DependentUpon>DinamicCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\MultiSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +98,7 @@
     <Compile Include="DB\Attributes\IMapAttribute.cs" />
     <Compile Include="DB\Attributes\IValidateAttribute.cs" />
     <Compile Include="DB\Attributes\NotAttributes.cs" />
+    <Compile Include="DB\IIdentity .cs" />
     <Compile Include="DB\QueryRepository.cs" />
     <Compile Include="DB\DB.cs" />
     <Compile Include="DB\DI\DIKernel.cs" />
@@ -147,6 +154,9 @@
     <Compile Include="User\UserRepository.cs" />
     <Compile Include="YApplication.cs" />
     <Compile Include="YMessageBox.cs" />
+    <EmbeddedResource Include="Components\DinamicCollection.resx">
+      <DependentUpon>DinamicCollection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\MultiSelector.resx">
       <DependentUpon>MultiSelector.cs</DependentUpon>
     </EmbeddedResource>
