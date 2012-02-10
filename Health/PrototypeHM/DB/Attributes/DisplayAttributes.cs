@@ -74,7 +74,10 @@ namespace PrototypeHM.DB.Attributes
     {
         private bool _isCompound;
 
-        public bool IsSimpleOrCompound
+        /// <summary>
+        /// true - если простой, false - если составной
+        /// </summary>
+        public bool IsSimple
         {
             get { return _isCompound; }
             set { _isCompound = value; }

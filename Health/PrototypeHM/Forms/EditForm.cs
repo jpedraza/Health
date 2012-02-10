@@ -150,7 +150,10 @@ namespace PrototypeHM.Forms
                                                                
                                                            }
 
-                                                           _collectionsPropertiInfos[i].SetValue(_dataObject, _lclClln, null);
+                                                           if (_dgvs[i].RowCount > 1)
+                                                           {
+                                                               _collectionsPropertiInfos[i].SetValue(_dataObject, _lclClln, null);
+                                                           }
 
                                                        }
                                                        else
@@ -166,10 +169,15 @@ namespace PrototypeHM.Forms
                                                QueryStatus status = SaveData(_dataObject);
                                                YMessageBox.Information(status.StatusMessage);
 
-                                               if (status.Status == 1)
+                                               if (status.Status == 0)
+                                               {
                                                    okFlag = false;
-                                                   if (okFlag)
-                                                       this.Close();
+                                               }
+
+                                               if (okFlag)
+                                               {
+                                                   Close();
+                                               }
                                            };
                 tsOperations.Items.Add(saveC);
             }
@@ -181,8 +189,7 @@ namespace PrototypeHM.Forms
 
             }
 
-            //служебная переменная
-            PropertyInfo propertyInfoSpecial;
+            
             foreach (PropertyInfo propertyInfo in propertiesInfo)
             {
                 if (propertyInfo.GetCustomAttributes(true).FirstOrDefault(
