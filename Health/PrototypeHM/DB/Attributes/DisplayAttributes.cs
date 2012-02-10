@@ -64,4 +64,20 @@ namespace PrototypeHM.DB.Attributes
             this.TypeOfCollectionElement = typeOfCollectionElement;
         }
     }
+
+    /// <summary>
+    /// Определяет - является ли данное св-во сущности простым, или составным
+    /// (т.е. для которого необходима отдельная форма редактирования)
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple=false, Inherited=false)]
+    public class SimpleOrCompoundModelAttribute : Attribute, IDisplayAttribute
+    {
+        private bool _isCompound;
+
+        public bool IsSimpleOrCompound
+        {
+            get { return _isCompound; }
+            set { _isCompound = value; }
+        }
+    }
 }

@@ -253,28 +253,7 @@ namespace PrototypeHM.Forms
                             /*
                              * В случае создания нового элемента, необходимо создать коллекцию.
                              */
-                            propertyInfoSpecial = propertyInfo;
                             
-                            Action addrow = () =>
-                            {
-                                try
-                                {
-                                    typeof(TData).GetMethod("AddRow").Invoke(_dataObject, null);
-                                    //cc.dgvMetaData.DataSource = propertyInfoSpecial.GetValue(_dataObject, null);
-                                    
-                                }
-                                catch (Exception exp)
-                                {
-                                    YMessageBox.Error(exp.Message);
-                                }
-                            };
-                            
-                            if (SaveData != null)
-                            {
-                                
-                                
-                            }
-
                             _dgvs.Add((cc as DinamicCollection).dgvMetaData);
                             _collectionsPropertiInfos.Add(propertyInfo);
                             /*
@@ -293,38 +272,18 @@ namespace PrototypeHM.Forms
                                         var columnText = elemAttr.DisplayName != null && elemAttr.DisplayName != "" ? elemAttr.DisplayName : propertyInfoOfElem.Name;
                                         cc.dgvMetaData.Columns.Add(new DataGridViewTextBoxColumn() { Name = propertyInfoOfElem.Name, HeaderText = columnText, DataPropertyName = propertyInfoOfElem.Name });
                                         fieldNumeric++;
-                                    }
-                                    //else
-                                    //{
-                                    //    var columnText = elemAttr.DisplayName != null && elemAttr.DisplayName != "" ? elemAttr.DisplayName : propertyInfoOfElem.Name;
-                                    //    cc.dgvMetaData.Columns.Add(new DataGridViewTextBoxColumn() { Name = propertyInfoOfElem.Name, HeaderText = columnText, DataPropertyName = propertyInfoOfElem.Name, Visible = false });
-                                    //}
+                                    }                                    
                                 }
-
-                                //cc.dgvMetaData.DataBindings.Add("DataSource", propertyInfo.GetValue(_dataObject, null), propertyInfo.Name, true, DataSourceUpdateMode.OnPropertyChanged);
-                                //cc.dgvMetaData.DataSource = propertyInfo.GetValue(_dataObject, null);
                                 var fieldWidth = 0;
                                 if (fieldNumeric != 0)
                                 {
                                     fieldWidth = cc.dgvMetaData.Width / fieldNumeric;
                                     fieldWidth = fieldWidth > 15 ? fieldWidth : 15;
-                                }
-                                //foreach (var column in cc.dgvMetaData.Columns)
-                                //{
-                                //    column.Width = fieldWidth;
-                                //}
-
-                                //for (var i = 0; i < cc.dgvMetaData.ColumnCount; i++)
-                                //{
-                                //    cc.dgvMetaData.Columns[i].Width = fieldWidth;
-                                //}
+                                }                                
                             }
 
                             cc.AddButtonClick = (sender, e) => {
                                 cc.dgvMetaData.Rows.Add();
-
-                                //addrow();
-                                cc.dgvMetaData.Update();
                             };
 
                             cc.DeleteButtonClick = (sender, e) => {

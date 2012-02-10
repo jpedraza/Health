@@ -28,16 +28,7 @@ namespace PrototypeHM.Parameter
                 
         [DisplayName(@"Мета-данные параметра"), DinamicCollectionModel(typeof(MetadataForParameter))]
         public IList<MetadataForParameter> Metadata { get; set; }
-
-        public ParameterDetail()
-        {
-            //this.Metadata = new List<MetadataForParameter>();
-        }
-
-        public void AddRow()
-        {
-            this.Metadata.Add(new MetadataForParameter());
-        }
+                
     }
 
     public class MetadataForParameter {
