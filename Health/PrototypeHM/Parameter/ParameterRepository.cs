@@ -64,28 +64,31 @@ namespace PrototypeHM.Parameter {
              *
              * string s = Encoding.UTF8.GetString(new byte[] { 0, 2 });
              */
-            if (data.Name != null && data.Name != "" && data.DefaultValue != null && data.DefaultValue != "")
+            if (data.IsValid())
             {
-
                 try
                 {
-                    
+                    SqlCommand c = CreateQuery("EXEC NewParameter @nameParameter, @defaultValue");
+                    c.Parameters.Add(new SqlParameter("nameParameter", SqlDbType.NVarChar));
+                    c.Parameters[0].Value = data.Name;
+                    c.Parameters.Add(new SqlParameter("defaultValue", SqlDbType.VarBinary));
+                    c.Parameters[1].Value = Encoding.UTF8.GetBytes(data.DefaultValue);
 
-                    var flagCheckMetadata = true;
-                    foreach (var metadata in data.Metadata)
-                    {
-                        if (metadata.Key == null && metadata.Key == "" && metadata.Value == null &&
-                            metadata.Value.ToString() == "")
-                        {
-                            flagCheckMetadata = false;
-                            break;
-                        }
-                    }
-                    if (flagCheckMetadata)
-                    {
-                        foreach (var metadata in data.Metadata)
-                        {
-                            try
+                    SqlDataReader reader = c.ExecuteReader();
+                    reader.Close();
+
+                    return new QueryStatus { Status = 1, StatusMessage = "Успешно записано" };
+                }
+                catch (Exception exp)
+                {
+                    return new QueryStatus { Status = 0, StatusMessage = exp.Message };
+                }
+            }
+
+            return new QueryStatus { Status = 0, StatusMessage = "Запись невозможна" };
+
+            /*
+             try
                             {
                                 SqlCommand c = CreateQuery("EXEC NewParameter @nameParameter, @defaultValue");
                                 c.Parameters.Add(new SqlParameter("nameParameter", SqlDbType.NVarChar));
@@ -110,25 +113,7 @@ namespace PrototypeHM.Parameter {
                                 return new QueryStatus { Status = 0, StatusMessage = exp2.Message };
                             }
                         }
-
-                        return new QueryStatus { Status = 1, StatusMessage = "Успешно записано" };
-                    }
-                    else
-                    {
-                        return new QueryStatus { Status = 0, StatusMessage = "Проверьте входные метаданные параметра здоровья" };
-                    }
-                }
-                catch (Exception exp)
-                {
-                    return new QueryStatus { Status = 0, StatusMessage = exp.Message };
-                }
-            }
-            else
-            {
-                return new QueryStatus { Status = 0, StatusMessage = "Проверьте входные данные параметра здоровья" };
-            }
-
-            return new QueryStatus();
+             */
         }
 
         internal QueryStatus Update(ParameterDetail data)

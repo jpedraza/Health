@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="checkEnitiesValid.cs" />
     <Compile Include="Components\DinamicCollection.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +99,7 @@
     <Compile Include="DB\Attributes\IMapAttribute.cs" />
     <Compile Include="DB\Attributes\IValidateAttribute.cs" />
     <Compile Include="DB\Attributes\NotAttributes.cs" />
+    <Compile Include="DB\IHealthParameterContext.cs" />
     <Compile Include="DB\IIdentity .cs" />
     <Compile Include="DB\QueryRepository.cs" />
     <Compile Include="DB\DB.cs" />
