@@ -80,11 +80,13 @@ namespace PrototypeHM.Components
         {
             var source = DataSource as IEnumerable<object>;
             if (source == null) return;
-            Type[] genericArguments = source.GetType().GetGenericArguments();
-            if (genericArguments.Length != 1) return;
-            Type objType = genericArguments[0];
-            PropertyInfo[] propertiesInfo = objType.GetProperties();
-            ProcessDisplayAttribute(propertiesInfo);
+            if (source.GetType().IsGenericType && source.GetType().GetGenericArguments().Any())
+            {
+                Type[] genericArguments = source.GetType().GetGenericArguments();
+                Type objType = genericArguments[0];
+                PropertyInfo[] propertiesInfo = objType.GetProperties();
+                ProcessDisplayAttribute(propertiesInfo);
+            }
         }
 
         private void ProcessDisplayAttribute(IEnumerable<PropertyInfo> propertiesInfo)

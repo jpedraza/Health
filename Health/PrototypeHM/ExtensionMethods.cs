@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace PrototypeHM
 {
@@ -24,6 +25,32 @@ namespace PrototypeHM
                 listObjs.Add(obj);
             }
             return listObjs;
+        }
+
+        internal static IBindingList ToBindingList<T>(this IList<T> list)
+        {
+            var listObjs = new BindingList<T>();
+            foreach (T obj in list)
+            {
+                listObjs.Add(obj);
+            }
+            return listObjs; 
+        }
+
+        internal static void AddRange(this IBindingList list, IBindingList objs)
+        {
+            foreach (object obj in objs)
+            {
+                list.Add(obj);
+            }
+        }
+
+        internal static void RemoveRange(this IBindingList list, IBindingList objs)
+        {
+            foreach (object obj in objs)
+            {
+                list.Remove(obj);
+            }
         }
     }
 }

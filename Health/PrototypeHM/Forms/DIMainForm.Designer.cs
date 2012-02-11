@@ -41,6 +41,8 @@ namespace PrototypeHM.Forms
             this.tsmiUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDiagnosis = new System.Windows.Forms.ToolStripMenuItem();
             this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ïğîñìîòğToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.íîâûéToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.òåñòûÓäàëèòüToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ñîçäàíèåToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ïàöèåíòóToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,8 +50,8 @@ namespace PrototypeHM.Forms
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.ïğîñìîòğToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.íîâûéToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.multiSelector1 = new PrototypeHM.Components.MultiSelector();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -158,6 +160,20 @@ namespace PrototypeHM.Forms
             this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.Text = "Ïàğàìåòğû çäîğîâüÿ";
             this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.Click += new System.EventHandler(this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem_Click);
             // 
+            // ïğîñìîòğToolStripMenuItem
+            // 
+            this.ïğîñìîòğToolStripMenuItem.Name = "ïğîñìîòğToolStripMenuItem";
+            this.ïğîñìîòğToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.ïğîñìîòğToolStripMenuItem.Text = "Ïğîñìîòğ";
+            this.ïğîñìîòğToolStripMenuItem.Click += new System.EventHandler(this.ïğîñìîòğToolStripMenuItem_Click);
+            // 
+            // íîâûéToolStripMenuItem
+            // 
+            this.íîâûéToolStripMenuItem.Name = "íîâûéToolStripMenuItem";
+            this.íîâûéToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.íîâûéToolStripMenuItem.Text = "Íîâûé";
+            this.íîâûéToolStripMenuItem.Click += new System.EventHandler(this.íîâûéToolStripMenuItem_Click);
+            // 
             // òåñòûÓäàëèòüToolStripMenuItem
             // 
             this.òåñòûÓäàëèòüToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -203,25 +219,32 @@ namespace PrototypeHM.Forms
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Ñîñòîÿíèå";
             // 
-            // ïğîñìîòğToolStripMenuItem
+            // multiSelector1
             // 
-            this.ïğîñìîòğToolStripMenuItem.Name = "ïğîñìîòğToolStripMenuItem";
-            this.ïğîñìîòğToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ïğîñìîòğToolStripMenuItem.Text = "Ïğîñìîòğ";
-            this.ïğîñìîòğToolStripMenuItem.Click += new System.EventHandler(this.ïğîñìîòğToolStripMenuItem_Click);
+            this.multiSelector1.EditMode = false;
+            this.multiSelector1.Location = new System.Drawing.Point(45, 204);
+            this.multiSelector1.MinimumSize = new System.Drawing.Size(255, 400);
+            this.multiSelector1.Name = "multiSelector1";
+            this.multiSelector1.Size = new System.Drawing.Size(445, 400);
+            this.multiSelector1.TabIndex = 4;
             // 
-            // íîâûéToolStripMenuItem
+            // button1
             // 
-            this.íîâûéToolStripMenuItem.Name = "íîâûéToolStripMenuItem";
-            this.íîâûéToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.íîâûéToolStripMenuItem.Text = "Íîâûé";
-            this.íîâûéToolStripMenuItem.Click += new System.EventHandler(this.íîâûéToolStripMenuItem_Click);
+            this.button1.Location = new System.Drawing.Point(427, 77);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // DIMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1072, 727);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.multiSelector1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
@@ -260,6 +283,8 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem ââîäÏàğàìåòğîâToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ïğîñìîòğToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem íîâûéToolStripMenuItem;
+        private Components.MultiSelector multiSelector1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

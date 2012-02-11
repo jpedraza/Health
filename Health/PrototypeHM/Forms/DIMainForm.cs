@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using PrototypeHM.DB.DI;
 using PrototypeHM.Diagnosis;
 using PrototypeHM.Doctor;
+using PrototypeHM.Specialty;
 using PrototypeHM.User;
 using PrototypeHM.Parameter;
 using PrototypeHM.DB;
@@ -116,6 +118,12 @@ namespace PrototypeHM.Forms
             
             editForm.InitializeForm();
             editForm.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            multiSelector1.SetData(DIKernel.Get<SpecialtyRepository>().GetAll().ToBindingList(),
+                                   new BindingList<Specialty.Specialty>());
         }
     }
 }

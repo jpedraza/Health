@@ -2,6 +2,7 @@ Health/_ReSharper.Health
 Health/Health.5.1.ReSharper.user
 [Oo]bj/
 [Bb]in/
+Health.MsSqlDatabase/sql
 *.suo
 *.user
 *.vspscc
