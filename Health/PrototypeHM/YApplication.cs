@@ -86,6 +86,12 @@ namespace PrototypeHM
                             
             });
 
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
+            {
+                Save = _kernel.Get<ParameterRepository>().SaveMetadata
+
+            });
+
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
             Save = _kernel.Get<ParameterRepository>().Save
             });
