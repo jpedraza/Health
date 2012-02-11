@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace PrototypeHM.Components
 {
+    /// <summary>
+    /// Компонент обеспечивает миграцию однотипных объектов между двумя источниками данных.
+    /// </summary>
     public partial class MultiSelector : UserControl
     {
         public MultiSelector()
@@ -14,6 +17,9 @@ namespace PrototypeHM.Components
         }
 
         private  bool _editMode;
+        /// <summary>
+        /// Задать или узнать включен ли режим редактирования.
+        /// </summary>
         public bool EditMode
         {
             get { return _editMode; }
@@ -31,14 +37,31 @@ namespace PrototypeHM.Components
             }
         }
 
+        /// <summary>
+        /// Делегат события при перемещении элементов.
+        /// </summary>
+        /// <param name="objs">Перемещаемые элементы.</param>
+        /// <returns>Разрешить перемещение или нет?</returns>
         public delegate bool EventMove(IBindingList objs);
 
+        /// <summary>
+        /// Событие возникате перед перемещением элемента из левого источника данных в правый.
+        /// </summary>
         public EventMove OnBeforeMoveToRight;
 
+        /// <summary>
+        /// Событие возникате перед перемещением элемента из правого источника данных в левый.
+        /// </summary>
         public EventMove OnBeforeMoveToLeft;
 
+        /// <summary>
+        /// Левый источник данных.
+        /// </summary>
         public IBindingList LeftSource { get; private set; }
 
+        /// <summary>
+        /// Правый источник данных.
+        /// </summary>
         public IBindingList RightSource { get; private set; }
 
         private void BtnDisplayModeClick(object sender, EventArgs e)
@@ -46,6 +69,11 @@ namespace PrototypeHM.Components
             EditMode = !EditMode;
         }
 
+        /// <summary>
+        /// Установить источники данных.
+        /// </summary>
+        /// <param name="left">Левый.</param>
+        /// <param name="right">Правый.</param>
         public void SetData(IBindingList left, IBindingList right)
         {
             if (left == null)
