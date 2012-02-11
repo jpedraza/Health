@@ -120,5 +120,10 @@ namespace PrototypeHM.Parameter {
         {
             return new QueryStatus();
         }
+
+        internal QueryStatus SaveMetadata(MetadataForParameter data)
+        {
+            return new QueryStatus() { Status = 1};
+        }
     }
 }

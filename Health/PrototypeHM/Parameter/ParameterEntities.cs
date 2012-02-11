@@ -37,7 +37,7 @@ namespace PrototypeHM.Parameter
                 
     }
 
-    public class MetadataForParameter:IHealthParameterContext {
+    public class MetadataForParameter:IHealthParameterContext, IIdentity {
         [DisplayName(@"Идентификатор"), Hide]
         public int ParameterId { get; set; }
 
@@ -47,15 +47,18 @@ namespace PrototypeHM.Parameter
         [DisplayName(@"Значение"), SimpleOrCompoundModel(IsSimple = true)]
         public object Value { get; set; }
 
-        [DisplayName(@"Тип данных значения"), SimpleOrCompoundModel(IsSimple = false)]
+        [DisplayName(@"Тип данных значения"), SimpleOrCompoundModel(IsSimple = false), SingleSelectEditMode(typeof(OperationsContext<Specialty.Specialty>), "Name")]
         public ValueTypeOfMetadata ValueType { get; set; }
 
         public bool IsValid()
         {
             return checkEnitiesValid.checkValid(this.GetType(), (object)this);
         }
+
+        [NotDisplay, NotEdit]
+        public int Id { get { return ParameterId; } set { ParameterId = value; } }
     }
-    public class ValueTypeOfMetadata:IHealthParameterContext {
+    public class ValueTypeOfMetadata:IHealthParameterContext, IIdentity {
         [DisplayName(@"Идентификатор"), Hide]
         public int ValueTypeId { get; set; }
 
@@ -66,5 +69,8 @@ namespace PrototypeHM.Parameter
         {
             return checkEnitiesValid.checkValid(this.GetType(), (object)this);
         }
+
+        [NotDisplay, NotEdit]
+        public int Id { get { return ValueTypeId; } set { ValueTypeId = value; } }
     }
 }
