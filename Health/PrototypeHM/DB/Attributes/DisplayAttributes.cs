@@ -17,8 +17,21 @@ namespace PrototypeHM.DB.Attributes
     /// </summary>
     public enum TypeMappingEnum
     {
+        /// <summary>
+        /// Данная сущность может быть связана с несколькими
+        /// другими сущностями
+        /// </summary>
         OneToMany = 1,
-        ManyToMany = 2
+
+        /// <summary>
+        /// Многие ко многим
+        /// </summary>
+        ManyToMany = 2,
+
+        /// <summary>
+        /// Сущностей может быть много, но все они принадлежат какой-то конкретной сущности
+        /// </summary>
+        ManyToOne = 3
     }
 
     /// <summary>
