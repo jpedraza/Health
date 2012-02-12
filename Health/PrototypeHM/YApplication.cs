@@ -74,7 +74,9 @@ namespace PrototypeHM
                                                                    });
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<PatientForDoctor>
                                                                    {
-                                                                       Detail = _kernel.Get<PatientRepository>().GetPatientFullDataById
+                                                                       Detail = _kernel.Get<PatientRepository>().GetPatientFullDataById,
+                                                                       Load = _kernel.Get<PatientRepository>().GetAllPatients
+
                                                                    });
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<Specialty.Specialty>
                                                                    {
@@ -115,6 +117,14 @@ namespace PrototypeHM
                                                                        
             });
             //Конец контекста операций для типа метаданных
+
+            //Для DoctorDetail
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<DoctorDetail>
+            {
+                Save = _kernel.Get<DoctorRepository>().Save
+            });
+
+            
         }
     }
 }

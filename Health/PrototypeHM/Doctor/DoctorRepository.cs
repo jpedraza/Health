@@ -57,5 +57,11 @@ namespace PrototypeHM.Doctor
                                  };
             return detailData;
         }
+
+        internal QueryStatus Save(DoctorDetail data)
+        {
+            return new QueryStatus();
+        }
+        
     }
 }

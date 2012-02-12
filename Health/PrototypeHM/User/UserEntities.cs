@@ -34,5 +34,21 @@ namespace PrototypeHM.User
         [DisplayName(@"Токен"), Hide]
         public string Token { get; set; }
 
+        public UserFullData():base()
+        {
+            foreach (var pI in this.GetType().GetProperties())
+            {
+                if (pI.PropertyType == typeof(string))
+                {
+                    pI.SetValue(this, string.Empty, null);
+                }
+
+                if (pI.PropertyType == typeof(DateTime))
+                {
+                    pI.SetValue(this, DateTime.Today, null);
+                }
+            }
+        }
+
     }
 }

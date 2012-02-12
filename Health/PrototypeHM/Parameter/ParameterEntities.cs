@@ -18,15 +18,21 @@ namespace PrototypeHM.Parameter
         [NotDisplay, NotEdit]
         public int Id { get { return ParameterId; } set { ParameterId = value; } }
 
-        [DisplayName(@"Назв. параметра"), SimpleOrCompoundModel(IsSimple=true)]
+        [DisplayName(@"Название параметра"), SimpleOrCompoundModel(IsSimple=true)]
         public string Name { get; set; }
 
-        [DisplayName(@"Знач. по умолч."), SimpleOrCompoundModel(IsSimple = true)]
+        [DisplayName(@"Значение по умолчанию"), SimpleOrCompoundModel(IsSimple = true)]
         public string DefaultValue { get; set; }
 
         public bool IsValid()
         {
             return checkEnitiesValid.checkValid(this.GetType(), (object)this);
+        }
+
+        public ParameterBaseData():base()
+        {
+            Name = string.Empty;
+            DefaultValue = string.Empty;
         }
     }
 
@@ -34,7 +40,12 @@ namespace PrototypeHM.Parameter
                 
         [DisplayName(@"Мета-данные параметра"), SimpleOrCompoundModel(IsSimple=false), MultiSelectEditMode(typeof(OperationsContext<MetadataForParameter>), "ParameterId", TypeMappingEnum.ManyToOne)]
         public IList<MetadataForParameter> Metadata { get; set; }
-                
+
+        public ParameterDetail() : base()
+        {
+            Metadata = new MetadataForParameter[0].ToList();
+            
+        }
     }
 
     public class MetadataForParameter:IHealthParameterContext, IIdentity {
@@ -45,7 +56,7 @@ namespace PrototypeHM.Parameter
         public string Key { get; set; }
 
         [DisplayName(@"Значение"), SimpleOrCompoundModel(IsSimple = true)]
-        public object Value { get; set; }
+        public string Value { get; set; }
 
         [DisplayName(@"Тип данных значения"), SimpleOrCompoundModel(IsSimple = false), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "ValueTypeId", TypeMappingEnum.OneToMany)]
         public ValueTypeOfMetadata ValueType { get; set; }
@@ -53,6 +64,22 @@ namespace PrototypeHM.Parameter
         public bool IsValid()
         {
             return checkEnitiesValid.checkValid(this.GetType(), (object)this);
+        }
+
+        public MetadataForParameter()
+        {
+            foreach (var pI in this.GetType().GetProperties())
+            {
+                if (pI.PropertyType == typeof(string))
+                {
+                    pI.SetValue(this, string.Empty, null);
+                }
+
+                if (pI.PropertyType == typeof(DateTime))
+                {
+                    pI.SetValue(this, DateTime.Today, null);
+                }
+            }
         }
 
         [NotDisplay, NotEdit]

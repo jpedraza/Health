@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using PrototypeHM.DB;
 using PrototypeHM.DB.Attributes;
@@ -13,9 +14,15 @@ namespace PrototypeHM.Doctor
 
         [DisplayName(@"Роль"), NotEdit]
         public new string Role { get; set; }
+
+        public DoctorFullData():base()
+        {
+            Specialty = string.Empty;
+            Role = string.Empty;
+        }
     }
 
-    public class PatientForDoctor : QueryStatus
+    public class PatientForDoctor : QueryStatus, IIdentity
     {
         [Hide]
         public int Id { get; set; }
@@ -35,7 +42,12 @@ namespace PrototypeHM.Doctor
 
     public class DoctorDetail : DoctorFullData
     {
-        [DisplayName(@"Пациенты")]
+        [DisplayName(@"Пациенты"), MultiSelectEditMode(typeof(OperationsContext<PatientForDoctor>), "FirstName", TypeMappingEnum.ManyToMany)]
         public ICollection<PatientForDoctor> Patients { get; set; }
+
+        public DoctorDetail():base()
+        {
+            Patients = new Collection<PatientForDoctor>();
+        }
     }
 }

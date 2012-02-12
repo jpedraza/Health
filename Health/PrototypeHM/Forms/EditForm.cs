@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -76,14 +77,29 @@ namespace PrototypeHM.Forms
             {
                 if (_Id == -1)
                 {
+                    if (operationsContext.Save == null)
+                    {
+                        throw new Exception(string.Format("Отсутствует операция сохранения, для типа: {0}",
+                                                          typeof (TData).Name));
+                    }
                     SaveData = operationsContext.Save;
                     _dataObject = new TData();
                 }
                 else
                 {
+                    if (operationsContext.Update == null)
+                    {
+                        throw new Exception(string.Format("Отсутствует операция обновления, для типа: {0}",
+                                                          typeof (TData).Name));
+                    }
                     UpdateData = operationsContext.Update;
                     DetailData = operationsContext.Detail;
                 }
+            }
+
+            else
+            {
+                throw new Exception(string.Format("Отсутствует контекст операций, для типа: {0}", typeof(TData).Name));
             }
 
             if (SaveData != null)
@@ -122,6 +138,12 @@ namespace PrototypeHM.Forms
 
             foreach (PropertyInfo propertyInfo in propertiesInfo)
             {
+                //Если null, то сперва необходимо создать.
+                if (propertyInfo.GetValue(_dataObject,null) == null)
+                {
+                    propertyInfo.SetValue(_dataObject, Activator.CreateInstance(propertyInfo.PropertyType, null), null);
+                }
+                
                 if (propertyInfo.GetCustomAttributes(true).FirstOrDefault(
                     a => a.GetType() == typeof (NotDisplayAttribute) || a.GetType() == typeof (HideAttribute)) == null)
                 {
@@ -181,6 +203,195 @@ namespace PrototypeHM.Forms
                     }
                     else
                     {
+                        //Обработка свойств помеченных атрибутом MultiSelector
+                        var multiSelectEdit =
+                            propertyInfo.GetCustomAttributes(true).FirstOrDefault(
+                                o => o.GetType() == typeof (MultiSelectEditModeAttribute)) as
+                            MultiSelectEditModeAttribute;
+
+                        if (multiSelectEdit != null)
+                        {
+                            //Определяем тип связи, который имеет данное свойство с отрисовываемой сущностью:
+                            var typeMappingEnum = multiSelectEdit.Type;
+                            if (typeMappingEnum == 0)
+                            {
+                                //Если не указан тип связи, выводим соответствующее значение:
+                                c = new Label
+                                        {
+                                            Height = LHeight*3,
+                                            Top = _cHeight,
+                                            Left = labelText.Width,
+                                            ForeColor = Color.Red,
+                                            Width = Convert.ToInt32(this.Width-0.1*this.Width),
+                                            Text =
+                                                String.Format(
+                                                    "Для типа данных {0} \n необходимо указать тип связей между сущностями для свойства: \n {1}",
+                                                    typeof (TData).Name, propertyInfo.Name)
+                                        };
+                            }
+                            else
+                            {
+                                
+                                //Если тип связи указан, то определяем в каком режиме работает данная форма:
+                                if (SaveData != null)
+                                {
+                                    //В случае сохранения данных:
+
+                                    //Определяем тип связи:
+                                    if (typeMappingEnum == TypeMappingEnum.ManyToOne)
+                                    {
+                                        //Если на момент создания объекта данное свойство не заполнить:
+                                        c = new Label
+                                        {
+                                            Height = LHeight * 3,
+                                            Top = _cHeight,
+                                            Left = labelText.Width + labelText.Left,
+                                            ForeColor = Color.Salmon,
+                                            Width = Convert.ToInt32(this.Width - 0.1 * this.Width),
+                                            Text =
+                                                String.Format(
+                                                    "Для заполнения свойства {0} \n необходимо сперва создать сам объект", displayNameAttribute.DisplayName)
+                                        };
+                                    }
+                                    else
+                                    {
+                                        //Если заполнение возможно, то добавляем на форму MultiSelector
+                                        if (multiSelectEdit!=null && multiSelectEdit.OperationContext!=null && multiSelectEdit.SourcePropery!=null)
+                                        {
+                                            //Определяем контекст операций для данных добавляемых в MultiSelector
+                                            var operationContext2 = Get<OperationsRepository>().Operations.
+                                                FirstOrDefault(
+                                                    o => o.GetType() == multiSelectEdit.OperationContext);
+                                            if (operationContext2 != null)
+                                            {
+                                                Type funcType =
+                                                        typeof(Func<>).MakeGenericType(
+                                                            typeof(IList<>).MakeGenericType(
+                                                                propertyInfo.PropertyType.GetGenericArguments()[0]));
+
+                                                //Вычисляем тип метода
+                                                PropertyInfo pi = operationContext2.GetType().GetProperty("Load");
+                                                var mv = pi.GetValue(operationContext2, null);
+
+                                                object ob = funcType.InvokeMember("DinamicInvoke",
+                                                                                  BindingFlags.InvokeMethod,
+                                                                                  null, mv, null);
+
+
+
+                                                //Конец добавления MultiSelector
+
+                        //                        if (true)
+                        //                        {
+                        //                            //Если контекст операций есть, то подгружаем данные
+                        //                            var loadProperty =
+                        //                                operationContext2.GetType().GetProperty("Load").GetValue(
+                        //                                    operationContext2, null);
+                        //                            if (true)
+                        //                            {
+                        //                                //Если есть данные для подгрузки, то добавляем MultiSelector:
+
+                        //                                /*
+                        //                                 пример
+                        //                                 * удалить!
+                        //                                 * 
+                        //                                 * 
+                        //                                 * PropertyInfo pi = operationsContext.GetType().GetProperty(@"Detail");
+                        //Type methodType = typeof(Func<,>).MakeGenericType(dObjType, typeof(object));
+                        //var mv = pi.GetValue(operationsContext, null);
+                        //                                 * 
+                        //                                 * 
+                        //                                 * object ob = methodType.InvokeMember("DynamicInvoke", BindingFlags.InvokeMethod,
+                        //                                                null, mv,
+                        //                                                new[] { arr[clickedRow] });
+                                                         
+                        //                                 */
+
+
+                        //                                //var data = operationContext2.GetType().InvokeMember("Load",
+                        //                                //                                               BindingFlags.InvokeMethod,
+                        //                                //                                               null,
+                        //                                //                                               operationContext2, null);
+                        //                                /*
+                        //                                 * 
+                        //                                 * Исправить!! Создать отдельный источник данных!
+                        //                                 * 
+                        //                                c = new MultiSelector() { Top = _cHeight, Left = labelText.Width + labelText.Left };
+                        //                                (c as MultiSelector).SetData(funcType(), propertyInfo.GetValue(_dataObject, null));pi.
+                        //                                */
+
+                        //                                //Вычисляем тип метода
+                        //                                PropertyInfo pi = operationContext2.GetType().GetProperty("Load");
+                        //                                var mv = pi.GetValue(operationContext2, null);
+                                                        
+                        //                                object ob = funcType.InvokeMember("DinamicInvoke",
+                        //                                                                  BindingFlags.InvokeMethod,
+                        //                                                                  null, mv, null);
+
+
+
+                        //                                //Конец добавления MultiSelector
+                        //                            }
+                        //                            else
+                        //                            {
+                        //                                throw new Exception(
+                        //                                    string.Format(
+                        //                                        "Отсутствует операция загрузки данных для типа {0}",
+                        //                                        propertyInfo.PropertyType.Name));
+                        //                            }
+                        //                        }
+                        //                        else
+                        //                        {
+                        //                            throw new Exception(
+                        //                                    string.Format(
+                        //                                        "Ошибка типа данных переданных с атрибутом - см тип {0}",
+                        //                                        propertyInfo.PropertyType.Name));
+                        //                        }
+                                                
+                                                
+                                            }
+                                            else
+                                            {
+                                                throw new Exception(
+                                                    string.Format("Отсутствует контекст операций для типа {0}",
+                                                                  propertyInfo.PropertyType.FullName));
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //Иначе выводим сообщение об ошибке:
+                                            c = new Label
+                                            {
+                                                Height = LHeight * 3,
+                                                Top = _cHeight,
+                                                Left = labelText.Width + labelText.Left,
+                                                ForeColor = Color.Red,
+                                                Width = Convert.ToInt32(this.Width - 0.1 * this.Width),
+                                                Text =
+                                                    String.Format(
+                                                        "Ошибка при навешивании атрибутов на св-во {0} \n в типе: \n {1}", propertyInfo.Name, typeof(TData).Name)
+                                            };
+                                        }
+
+                                    }
+                                    //Конец отрисовки для сохранения данных
+                                }
+                                if(UpdateData != null)
+                                {
+                                    //В случае редактирования (обновления) данных
+
+                                    //Конец отрисовки редактирования данных
+                                }
+                            }
+
+                        }
+                        //Конец обработки свойств помеченных атрибутом MultiSelector
+
+                        else
+                        {
+                            
+                            //Обработка прочих свойств
+                            
                             var editModeAtt =
                                 propertyInfo.GetCustomAttributes(true).FirstOrDefault(
                                     a => a.GetType() == typeof (EditModeAttribute)) as EditModeAttribute;
@@ -225,18 +436,21 @@ namespace PrototypeHM.Forms
                                 (c as YDataGridView).RowHeadersVisible = false;
                             }
 
-                            if (c != null)
+                            
+                            //конец обработки прочих свойств
+                        }
+
+                        if (c != null)
+                        {
+                            if (
+                                propertyInfo.GetCustomAttributes(true).FirstOrDefault(
+                                    a => a.GetType() == typeof(NotEditAttribute)) != null)
                             {
-                                if (
-                                    propertyInfo.GetCustomAttributes(true).FirstOrDefault(
-                                        a => a.GetType() == typeof (NotEditAttribute)) != null)
-                                {
-                                    c.Enabled = false;
-                                }
-                                _cHeight += c.Height + 5;
-                                tscContent.ContentPanel.Controls.AddRange(new[] {c, labelText});
+                                c.Enabled = false;
                             }
-                        
+                            _cHeight += c.Height + 5;
+                            tscContent.ContentPanel.Controls.AddRange(new[] { c, labelText });
+                        }
                     }
                 }
             }

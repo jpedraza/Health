@@ -18,5 +18,10 @@ namespace PrototypeHM.DB
         /// </summary>
         [NotDisplay, NotEdit]
         public string StatusMessage { get; set; }
+
+        public QueryStatus()
+        {
+            StatusMessage = string.Empty;
+        }
     }
 }

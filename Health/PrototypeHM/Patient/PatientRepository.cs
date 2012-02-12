@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using PrototypeHM.DB;
 using PrototypeHM.DB.DI;
@@ -20,6 +21,13 @@ namespace PrototypeHM.Patient
             PatientFullData patient = Get<PropertyToColumnMapper<PatientFullData>>().Map(reader).FirstOrDefault();
             reader.Close();
             return patient;
+        }
+
+        public IList<PatientForDoctor> GetAllPatients()
+        {
+            var list = new List<PatientForDoctor>();
+
+            return list;
         }
     }
 }

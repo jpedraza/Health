@@ -57,7 +57,7 @@ namespace PrototypeHM.Forms
         {
             var listForm = DIKernel.Get<ListForm<DoctorFullData>>();
             listForm.MdiParent = this;
-            /*listForm.LoadData = DIKernel.Get<DoctorRepository>().GetAll;
+            /*listForm.LoadData = DIKernel.Get<DoctorRepository>().GetAllPatients;
             listForm.DetailData = DIKernel.Get<DoctorRepository>().Detail;
             listForm.DeleteData = DIKernel.Get<DoctorRepository>().Delete;*/
             listForm.InitializeOperations();
@@ -124,6 +124,25 @@ namespace PrototypeHM.Forms
         {
             multiSelector1.SetData(DIKernel.Get<SpecialtyRepository>().GetAll().ToBindingList(),
                                    new BindingList<Specialty.Specialty>());
+        }
+
+        private void òåñòûÓäàëèòüToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ñîçäàòüÌåòàäàííîåToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var editForm = new AddForm<MetadataForParameter>(DIKernel, -1) {MdiParent = this};
+            editForm.InitializeForm();
+            editForm.Show();
+        }
+
+        private void äîáàâèòüÄîêòîğàToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var editForm = new AddForm<DoctorDetail>(DIKernel, -1) { MdiParent = this };
+            editForm.InitializeForm();
+            editForm.Show();
         }
     }
 }
