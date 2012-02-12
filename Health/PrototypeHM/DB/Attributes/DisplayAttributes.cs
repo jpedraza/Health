@@ -47,21 +47,26 @@ namespace PrototypeHM.DB.Attributes
     }
 
     /// <summary>
-    /// Определяет значение-коллекцию с динамическим иземенением содержащихся в ней элементов
+    /// Определяет значение с возможностью выбора нескольких значений
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
-    public class DinamicCollectionModelAttribute : Attribute, IDisplayAttribute {
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    public class MultiSelectEditModeAttribute:Attribute,IDisplayAttribute
+    {
+        /// <summary>
+        /// Тип контекста операции
+        /// </summary>
+        public Type OperationContext;
 
         /// <summary>
-        /// тип данных элементов коллекции
+        /// Свойство источник значения при бинбинге
         /// </summary>
-        public Type TypeOfCollectionElement;
+        public string SourcePropery;
 
-        public DinamicCollectionModelAttribute() { }
-
-        public DinamicCollectionModelAttribute(Type typeOfCollectionElement)
+        //Конструктор:
+        public MultiSelectEditModeAttribute(Type operationContext, string sourceProperty)
         {
-            this.TypeOfCollectionElement = typeOfCollectionElement;
+            OperationContext = operationContext;
+            SourcePropery = sourceProperty;
         }
     }
 
@@ -72,15 +77,9 @@ namespace PrototypeHM.DB.Attributes
     [AttributeUsage(AttributeTargets.Property, AllowMultiple=false, Inherited=false)]
     public class SimpleOrCompoundModelAttribute : Attribute, IDisplayAttribute
     {
-        private bool _isCompound;
-
         /// <summary>
         /// true - если простой, false - если составной
         /// </summary>
-        public bool IsSimple
-        {
-            get { return _isCompound; }
-            set { _isCompound = value; }
-        }
+        public bool IsSimple { get; set; }
     }
 }

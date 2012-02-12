@@ -32,7 +32,7 @@ namespace PrototypeHM.Parameter
 
     public class ParameterDetail : ParameterBaseData {        
                 
-        [DisplayName(@"Мета-данные параметра"), DinamicCollectionModel(typeof(MetadataForParameter)), SimpleOrCompoundModel(IsSimple=false)]
+        [DisplayName(@"Мета-данные параметра"), SimpleOrCompoundModel(IsSimple=false)]
         public IList<MetadataForParameter> Metadata { get; set; }
                 
     }

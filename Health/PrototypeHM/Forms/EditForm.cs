@@ -135,10 +135,6 @@ namespace PrototypeHM.Forms
                     var singSelectAtt =
                         propertyInfo.GetCustomAttributes(true).FirstOrDefault(
                             a => a.GetType() == typeof (SingleSelectEditModeAttribute)) as SingleSelectEditModeAttribute;
-
-                    var dinCollectAtt = propertyInfo.GetCustomAttributes(true).FirstOrDefault(
-                        a => a.GetType() == typeof (DinamicCollectionModelAttribute)) as DinamicCollectionModelAttribute;
-
                     if (singSelectAtt != null && singSelectAtt.OperationContext != null)
                     {
                         object operationContext = Get<OperationsRepository>().Operations.FirstOrDefault(
