@@ -12,6 +12,16 @@ namespace PrototypeHM.DB.Attributes
     }
 
     /// <summary>
+    /// Возможные виды связей между сущностями на основе того как 
+    /// они представлены в базе данных.
+    /// </summary>
+    public enum TypeMappingEnum
+    {
+        OneToMany = 1,
+        ManyToMany = 2
+    }
+
+    /// <summary>
     /// Аттрибут определяет формат свойства при редактировании.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
@@ -39,10 +49,22 @@ namespace PrototypeHM.DB.Attributes
         /// </summary>
         public string SourceProperty;
 
+        /// <summary>
+        /// Тип связи между сущностями
+        /// </summary>
+        public TypeMappingEnum Type { get; set; }
+
         public SingleSelectEditModeAttribute(Type operationContext, string sourceProperty)
         {
             OperationContext = operationContext;
             SourceProperty = sourceProperty;
+        }
+
+        public SingleSelectEditModeAttribute(Type operationContext, string sourceProperty, TypeMappingEnum typeMapping)
+        {
+            OperationContext = operationContext;
+            SourceProperty = sourceProperty;
+            Type = typeMapping;
         }
     }
 
@@ -62,11 +84,24 @@ namespace PrototypeHM.DB.Attributes
         /// </summary>
         public string SourcePropery;
 
+        /// <summary>
+        /// Тип связи между сущностями
+        /// </summary>
+        public TypeMappingEnum Type { get; set; }
+
         //Конструктор:
         public MultiSelectEditModeAttribute(Type operationContext, string sourceProperty)
         {
             OperationContext = operationContext;
             SourcePropery = sourceProperty;
+        }
+
+        //Перегрузка конструктора с учетом связи между сущностями
+        public MultiSelectEditModeAttribute(Type operationContext, string sourceProperty, TypeMappingEnum typeMapping)
+        {
+            OperationContext = operationContext;
+            SourcePropery = sourceProperty;
+            Type = typeMapping;
         }
     }
 

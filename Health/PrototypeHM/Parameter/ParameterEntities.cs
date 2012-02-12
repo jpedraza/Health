@@ -32,7 +32,7 @@ namespace PrototypeHM.Parameter
 
     public class ParameterDetail : ParameterBaseData {        
                 
-        [DisplayName(@"Мета-данные параметра"), SimpleOrCompoundModel(IsSimple=false)]
+        [DisplayName(@"Мета-данные параметра"), SimpleOrCompoundModel(IsSimple=false), MultiSelectEditMode(typeof(OperationsContext<MetadataForParameter>), "ParameterId")]
         public IList<MetadataForParameter> Metadata { get; set; }
                 
     }
@@ -47,7 +47,7 @@ namespace PrototypeHM.Parameter
         [DisplayName(@"Значение"), SimpleOrCompoundModel(IsSimple = true)]
         public object Value { get; set; }
 
-        [DisplayName(@"Тип данных значения"), SimpleOrCompoundModel(IsSimple = false), SingleSelectEditMode(typeof(OperationsContext<Specialty.Specialty>), "Name")]
+        [DisplayName(@"Тип данных значения"), SimpleOrCompoundModel(IsSimple = false), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "ValueTypeId")]
         public ValueTypeOfMetadata ValueType { get; set; }
 
         public bool IsValid()

@@ -89,7 +89,6 @@ namespace PrototypeHM
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
             {
                 Save = _kernel.Get<ParameterRepository>().SaveMetadata
-
             });
 
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
@@ -102,6 +101,20 @@ namespace PrototypeHM
             Load = _kernel.Get<ParameterRepository>().GetAll,   
             });
 
+            //Контекст операций для метаданных параметров здоровья
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
+            {
+                                                                       
+            });
+
+            //Конец контекста операций для метаданных параметров здоровья
+
+            //Контекст операций для типа метаданных
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ValueTypeOfMetadata>
+            {
+                                                                       
+            });
+            //Конец контекста операций для типа метаданных
         }
     }
 }
