@@ -52,6 +52,8 @@ namespace PrototypeHM.Forms
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.multiSelector1 = new PrototypeHM.Components.MultiSelector();
             this.button1 = new System.Windows.Forms.Button();
+            this.multiSelector2 = new PrototypeHM.Components.MultiSelector();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -230,7 +232,7 @@ namespace PrototypeHM.Forms
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(427, 77);
+            this.button1.Location = new System.Drawing.Point(45, 175);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -238,11 +240,32 @@ namespace PrototypeHM.Forms
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // multiSelector2
+            // 
+            this.multiSelector2.EditMode = false;
+            this.multiSelector2.Location = new System.Drawing.Point(516, 204);
+            this.multiSelector2.MinimumSize = new System.Drawing.Size(400, 400);
+            this.multiSelector2.Name = "multiSelector2";
+            this.multiSelector2.Size = new System.Drawing.Size(400, 400);
+            this.multiSelector2.TabIndex = 7;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(516, 175);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // DIMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1072, 727);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.multiSelector2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.multiSelector1);
             this.Controls.Add(this.statusStrip);
@@ -285,6 +308,8 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem ÌÓ‚˚ÈToolStripMenuItem;
         private Components.MultiSelector multiSelector1;
         private System.Windows.Forms.Button button1;
+        private Components.MultiSelector multiSelector2;
+        private System.Windows.Forms.Button button2;
     }
 }
 

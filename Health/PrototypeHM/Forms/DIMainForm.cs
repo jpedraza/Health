@@ -122,8 +122,12 @@ namespace PrototypeHM.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            multiSelector1.SetData(DIKernel.Get<SpecialtyRepository>().GetAll().ToBindingList(),
-                                   new BindingList<Specialty.Specialty>());
+            multiSelector1.SetData(DIKernel.Get<SpecialtyRepository>().GetAll(), new List<Specialty.Specialty>());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            multiSelector2.SetData(multiSelector1.RightSource, new List<Specialty.Specialty>());
         }
     }
 }

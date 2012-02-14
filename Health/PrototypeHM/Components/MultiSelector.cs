@@ -57,12 +57,12 @@ namespace PrototypeHM.Components
         /// <summary>
         /// Левый источник данных.
         /// </summary>
-        public IBindingList LeftSource { get; private set; }
+        public BindingSource LeftSource { get; private set; }
 
         /// <summary>
         /// Правый источник данных.
         /// </summary>
-        public IBindingList RightSource { get; private set; }
+        public BindingSource RightSource { get; private set; }
 
         private void BtnDisplayModeClick(object sender, EventArgs e)
         {
@@ -71,10 +71,13 @@ namespace PrototypeHM.Components
 
         /// <summary>
         /// Установить источники данных.
+        /// Источник данных автоматически упаковывается в BindingSource, 
+        /// либо возможно передать уже упакованный объект, тогда повторная 
+        /// упаковка не произойдет.
         /// </summary>
         /// <param name="left">Левый.</param>
         /// <param name="right">Правый.</param>
-        public void SetData(IBindingList left, IBindingList right)
+        public void SetData(object left, object right)
         {
             if (left == null)
                 throw new ArgumentNullException("left");
@@ -82,14 +85,24 @@ namespace PrototypeHM.Components
             if (right == null)
                 throw new ArgumentNullException("right");
 
-            if (left.Count == 0 && right.Count == 0)
+            BindingSource leftBindingSource = left.GetType().IsAssignableFrom((typeof (BindingSource)))
+                                                  ? (BindingSource) left
+                                                  : new BindingSource {DataSource = left};
+            BindingSource rightBindingSource = right.GetType().IsAssignableFrom(typeof (BindingSource))
+                                                   ? (BindingSource) right
+                                                   : new BindingSource {DataSource = right};
+
+            if (leftBindingSource.DataSource.GetType() != rightBindingSource.DataSource.GetType())
+                throw new Exception("Источники данных должны быть одного типа.");
+
+            if (leftBindingSource.Count == 0 && rightBindingSource.Count == 0)
                 throw new Exception("Число элементов хотя бы в одной из коллекций должно быть больше 0.");
 
-            btnToLeft.Enabled = left.Count == 0;
-            btnToRight.Enabled = right.Count == 0;
+            btnToLeft.Enabled = leftBindingSource.Count == 0;
+            btnToRight.Enabled = rightBindingSource.Count == 0;
 
-            LeftSource = left;
-            RightSource = right;
+            LeftSource = leftBindingSource;
+            RightSource = rightBindingSource;
             ydgvLeft.DataSource = LeftSource;
             ydgvRight.DataSource = RightSource;
 
