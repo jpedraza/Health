@@ -1022,33 +1022,6 @@ BEGIN
 	select @is_even_week, @week_day
 END
 GO
-PRINT N'Выполняется создание [dbo].[NewParameter]...';
-
-
-GO
-CREATE PROCEDURE [dbo].[NewParameter]
-	@nameParameter nvarchar(max), 
-	@defaultValue varbinary(1)
-AS
-	insert into Parameters(Name, DefaultValue) values(@nameParameter, @defaultValue)
-	
-	
-RETURN 0
-GO
-PRINT N'Выполняется создание [dbo].[NewParameterMetadata]...';
-
-
-GO
-CREATE PROCEDURE [dbo].[NewParameterMetadata]
-	@ParameterId int,
-	@Key nvarchar(max),
-	@Value varbinary(max),
-	@ValueTypeId int
-AS
-	insert ParameterMetadata (ParameterId, [Key], Value, ValueTypeId) 
-	values (@ParameterId, @Key, @Value, @ValueTypeId)
-RETURN 0
-GO
 PRINT N'Выполняется создание [dbo].[DeleteDoctor]...';
 
 
@@ -1231,6 +1204,28 @@ AS
 		   JOIN Roles as ro ON us.RoleId = ro.RoleId
 RETURN 0
 GO
+PRINT N'Выполняется создание [dbo].[GetAllValueTypes]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllValueTypes]
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		select @status as Status, @statusMessage as StatusMessage,
+			v.ValueTypeId,
+			v.Name,
+			'0' as Id
+			from ValueTypes as v
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[GetDoctorShowData]...';
 
 
@@ -1305,6 +1300,147 @@ AS
 		   join Users as u on p.PatientId = u.UserId
 		   join Roles as r on u.RoleId = r.RoleId
 		   where p.PatientId = @patientId
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[NewParameter]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[NewParameter]
+	@nameParameter nvarchar(max), 
+	@defaultValue varbinary(1)
+AS
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		insert into Parameters(Name, DefaultValue) values(@nameParameter, @defaultValue)
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[NewParameterMetadata]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[NewParameterMetadata]
+	@ParameterId int,
+	@Key nvarchar(max),
+	@Value varbinary(max),
+	@ValueTypeId int
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		insert ParameterMetadata (ParameterId, [Key], Value, ValueTypeId) 
+		values (@ParameterId, @Key, @Value, @ValueTypeId)
+	end try
+
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[NewValueTypes]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[NewValueTypes]
+	@name nvarchar(MAX)
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		insert dbo.ValueTypes(Name) values
+		(@name)
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[UpdateParameter]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[UpdateParameter]
+	@ParameterId int, 
+	@Name nvarchar(MAX),
+	@DefaultValue varbinary
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update dbo.Parameters
+			set Name=@Name,
+				DefaultValue=@DefaultValue
+			where ParameterId=@ParameterId
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[UpdateParameterMetadata]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[UpdateParameterMetadata]
+	@ParameterId int, 
+	@Key nvarchar(MAX),
+	@Value varbinary(MAX),
+	@ValueTypeId int
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update dbo.ParameterMetadata
+			set [Key]=@Key,
+				Value=@Value,
+				ValueTypeId=@ValueTypeId
+			where ParameterId=@ParameterId
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[UpdateValueTypes]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[UpdateValueTypes]
+	@ValueTypeId int = 0, 
+	@Name nvarchar(MAX)
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update dbo.ValueTypes
+			set Name=@Name
+			where ValueTypeId=@ValueTypeId
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
 RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[GSM]...';
@@ -1584,6 +1720,11 @@ insert into Status values(3001000, 'Отсутствует запись в ба�
 -- Пациенты
 	-- Ошибки
 	insert into Status values(3001002, 'Отсутствует информация о пациенте в базе.')
+
+--Параметры здоровья, и все что с ними связано.
+	-- Сообщения
+	insert into Status values(4000001, 'Тип метаданных записан.')
+	-- Ошибки
 
 GO
 PRINT N'Существующие данные проверяются относительно вновь созданных ограничений';

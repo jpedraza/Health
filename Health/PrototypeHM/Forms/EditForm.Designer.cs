@@ -33,6 +33,8 @@
             this.tscContent.TopToolStripPanel.SuspendLayout();
             this.tscContent.SuspendLayout();
             this.SuspendLayout();
+            
+            
             // 
             // tsOperations
             // 

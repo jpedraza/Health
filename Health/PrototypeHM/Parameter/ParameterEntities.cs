@@ -49,7 +49,7 @@ namespace PrototypeHM.Parameter
     }
 
     public class MetadataForParameter:IHealthParameterContext, IIdentity {
-        [DisplayName(@"Идентификатор"), Hide]
+        [DisplayName(@"Id параметра")]
         public int ParameterId { get; set; }
 
         [DisplayName(@"Ключ-значение"), SimpleOrCompoundModel(IsSimple = true)]
@@ -58,8 +58,8 @@ namespace PrototypeHM.Parameter
         [DisplayName(@"Значение"), SimpleOrCompoundModel(IsSimple = true)]
         public string Value { get; set; }
 
-        [DisplayName(@"Тип данных значения"), SimpleOrCompoundModel(IsSimple = false), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "ValueTypeId", TypeMappingEnum.OneToMany)]
-        public ValueTypeOfMetadata ValueType { get; set; }
+        [DisplayName(@"Тип данных значения"), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "ValueTypeId", TypeMappingEnum.OneToMany)]
+        public string ValueType { get; set; }
 
         public bool IsValid()
         {
@@ -85,19 +85,22 @@ namespace PrototypeHM.Parameter
         [NotDisplay, NotEdit]
         public int Id { get { return ParameterId; } set { ParameterId = value; } }
     }
-    public class ValueTypeOfMetadata:IHealthParameterContext, IIdentity {
+    public class ValueTypeOfMetadata:QueryStatus, IIdentity {
         [DisplayName(@"Идентификатор"), Hide]
         public int ValueTypeId { get; set; }
 
         [DisplayName(@"Название типа"), SimpleOrCompoundModel(IsSimple = true)]
         public string Name { get; set; }
 
-        public bool IsValid()
-        {
-            return checkEnitiesValid.checkValid(this.GetType(), (object)this);
-        }
 
         [NotDisplay, NotEdit]
         public int Id { get { return ValueTypeId; } set { ValueTypeId = value; } }
+
+        public ValueTypeOfMetadata()
+            : base()
+        {
+            Name = string.Empty;
+            
+        }
     }
 }

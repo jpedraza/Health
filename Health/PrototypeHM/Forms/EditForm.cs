@@ -12,6 +12,7 @@ using PrototypeHM.DB;
 using PrototypeHM.DB.Attributes;
 using PrototypeHM.DB.DI;
 using PrototypeHM.Properties;
+using PrototypeHM;
 
 namespace PrototypeHM.Forms
 {
@@ -113,7 +114,7 @@ namespace PrototypeHM.Forms
                                    {
                                        //Флаг, показывающий - нормально ли сохранились данные
                                        bool okFlag = true;
-                                     
+                                       
                                        QueryStatus status = SaveData(_dataObject);
                                        YMessageBox.Information(status.StatusMessage);
 
@@ -133,6 +134,11 @@ namespace PrototypeHM.Forms
             {
                 var o = new TData {Id = _Id};
                 _dataObject = DetailData(o) as TData;
+
+                if (_dataObject == null)
+                {
+                    throw new Exception("Отсутствует объект редактирования");
+                }
             }
 
 
@@ -231,7 +237,7 @@ namespace PrototypeHM.Forms
                             }
                             else
                             {
-                                
+                                #region SaveData 
                                 //Если тип связи указан, то определяем в каком режиме работает данная форма:
                                 if (SaveData != null)
                                 {
@@ -259,96 +265,68 @@ namespace PrototypeHM.Forms
                                         if (multiSelectEdit!=null && multiSelectEdit.OperationContext!=null && multiSelectEdit.SourcePropery!=null)
                                         {
                                             //Определяем контекст операций для данных добавляемых в MultiSelector
-                                            var operationContext2 = Get<OperationsRepository>().Operations.
-                                                FirstOrDefault(
-                                                    o => o.GetType() == multiSelectEdit.OperationContext);
+                                            var operationContext2 = Get<OperationsRepository>().Operations.FirstOrDefault(o => o.GetType() == multiSelectEdit.OperationContext);
                                             if (operationContext2 != null)
                                             {
-                                                Type funcType =
-                                                        typeof(Func<>).MakeGenericType(
-                                                            typeof(IList<>).MakeGenericType(
-                                                                propertyInfo.PropertyType.GetGenericArguments()[0]));
-
-                                                //Вычисляем тип метода
-                                                PropertyInfo pi = operationContext2.GetType().GetProperty("Load");
-                                                var mv = pi.GetValue(operationContext2, null);
-
-                                                object ob = funcType.InvokeMember("DinamicInvoke",
-                                                                                  BindingFlags.InvokeMethod,
-                                                                                  null, mv, null);
-
-
-
-                                                //Конец добавления MultiSelector
-
-                        //                        if (true)
-                        //                        {
-                        //                            //Если контекст операций есть, то подгружаем данные
-                        //                            var loadProperty =
-                        //                                operationContext2.GetType().GetProperty("Load").GetValue(
-                        //                                    operationContext2, null);
-                        //                            if (true)
-                        //                            {
-                        //                                //Если есть данные для подгрузки, то добавляем MultiSelector:
-
-                        //                                /*
-                        //                                 пример
-                        //                                 * удалить!
-                        //                                 * 
-                        //                                 * 
-                        //                                 * PropertyInfo pi = operationsContext.GetType().GetProperty(@"Detail");
-                        //Type methodType = typeof(Func<,>).MakeGenericType(dObjType, typeof(object));
-                        //var mv = pi.GetValue(operationsContext, null);
-                        //                                 * 
-                        //                                 * 
-                        //                                 * object ob = methodType.InvokeMember("DynamicInvoke", BindingFlags.InvokeMethod,
-                        //                                                null, mv,
-                        //                                                new[] { arr[clickedRow] });
-                                                         
-                        //                                 */
-
-
-                        //                                //var data = operationContext2.GetType().InvokeMember("Load",
-                        //                                //                                               BindingFlags.InvokeMethod,
-                        //                                //                                               null,
-                        //                                //                                               operationContext2, null);
-                        //                                /*
-                        //                                 * 
-                        //                                 * Исправить!! Создать отдельный источник данных!
-                        //                                 * 
-                        //                                c = new MultiSelector() { Top = _cHeight, Left = labelText.Width + labelText.Left };
-                        //                                (c as MultiSelector).SetData(funcType(), propertyInfo.GetValue(_dataObject, null));pi.
-                        //                                */
-
-                        //                                //Вычисляем тип метода
-                        //                                PropertyInfo pi = operationContext2.GetType().GetProperty("Load");
-                        //                                var mv = pi.GetValue(operationContext2, null);
-                                                        
-                        //                                object ob = funcType.InvokeMember("DinamicInvoke",
-                        //                                                                  BindingFlags.InvokeMethod,
-                        //                                                                  null, mv, null);
-
-
-
-                        //                                //Конец добавления MultiSelector
-                        //                            }
-                        //                            else
-                        //                            {
-                        //                                throw new Exception(
-                        //                                    string.Format(
-                        //                                        "Отсутствует операция загрузки данных для типа {0}",
-                        //                                        propertyInfo.PropertyType.Name));
-                        //                            }
-                        //                        }
-                        //                        else
-                        //                        {
-                        //                            throw new Exception(
-                        //                                    string.Format(
-                        //                                        "Ошибка типа данных переданных с атрибутом - см тип {0}",
-                        //                                        propertyInfo.PropertyType.Name));
-                        //                        }
                                                 
-                                                
+                                                //Получаем делегат, представляющий метод загрузки данных
+                                                var @delegate =
+                                                    operationContext2.GetType().GetProperty("Load").GetValue(operationContext2, null);
+
+                                                //Если такая операция не предумотрена, то кидаем исключение:
+                                                if (@delegate == null)
+                                                {
+                                                    throw new Exception(
+                                                        string.Format("Отсутствует операция загрузки для типа \n {0}",
+                                                                      multiSelectEdit.OperationContext.FullName));
+                                                }
+
+                                                //Вызываем через делегат метод загрузки данных
+                                                var leftListData = (@delegate as Delegate).DynamicInvoke(null);
+
+                                                //Добавляем MultiSelector
+                                                c = new MultiSelector() { Top = _cHeight, Left = labelText.Width + labelText.Left };
+
+                                                //Инициализируем загрузку данных
+                                                var toBindingMethod =
+                                                    typeof (ExtensionMethods).GetMethod("ToBindingList",
+                                                                                        BindingFlags.Public |
+                                                                                        BindingFlags.Static);
+
+                                                if (toBindingMethod == null)
+                                                    throw new Exception(
+                                                        string.Format(
+                                                            "Ошибка, тип {0}\n не поддерживает метод ToBindingList()",
+                                                            leftListData.GetType().FullName));
+
+                                                var toBindingMethodGenericArgs = toBindingMethod.GetGenericMethodDefinition();
+
+                                                //Создаем метод с генерик-аргументом
+                                                var newToBindingMethod =
+                                                    toBindingMethodGenericArgs.MakeGenericMethod(
+                                                        propertyInfo.PropertyType.GetGenericArguments()[0]);
+
+                                                //Подгружаем даные
+                                                typeof (MultiSelector).GetMethod("SetData").Invoke(
+                                                    (c as MultiSelector),
+                                                    new[]
+                                                        {
+                                                            newToBindingMethod.Invoke(null, BindingFlags.Static, null,
+                                                                                      new[] {leftListData}, null),
+                                                            newToBindingMethod.Invoke(null, BindingFlags.Static, null,
+                                                                                      new[]
+                                                                                          {
+                                                                                              propertyInfo.GetValue(
+                                                                                                  _dataObject, null)
+                                                                                          },
+                                                                                      null)
+                                                                                      //этого хватит?
+                                                        });
+
+
+
+
+
                                             }
                                             else
                                             {
@@ -375,6 +353,7 @@ namespace PrototypeHM.Forms
 
                                     }
                                     //Конец отрисовки для сохранения данных
+                                #endregion
                                 }
                                 if(UpdateData != null)
                                 {
@@ -398,7 +377,7 @@ namespace PrototypeHM.Forms
                             if (propertyInfo.PropertyType == typeof (string))
                             {
                                 c = new TextBox
-                                        {Height = LHeight, Top = _cHeight, Left = labelText.Width + labelText.Left};
+                                        {Height = LHeight, Top = _cHeight, Left = labelText.Width + labelText.Left, Width = 200};
                                 c.DataBindings.Add("Text", _dataObject, propertyInfo.Name, false,
                                                    DataSourceUpdateMode.OnPropertyChanged);
                                 if (editModeAtt != null && editModeAtt.Mode.HasFlag(EditModeEnum.Multiline))
@@ -440,18 +419,22 @@ namespace PrototypeHM.Forms
                             //конец обработки прочих свойств
                         }
 
-                        if (c != null)
-                        {
-                            if (
-                                propertyInfo.GetCustomAttributes(true).FirstOrDefault(
-                                    a => a.GetType() == typeof(NotEditAttribute)) != null)
-                            {
-                                c.Enabled = false;
-                            }
-                            _cHeight += c.Height + 5;
-                            tscContent.ContentPanel.Controls.AddRange(new[] { c, labelText });
-                        }
+                        
                     }
+
+                    //Добавляем на форму готовый элемент
+                    if (c != null)
+                    {
+                        if (
+                            propertyInfo.GetCustomAttributes(true).FirstOrDefault(
+                                a => a.GetType() == typeof(NotEditAttribute)) != null)
+                        {
+                            c.Enabled = false;
+                        }
+                        _cHeight += c.Height + 5;
+                        tscContent.ContentPanel.Controls.AddRange(new[] { c, labelText });
+                    }
+                    //конец добавления элемента
                 }
             }
         }

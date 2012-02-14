@@ -26,7 +26,14 @@ namespace PrototypeHM.Patient
         public IList<PatientForDoctor> GetAllPatients()
         {
             var list = new List<PatientForDoctor>();
-
+            list.Add(new PatientForDoctor()
+                         {
+                             Card = "0446а2",
+                             FirstName = "Кошкин",
+                             LastName = "Иван",
+                             Policy = "911",
+                             ThirdName = "Сергеевич"
+                         });
             return list;
         }
     }

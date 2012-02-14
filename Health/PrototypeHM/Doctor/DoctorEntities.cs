@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using PrototypeHM.DB;
@@ -33,17 +34,49 @@ namespace PrototypeHM.Doctor
         [Hide]
         public string ThirdName { get; set; }
         [NotMap, DisplayName(@"ФИО")]
-        public string FullName { get { return string.Format("{0} {1} {2}", LastName, FirstName, ThirdName); } }
+        public string FullName { get { return string.Format("{0} {1} {2}", LastName, FirstName, ThirdName); }
+            
+        }
         [DisplayName(@"Карта")]
         public string Card { get; set; }
         [DisplayName(@"Полюс")]
         public string Policy { get; set; }
+
+        public PatientForDoctor():base()
+        {
+            foreach (var pI in this.GetType().GetProperties())
+            {
+                if (pI.PropertyType == typeof(string))
+                {
+                    try
+                    {
+                        pI.SetValue(this, string.Empty, null);
+                    }
+                    catch
+                    {
+                        
+                    }
+                }
+
+                if (pI.PropertyType == typeof(DateTime))
+                {
+                    try
+                    {
+                        pI.SetValue(this, DateTime.Today, null);
+                    }
+                    catch
+                    {
+                        
+                    }
+                }
+            }
+        }
     }
 
     public class DoctorDetail : DoctorFullData
     {
         [DisplayName(@"Пациенты"), MultiSelectEditMode(typeof(OperationsContext<PatientForDoctor>), "FirstName", TypeMappingEnum.ManyToMany)]
-        public ICollection<PatientForDoctor> Patients { get; set; }
+        public IList<PatientForDoctor> Patients { get; set; }
 
         public DoctorDetail():base()
         {

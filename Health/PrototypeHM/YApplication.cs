@@ -114,7 +114,8 @@ namespace PrototypeHM
             //Контекст операций для типа метаданных
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ValueTypeOfMetadata>
             {
-                                                                       
+                Save = _kernel.Get<ParameterRepository>().SaveValueType,
+                Load = _kernel.Get<ParameterRepository>().GetAllValueTypes
             });
             //Конец контекста операций для типа метаданных
 

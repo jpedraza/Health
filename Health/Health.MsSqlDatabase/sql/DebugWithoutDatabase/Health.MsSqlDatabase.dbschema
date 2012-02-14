@@ -2265,6 +2265,58 @@ RETURN 0]]></Value>
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllUserShowData]&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetAllValueTypes]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		select @status as Status, @statusMessage as StatusMessage,
+			v.ValueTypeId,
+			v.Name,
+			'0' as Id
+			from ValueTypes as v
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[Name]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="439" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllValueTypes]&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetDoctorShowData]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
@@ -2880,12 +2932,31 @@ END]]></Value>
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
-	insert into Parameters(Name, DefaultValue) values(@nameParameter, @defaultValue)
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	
-	
+	begin try
+		insert into Parameters(Name, DefaultValue) values(@nameParameter, @defaultValue)
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+
 RETURN 0]]></Value>
 			</Property>
 			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[Parameters]" />
 				</Entry>
@@ -2942,7 +3013,7 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="202" />
+				<Property Name="Length" Value="456" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[NewParameter]&#xD;&#xA;&#x9;@nameParameter nvarchar(max), &#xD;&#xA;&#x9;@defaultValue varbinary(1)&#xD;&#xA;AS" />
@@ -2952,11 +3023,32 @@ RETURN 0]]></Value>
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
-	insert ParameterMetadata (ParameterId, [Key], Value, ValueTypeId) 
-	values (@ParameterId, @Key, @Value, @ValueTypeId)
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		insert ParameterMetadata (ParameterId, [Key], Value, ValueTypeId) 
+		values (@ParameterId, @Key, @Value, @ValueTypeId)
+	end try
+
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+
+	select @status as Status, @statusMessage as StatusMessage
 RETURN 0]]></Value>
 			</Property>
 			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[ParameterMetadata]" />
 				</Entry>
@@ -3055,10 +3147,77 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="266" />
+				<Property Name="Length" Value="527" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[NewParameterMetadata]&#xD;&#xA;&#x9;@ParameterId int,&#xD;&#xA;&#x9;@Key nvarchar(max),&#xD;&#xA;&#x9;@Value varbinary(max),&#xD;&#xA;&#x9;@ValueTypeId int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[NewValueTypes]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		insert dbo.ValueTypes(Name) values
+		(@name)
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[NewValueTypes].[@name]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[NewValueTypes].[@name]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="375" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[NewValueTypes]&#xD;&#xA;&#x9;@name nvarchar(MAX)&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[ParameterMetadata]">
@@ -4384,6 +4543,344 @@ RETURN 0]]></Value>
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[UpdateParameter]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update dbo.Parameters
+			set Name=@Name,
+				DefaultValue=@DefaultValue
+			where ParameterId=@ParameterId
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameter].[@Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[DefaultValue]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameter].[@DefaultValue]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameter].[@ParameterId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameter].[@ParameterId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameter].[@Name]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameter].[@DefaultValue]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="Length" Value="1" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varbinary]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="488" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateParameter]&#xD;&#xA;&#x9;@ParameterId int, &#xD;&#xA;&#x9;@Name nvarchar(MAX),&#xD;&#xA;&#x9;@DefaultValue varbinary&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[UpdateParameterMetadata]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update dbo.ParameterMetadata
+			set [Key]=@Key,
+				Value=@Value,
+				ValueTypeId=@ValueTypeId
+			where ParameterId=@ParameterId
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Key]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameterMetadata].[@Key]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Value]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameterMetadata].[@Value]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameterMetadata].[@ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameterMetadata].[@ParameterId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameterMetadata].[@ParameterId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameterMetadata].[@Key]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameterMetadata].[@Value]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varbinary]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameterMetadata].[@ValueTypeId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="537" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateParameterMetadata]&#xD;&#xA;&#x9;@ParameterId int, &#xD;&#xA;&#x9;@Key nvarchar(MAX),&#xD;&#xA;&#x9;@Value varbinary(MAX),&#xD;&#xA;&#x9;@ValueTypeId int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[UpdateValueTypes]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		update dbo.ValueTypes
+			set Name=@Name
+			where ValueTypeId=@ValueTypeId
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateValueTypes].[@Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateValueTypes].[@ValueTypeId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateValueTypes].[@ValueTypeId]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[0]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateValueTypes].[@Name]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Property Name="IsMax" Value="True" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="433" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateValueTypes]&#xD;&#xA;&#x9;@ValueTypeId int = 0, &#xD;&#xA;&#x9;@Name nvarchar(MAX)&#xD;&#xA;AS" />
+			</Annotation>
 		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[Users]">
 			<Property Name="IsAnsiNullsOn" Value="True" />

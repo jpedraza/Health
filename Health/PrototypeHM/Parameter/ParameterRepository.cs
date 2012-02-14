@@ -57,63 +57,7 @@ namespace PrototypeHM.Parameter {
 
         internal QueryStatus Save(ParameterDetail data)
         {
-            /*Не абыть про валидацию*/
-
-            /*
-             *byte[] bytes = Encoding.UTF8.GetBytes(1231231.ToString());
-             *
-             * string s = Encoding.UTF8.GetString(new byte[] { 0, 2 });
-             */
-            if (data.IsValid())
-            {
-                try
-                {
-                    SqlCommand c = CreateQuery("EXEC NewParameter @nameParameter, @defaultValue");
-                    c.Parameters.Add(new SqlParameter("nameParameter", SqlDbType.NVarChar));
-                    c.Parameters[0].Value = data.Name;
-                    c.Parameters.Add(new SqlParameter("defaultValue", SqlDbType.VarBinary));
-                    c.Parameters[1].Value = Encoding.UTF8.GetBytes(data.DefaultValue);
-
-                    SqlDataReader reader = c.ExecuteReader();
-                    reader.Close();
-
-                    return new QueryStatus { Status = 1, StatusMessage = "Успешно записано" };
-                }
-                catch (Exception exp)
-                {
-                    return new QueryStatus { Status = 0, StatusMessage = exp.Message };
-                }
-            }
-
-            return new QueryStatus { Status = 0, StatusMessage = "Запись невозможна" };
-
-            /*
-             try
-                            {
-                                SqlCommand c = CreateQuery("EXEC NewParameter @nameParameter, @defaultValue");
-                                c.Parameters.Add(new SqlParameter("nameParameter", SqlDbType.NVarChar));
-                                c.Parameters[0].Value = data.Name;
-                                c.Parameters.Add(new SqlParameter("defaultValue", SqlDbType.VarBinary));
-                                c.Parameters[1].Value = Encoding.UTF8.GetBytes(data.DefaultValue);
-
-                                SqlDataReader reader = c.ExecuteReader();
-                                reader.Close();
-
-                                SqlCommand c2 = CreateQuery("EXEC NewParameterMetadata @ParameterId, @Key, @Value, @ValueTypeId");
-                                c2.Parameters.Add(new SqlParameter("ParameterId", SqlDbType.Int) { Value = data.ParameterId });
-                                c2.Parameters.Add(new SqlParameter("Key", SqlDbType.NVarChar) { Value = metadata.Key });
-                                c2.Parameters.Add(new SqlParameter("Value", SqlDbType.VarBinary) { Value = Encoding.UTF8.GetBytes(metadata.Value.ToString()) });
-                                c2.Parameters.Add(new SqlParameter("ValueTypeId", SqlDbType.Int) { Value = metadata.ValueType.ValueTypeId });
-
-                                reader = c2.ExecuteReader();
-                                reader.Close();
-                            }
-                            catch (Exception exp2)
-                            {
-                                return new QueryStatus { Status = 0, StatusMessage = exp2.Message };
-                            }
-                        }
-             */
+            return new QueryStatus();
         }
 
         internal QueryStatus Update(ParameterDetail data)
@@ -124,6 +68,39 @@ namespace PrototypeHM.Parameter {
         internal QueryStatus SaveMetadata(MetadataForParameter data)
         {
             return new QueryStatus() { Status = 1};
+        }
+
+        internal QueryStatus SaveValueType(ValueTypeOfMetadata data)
+        {
+            var @queryStatus = new QueryStatus();
+            var @parameters = this.CheckWrittingPropertys(data.Name);
+            if (@parameters == null)
+            {
+                @queryStatus.Status = 0;
+                @queryStatus.StatusMessage = "Проверьте пожалуйста данные";
+            }
+            else
+            {
+                var c = CreateQuery("EXEC [dbo].[NewValueTypes] @name");
+                c.Parameters.Add("name", SqlDbType.NVarChar);
+                c.Parameters[0].Value = parameters[0];
+                var reader = c.ExecuteReader();
+                queryStatus = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+                reader.Close();
+            }
+
+            return @queryStatus;
+        }
+
+        public IList<ValueTypeOfMetadata> GetAllValueTypes()
+        {
+            var c = CreateQuery("EXEC [dbo].[GetAllValueTypes]");
+            var reader = c.ExecuteReader();
+            var list =
+                Get<PropertyToColumnMapper<ValueTypeOfMetadata>>().Map
+                    (reader);
+            reader.Close();
+            return list;
         }
     }
 }

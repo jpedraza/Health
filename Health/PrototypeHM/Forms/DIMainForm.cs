@@ -120,11 +120,7 @@ namespace PrototypeHM.Forms
             editForm.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            multiSelector1.SetData(DIKernel.Get<SpecialtyRepository>().GetAll().ToBindingList(),
-                                   new BindingList<Specialty.Specialty>());
-        }
+        
 
         private void тесты”далитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -141,6 +137,13 @@ namespace PrototypeHM.Forms
         private void добавитьƒоктораToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var editForm = new AddForm<DoctorDetail>(DIKernel, -1) { MdiParent = this };
+            editForm.InitializeForm();
+            editForm.Show();
+        }
+
+        private void создатьЌовый“ипћетаданныхToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var editForm = new AddForm<ValueTypeOfMetadata>(DIKernel, -1) { MdiParent = this };
             editForm.InitializeForm();
             editForm.Show();
         }

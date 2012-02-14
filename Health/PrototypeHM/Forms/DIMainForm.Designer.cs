@@ -46,14 +46,13 @@ namespace PrototypeHM.Forms
             this.тестыУдалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.созданиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьМетаданноеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.добавитьДоктораToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пациентуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вводПараметровToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.multiSelector1 = new PrototypeHM.Components.MultiSelector();
-            this.button1 = new System.Windows.Forms.Button();
-            this.добавитьДоктораToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.создатьНовыйТипМетаданныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -181,7 +180,8 @@ namespace PrototypeHM.Forms
             this.тестыУдалитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.созданиеToolStripMenuItem,
             this.создатьМетаданноеToolStripMenuItem,
-            this.добавитьДоктораToolStripMenuItem});
+            this.добавитьДоктораToolStripMenuItem,
+            this.создатьНовыйТипМетаданныхToolStripMenuItem});
             this.тестыУдалитьToolStripMenuItem.Name = "тестыУдалитьToolStripMenuItem";
             this.тестыУдалитьToolStripMenuItem.Size = new System.Drawing.Size(162, 20);
             this.тестыУдалитьToolStripMenuItem.Text = "Тесты (Удалить но потом)";
@@ -190,16 +190,23 @@ namespace PrototypeHM.Forms
             // созданиеToolStripMenuItem
             // 
             this.созданиеToolStripMenuItem.Name = "созданиеToolStripMenuItem";
-            this.созданиеToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.созданиеToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.созданиеToolStripMenuItem.Text = "Создание";
             this.созданиеToolStripMenuItem.Click += new System.EventHandler(this.созданиеToolStripMenuItem_Click);
             // 
             // создатьМетаданноеToolStripMenuItem
             // 
             this.создатьМетаданноеToolStripMenuItem.Name = "создатьМетаданноеToolStripMenuItem";
-            this.создатьМетаданноеToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.создатьМетаданноеToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.создатьМетаданноеToolStripMenuItem.Text = "Создать метаданное";
             this.создатьМетаданноеToolStripMenuItem.Click += new System.EventHandler(this.создатьМетаданноеToolStripMenuItem_Click);
+            // 
+            // добавитьДоктораToolStripMenuItem
+            // 
+            this.добавитьДоктораToolStripMenuItem.Name = "добавитьДоктораToolStripMenuItem";
+            this.добавитьДоктораToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.добавитьДоктораToolStripMenuItem.Text = "Добавить доктора";
+            this.добавитьДоктораToolStripMenuItem.Click += new System.EventHandler(this.добавитьДоктораToolStripMenuItem_Click);
             // 
             // пациентуToolStripMenuItem
             // 
@@ -231,39 +238,18 @@ namespace PrototypeHM.Forms
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Состояние";
             // 
-            // multiSelector1
+            // создатьНовыйТипМетаданныхToolStripMenuItem
             // 
-            this.multiSelector1.EditMode = false;
-            this.multiSelector1.Location = new System.Drawing.Point(45, 204);
-            this.multiSelector1.MinimumSize = new System.Drawing.Size(255, 400);
-            this.multiSelector1.Name = "multiSelector1";
-            this.multiSelector1.Size = new System.Drawing.Size(445, 400);
-            this.multiSelector1.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(427, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // добавитьДоктораToolStripMenuItem
-            // 
-            this.добавитьДоктораToolStripMenuItem.Name = "добавитьДоктораToolStripMenuItem";
-            this.добавитьДоктораToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.добавитьДоктораToolStripMenuItem.Text = "Добавить доктора";
-            this.добавитьДоктораToolStripMenuItem.Click += new System.EventHandler(this.добавитьДоктораToolStripMenuItem_Click);
+            this.создатьНовыйТипМетаданныхToolStripMenuItem.Name = "создатьНовыйТипМетаданныхToolStripMenuItem";
+            this.создатьНовыйТипМетаданныхToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.создатьНовыйТипМетаданныхToolStripMenuItem.Text = "Создать новый тип метаданных";
+            this.создатьНовыйТипМетаданныхToolStripMenuItem.Click += new System.EventHandler(this.создатьНовыйТипМетаданныхToolStripMenuItem_Click);
             // 
             // DIMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1072, 727);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.multiSelector1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
@@ -302,10 +288,9 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem вводПараметровToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem просмотрToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem новыйToolStripMenuItem;
-        private Components.MultiSelector multiSelector1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem создатьМетаданноеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem добавитьДоктораToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem создатьНовыйТипМетаданныхToolStripMenuItem;
     }
 }
 
