@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="QueryStatus" EntityType="Model.Store.QueryStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="Model.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="Model.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Specialties" EntityType="Model.Store.Specialties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users_Doctor" EntityType="Model.Store.Users_Doctor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users_Patient" EntityType="Model.Store.Users_Patient" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="RoleUser" Association="Model.Store.RoleUser">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="SpecialtyDoctor" Association="Model.Store.SpecialtyDoctor">
+      <End Role="Specialty" EntitySet="Specialties" />
+      <End Role="Doctor" EntitySet="Users_Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doctor_inherits_User" Association="Model.Store.FK_Doctor_inherits_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Doctor" EntitySet="Users_Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_inherits_User" Association="Model.Store.FK_Patient_inherits_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Patient" EntitySet="Users_Patient" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="QueryStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Code" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ThirdName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Birthday" Type="datetime" Nullable="false" />
+    <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Role_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Specialties">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users_Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Specialty_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users_Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Policy" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Card" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Mother" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartDateOfObservation" Type="datetime" Nullable="false" />
+    <Property Name="Phone1" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone2" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="RoleUser">
+    <End Role="Role" Type="Model.Store.Roles" Multiplicity="1" />
+    <End Role="User" Type="Model.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SpecialtyDoctor">
+    <End Role="Specialty" Type="Model.Store.Specialties" Multiplicity="1" />
+    <End Role="Doctor" Type="Model.Store.Users_Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="Specialty_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doctor_inherits_User">
+    <End Role="User" Type="Model.Store.Users" Multiplicity="1" />
+    <End Role="Doctor" Type="Model.Store.Users_Doctor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_inherits_User">
+    <End Role="User" Type="Model.Store.Users" Multiplicity="1" />
+    <End Role="Patient" Type="Model.Store.Users_Patient" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="QueryStatus" EntityType="Model.QueryStatus" />
+          <EntitySet Name="Users" EntityType="Model.User" />
+          <EntitySet Name="Roles" EntityType="Model.Role" />
+          <AssociationSet Name="RoleUser" Association="Model.RoleUser">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Specialties" EntityType="Model.Specialty" />
+          <AssociationSet Name="SpecialtyDoctor" Association="Model.SpecialtyDoctor">
+            <End Role="Specialty" EntitySet="Specialties" />
+            <End Role="Doctor" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="QueryStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Message" Nullable="false" />
+          <Property Type="Int32" Name="Code" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FirstName" Nullable="false" />
+          <Property Type="String" Name="LastName" Nullable="false" />
+          <Property Type="String" Name="ThirdName" Nullable="false" />
+          <Property Type="String" Name="Login" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" />
+          <Property Type="DateTime" Name="Birthday" Nullable="false" />
+          <Property Type="String" Name="Token" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Model.RoleUser" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Model.RoleUser" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <Association Name="RoleUser">
+          <End Type="Model.Role" Role="Role" Multiplicity="1" />
+          <End Type="Model.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Doctor" BaseType="Model.User">
+          <NavigationProperty Name="Specialty" Relationship="Model.SpecialtyDoctor" FromRole="Doctor" ToRole="Specialty" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Doctors" Relationship="Model.SpecialtyDoctor" FromRole="Specialty" ToRole="Doctor" />
+        </EntityType>
+        <Association Name="SpecialtyDoctor">
+          <End Type="Model.Specialty" Role="Specialty" Multiplicity="1" />
+          <End Type="Model.Doctor" Role="Doctor" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Patient" BaseType="Model.User">
+          <Property Type="String" Name="Policy" Nullable="false" />
+          <Property Type="String" Name="Card" Nullable="false" />
+          <Property Type="String" Name="Mother" Nullable="false" />
+          <Property Type="DateTime" Name="StartDateOfObservation" Nullable="false" />
+          <Property Type="String" Name="Phone1" Nullable="false" />
+          <Property Type="String" Name="Phone2" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="QueryStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.QueryStatus)">
+        <MappingFragment StoreEntitySet="QueryStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="ThirdName" ColumnName="ThirdName" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Doctor)">
+        <MappingFragment StoreEntitySet="Users_Doctor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Patient)">
+        <MappingFragment StoreEntitySet="Users_Patient">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Policy" ColumnName="Policy" />
+          <ScalarProperty Name="Card" ColumnName="Card" />
+          <ScalarProperty Name="Mother" ColumnName="Mother" />
+          <ScalarProperty Name="StartDateOfObservation" ColumnName="StartDateOfObservation" />
+          <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+          <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Specialties">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Specialty)">
+        <MappingFragment StoreEntitySet="Specialties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RoleUser" TypeName="Model.RoleUser" StoreEntitySet="Users">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="Id" ColumnName="Role_Id" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SpecialtyDoctor" TypeName="Model.SpecialtyDoctor" StoreEntitySet="Users_Doctor">
+      <EndProperty Name="Specialty">
+        <ScalarProperty Name="Id" ColumnName="Specialty_Id" />
+      </EndProperty>
+      <EndProperty Name="Doctor">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Model" DisplayType="true" >
+        <EntityTypeShape EntityType="Model.QueryStatus" Width="1.5" PointX="0.5" PointY="0.5" Height="1.59568359375" />
+        <EntityTypeShape EntityType="Model.User" Width="1.75" PointX="3.5" PointY="0.5" Height="2.5571907552083331" />
+        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.5" PointY="4.125" Height="1.5956835937499996" />
+        <AssociationConnector Association="Model.RoleUser">
+          <ConnectorPoint PointX="2" PointY="4.40625" />
+          <ConnectorPoint PointX="4.21875" PointY="4.40625" />
+          <ConnectorPoint PointX="4.21875" PointY="3.2494921874999996" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Model.Doctor" Width="1.5" PointX="5" PointY="4.75" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="Model.Doctor">
+          <ConnectorPoint PointX="4.375" PointY="3.2494921874999996" />
+          <ConnectorPoint PointX="4.375" PointY="4.375" />
+          <ConnectorPoint PointX="5.75" PointY="4.375" />
+          <ConnectorPoint PointX="5.75" PointY="4.75" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="Model.Specialty" Width="1.5" PointX="6.5" PointY="3.25" Height="1.2110807291666665" />
+        <AssociationConnector Association="Model.SpecialtyDoctor">
+          <ConnectorPoint PointX="7.2500005000000005" PointY="4.6533821614583335" />
+          <ConnectorPoint PointX="7.2500005000000005" PointY="5.3555403645833337" />
+          <ConnectorPoint PointX="6.5" PointY="5.3555403645833337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Model.Patient" Width="1.5" PointX="6.25" PointY="0.5" Height="2.172587890625" />
+        <InheritanceConnector EntityType="Model.Patient">
+          <ConnectorPoint PointX="5.25" PointY="1.5862939453125" />
+          <ConnectorPoint PointX="6.25" PointY="1.5862939453125" />
+        </InheritanceConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
