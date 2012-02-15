@@ -58,7 +58,7 @@ namespace PrototypeHM.Parameter
         [DisplayName(@"Значение"), SimpleOrCompoundModel(IsSimple = true)]
         public string Value { get; set; }
 
-        [DisplayName(@"Тип данных значения"), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "ValueTypeId", TypeMappingEnum.OneToMany)]
+        [DisplayName(@"Тип данных значения"), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "Name", TypeMappingEnum.OneToMany)]
         public string ValueType { get; set; }
 
         public bool IsValid()
