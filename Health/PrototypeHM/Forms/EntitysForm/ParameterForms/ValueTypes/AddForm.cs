@@ -14,10 +14,11 @@ using PrototypeHM.DB.DI;
 using PrototypeHM.Properties;
 using PrototypeHM;
 using PrototypeHM.Parameter;
+using PrototypeHM.Forms.EntitysForm.ParameterForms.Other;
 
 namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
 {
-    public partial class AddForm : DIForm
+    public partial class AddForm : DIForm, ICommonFormsFunctions
     {
         public AddForm(IDIKernel diKernel)
             : base(diKernel)

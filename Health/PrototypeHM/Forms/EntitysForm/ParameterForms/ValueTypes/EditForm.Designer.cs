@@ -83,6 +83,7 @@
             this.ClientSize = new System.Drawing.Size(390, 226);
             this.Controls.Add(this.groupBox1);
             this.Name = "EditForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Создание нового типа мета-данных";
             this.Load += new System.EventHandler(this.EditForm_Load);
             this.groupBox1.ResumeLayout(false);

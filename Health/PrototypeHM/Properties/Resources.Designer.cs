@@ -68,5 +68,23 @@ namespace PrototypeHM.Properties {
                 return ResourceManager.GetString("AddForm_InitializeForm_Сохранить", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не удалось выполнить..
+        /// </summary>
+        internal static string ExtensionMethods_GetNegativeNotice_Не_удалось_выполнить_ {
+            get {
+                return ResourceManager.GetString("ExtensionMethods_GetNegativeNotice_Не_удалось_выполнить_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выполнено успешно..
+        /// </summary>
+        internal static string ExtensionMethods_GetPositiveNotice_Выполнено_успешно_ {
+            get {
+                return ResourceManager.GetString("ExtensionMethods_GetPositiveNotice_Выполнено_успешно_", resourceCulture);
+            }
+        }
     }
 }

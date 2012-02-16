@@ -14,10 +14,11 @@ using PrototypeHM.DB.DI;
 using PrototypeHM.Properties;
 using PrototypeHM;
 using PrototypeHM.Parameter;
+using PrototypeHM.Forms.EntitysForm.ParameterForms.Other;
 
 namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
 {
-    public partial class ListForm : DIForm
+    public partial class ListForm : DIForm, ICommonFormsFunctions
     {
         public ListForm(IDIKernel diKernel)
             : base(diKernel)
@@ -28,7 +29,9 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
 
         private void ListForm_Load(object sender, EventArgs e)
         {
+            this.SwitchOnNoticePanel(this);
             GetListAndSetTable();
+            this.GetPositiveNotice(this, "Таблица успешно заполнена");
         }
 
         private IList<ValueTypeOfMetadata> ListObject { get; set; } 

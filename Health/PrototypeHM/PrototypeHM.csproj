@@ -131,6 +131,8 @@
     <Compile Include="Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Other\ExtensionMethods.cs" />
+    <Compile Include="Forms\EntitysForm\ParameterForms\Other\ICommonFormsFunctions.cs" />
     <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
