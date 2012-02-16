@@ -34,6 +34,8 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
 
         private ValueTypeOfMetadata DataObject { get; set; }
 
+        public bool FlagResult = false;
+
         private void SaveClickButtonClick(object sender, EventArgs e)
         {
             try
@@ -58,7 +60,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                     var qs = @delegate(DataObject);
                     if (qs.Status == 1)
                     {
-                        YMessageBox.Information("Успешено сохранено");
+                        FlagResult = true;
                         Close();
                     }
                     else
@@ -69,7 +71,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                 }
                 else
                 {
-                    YMessageBox.Warning("Пожалуйста укажите название создаваемого типа метаданного");
+                    this.GetNegativeNotice(this, "Укажите название!");
                 }
             }
             catch (Exception exp)
@@ -110,7 +112,13 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                     throw new Exception("Отсутствует объект c заданным Id");
                 else
                 {
-                    if (DataObject.Name != null) NameTextBox.Text = DataObject.Name;
+                    if (DataObject.Name != null)
+                    {
+                        NameTextBox.Text = DataObject.Name;
+
+                        this.SwitchOnNoticePanel(this);
+                        this.GetPositiveNotice(this, "Успешно загружено");
+                    }
                     else throw new Exception("Ошибка репозиторяи - поле со значением null");
                 }
             }

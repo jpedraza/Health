@@ -31,7 +31,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
         {
             this.SwitchOnNoticePanel(this);
             GetListAndSetTable();
-            this.GetPositiveNotice(this, "Таблица успешно заполнена");
+            this.GetPositiveNotice(this, dataGridView1.RowCount > 1 ? "Таблица успешно заполнена" : "В базе нет типов.");
         }
 
         private IList<ValueTypeOfMetadata> ListObject { get; set; } 
@@ -80,6 +80,14 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
         {
             var form = new AddForm(this.DIKernel);
             form.ShowDialog();
+            if (form.FlagResult)
+            {
+                this.GetPositiveNotice(this, "Успешно записано");
+            }
+            else
+            {
+                this.GetNegativeNotice(this, "Добавление отменено пользователем");
+            }
             Update();
 
         }
@@ -87,6 +95,8 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             Update();
+            this.GetPositiveNotice(this, "Обновлено");
+            this.GetPositiveNotice(this, dataGridView1.RowCount > 1 ? "Таблица успешно заполнена" : "В базе нет типов.");
         }
 
         private void Update()
@@ -116,6 +126,14 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                                                                           Convert.ToInt32(
                                                                               value));
                                               editForm.ShowDialog();
+                                              if (editForm.FlagResult)
+                                              {
+                                                  this.GetPositiveNotice(this, "Успешно изменено");
+                                              }
+                                              else
+                                              {
+                                                  this.GetNegativeNotice(this, "Редактирование отменено пользователем");
+                                              }
                                               Update();
                                           };
 
@@ -145,8 +163,12 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                                                   var qS = @delegate(dO);
                                                   if (qS.Status ==1)
                                                   {
-                                                      YMessageBox.Information("Успешно удалено");
+                                                      //YMessageBox.Information("Успешно удалено");
                                                       this.Update();
+                                                      this.GetPositiveNotice(this,
+                                                                             dataGridView1.RowCount > 1
+                                                                                 ? "Успешно удалено"
+                                                                                 : "Успешно удалено. В базе нет типов.");
                                                   }
                                                   else
                                                   {

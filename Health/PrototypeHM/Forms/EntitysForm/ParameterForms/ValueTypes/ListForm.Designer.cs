@@ -140,6 +140,7 @@
             this.ClientSize = new System.Drawing.Size(553, 403);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ListForm";
             this.Text = "Работа с типами метаданных параметра";
             this.Load += new System.EventHandler(this.ListForm_Load);

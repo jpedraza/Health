@@ -55,18 +55,20 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                         var qs = @delegate(dataObject);
                     if (qs.Status == 1)
                     {
-                        YMessageBox.Information("Успешено сохранено");
+                        FlagResult = true;
                         Close();
                     }
                     else
                     {
-                        YMessageBox.Warning(qs.StatusMessage);
+                        //YMessageBox.Warning(qs.StatusMessage);
+                        this.GetNegativeNotice(this, qs.StatusMessage);
                     }
                    
                 }
                 else
                 {
-                    YMessageBox.Warning("Пожалуйста укажите название создаваемого типа метаданного");
+                    //YMessageBox.Warning("Пожалуйста укажите название создаваемого типа метаданного");
+                    this.GetNegativeNotice(this, "Пожалуйста укажите название!");
                 }
             }
             catch (Exception exp)
@@ -76,5 +78,12 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                 Close();
             }
         }
+
+        private void AddForm_Load(object sender, EventArgs e)
+        {
+            this.SwitchOnNoticePanel(this);
+        }
+
+        public bool FlagResult = false;
     }
 }

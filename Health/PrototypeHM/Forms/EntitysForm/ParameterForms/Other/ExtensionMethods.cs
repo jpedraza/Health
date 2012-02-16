@@ -30,7 +30,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.Other
                             };
             var label = new Label
                             {
-                                Text = "Успешно подгружено",
+                                //Text = "Успешно подгружено",
                                 Font = new Font("TimesNewRoman", 10f, FontStyle.Bold),
                                 Name = "Label",
                                 Left = 10,
@@ -66,7 +66,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.Other
                                   if (t.Interval > 350){
                                       
                                       if (label != null) label.Visible = true;
-                                      if(t.Interval >= 600)
+                                      if(t.Interval >= 500)
                                       {
                                           if (label != null) label.Visible = false;
                                           t.Stop();
