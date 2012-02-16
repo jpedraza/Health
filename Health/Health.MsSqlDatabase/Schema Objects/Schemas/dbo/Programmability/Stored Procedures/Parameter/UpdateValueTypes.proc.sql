@@ -1,12 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[UpdateValueTypes]
-	@ValueTypeId int = 0, 
+	@ValueTypeId int, 
 	@Name nvarchar(MAX)
 AS
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
-		update dbo.ValueTypes
-			set Name=@Name
+		update ValueTypes
+			set Name = @Name
 			where ValueTypeId=@ValueTypeId
 	end try
 	begin catch

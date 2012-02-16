@@ -4,9 +4,9 @@ AS
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
 		select @status as Status, @statusMessage as StatusMessage,
-			v.ValueTypeId,
-			v.Name,
-			'0' as Id
+			v.ValueTypeId as ValueTypeId,
+			v.Name as Name,
+			v.ValueTypeId as Id
 			from ValueTypes as v
 	end try
 	begin catch

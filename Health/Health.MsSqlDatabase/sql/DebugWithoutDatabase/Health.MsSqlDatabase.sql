@@ -973,17 +973,6 @@ AS
 	SELECT @param1, @param2
 RETURN 0
 GO
-PRINT N'Выполняется создание [dbo].[GetParameterById]...';
-
-
-GO
-CREATE PROCEDURE [dbo].[GetParameterById]
-	@parameterId int
-AS
-	SELECT ParameterId, Name, DefaultValue from 
-	Parameters where ParameterId = @parameterId
-RETURN 0
-GO
 PRINT N'Выполняется создание [dbo].[GetParametersForPatientNowDate]...';
 
 
@@ -1048,6 +1037,28 @@ AS
 		set @status = 0
 		set @statusMessage = dbo.GSM(3001001)
 	end	
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[DeleteValueTypes]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[DeleteValueTypes]
+	@deleteValueTypeId int
+AS
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		delete ValueTypes
+			where ValueTypeId=@deleteValueTypeId
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+	end catch
 	select @status as Status, @statusMessage as StatusMessage
 RETURN 0
 GO
@@ -1214,9 +1225,9 @@ AS
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
 		select @status as Status, @statusMessage as StatusMessage,
-			v.ValueTypeId,
-			v.Name,
-			'0' as Id
+			v.ValueTypeId as ValueTypeId,
+			v.Name as Name,
+			v.ValueTypeId as Id
 			from ValueTypes as v
 	end try
 	begin catch
@@ -1263,6 +1274,31 @@ AS
 			WHERE do.DoctorId = @doctorId		
 RETURN 0
 GO
+PRINT N'Выполняется создание [dbo].[GetParameterById]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetParameterById]
+	@parameterId int
+AS
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try		
+		SELECT ParameterId, Name, DefaultValue,
+			@status as Status,
+			@statusMessage as StatusMessage
+		from 
+		Parameters where ParameterId = @parameterId
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage	
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[GetPatientFullDataById]...';
 
 
@@ -1300,6 +1336,36 @@ AS
 		   join Users as u on p.PatientId = u.UserId
 		   join Roles as r on u.RoleId = r.RoleId
 		   where p.PatientId = @patientId
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetValueTypeDataById]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetValueTypeDataById]
+	@ValueTypeId int
+AS
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		SELECT 
+			@status as Status,
+			@statusMessage as StatusMessage,
+			vt.ValueTypeId as ValueTypeId,
+			vt.ValueTypeId as Id,
+			vt.Name as Name	
+				
+		from ValueTypes as vt
+		where vt.ValueTypeId = @ValueTypeId
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+		select @status as Status, @statusMessage as StatusMessage
+	end catch
+		
 RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[NewParameter]...';
@@ -1426,14 +1492,14 @@ PRINT N'Выполняется создание [dbo].[UpdateValueTypes]...';
 
 GO
 CREATE PROCEDURE [dbo].[UpdateValueTypes]
-	@ValueTypeId int = 0, 
+	@ValueTypeId int, 
 	@Name nvarchar(MAX)
 AS
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
-		update dbo.ValueTypes
-			set Name=@Name
+		update ValueTypes
+			set Name = @Name
 			where ValueTypeId=@ValueTypeId
 	end try
 	begin catch

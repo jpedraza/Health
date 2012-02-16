@@ -115,7 +115,10 @@ namespace PrototypeHM
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ValueTypeOfMetadata>
             {
                 Save = _kernel.Get<ParameterRepository>().SaveValueType,
-                Load = _kernel.Get<ParameterRepository>().GetAllValueTypes
+                Load = _kernel.Get<ParameterRepository>().GetAllValueTypes,
+                Delete = _kernel.Get<ParameterRepository>().DeleteValueTypeById,
+                Update = _kernel.Get<ParameterRepository>().UpdateValueTypeById,
+                Detail = _kernel.Get<ParameterRepository>().DetailValueType
             });
             //Конец контекста операций для типа метаданных
 

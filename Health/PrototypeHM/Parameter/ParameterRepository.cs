@@ -102,5 +102,45 @@ namespace PrototypeHM.Parameter {
             reader.Close();
             return list;
         }
+
+        internal QueryStatus DeleteValueTypeById(ValueTypeOfMetadata deleteData)
+        {
+            var c = CreateQuery("EXEC [dbo].[DeleteValueTypes] @deleteValueTypeId");
+            c.Parameters.Add("deleteValueTypeId", SqlDbType.Int);
+            c.Parameters[0].Value = deleteData.ValueTypeId;
+            var reader = c.ExecuteReader();
+            var queryStatus = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+            return queryStatus;
+        }
+
+        internal QueryStatus UpdateValueTypeById(ValueTypeOfMetadata updateData)
+        {
+            var c = CreateQuery("EXEC [dbo].[UpdateValueTypes] @ValueTypeId, @Name");
+            c.Parameters.Add("ValueTypeId", SqlDbType.Int);
+            c.Parameters[0].Value = updateData.ValueTypeId;
+
+            c.Parameters.Add("Name", SqlDbType.NVarChar);
+            c.Parameters[1].Value = updateData.Name;
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+            return qS;
+        }
+
+        internal ValueTypeOfMetadata DetailValueType(ValueTypeOfMetadata data)
+        {
+            if (data == null) throw new ArgumentNullException("data");
+
+            var c = CreateQuery("EXEC [dbo].[GetValueTypeDataById] @ValueTypeId");
+            c.Parameters.Add("ValueTypeId", SqlDbType.Int);
+            c.Parameters[0].Value = data.ValueTypeId;
+
+            var reader = c.ExecuteReader();
+            var qS = Get<PropertyToColumnMapper<ValueTypeOfMetadata>>().Map(reader)[0];
+            reader.Close();
+            return qS;
+        }
     }
 }

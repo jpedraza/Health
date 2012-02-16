@@ -857,6 +857,74 @@ RETURN 0]]></Value>
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[DeleteDoctor]&#xD;&#xA;&#x9;@doctorId int = 0&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[DeleteValueTypes]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		delete ValueTypes
+			where ValueTypeId=@deleteValueTypeId
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[DeleteValueTypes].[@deleteValueTypeId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[DeleteValueTypes].[@deleteValueTypeId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="399" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[DeleteValueTypes]&#xD;&#xA;&#x9;@deleteValueTypeId int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[Diagnosis]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="Columns">
@@ -2273,9 +2341,9 @@ RETURN 0]]></Value>
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
 		select @status as Status, @statusMessage as StatusMessage,
-			v.ValueTypeId,
-			v.Name,
-			'0' as Id
+			v.ValueTypeId as ValueTypeId,
+			v.Name as Name,
+			v.ValueTypeId as Id
 			from ValueTypes as v
 	end try
 	begin catch
@@ -2304,6 +2372,9 @@ RETURN 0]]></Value>
 				<Entry>
 					<References Name="[dbo].[ValueTypes].[Name]" />
 				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
 			</Relationship>
 			<Relationship Name="Owner">
 				<Entry>
@@ -2311,7 +2382,7 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="439" />
+				<Property Name="Length" Value="472" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllValueTypes]&#xD;&#xA;AS" />
@@ -2470,11 +2541,34 @@ RETURN 0]]></Value>
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
 				<Value><![CDATA[
-	SELECT ParameterId, Name, DefaultValue from 
-	Parameters where ParameterId = @parameterId
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try		
+		SELECT ParameterId, Name, DefaultValue,
+			@status as Status,
+			@statusMessage as StatusMessage
+		from 
+		Parameters where ParameterId = @parameterId
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage	
 RETURN 0]]></Value>
 			</Property>
 			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[Parameters]" />
 				</Entry>
@@ -2514,7 +2608,7 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="167" />
+				<Property Name="Length" Value="492" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetParameterById]&#xD;&#xA;&#x9;@parameterId int&#xD;&#xA;AS" />
@@ -2794,6 +2888,91 @@ RETURN 0]]></Value>
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetPatientFullDataById]&#xD;&#xA;&#x9;@patientId int = 0&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetValueTypeDataById]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		SELECT 
+			@status as Status,
+			@statusMessage as StatusMessage,
+			vt.ValueTypeId as ValueTypeId,
+			vt.ValueTypeId as Id,
+			vt.Name as Name	
+				
+		from ValueTypes as vt
+		where vt.ValueTypeId = @ValueTypeId
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+		select @status as Status, @statusMessage as StatusMessage
+	end catch
+		
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetValueTypeDataById].[@ValueTypeId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[GetValueTypeDataById].[@ValueTypeId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="563" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetValueTypeDataById]&#xD;&#xA;&#x9;@ValueTypeId int&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100ScalarFunction" Name="[dbo].[GSM]">
@@ -4797,8 +4976,8 @@ RETURN 0]]></Value>
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
-		update dbo.ValueTypes
-			set Name=@Name
+		update ValueTypes
+			set Name = @Name
 			where ValueTypeId=@ValueTypeId
 	end try
 	begin catch
@@ -4842,9 +5021,6 @@ RETURN 0]]></Value>
 			<Relationship Name="Parameters">
 				<Entry>
 					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateValueTypes].[@ValueTypeId]">
-						<Property Name="DefaultExpressionScript">
-							<Value><![CDATA[0]]></Value>
-						</Property>
 						<Relationship Name="Type">
 							<Entry>
 								<Element Type="ISql90TypeSpecifier">
@@ -4876,10 +5052,10 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="433" />
+				<Property Name="Length" Value="427" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateValueTypes]&#xD;&#xA;&#x9;@ValueTypeId int = 0, &#xD;&#xA;&#x9;@Name nvarchar(MAX)&#xD;&#xA;AS" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateValueTypes]&#xD;&#xA;&#x9;@ValueTypeId int, &#xD;&#xA;&#x9;@Name nvarchar(MAX)&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[Users]">

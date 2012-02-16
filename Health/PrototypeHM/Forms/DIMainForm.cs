@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using PrototypeHM.DB.DI;
 using PrototypeHM.Diagnosis;
 using PrototypeHM.Doctor;
+using PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes;
 using PrototypeHM.Specialty;
 using PrototypeHM.User;
 using PrototypeHM.Parameter;
@@ -146,6 +147,21 @@ namespace PrototypeHM.Forms
             var editForm = new AddForm<ValueTypeOfMetadata>(DIKernel, -1) { MdiParent = this };
             editForm.InitializeForm();
             editForm.Show();
+        }
+
+        private void ÚËÔ˚ÃÂÚ‡‰‡ÌÌ˚ıToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            var form = new PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes.ListForm(DIKernel) { MdiParent = this };
+                form.Show();
+            form = null;
+
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes.AddForm(this.DIKernel);
+            form.ShowDialog();
         }
     }
 }

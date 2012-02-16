@@ -131,6 +131,24 @@
     <Compile Include="Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.Designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\ListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\ListForm.Designer.cs">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +192,15 @@
     <EmbeddedResource Include="Forms\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\ValueTypes\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\ValueTypes\ListForm.resx">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ListForm.resx">
       <DependentUpon>ListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -205,7 +232,6 @@
   <ItemGroup>
     <Folder Include="Forms\EntitysForm\ParameterForms\MetaData\" />
     <Folder Include="Forms\EntitysForm\ParameterForms\Parameter\" />
-    <Folder Include="Forms\EntitysForm\ParameterForms\ValueTypes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
