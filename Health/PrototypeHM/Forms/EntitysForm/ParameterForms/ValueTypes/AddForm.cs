@@ -61,14 +61,14 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                     else
                     {
                         //YMessageBox.Warning(qs.StatusMessage);
-                        this.GetNegativeNotice(this, qs.StatusMessage);
+                        this.GetNegativeNotice(qs.StatusMessage);
                     }
                    
                 }
                 else
                 {
                     //YMessageBox.Warning("Пожалуйста укажите название создаваемого типа метаданного");
-                    this.GetNegativeNotice(this, "Пожалуйста укажите название!");
+                    this.GetNegativeNotice("Пожалуйста укажите название!");
                 }
             }
             catch (Exception exp)
@@ -81,7 +81,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
 
         private void AddForm_Load(object sender, EventArgs e)
         {
-            this.SwitchOnNoticePanel(this);
+            this.SwitchOnNoticePanel();
         }
 
         public bool FlagResult = false;

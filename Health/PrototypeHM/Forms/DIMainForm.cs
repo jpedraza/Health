@@ -103,15 +103,15 @@ namespace PrototypeHM.Forms
            
         }
 
-        private void ïðîñìîòðToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var listForm = new ListForm<ParameterDetail>(DIKernel);
-            listForm.MdiParent = this;
-            listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAll;
-            listForm.InitializeOperations();
-            listForm.Show();
-            listForm.Activate();
-        }
+        //private void ïðîñìîòðToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    var listForm = new ListForm<ParameterDetail>(DIKernel);
+        //    listForm.MdiParent = this;
+        //    listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAll;
+        //    listForm.InitializeOperations();
+        //    listForm.Show();
+        //    listForm.Activate();
+        //}
 
         private void íîâûéToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -162,6 +162,22 @@ namespace PrototypeHM.Forms
         {
             var form = new PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes.AddForm(this.DIKernel);
             form.ShowDialog();
+        }
+
+        private void ìåòàäàííûåToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var form = new PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData.ListForm(DIKernel)
+                               {MdiParent = this};
+                form.Show();
+                form = null;
+            }
+            catch(Exception exp)
+            {
+                YMessageBox.Error(exp.Message);
+            }
+            
         }
     }
 }

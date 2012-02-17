@@ -393,7 +393,7 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetAllParameterShowData.proc.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetAllMetadataForParameter.proc.sql">
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetAllMetadata.proc.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\NewParameter.proc.sql">

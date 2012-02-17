@@ -71,7 +71,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                 }
                 else
                 {
-                    this.GetNegativeNotice(this, "Укажите название!");
+                    this.GetNegativeNotice("Укажите название!");
                 }
             }
             catch (Exception exp)
@@ -116,8 +116,8 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
                     {
                         NameTextBox.Text = DataObject.Name;
 
-                        this.SwitchOnNoticePanel(this);
-                        this.GetPositiveNotice(this, "Успешно загружено");
+                        this.SwitchOnNoticePanel();
+                        this.GetPositiveNotice("Успешно загружено");
                     }
                     else throw new Exception("Ошибка репозиторяи - поле со значением null");
                 }

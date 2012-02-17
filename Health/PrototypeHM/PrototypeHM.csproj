@@ -131,6 +131,18 @@
     <Compile Include="Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.Designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\ListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\ListForm.Designer.cs">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EntitysForm\ParameterForms\Other\ExtensionMethods.cs" />
     <Compile Include="Forms\EntitysForm\ParameterForms\Other\ICommonFormsFunctions.cs" />
     <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.cs">
@@ -194,6 +206,12 @@
     <EmbeddedResource Include="Forms\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\ListForm.resx">
+      <DependentUpon>ListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,7 +250,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Forms\EntitysForm\ParameterForms\MetaData\" />
     <Folder Include="Forms\EntitysForm\ParameterForms\Parameter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

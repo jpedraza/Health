@@ -15,14 +15,15 @@ namespace PrototypeHM.Parameter {
         {
         }
 
-        public IList<ParameterDetail> GetAll()
+        public IList<ParameterBaseData> GetAll()
         {
             var db = DIKernel.Get<DB.DB>();
-            SqlCommand command = CreateQuery(GetQueryText("GetAllParameterShowData"));
-            SqlDataReader reader = command.ExecuteReader();
+            var command = CreateQuery("EXEC [dbo].[GetAllParameterShowData]");
+            var reader = command.ExecuteReader();
 
-            IList<ParameterDetail> parameters = Get<PropertyToColumnMapper<ParameterDetail>>().Map(reader);
+            var parameters = Get<PropertyToColumnMapper<ParameterBaseData>>().Map(reader);
             reader.Close();
+
             return parameters;
         }
 
@@ -67,7 +68,23 @@ namespace PrototypeHM.Parameter {
 
         internal QueryStatus SaveMetadata(MetadataForParameter data)
         {
-            return new QueryStatus() { Status = 1};
+            var c = CreateQuery("[dbo].[NewParameterMetadata] @ParameterId, @Key, @Value, @ValueTypeId");
+            c.Parameters.Add("ParameterId", SqlDbType.Int);
+            c.Parameters[0].Value = data.ParameterId.ToString();
+
+            c.Parameters.Add("Key", SqlDbType.NVarChar);
+            c.Parameters[1].Value = data.Key;
+
+            c.Parameters.Add("Value", SqlDbType.VarBinary);
+            c.Parameters[2].Value = data.Value;
+
+            c.Parameters.Add("ValueTypeId", SqlDbType.NVarChar);
+            c.Parameters[3].Value = data.ValueTypeId.ToString();
+
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            return qS;
         }
 
         internal QueryStatus SaveValueType(ValueTypeOfMetadata data)
@@ -141,6 +158,17 @@ namespace PrototypeHM.Parameter {
             var qS = Get<PropertyToColumnMapper<ValueTypeOfMetadata>>().Map(reader)[0];
             reader.Close();
             return qS;
+        }
+
+        internal IList<MetadataForParameter> GetAllMetadataForParameters ()
+        {
+            var c = CreateQuery("EXEC [dbo].[GetAllMetadata]");
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<MetadataForParameter>>().Map(reader);
+            reader.Close();
+
+           return qS;
         }
     }
 }

@@ -82,31 +82,22 @@ namespace PrototypeHM
                                                                    {
                                                                        Load = _kernel.Get<SpecialtyRepository>().GetAll
                                                                    });
-            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterBaseData>
-            {                
-                
-                            
-            });
-
+            
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
             {
-                Save = _kernel.Get<ParameterRepository>().SaveMetadata
+                Save = _kernel.Get<ParameterRepository>().SaveMetadata,
+                Load = _kernel.Get<ParameterRepository>().GetAllMetadataForParameters
             });
-
-            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
-            Save = _kernel.Get<ParameterRepository>().Save
-            });
+            
 
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
             Save = _kernel.Get<ParameterRepository>().Save,
             Detail = _kernel.Get<ParameterRepository>().Detail,
-            Load = _kernel.Get<ParameterRepository>().GetAll,   
             });
 
-            //Контекст операций для метаданных параметров здоровья
-            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterBaseData>
             {
-                                                                       
+                Load = _kernel.Get<ParameterRepository>().GetAll,
             });
 
             //Конец контекста операций для метаданных параметров здоровья

@@ -22,18 +22,18 @@ namespace PrototypeHM.Parameter
         public string Name { get; set; }
 
         [DisplayName(@"Значение по умолчанию"), SimpleOrCompoundModel(IsSimple = true)]
-        public string DefaultValue { get; set; }
+        public byte[] DefaultValue { get; set; }
 
         public bool IsValid()
         {
             return checkEnitiesValid.checkValid(this.GetType(), (object)this);
         }
 
-        public ParameterBaseData():base()
-        {
-            Name = string.Empty;
-            DefaultValue = string.Empty;
-        }
+        //public ParameterBaseData():base()
+        //{
+        //    Name = string.Empty;
+        //    DefaultValue = string.Empty;
+        //}
     }
 
     public class ParameterDetail : ParameterBaseData {        
@@ -41,25 +41,31 @@ namespace PrototypeHM.Parameter
         [DisplayName(@"Мета-данные параметра"), SimpleOrCompoundModel(IsSimple=false), MultiSelectEditMode(typeof(OperationsContext<MetadataForParameter>), "ParameterId", TypeMappingEnum.ManyToOne)]
         public IList<MetadataForParameter> Metadata { get; set; }
 
-        public ParameterDetail() : base()
-        {
-            Metadata = new MetadataForParameter[0].ToList();
+        //public ParameterDetail() : base()
+        //{
+        //    Metadata = new MetadataForParameter[0].ToList();
             
-        }
+        //}
     }
 
     public class MetadataForParameter:IHealthParameterContext, IIdentity {
         [DisplayName(@"Id параметра")]
         public int ParameterId { get; set; }
 
+        public string ParameterName { get; set; }
+
         [DisplayName(@"Ключ-значение"), SimpleOrCompoundModel(IsSimple = true)]
         public string Key { get; set; }
 
         [DisplayName(@"Значение"), SimpleOrCompoundModel(IsSimple = true)]
-        public string Value { get; set; }
+        public byte[] Value { get; set; }
 
-        [DisplayName(@"Тип данных значения"), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "Name", TypeMappingEnum.OneToMany)]
-        public string ValueType { get; set; }
+        //[DisplayName(@"Тип данных значения"), SingleSelectEditMode(typeof(OperationsContext<ValueTypeOfMetadata>), "Name", TypeMappingEnum.OneToMany)]
+        //public ValueTypeOfMetadata ValueType { get; set; }
+
+        public string ValueTypeId { get; set; }
+
+        public string ValueTypeName { get; set; }
 
         public bool IsValid()
         {

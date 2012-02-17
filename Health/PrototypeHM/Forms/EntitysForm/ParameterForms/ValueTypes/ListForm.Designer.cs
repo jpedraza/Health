@@ -1,4 +1,7 @@
-﻿namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
+﻿using System;
+using PrototypeHM.Forms.EntitysForm.ParameterForms.Other;
+
+namespace PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes
 {
     partial class ListForm
     {
@@ -64,7 +67,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(513, 168);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
+            this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView1CellMouseDown);
             // 
             // ValueTypeId
             // 
@@ -87,7 +90,7 @@
             this.AddValueTypes.TabIndex = 0;
             this.AddValueTypes.Text = "Добавить новый тип";
             this.AddValueTypes.UseVisualStyleBackColor = true;
-            this.AddValueTypes.Click += new System.EventHandler(this.AddValueTypes_Click);
+            this.AddValueTypes.Click += new System.EventHandler(this.AddValueTypesClick);
             // 
             // CloseButton
             // 
@@ -97,6 +100,7 @@
             this.CloseButton.TabIndex = 1;
             this.CloseButton.Text = "Закрыть";
             this.CloseButton.UseVisualStyleBackColor = true;
+            this.CloseButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
             // UpdateButton
             // 
@@ -106,7 +110,7 @@
             this.UpdateButton.TabIndex = 2;
             this.UpdateButton.Text = "Обновить";
             this.UpdateButton.UseVisualStyleBackColor = true;
-            this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
+            this.UpdateButton.Click += new System.EventHandler(this.UpdateButtonClick);
             // 
             // groupBox2
             // 
@@ -143,7 +147,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ListForm";
             this.Text = "Работа с типами метаданных параметра";
-            this.Load += new System.EventHandler(this.ListForm_Load);
+            this.Load += new System.EventHandler(this.ListFormLoad);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -156,7 +160,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameValueType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ValueTypeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameValueType2;
         private System.Windows.Forms.Button AddValueTypes;
@@ -164,5 +167,34 @@
         private System.Windows.Forms.Button UpdateButton;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
+
+        private void UpdateTable()
+        {
+            dataGridView1.Rows.Clear();
+            GetListAndSetTable();
+        }
+
+        private void UpdateButtonClick(object sender, EventArgs e)
+        {
+            UpdateTable();
+            this.GetPositiveNotice("Обновлено");
+            this.GetPositiveNotice(dataGridView1.RowCount > 1 ? "Таблица успешно заполнена" : "В базе нет типов.");
+        }
+
+        private void AddValueTypesClick(object sender, EventArgs e)
+        {
+            var form = new AddForm(this.DIKernel);
+            form.ShowDialog();
+            if (form.FlagResult)
+            {
+                this.GetPositiveNotice("Успешно записано");
+            }
+            else
+            {
+                this.GetNegativeNotice("Добавление отменено пользователем");
+            }
+            UpdateTable();
+
+        }
     }
 }
