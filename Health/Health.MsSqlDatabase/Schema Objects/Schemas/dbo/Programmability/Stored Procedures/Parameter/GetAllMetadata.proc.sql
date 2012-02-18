@@ -8,7 +8,7 @@ AS
 			pm.Value as Value,
 			pm.ValueTypeId as ValueTypeId,
 			pm.[Key] as [Key],
-			pm.ParameterId as Id,
+			pm.MetadataId as Id,
 			@status as Status,
 			p.Name as ParameterName,
 			vt.Name as ValueTypeName,

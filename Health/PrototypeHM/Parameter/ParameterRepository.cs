@@ -84,6 +84,8 @@ namespace PrototypeHM.Parameter {
             var reader = c.ExecuteReader();
 
             var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+
             return qS;
         }
 
@@ -169,6 +171,58 @@ namespace PrototypeHM.Parameter {
             reader.Close();
 
            return qS;
+        }
+
+        internal QueryStatus UpdateMetadata(MetadataForParameter editMetadataForParameter)
+        {
+            var c = CreateQuery("EXEC [dbo].[UpdateParameterMetadata] @Id, @ParameterId, @Key, @Value, @ValueTypeId");
+            
+            c.Parameters.Add("Id", SqlDbType.Int);
+            c.Parameters[0].Value = editMetadataForParameter.Id;
+
+            c.Parameters.Add("ParameterId", SqlDbType.Int);
+            c.Parameters[1].Value = editMetadataForParameter.ParameterId;
+
+            c.Parameters.Add("Key", SqlDbType.NVarChar);
+            c.Parameters[2].Value = editMetadataForParameter.Key;
+
+            c.Parameters.Add("Value", SqlDbType.VarBinary);
+            c.Parameters[3].Value = editMetadataForParameter.Value;
+
+            c.Parameters.Add("ValueTypeId", SqlDbType.Int);
+            c.Parameters[4].Value = editMetadataForParameter.ValueTypeId;
+
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+            return qS;
+        }
+
+        internal QueryStatus DeleteMetadata(MetadataForParameter deleteIdMetadataForParameter)
+        {
+            var c = CreateQuery("EXEC [dbo].[DeleteMetadata] @Id");
+            c.Parameters.Add("Id", SqlDbType.Int);
+            c.Parameters[0].Value = deleteIdMetadataForParameter.Id;
+
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+            return qS;
+        }
+
+        internal MetadataForParameter GetMetdadataById(MetadataForParameter detailMetadata)
+        {
+            var c = CreateQuery("EXEC [dbo].[GetMetadataById] @Id");
+            c.Parameters.Add("Id", SqlDbType.Int);
+            c.Parameters[0].Value = detailMetadata.Id;
+
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<MetadataForParameter>>().Map(reader)[0];
+            reader.Close();
+            return qS;
         }
     }
 }

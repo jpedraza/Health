@@ -137,6 +137,12 @@
     <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.Designer.cs">
       <DependentUpon>AddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\EditMetaDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\EditMetaDataForm.Designer.cs">
+      <DependentUpon>EditMetaDataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\ListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,6 +215,9 @@
     <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\EditMetaDataForm.resx">
+      <DependentUpon>EditMetaDataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\ListForm.resx">
       <DependentUpon>ListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -251,6 +260,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\EntitysForm\ParameterForms\Parameter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Health.Core\Health.Core.csproj">
+      <Project>{005180DD-4D3E-492E-8ECE-4DB5615F06CD}</Project>
+      <Name>Health.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Health.Data\Health.Data.csproj">
+      <Project>{A0246A4F-54A6-4F33-8FE7-3537161469F8}</Project>
+      <Name>Health.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prototype\Prototype.csproj">
+      <Project>{B63ADB02-CAF9-40CA-BC07-C6656353692B}</Project>
+      <Name>Prototype</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

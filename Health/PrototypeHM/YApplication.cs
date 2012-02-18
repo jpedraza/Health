@@ -86,7 +86,10 @@ namespace PrototypeHM
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
             {
                 Save = _kernel.Get<ParameterRepository>().SaveMetadata,
-                Load = _kernel.Get<ParameterRepository>().GetAllMetadataForParameters
+                Load = _kernel.Get<ParameterRepository>().GetAllMetadataForParameters,
+                Update = _kernel.Get<ParameterRepository>().UpdateMetadata,
+                Delete = _kernel.Get<ParameterRepository>().DeleteMetadata,
+                Detail = _kernel.Get<ParameterRepository>().GetMetdadataById
             });
             
 

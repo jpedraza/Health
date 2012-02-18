@@ -857,6 +857,88 @@ RETURN 0]]></Value>
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[DeleteDoctor]&#xD;&#xA;&#x9;@doctorId int = 0&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[DeleteMetadata]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		if EXISTS( select pm.MetadataId						
+							from ParameterMetadata as pm
+							where pm.MetadataId=@Id)
+			begin
+				delete from ParameterMetadata where MetadataId=@Id
+			end
+		else
+		begin
+			set @status = 0
+			set @statusMessage = dbo.GSM(4001001)
+		end
+
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[DeleteMetadata].[@Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[DeleteMetadata].[@Id]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="588" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[DeleteMetadata]&#xD;&#xA;&#x9;@Id int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[DeleteValueTypes]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Property Name="BodyScript">
@@ -1961,7 +2043,7 @@ RETURN 0]]></Value>
 			pm.Value as Value,
 			pm.ValueTypeId as ValueTypeId,
 			pm.[Key] as [Key],
-			pm.ParameterId as Id,
+			pm.MetadataId as Id,
 			@status as Status,
 			p.Name as ParameterName,
 			vt.Name as ValueTypeName,
@@ -2023,7 +2105,7 @@ RETURN 0]]></Value>
 					<References Name="[dbo].[ParameterMetadata].[Key]" />
 				</Entry>
 				<Entry>
-					<References Name="[dbo].[ParameterMetadata].[ParameterId]" />
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
 				</Entry>
 				<Entry>
 					<References Name="[dbo].[Parameters].[Name]" />
@@ -2038,7 +2120,7 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="736" />
+				<Property Name="Length" Value="735" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllMetadata]&#xD;&#xA;AS" />
@@ -2583,6 +2665,128 @@ RETURN 0]]></Value>
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetDoctorShowData]&#xD;&#xA;&#x9;@doctorId int = 0&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[GetMetadataById]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		SELECT 
+			@status as Status,
+			@statusMessage as StatusMessage,
+			pm.MetadataId as Id,
+			pm.ParameterId as ParameterId,
+			pm.Value as Value,
+			pm.[Key] as [Key],
+			pm.ValueTypeId as ValueTypeId,
+			p.Name as ParameterName,
+			vt.Name as ValueTypeName
+
+		FROM ParameterMetadata as pm,
+			Parameters as p,
+			ValueTypes as vt
+		WHERE pm.MetadataId=@Id and p.ParameterId=pm.ParameterId 
+			and vt.ValueTypeId=pm.ValueTypeId
+		
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+		select @status as Status, @statusMessage as StatusMessage
+	end catch
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Value]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[Key]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GetMetadataById].[@Id]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Parameters].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ParameterId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ValueTypes].[ValueTypeId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[ValueTypeId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[GetMetadataById].[@Id]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="772" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetMetadataById]&#xD;&#xA;&#x9;@Id int&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[GetParameterById]">
@@ -3450,6 +3654,23 @@ RETURN 0]]></Value>
 		<Element Type="ISql100Table" Name="[dbo].[ParameterMetadata]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
 			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[ParameterMetadata].[MetadataId]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
 				<Entry>
 					<Element Type="ISql100SimpleColumn" Name="[dbo].[ParameterMetadata].[ParameterId]">
 						<Property Name="IsNullable" Value="False" />
@@ -4890,11 +5111,22 @@ RETURN 0]]></Value>
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
-		update dbo.ParameterMetadata
-			set [Key]=@Key,
-				Value=@Value,
-				ValueTypeId=@ValueTypeId
-			where ParameterId=@ParameterId
+		if EXISTS( select pm.MetadataId						
+							from ParameterMetadata as pm
+							where pm.MetadataId=@Id)
+			begin
+				update dbo.ParameterMetadata
+					set [Key]=@Key,
+						Value=@Value,
+						ValueTypeId=@ValueTypeId,
+						ParameterId=@ParameterId
+					where MetadataId=@Id
+			end
+		else
+		begin
+			set @status = 0
+			set @statusMessage = dbo.GSM(4001001)
+		end
 	end try
 	begin catch
 		set @status = 0
@@ -4915,6 +5147,12 @@ RETURN 0]]></Value>
 				</Entry>
 				<Entry>
 					<References Name="[dbo].[ParameterMetadata]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[UpdateParameterMetadata].[@Id]" />
 				</Entry>
 				<Entry>
 					<References Name="[dbo].[ParameterMetadata].[Key]" />
@@ -4940,6 +5178,9 @@ RETURN 0]]></Value>
 				<Entry>
 					<References Name="[dbo].[UpdateParameterMetadata].[@ParameterId]" />
 				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterMetadata].[MetadataId]" />
+				</Entry>
 			</Relationship>
 			<Relationship Name="Owner">
 				<Entry>
@@ -4947,6 +5188,21 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameterMetadata].[@Id]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
 				<Entry>
 					<Element Type="ISql100SubroutineParameter" Name="[dbo].[UpdateParameterMetadata].[@ParameterId]">
 						<Relationship Name="Type">
@@ -5011,10 +5267,10 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="537" />
+				<Property Name="Length" Value="796" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
-				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateParameterMetadata]&#xD;&#xA;&#x9;@ParameterId int, &#xD;&#xA;&#x9;@Key nvarchar(MAX),&#xD;&#xA;&#x9;@Value varbinary(MAX),&#xD;&#xA;&#x9;@ValueTypeId int&#xD;&#xA;AS" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[UpdateParameterMetadata]&#xD;&#xA;&#x9;@Id int,&#xD;&#xA;&#x9;@ParameterId int, &#xD;&#xA;&#x9;@Key nvarchar(MAX),&#xD;&#xA;&#x9;@Value varbinary(MAX),&#xD;&#xA;&#x9;@ValueTypeId int&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Procedure" Name="[dbo].[UpdateValueTypes]">

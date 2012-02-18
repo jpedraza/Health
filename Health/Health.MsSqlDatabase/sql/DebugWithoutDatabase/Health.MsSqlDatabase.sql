@@ -396,6 +396,7 @@ PRINT N'Выполняется создание [dbo].[ParameterMetadata]...';
 
 GO
 CREATE TABLE [dbo].[ParameterMetadata] (
+    [MetadataId]  INT             IDENTITY (1, 1) NOT NULL,
     [ParameterId] INT             NOT NULL,
     [Key]         NVARCHAR (MAX)  NOT NULL,
     [Value]       VARBINARY (MAX) NULL,
@@ -1023,6 +1024,36 @@ AS
 	select @status as Status, @statusMessage as StatusMessage
 RETURN 0
 GO
+PRINT N'Выполняется создание [dbo].[DeleteMetadata]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[DeleteMetadata]
+	@Id int
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		if EXISTS( select pm.MetadataId						
+							from ParameterMetadata as pm
+							where pm.MetadataId=@Id)
+			begin
+				delete from ParameterMetadata where MetadataId=@Id
+			end
+		else
+		begin
+			set @status = 0
+			set @statusMessage = dbo.GSM(4001001)
+		end
+
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[DeleteValueTypes]...';
 
 
@@ -1140,7 +1171,7 @@ AS
 			pm.Value as Value,
 			pm.ValueTypeId as ValueTypeId,
 			pm.[Key] as [Key],
-			pm.ParameterId as Id,
+			pm.MetadataId as Id,
 			@status as Status,
 			p.Name as ParameterName,
 			vt.Name as ValueTypeName,
@@ -1297,6 +1328,43 @@ AS
 			JOIN Roles as ro ON us.RoleId = ro.RoleId
 			JOIN Specialties as sp ON do.SpecialtyId = sp.SpecialtyId	
 			WHERE do.DoctorId = @doctorId		
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetMetadataById]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetMetadataById]
+	@Id int
+AS
+	declare @status int =1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	
+	begin try
+		SELECT 
+			@status as Status,
+			@statusMessage as StatusMessage,
+			pm.MetadataId as Id,
+			pm.ParameterId as ParameterId,
+			pm.Value as Value,
+			pm.[Key] as [Key],
+			pm.ValueTypeId as ValueTypeId,
+			p.Name as ParameterName,
+			vt.Name as ValueTypeName
+
+		FROM ParameterMetadata as pm,
+			Parameters as p,
+			ValueTypes as vt
+		WHERE pm.MetadataId=@Id and p.ParameterId=pm.ParameterId 
+			and vt.ValueTypeId=pm.ValueTypeId
+		
+	end try
+		
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(000000)
+		select @status as Status, @statusMessage as StatusMessage
+	end catch
 RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[GetParameterById]...';
@@ -1491,6 +1559,7 @@ PRINT N'Выполняется создание [dbo].[UpdateParameterMetadata].
 
 GO
 CREATE PROCEDURE [dbo].[UpdateParameterMetadata]
+	@Id int,
 	@ParameterId int, 
 	@Key nvarchar(MAX),
 	@Value varbinary(MAX),
@@ -1499,11 +1568,22 @@ AS
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
 	begin try
-		update dbo.ParameterMetadata
-			set [Key]=@Key,
-				Value=@Value,
-				ValueTypeId=@ValueTypeId
-			where ParameterId=@ParameterId
+		if EXISTS( select pm.MetadataId						
+							from ParameterMetadata as pm
+							where pm.MetadataId=@Id)
+			begin
+				update dbo.ParameterMetadata
+					set [Key]=@Key,
+						Value=@Value,
+						ValueTypeId=@ValueTypeId,
+						ParameterId=@ParameterId
+					where MetadataId=@Id
+			end
+		else
+		begin
+			set @status = 0
+			set @statusMessage = dbo.GSM(4001001)
+		end
 	end try
 	begin catch
 		set @status = 0
@@ -1815,6 +1895,7 @@ insert into Status values(3001000, 'Отсутствует запись в ба�
 --Параметры здоровья, и все что с ними связано.
 	-- Сообщения
 	insert into Status values(4000001, 'Тип метаданных записан.')
+	insert into Status values(4001001, 'Такое метаданное отсутствует')
 	-- Ошибки
 
 GO

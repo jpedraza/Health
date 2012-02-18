@@ -34,6 +34,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParameterName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParameetrerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ValueTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,14 +53,14 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Location = new System.Drawing.Point(12, 256);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(568, 66);
+            this.groupBox2.Size = new System.Drawing.Size(589, 66);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Управление";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(412, 19);
+            this.button3.Location = new System.Drawing.Point(457, 19);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 2;
@@ -92,7 +93,7 @@
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(568, 227);
+            this.groupBox1.Size = new System.Drawing.Size(589, 227);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Все метаданые";
@@ -101,6 +102,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
             this.ParameterName,
             this.ParameetrerId,
             this.ValueTypeId,
@@ -110,8 +112,16 @@
             this.dataGridView1.Location = new System.Drawing.Point(6, 31);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(556, 160);
+            this.dataGridView1.Size = new System.Drawing.Size(577, 160);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView1CellMouseDown);
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Width = 30;
             // 
             // ParameterName
             // 
@@ -159,7 +169,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 413);
+            this.ClientSize = new System.Drawing.Size(613, 413);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -182,6 +192,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParameterName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParameetrerId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ValueTypeId;

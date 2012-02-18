@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using PrototypeHM.DB.DI;
-using PrototypeHM.Components;
 using PrototypeHM.DB;
-using PrototypeHM.DB.Attributes;
-using PrototypeHM.DB.DI;
-using PrototypeHM.Properties;
-using PrototypeHM;
 using PrototypeHM.Parameter;
 using PrototypeHM.Forms.EntitysForm.ParameterForms.Other;
 

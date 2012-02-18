@@ -88,8 +88,11 @@ namespace PrototypeHM.Parameter
             }
         }
 
+        //[NotDisplay, NotEdit]
+        //public int Id { get { return ParameterId; } set { ParameterId = value; } }
+
         [NotDisplay, NotEdit]
-        public int Id { get { return ParameterId; } set { ParameterId = value; } }
+        public int Id { get; set; }
     }
     public class ValueTypeOfMetadata:QueryStatus, IIdentity {
         [DisplayName(@"Идентификатор"), Hide]
