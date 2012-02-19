@@ -161,6 +161,7 @@ namespace PrototypeHM.Forms
             this.ןאנאלוענûÇהמנמגüÿToolStripMenuItem1.Name = "ןאנאלוענûÇהמנמגüÿToolStripMenuItem1";
             this.ןאנאלוענûÇהמנמגüÿToolStripMenuItem1.Size = new System.Drawing.Size(191, 22);
             this.ןאנאלוענûÇהמנמגüÿToolStripMenuItem1.Text = "Ïאנאלוענû חהמנמגüÿ";
+            this.ןאנאלוענûÇהמנמגüÿToolStripMenuItem1.Click += new System.EventHandler(this.ןאנאלוענûÇהמנמגüÿToolStripMenuItem1_Click);
             // 
             // לועאהאםםûוToolStripMenuItem
             // 

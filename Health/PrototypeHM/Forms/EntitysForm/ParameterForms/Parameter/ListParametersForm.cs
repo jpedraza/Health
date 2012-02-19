@@ -8,63 +8,53 @@ using System.Text;
 using System.Windows.Forms;
 using PrototypeHM.DB;
 using PrototypeHM.DB.DI;
+using PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData;
 using PrototypeHM.Forms.EntitysForm.ParameterForms.Other;
-using PrototypeHM.Forms.EntitysForm.ParameterForms.ValueTypes;
 using PrototypeHM.Parameter;
 
-namespace PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData
+namespace PrototypeHM.Forms.EntitysForm.ParameterForms.Parameter
 {
-    public partial class ListForm : DIForm, ICommonFormsFunctions
+    public partial class ListParametersForm : DIForm, ICommonFormsFunctions
     {
-        public ListForm(IDIKernel diKernel)
+        private IList<ParameterBaseData> _listData;
+
+        public ListParametersForm(IDIKernel diKernel)
             : base(diKernel)
         {
             InitializeComponent();
-            _listData = new List<MetadataForParameter>();
         }
 
-        private IList<MetadataForParameter> _listData;
-
-        private void ListFormLoad(object sender, EventArgs e)
+        private void ListParametersForm_Load(object sender, EventArgs e)
         {
             this.SwitchOnNoticePanel();
             GetTableFromDb();
             ShowNotice();
         }
 
-        private void ShowNotice()
+        private void button1_Click(object sender, EventArgs e)
         {
-            if (_listData != null)
-            {
-                this.GetPositiveNotice(_listData.Count > 0 ? "Данные загружены" : "В Базе нет записей");
-            }
-            
-        }
-
-        private void Button3Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void Button2Click(object sender, EventArgs e)
-        {
-            UpdateTable();
-        }
-
-        private void Button1Click(object sender, EventArgs e)
-        {
-            var form = new AddForm(DIKernel);
+            var form = new AddParameterForm(DIKernel);
             form.ShowDialog();
 
             this.GetPositiveNotice(form.FlagResult ? "Успешно записано." : "Пользователь отменил действие");
             UpdateTable();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UpdateTable();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void GetTableFromDb()
         {
-            var oC =DIKernel.Get<OperationsRepository>().
-                Operations.FirstOrDefault(o => o.GetType() == typeof(OperationsContext<MetadataForParameter>)) as
-                                                  OperationsContext<MetadataForParameter>;
+            var oC = DIKernel.Get<OperationsRepository>().
+                Operations.FirstOrDefault(o => o.GetType() == typeof(OperationsContext<ParameterBaseData>)) as
+                                                  OperationsContext<ParameterBaseData>;
 
             if (oC == null)
                 throw new Exception("Отсутсвует контекст операции");
@@ -75,34 +65,41 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData
 
             _listData = @delegate();
             var index = 0;
-            foreach (var metadataForParameter in _listData)
+            foreach (var parameterBaseData in _listData)
             {
 
                 dataGridView1.RowCount++;
-                dataGridView1.Rows[index].Cells["ParameetrerId"].Value = metadataForParameter.ParameterId;
-                dataGridView1.Rows[index].Cells["Key"].Value = metadataForParameter.Key;
-                dataGridView1.Rows[index].Cells["Value"].Value = Encoding.UTF8.GetString(metadataForParameter.Value);
-                dataGridView1.Rows[index].Cells["ValueTypeId"].Value = metadataForParameter.ValueTypeId;
-                dataGridView1.Rows[index].Cells["Id"].Value = metadataForParameter.Id;
-
-                //Заполнить!!!
-                dataGridView1.Rows[index].Cells["ParameterName"].Value = metadataForParameter.ParameterName;
-                dataGridView1.Rows[index].Cells["ValueType"].Value = metadataForParameter.ValueTypeName;
-
-                
+                dataGridView1.Rows[index].Cells["Id"].Value = parameterBaseData.ParameterId;
+                dataGridView1.Rows[index].Cells["NameParameter"].Value = parameterBaseData.Name;
+                dataGridView1.Rows[index].Cells["DefaultValue"].Value =
+                    Encoding.UTF8.GetString(parameterBaseData.DefaultValue);
                 index++;
             }
         }
+
         private void UpdateTable()
         {
             dataGridView1.Rows.Clear();
             GetTableFromDb();
         }
+        private void ShowNotice()
+        {
+            if (_listData != null)
+            {
+                this.GetPositiveNotice(_listData.Count > 0 ? "Данные загружены" : "В Базе нет записей");
+            }
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
 
         private void DataGridView1CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             var dataGridView = sender as DataGridView;
-            if (dataGridView != null && (e.Button != MouseButtons.Right || e.RowIndex < 0 || e.ColumnIndex < 0||e.RowIndex == dataGridView.RowCount -1)) return;
+            if (dataGridView != null && (e.Button != MouseButtons.Right || e.RowIndex < 0 || e.ColumnIndex < 0 || e.RowIndex == dataGridView.RowCount - 1)) return;
 
             //Обработка ячеек
             dataGridView1.ClearSelection();
@@ -117,7 +114,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData
             {
                 var value = dataGridView1.Rows[e.RowIndex].Cells["Id"].Value;
                 if (value == (object)string.Empty) return;
-                var editForm = new EditMetaDataForm(DIKernel,
+                var editForm = new EditParameterForm(DIKernel,
                                             Convert.ToInt32(
                                                 value));
                 editForm.ShowDialog();
@@ -141,8 +138,8 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData
                 {
                     var oC =
                         DIKernel.Get<OperationsRepository>().Operations.FirstOrDefault(
-                            o => o.GetType() == typeof(OperationsContext<MetadataForParameter>)) as
-                        OperationsContext<MetadataForParameter>;
+                            o => o.GetType() == typeof(OperationsContext<ParameterBaseData>)) as
+                        OperationsContext<ParameterBaseData>;
 
                     if (oC == null)
                         throw new Exception("Отсутствует контекст операции");
@@ -180,5 +177,16 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.MetaData
             };
             dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].ContextMenuStrip = cMs;
         }
+
+        //TODO: для листинга скопировать с листинга метаданных. Заменить тип метаданных на тип параметра
+        //TODO:     убрать поля связанные с метадаными
+
+        //TODO: для добавления скопировать. удалить списки параметров, типов метаданнных. добавить список метаданных
+        //TODO: замена элементов управления
+        //TODO: скопировать метод сбора данных. имзенить его. учесть bytes[]
+
+        //TODO: для редактирования скопировать и заменить на обновление 
+
+        //TODO: скопировать и заменить методу удаления
     }
 }

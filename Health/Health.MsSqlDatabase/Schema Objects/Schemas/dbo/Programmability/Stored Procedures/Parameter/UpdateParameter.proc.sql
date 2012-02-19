@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[UpdateParameter]
 	@ParameterId int, 
 	@Name nvarchar(MAX),
-	@DefaultValue varbinary
+	@DefaultValue varbinary(MAX)
 AS
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)

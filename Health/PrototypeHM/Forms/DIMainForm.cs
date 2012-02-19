@@ -107,7 +107,7 @@ namespace PrototypeHM.Forms
         //{
         //    var listForm = new ListForm<ParameterDetail>(DIKernel);
         //    listForm.MdiParent = this;
-        //    listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAll;
+        //    listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAllParameters;
         //    listForm.InitializeOperations();
         //    listForm.Show();
         //    listForm.Activate();
@@ -178,6 +178,21 @@ namespace PrototypeHM.Forms
                 YMessageBox.Error(exp.Message);
             }
             
+        }
+
+        private void ïàðàìåòðûÇäîðîâüÿToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                var form = new PrototypeHM.Forms.EntitysForm.ParameterForms.Parameter.ListParametersForm(DIKernel) { MdiParent = this };
+                form.Show();
+                form = null;
+            }
+            catch (Exception exp)
+            {
+                YMessageBox.Error(exp.Message);
+            }
         }
     }
 }

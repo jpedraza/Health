@@ -15,12 +15,11 @@ namespace PrototypeHM.Parameter {
         {
         }
 
-        public IList<ParameterBaseData> GetAll()
+        public IList<ParameterBaseData> GetAllParameters()
         {
-            var db = DIKernel.Get<DB.DB>();
             var command = CreateQuery("EXEC [dbo].[GetAllParameterShowData]");
+            
             var reader = command.ExecuteReader();
-
             var parameters = Get<PropertyToColumnMapper<ParameterBaseData>>().Map(reader);
             reader.Close();
 
@@ -29,48 +28,81 @@ namespace PrototypeHM.Parameter {
 
         internal ParameterDetail Detail(ParameterDetail data)
         {
+            var c = CreateQuery("[dbo].[GetParameterById] @ParameterId");
+            c.Parameters.Add("ParameterId", SqlDbType.Int);
+            c.Parameters[0].Value = data.ParameterId;
 
-            SqlCommand command = CreateQuery(GetQueryText("GetParameterById",
-                new Dictionary<string, string> { {"parameterId", data.ParameterId.ToString()}}));
+            var reader = c.ExecuteReader();
 
-            SqlDataReader reader = command.ExecuteReader();
+            var qS = Get<PropertyToColumnMapper<ParameterDetail>>().Map(reader)[0];
+            reader.Close();
 
-            var _data = Get<PropertyToColumnMapper<ParameterBaseData>>().Map(reader)[0];
+            var c2 = CreateQuery("[dbo].[GetAllMetadataForParameterByParameterId] @ParameterId");
+            c2.Parameters.Add("ParameterId", SqlDbType.Int);
+            c2.Parameters[0].Value = data.ParameterId;
 
-            if (_data != null)
-            {
-                SqlCommand command2 = CreateQuery(GetQueryText("GetAllMetadataForParameter",
-                    new Dictionary<string, string> { { "parameterId", _data.ParameterId.ToString() } }));
+            var reader2 = c2.ExecuteReader();
+            var qS2 = Get<PropertyToColumnMapper<MetadataForParameter>>().Map(reader2);
+            reader2.Close();
 
-                var metaData = Get<PropertyToColumnMapper<MetadataForParameter>>().Map(reader);
+            qS.Metadata = qS2;
 
-                return new ParameterDetail { ParameterId = _data.ParameterId,
-                Id = _data.ParameterId,
-                Name = _data.Name,
-                DefaultValue = _data.DefaultValue,
-                Metadata = metaData
-                };
-            }
-            return new ParameterDetail();
-
-
+            return qS;
         }
 
-        internal QueryStatus Save(ParameterDetail data)
+        internal QueryStatus SaveNewParameter(ParameterBaseData data)
         {
-            return new QueryStatus();
+            var c0 = CreateQuery("[dbo].[NewParameter] @nameParameter, @defaultValue");
+            c0.Parameters.Add("nameParameter", SqlDbType.NVarChar);
+            c0.Parameters[0].Value = data.Name;
+
+            c0.Parameters.Add("defaultValue", SqlDbType.VarBinary);
+            c0.Parameters[1].Value = data.DefaultValue;
+
+            var reader = c0.ExecuteReader();
+            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+
+            return qS;
         }
 
-        internal QueryStatus Update(ParameterDetail data)
+        internal QueryStatus UpdateParameter(ParameterDetail data)
         {
-            return new QueryStatus();
+            var c0 = CreateQuery("[dbo].[UpdateParameter] @ParameterId, @Name, @DefaultValue");
+            c0.Parameters.Add("ParameterId", SqlDbType.Int);
+            c0.Parameters[0].Value = data.ParameterId;
+
+            c0.Parameters.Add("Name", SqlDbType.NVarChar);
+            c0.Parameters[1].Value = data.Name;
+
+            c0.Parameters.Add("DefaultValue", SqlDbType.VarBinary);
+            c0.Parameters[2].Value = data.DefaultValue;
+
+            var reader = c0.ExecuteReader();
+            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+
+            
+            return qS;
+        }
+
+        internal QueryStatus DeleteParameter (ParameterBaseData deleteParameter)
+        {
+            var c = CreateQuery("EXEC [dbo].[DeleteParameter] @Id");
+            c.Parameters.Add("Id", SqlDbType.Int);
+            c.Parameters[0].Value = deleteParameter.ParameterId;
+            var reader = c.ExecuteReader();
+            var queryStatus = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
+            reader.Close();
+            return queryStatus;
         }
 
         internal QueryStatus SaveMetadata(MetadataForParameter data)
         {
+
             var c = CreateQuery("[dbo].[NewParameterMetadata] @ParameterId, @Key, @Value, @ValueTypeId");
             c.Parameters.Add("ParameterId", SqlDbType.Int);
-            c.Parameters[0].Value = data.ParameterId.ToString();
+            c.Parameters[0].Value = data.ParameterId;
 
             c.Parameters.Add("Key", SqlDbType.NVarChar);
             c.Parameters[1].Value = data.Key;
@@ -79,14 +111,14 @@ namespace PrototypeHM.Parameter {
             c.Parameters[2].Value = data.Value;
 
             c.Parameters.Add("ValueTypeId", SqlDbType.NVarChar);
-            c.Parameters[3].Value = data.ValueTypeId.ToString();
+            c.Parameters[3].Value = data.ValueTypeId;
 
-            var reader = c.ExecuteReader();
+            var reader2 = c.ExecuteReader();
+            var qS2 = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader2)[0];
+            reader2.Close();
 
-            var qS = Get<PropertyToColumnMapper<QueryStatus>>().Map(reader)[0];
-            reader.Close();
 
-            return qS;
+            return qS2;
         }
 
         internal QueryStatus SaveValueType(ValueTypeOfMetadata data)

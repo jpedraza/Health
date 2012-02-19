@@ -151,6 +151,30 @@
     </Compile>
     <Compile Include="Forms\EntitysForm\ParameterForms\Other\ExtensionMethods.cs" />
     <Compile Include="Forms\EntitysForm\ParameterForms\Other\ICommonFormsFunctions.cs" />
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\AddMetadataForParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\AddMetadataForParameterForm.Designer.cs">
+      <DependentUpon>AddMetadataForParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\AddParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\AddParameterForm.Designer.cs">
+      <DependentUpon>AddParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\EditParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\EditParameterForm.Designer.cs">
+      <DependentUpon>EditParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\ListParametersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\ParameterForms\Parameter\ListParametersForm.Designer.cs">
+      <DependentUpon>ListParametersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +245,18 @@
     <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\ListForm.resx">
       <DependentUpon>ListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\Parameter\AddMetadataForParameterForm.resx">
+      <DependentUpon>AddMetadataForParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\Parameter\AddParameterForm.resx">
+      <DependentUpon>AddParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\Parameter\EditParameterForm.resx">
+      <DependentUpon>EditParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\Parameter\ListParametersForm.resx">
+      <DependentUpon>ListParametersForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\ValueTypes\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -258,9 +294,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forms\EntitysForm\ParameterForms\Parameter\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Health.Core\Health.Core.csproj">
       <Project>{005180DD-4D3E-492E-8ECE-4DB5615F06CD}</Project>

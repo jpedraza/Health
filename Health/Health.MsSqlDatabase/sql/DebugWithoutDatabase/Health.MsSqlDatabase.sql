@@ -410,9 +410,9 @@ PRINT N'Выполняется создание [dbo].[Parameters]...';
 
 GO
 CREATE TABLE [dbo].[Parameters] (
-    [ParameterId]  INT            IDENTITY (1, 1) NOT NULL,
-    [Name]         NVARCHAR (MAX) NOT NULL,
-    [DefaultValue] VARBINARY (1)  NULL
+    [ParameterId]  INT             IDENTITY (1, 1) NOT NULL,
+    [Name]         NVARCHAR (MAX)  NOT NULL,
+    [DefaultValue] VARBINARY (MAX) NULL
 );
 
 
@@ -1054,6 +1054,39 @@ AS
 	select @status as Status, @statusMessage as StatusMessage
 RETURN 0
 GO
+PRINT N'Выполняется создание [dbo].[DeleteParameter]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[DeleteParameter]
+	@Id int
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		if EXISTS( select * 
+					FROM Parameters as p
+					WHERE p.ParameterId=@Id)
+			begin
+				DELETE FROM ParameterMetadata
+				WHERE ParameterId=@Id
+								
+				DELETE FROM Parameters WHERE ParameterId=@Id
+			end
+		else
+		begin
+			set @status = 0
+			set @statusMessage = dbo.GSM(4001001)
+		end
+
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
+RETURN 0
+GO
 PRINT N'Выполняется создание [dbo].[DeleteValueTypes]...';
 
 
@@ -1187,6 +1220,41 @@ AS
 	end catch
 	select @status as Status, @statusMessage as StatusMessage
 	
+RETURN 0
+GO
+PRINT N'Выполняется создание [dbo].[GetAllMetadataForParameterByParameterId]...';
+
+
+GO
+CREATE PROCEDURE [dbo].[GetAllMetadataForParameterByParameterId]
+	@ParameterId int
+AS
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	begin try
+		select 
+			pm.ParameterId as ParameterId,
+			pm.Value as Value,
+			pm.ValueTypeId as ValueTypeId,
+			pm.[Key] as [Key],
+			pm.MetadataId as Id,
+			@status as Status,
+			p.Name as ParameterName,
+			vt.Name as ValueTypeName,
+			@statusMessage as StatusMessage			
+			FROM ParameterMetadata AS pm,
+			Parameters AS p,
+			ValueTypes AS vt
+			WHERE pm.ParameterId=@ParameterId AND
+				p.ParameterId=pm.ParameterId AND
+				vt.ValueTypeId=pm.ValueTypeId
+			
+	end try
+	begin catch
+		set @status = 0
+		set @statusMessage = dbo.GSM(0000000)
+	end catch
+	select @status as Status, @statusMessage as StatusMessage
 RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[GetAllParameterShowData]...';
@@ -1379,6 +1447,7 @@ AS
 	
 	begin try		
 		SELECT ParameterId, Name, DefaultValue,
+			ParameterId as Id,
 			@status as Status,
 			@statusMessage as StatusMessage
 		from 
@@ -1389,7 +1458,6 @@ AS
 		set @status = 0
 		set @statusMessage = dbo.GSM(000000)
 	end catch
-	select @status as Status, @statusMessage as StatusMessage	
 RETURN 0
 GO
 PRINT N'Выполняется создание [dbo].[GetPatientFullDataById]...';
@@ -1467,7 +1535,7 @@ PRINT N'Выполняется создание [dbo].[NewParameter]...';
 GO
 CREATE PROCEDURE [dbo].[NewParameter]
 	@nameParameter nvarchar(max), 
-	@defaultValue varbinary(1)
+	@defaultValue varbinary(MAX)
 AS
 	declare @status int =1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
@@ -1537,7 +1605,7 @@ GO
 CREATE PROCEDURE [dbo].[UpdateParameter]
 	@ParameterId int, 
 	@Name nvarchar(MAX),
-	@DefaultValue varbinary
+	@DefaultValue varbinary(MAX)
 AS
 	declare @status int = 1
 	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)

@@ -432,6 +432,12 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetMetadataById.proc.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\DeleteParameter.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\Parameter\GetAllMetadataForParameterByParameterId.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <NotInBuild Include="Scripts\Post-Deployment\TestData.sql">

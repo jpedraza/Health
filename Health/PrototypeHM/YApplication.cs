@@ -94,13 +94,15 @@ namespace PrototypeHM
             
 
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterDetail> { 
-            Save = _kernel.Get<ParameterRepository>().Save,
             Detail = _kernel.Get<ParameterRepository>().Detail,
+            Update = _kernel.Get<ParameterRepository>().UpdateParameter
             });
 
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<ParameterBaseData>
             {
-                Load = _kernel.Get<ParameterRepository>().GetAll,
+                Load = _kernel.Get<ParameterRepository>().GetAllParameters,
+                Delete = _kernel.Get<ParameterRepository>().DeleteParameter,
+                Save = _kernel.Get<ParameterRepository>().SaveNewParameter
             });
 
             //Конец контекста операций для метаданных параметров здоровья

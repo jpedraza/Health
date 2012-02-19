@@ -38,7 +38,7 @@ namespace PrototypeHM.Parameter
 
     public class ParameterDetail : ParameterBaseData {        
                 
-        [DisplayName(@"Мета-данные параметра"), SimpleOrCompoundModel(IsSimple=false), MultiSelectEditMode(typeof(OperationsContext<MetadataForParameter>), "ParameterId", TypeMappingEnum.ManyToOne)]
+        [DisplayName(@"Мета-данные параметра"), NotMap, SimpleOrCompoundModel(IsSimple=false), MultiSelectEditMode(typeof(OperationsContext<MetadataForParameter>), "ParameterId", TypeMappingEnum.ManyToOne)]
         public IList<MetadataForParameter> Metadata { get; set; }
 
         //public ParameterDetail() : base()

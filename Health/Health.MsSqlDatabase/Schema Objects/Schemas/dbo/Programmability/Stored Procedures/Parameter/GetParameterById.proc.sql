@@ -6,6 +6,7 @@ AS
 	
 	begin try		
 		SELECT ParameterId, Name, DefaultValue,
+			ParameterId as Id,
 			@status as Status,
 			@statusMessage as StatusMessage
 		from 
@@ -16,5 +17,4 @@ AS
 		set @status = 0
 		set @statusMessage = dbo.GSM(000000)
 	end catch
-	select @status as Status, @statusMessage as StatusMessage	
 RETURN 0
