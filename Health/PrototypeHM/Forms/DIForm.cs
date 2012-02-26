@@ -1,5 +1,6 @@
+using System.ComponentModel;
 using System.Windows.Forms;
-using PrototypeHM.DB.DI;
+using PrototypeHM.DI;
 
 namespace PrototypeHM.Forms
 {
@@ -7,7 +8,6 @@ namespace PrototypeHM.Forms
     {
         public DIForm()
         {
-            
         }
 
         public DIForm(IDIKernel diKernel) : this()
@@ -23,6 +23,8 @@ namespace PrototypeHM.Forms
         #region Implementation of IDIInjected
 
         private readonly IDIKernel _diKernel;
+
+        [Browsable(false)]
         public IDIKernel DIKernel
         {
             get { return _diKernel; }

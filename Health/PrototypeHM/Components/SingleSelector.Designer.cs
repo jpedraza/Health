@@ -1,6 +1,6 @@
 namespace PrototypeHM.Components
 {
-    partial class SingleSelector<T>
+    partial class SingleSelector
     {
         /// <summary> 
         /// Требуется переменная конструктора.

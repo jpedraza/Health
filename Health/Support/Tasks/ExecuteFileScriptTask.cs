@@ -1,22 +1,24 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data;
+using System.Data.Entity;
 using System.IO;
-using System.Reflection;
-using System;
-using System.Collections.Generic;
 
 namespace Support.Tasks
 {
     internal class ExecuteFileScriptTask : ITask
     {
         private readonly string _fileName;
+
         internal ExecuteFileScriptTask(string fileName)
         {
             _fileName = fileName;
         }
 
-        public void Process(SqlConnection connection)
+        #region Implementation of ITask
+
+        public void Process(DbContext context)
         {
-            SqlCommand preCommand = connection.CreateCommand();
+            IDbCommand preCommand = context.Database.Connection.CreateCommand();
             string fileDir = String.Empty;
             SupportManager sp = SupportManager.Instance();
             foreach (string path in sp.IncludePaths)
@@ -31,5 +33,7 @@ namespace Support.Tasks
             preCommand.CommandText = script;
             preCommand.ExecuteNonQuery();
         }
+
+        #endregion
     }
 }

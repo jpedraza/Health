@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
+﻿using System.Data.Entity;
 
 namespace Support
 {
     internal interface ITask
     {
-        void Process(SqlConnection connection);
+        void Process(DbContext context);
     }
 }

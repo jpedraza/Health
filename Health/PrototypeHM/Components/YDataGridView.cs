@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using PrototypeHM.DB.Attributes;
+using EFCFModel.Attributes;
 
 namespace PrototypeHM.Components
 {
     public class YDataGridView : DataGridView
     {
+        private bool _convertEmptyStringToNull;
+
         public YDataGridView()
         {
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -18,16 +21,33 @@ namespace PrototypeHM.Components
             CellClick += CellClickEvent;
         }
 
-        private bool _convertEmptyStringToNull;
+        public BindingSource BindingSource
+        {
+            get { return (DataSource as BindingSource); }
+            set { DataSource = value; }
+        }
 
         public Action<int> Detail { get; set; }
 
         public Action<int> Delete { get; set; }
 
+        public void SetDataSource(BindingSource dataSource)
+        {
+            BindingSource = dataSource;
+        }
+
         private void CellClickEvent(object sender, DataGridViewCellEventArgs e)
         {
-            if (Detail != null && Columns[e.ColumnIndex].Name == @"Детали") { Detail(e.RowIndex); return; }
-            if (Delete != null && Columns[e.ColumnIndex].Name == @"Удалить") { Delete(e.RowIndex); return; }
+            if (Detail != null && Columns[e.ColumnIndex].Name == @"Детали")
+            {
+                Detail(e.RowIndex);
+                return;
+            }
+            if (Delete != null && Columns[e.ColumnIndex].Name == @"Удалить")
+            {
+                Delete(e.RowIndex);
+                return;
+            }
         }
 
         public void InitializeOperations()
@@ -45,11 +65,11 @@ namespace PrototypeHM.Components
             if (Delete != null)
             {
                 var column = new DataGridViewButtonColumn
-                {
-                    Text = @"Удалить",
-                    Name = @"Удалить",
-                    UseColumnTextForButtonValue = true
-                };
+                                 {
+                                     Text = @"Удалить",
+                                     Name = @"Удалить",
+                                     UseColumnTextForButtonValue = true
+                                 };
                 Columns.Add(column);
             }
         }
@@ -78,12 +98,22 @@ namespace PrototypeHM.Components
 
         private void FixAutoGenerateColumn()
         {
-            var source = DataSource as IEnumerable<object>;
-            if (source == null) return;
-            if (source.GetType().IsGenericType && source.GetType().GetGenericArguments().Any())
+            object source = BindingSource != null
+                                ? BindingSource.DataSource
+                                : BindingSource;
+            if (source != null && source.GetType().IsGenericType && source.GetType().GetGenericArguments().Any())
             {
+                Type st = source.GetType();
                 Type[] genericArguments = source.GetType().GetGenericArguments();
                 Type objType = genericArguments[0];
+                var metadataTypeAttribute =
+                    objType.GetCustomAttributes(true).FirstOrDefault(a => a is MetadataTypeAttribute) as
+                    MetadataTypeAttribute;
+                if (metadataTypeAttribute != null)
+                {
+                    PropertyInfo[] propertiesInfos = metadataTypeAttribute.MetadataClassType.GetProperties();
+                    ProcessDisplayAttribute(propertiesInfos);
+                }
                 PropertyInfo[] propertiesInfo = objType.GetProperties();
                 ProcessDisplayAttribute(propertiesInfo);
             }
@@ -97,22 +127,30 @@ namespace PrototypeHM.Components
                 if (column != null)
                 {
                     object[] attributes = propertyInfo.GetCustomAttributes(true);
-                    if (attributes.Where(a => a.GetType() == typeof(NotDisplayAttribute)).FirstOrDefault() != null)
+                    foreach (object att in attributes)
                     {
-                        Columns.Remove(propertyInfo.Name);
-                    }
-                    if (attributes.Where(a => a.GetType() == typeof(HideAttribute)).FirstOrDefault() != null)
-                    {
-                        column.Visible = false;
-                    }
-                    var attribute =
-                        attributes.Where(a => a.GetType() == typeof(DisplayFormatAttribute)).FirstOrDefault() as
-                        DisplayFormatAttribute;
-                    if (attribute != null)
-                    {
-                        _convertEmptyStringToNull = attribute.ConvertEmptyStringToNull;
-                        column.DefaultCellStyle.Format = attribute.DataFormatString;
-                        column.DefaultCellStyle.NullValue = attribute.NullDisplayText;
+                        if (att is DisplayNameAttribute)
+                        {
+                            column.HeaderText = (att as DisplayNameAttribute).DisplayName;
+                            continue;
+                        }
+                        if (att is NotDisplayAttribute)
+                        {
+                            Columns.Remove(propertyInfo.Name);
+                            continue;
+                        }
+                        if (att is HideAttribute)
+                        {
+                            column.Visible = false;
+                            continue;
+                        }
+                        if (att is DisplayFormatAttribute)
+                        {
+                            _convertEmptyStringToNull = (att as DisplayFormatAttribute).ConvertEmptyStringToNull;
+                            column.DefaultCellStyle.Format = (att as DisplayFormatAttribute).DataFormatString;
+                            column.DefaultCellStyle.NullValue = (att as DisplayFormatAttribute).NullDisplayText;
+                            continue;
+                        }
                     }
                 }
             }

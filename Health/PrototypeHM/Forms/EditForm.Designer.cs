@@ -1,6 +1,6 @@
 ﻿namespace PrototypeHM.Forms
 {
-    partial class AddForm<TData>
+    partial class EditForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,57 +28,61 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tsOperations = new System.Windows.Forms.ToolStrip();
-            this.tscContent = new System.Windows.Forms.ToolStripContainer();
-            this.tscContent.TopToolStripPanel.SuspendLayout();
-            this.tscContent.SuspendLayout();
+            this.toolPanel = new System.Windows.Forms.ToolStrip();
+            this.statusPanel = new System.Windows.Forms.StatusStrip();
+            this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
-            // tsOperations
+            // toolPanel
             // 
-            this.tsOperations.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsOperations.Location = new System.Drawing.Point(3, 0);
-            this.tsOperations.Name = "tsOperations";
-            this.tsOperations.Size = new System.Drawing.Size(111, 25);
-            this.tsOperations.TabIndex = 0;
-            this.tsOperations.Text = "toolStrip1";
+            this.toolPanel.Location = new System.Drawing.Point(0, 0);
+            this.toolPanel.Name = "toolPanel";
+            this.toolPanel.Size = new System.Drawing.Size(598, 25);
+            this.toolPanel.TabIndex = 0;
+            this.toolPanel.Text = "toolStrip1";
             // 
-            // tscContent
+            // statusPanel
             // 
+            this.statusPanel.Location = new System.Drawing.Point(0, 524);
+            this.statusPanel.Name = "statusPanel";
+            this.statusPanel.Size = new System.Drawing.Size(598, 22);
+            this.statusPanel.TabIndex = 1;
+            this.statusPanel.Text = "statusStrip1";
             // 
-            // tscContent.ContentPanel
+            // layoutPanel
             // 
-            this.tscContent.ContentPanel.Size = new System.Drawing.Size(622, 505);
-            this.tscContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tscContent.Location = new System.Drawing.Point(0, 0);
-            this.tscContent.Name = "tscContent";
-            this.tscContent.Size = new System.Drawing.Size(622, 530);
-            this.tscContent.TabIndex = 1;
-            this.tscContent.Text = "toolStripContainer1";
+            this.layoutPanel.AutoScroll = true;
+            this.layoutPanel.ColumnCount = 1;
+            this.layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.layoutPanel.Location = new System.Drawing.Point(0, 25);
+            this.layoutPanel.Name = "layoutPanel";
+            this.layoutPanel.RowCount = 1;
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutPanel.Size = new System.Drawing.Size(598, 499);
+            this.layoutPanel.TabIndex = 2;
             // 
-            // tscContent.TopToolStripPanel
-            // 
-            this.tscContent.TopToolStripPanel.Controls.Add(this.tsOperations);
-            // 
-            // AddForm
+            // EditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 530);
-            this.Controls.Add(this.tscContent);
-            this.Name = "AddForm";
+            this.ClientSize = new System.Drawing.Size(598, 546);
+            this.Controls.Add(this.layoutPanel);
+            this.Controls.Add(this.statusPanel);
+            this.Controls.Add(this.toolPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Name = "EditForm";
             this.Text = "EditForm";
-            this.tscContent.TopToolStripPanel.ResumeLayout(false);
-            this.tscContent.TopToolStripPanel.PerformLayout();
-            this.tscContent.ResumeLayout(false);
-            this.tscContent.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip tsOperations;
-        private System.Windows.Forms.ToolStripContainer tscContent;
+        private System.Windows.Forms.ToolStrip toolPanel;
+        private System.Windows.Forms.StatusStrip statusPanel;
+        private System.Windows.Forms.TableLayoutPanel layoutPanel;
     }
 }

@@ -2,21 +2,51 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using PrototypeHM.DI;
 
 namespace PrototypeHM.Components
 {
     /// <summary>
     /// Компонент обеспечивает миграцию однотипных объектов между двумя источниками данных.
     /// </summary>
-    public partial class MultiSelector : UserControl
+    public partial class MultiSelector : UserControl, IDIInjected
     {
-        public MultiSelector()
+        #region Delegates
+
+        /// <summary>
+        /// Делегат события при перемещении элементов.
+        /// </summary>
+        /// <param name="objs">Перемещаемые элементы.</param>
+        /// <returns>Разрешить перемещение или нет?</returns>
+        public delegate bool EventMove(IBindingList objs);
+
+        #endregion
+
+        /// <summary>
+        /// Событие возникате перед перемещением элемента из правого источника данных в левый.
+        /// </summary>
+        public EventMove OnBeforeMoveToLeft;
+
+        /// <summary>
+        /// Событие возникате перед перемещением элемента из левого источника данных в правый.
+        /// </summary>
+        public EventMove OnBeforeMoveToRight;
+
+        private bool _editMode;
+
+        public MultiSelector(IDIKernel diKernel)
         {
+            DIKernel = diKernel;
             InitializeComponent();
             EditMode = false;
         }
 
-        private  bool _editMode;
+        #region Implementation of IDIInjected
+
+        public IDIKernel DIKernel { get; private set; }
+
+        #endregion
+
         /// <summary>
         /// Задать или узнать включен ли режим редактирования.
         /// </summary>
@@ -36,23 +66,6 @@ namespace PrototypeHM.Components
                 }
             }
         }
-
-        /// <summary>
-        /// Делегат события при перемещении элементов.
-        /// </summary>
-        /// <param name="objs">Перемещаемые элементы.</param>
-        /// <returns>Разрешить перемещение или нет?</returns>
-        public delegate bool EventMove(IBindingList objs);
-
-        /// <summary>
-        /// Событие возникате перед перемещением элемента из левого источника данных в правый.
-        /// </summary>
-        public EventMove OnBeforeMoveToRight;
-
-        /// <summary>
-        /// Событие возникате перед перемещением элемента из правого источника данных в левый.
-        /// </summary>
-        public EventMove OnBeforeMoveToLeft;
 
         /// <summary>
         /// Левый источник данных.
@@ -95,16 +108,18 @@ namespace PrototypeHM.Components
             if (leftBindingSource.DataSource.GetType() != rightBindingSource.DataSource.GetType())
                 throw new Exception("Источники данных должны быть одного типа.");
 
+#if Release
             if (leftBindingSource.Count == 0 && rightBindingSource.Count == 0)
-                throw new Exception("Число элементов хотя бы в одной из коллекций должно быть больше 0.");
+                throw new Exception("Число элементов хотя бы в одной из коллекций должно быть больше 0.");  
+#endif
 
-            btnToLeft.Enabled = leftBindingSource.Count == 0;
-            btnToRight.Enabled = rightBindingSource.Count == 0;
+            btnToLeft.Enabled = rightBindingSource.Count > 0;
+            btnToRight.Enabled = leftBindingSource.Count > 0;
 
             LeftSource = leftBindingSource;
             RightSource = rightBindingSource;
-            ydgvLeft.DataSource = LeftSource;
-            ydgvRight.DataSource = RightSource;
+            ydgvLeft.BindingSource = LeftSource;
+            ydgvRight.BindingSource = RightSource;
 
             LeftSource.ListChanged += LeftSourceListChanged;
             RightSource.ListChanged += RightSourceListChanged;
@@ -139,7 +154,7 @@ namespace PrototypeHM.Components
             }
             if (OnBeforeMoveToRight != null && OnBeforeMoveToRight(objs))
                 MoveToRight(objs);
-            else 
+            else
                 MoveToRight(objs);
         }
 
@@ -164,7 +179,7 @@ namespace PrototypeHM.Components
             }
             if (OnBeforeMoveToLeft != null && OnBeforeMoveToLeft(objs))
                 MoveToLeft(objs);
-            else 
+            else
                 MoveToLeft(objs);
         }
 

@@ -50,28 +50,24 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Client\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\DinamicCollection.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Components\DinamicCollection.Designer.cs">
-      <DependentUpon>DinamicCollection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Components\MultiSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -87,32 +83,9 @@
     <Compile Include="Components\YDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\YDataGridViewWithControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Components\YDataGridViewWithControl.Designer.cs">
-      <DependentUpon>YDataGridViewWithControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Attributes\DisplayAttributes.cs" />
-    <Compile Include="DB\Attributes\IDisplayAttribute.cs" />
-    <Compile Include="DB\Attributes\IMapAttribute.cs" />
-    <Compile Include="DB\Attributes\IValidateAttribute.cs" />
-    <Compile Include="DB\Attributes\NotAttributes.cs" />
-    <Compile Include="DB\IIdentity .cs" />
-    <Compile Include="DB\QueryRepository.cs" />
-    <Compile Include="DB\DB.cs" />
-    <Compile Include="DB\DI\DIKernel.cs" />
-    <Compile Include="DB\DI\IDIInjected.cs" />
-    <Compile Include="DB\DI\IDIKernel.cs" />
-    <Compile Include="DB\IQueryResult.cs" />
-    <Compile Include="DB\ISqlMapper.cs" />
-    <Compile Include="DB\Mappers\PropertyToColumnMapper.cs" />
-    <Compile Include="DB\OperationsRepository.cs" />
-    <Compile Include="DB\Repository.cs" />
-    <Compile Include="Diagnosis\DiagnosisEntities.cs" />
-    <Compile Include="Diagnosis\DiagnosisRepository.cs" />
-    <Compile Include="Doctor\DoctorEntities.cs" />
-    <Compile Include="Doctor\DoctorRepository.cs" />
+    <Compile Include="DI\DIKernel.cs" />
+    <Compile Include="DI\IDIInjected.cs" />
+    <Compile Include="DI\IDIKernel.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Forms\DIForm.cs">
       <SubType>Form</SubType>
@@ -135,36 +108,21 @@
     <Compile Include="Forms\ListForm.Designer.cs">
       <DependentUpon>ListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\QueryStatus.cs" />
-    <Compile Include="Forms\DetailForm.cs">
+    <Compile Include="Forms\Patient\EnterParameterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DetailForm.Designer.cs">
-      <DependentUpon>DetailForm.cs</DependentUpon>
+    <Compile Include="Forms\Patient\EnterParameterForm.Designer.cs">
+      <DependentUpon>EnterParameterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Parameter\ParameterEntities.cs" />
-    <Compile Include="Parameter\ParameterRepository.cs" />
-    <Compile Include="Patient\PatientEntities.cs" />
-    <Compile Include="Patient\PatientRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specialty\SpecialtyEntities.cs" />
-    <Compile Include="Specialty\SpecialtyRepository.cs" />
-    <Compile Include="User\UserEntities.cs" />
-    <Compile Include="User\UserRepository.cs" />
     <Compile Include="YApplication.cs" />
     <Compile Include="YMessageBox.cs" />
-    <EmbeddedResource Include="Components\DinamicCollection.resx">
-      <DependentUpon>DinamicCollection.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Components\MultiSelector.resx">
       <DependentUpon>MultiSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\SingleSelector.resx">
       <DependentUpon>SingleSelector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\YDataGridViewWithControl.resx">
-      <DependentUpon>YDataGridViewWithControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DIMainForm.resx">
       <DependentUpon>DIMainForm.cs</DependentUpon>
@@ -175,9 +133,6 @@
     <EmbeddedResource Include="Forms\ListForm.resx">
       <DependentUpon>ListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DetailForm.resx">
-      <DependentUpon>DetailForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -187,7 +142,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="ClassDiagram.cd" />
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -198,6 +153,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EFCFModel\EFCFModel.csproj">
+      <Project>{E7D07113-1BB1-4EA3-9E24-4421F585C04C}</Project>
+      <Name>EFCFModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

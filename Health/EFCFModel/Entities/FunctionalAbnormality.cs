@@ -1,0 +1,36 @@
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using EFCFModel.Attributes;
+
+namespace EFCFModel.Entities
+{
+    [Table("FunctionalAbnormalities"), ScaffoldTable(true), DisplayName("Функциональное нарушение")]
+    public class FunctionalAbnormality : IIdentity
+    {
+        public FunctionalAbnormality()
+        {
+            ChildFunctionalAbnormalities = new List<FunctionalAbnormality>();
+            Patients = new List<Patient>();
+        }
+
+        [Required, DisplayName("Имя")]
+        public string Name { get; set; }
+
+        [NotDisplay, DisplayName("Дочерние функциональные нарушения")]
+        public virtual ICollection<FunctionalAbnormality> ChildFunctionalAbnormalities { get; set; }
+
+        [NotDisplay, DisplayName("Родительское функциональное нарушение")]
+        public virtual FunctionalAbnormality ParentFunctionalAbnormality { get; set; }
+
+        [NotDisplay, DisplayName("Пациенты")]
+        public virtual ICollection<Patient> Patients { get; set; }
+
+        #region IIdentity Members
+
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
+        public int Id { get; set; }
+
+        #endregion
+    }
+}

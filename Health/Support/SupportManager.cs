@@ -1,69 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
+using System.Data;
+using System.Data.Entity;
 using System.IO;
-using System.Reflection;
 
 namespace Support
 {
     internal class SupportManager : IDisposable
     {
-        private class _Task
-        {
-            internal string Name { get; set; }
-            internal ITask Task { get; set; }
-            internal void Process(SqlConnection connection) { Task.Process(connection); }
-        }
-
-        public IList<string> IncludePaths { get; private set; }
         private static SupportManager _dbManager;
-        private string _connectionString;
-        public string ConnectionString 
-        {
-            get { return _connectionString; }
-            set
-            {
-                _connectionString = value;
-                Connection = new SqlConnection(_connectionString);
-            }
-        }
-        private SqlConnection _connection;
-        public SqlConnection Connection 
-        {
-            get
-            {
-                if (_connection == null) _connection = new SqlConnection(ConnectionString);
-                OpenConnection();
-                return _connection;
-            }
-            private set
-            {
-                _connection = value;
-            }
-        }
-        private IList<_Task> _tasks;
 
-        internal static SupportManager Instance()
-        {
-            return _dbManager ?? (_dbManager = new SupportManager());
-        }
+        private readonly DbContext _context;
 
-        private SupportManager()
+        private readonly IList<_Task> _tasks;
+
+        private SupportManager(DbContext context)
         {
+            _context = context;
             _tasks = new List<_Task>();
             IncludePaths = new List<string>();
         }
 
-        private void OpenConnection() 
+        public IList<string> IncludePaths { get; private set; }
+
+        #region IDisposable Members
+
+        public void Dispose()
         {
-            if (_connection.State == System.Data.ConnectionState.Closed) _connection.Open();
+            if (_context.Database.Connection.State == ConnectionState.Open)
+            {
+                _context.Dispose();
+            }
         }
 
-        private void CloseConnection()
+        #endregion
+
+        internal static SupportManager Instance(DbContext context)
         {
-            if (_connection.State == System.Data.ConnectionState.Open) _connection.Close();
+            return _dbManager = new SupportManager(context);
+        }
+
+        internal static SupportManager Instance()
+        {
+            return _dbManager;
         }
 
         public void ExecuteTasks()
@@ -78,9 +57,11 @@ namespace Support
         {
             try
             {
-                Console.WriteLine("@ Начало выполнения задачи {0} ...", _tasks[i].Name);
-                _tasks[i].Process(Connection);
-                Console.WriteLine("+ Задача {0} выполнена успешно.", _tasks[i].Name);
+                Console.WriteLine("@ Выполнение задачи \"{0}\" ... ({1})", _tasks[i].Name, DateTime.Now);
+                DateTime preTime = DateTime.Now;
+                _tasks[i].Process(_context);
+                Console.WriteLine("+ Задача \"{0}\" выполнена успешно в {1} за {2}.", _tasks[i].Name, DateTime.Now,
+                                  DateTime.Now - preTime);
             }
             catch (Exception e)
             {
@@ -90,7 +71,7 @@ namespace Support
 
         public void AddTask(string name, ITask task)
         {
-            _tasks.Add(new _Task { Name = name, Task = task });
+            _tasks.Add(new _Task {Name = name, Task = task});
         }
 
         public void AddIncludePath(string path)
@@ -105,31 +86,23 @@ namespace Support
             }
         }
 
-        public void Dispose()
-        {
-            if (_connection.State == System.Data.ConnectionState.Open)
-            {
-                _connection.Dispose();
-                _connection.Close();
-            }
-        }
-
         public void ProcessAvailableTasks()
         {
             Console.WriteLine("Выберите задачу для выполнения:");
             for (int i = 1; i < _tasks.Count + 1; ++i)
             {
                 _Task task = _tasks[i - 1];
-                Console.WriteLine("{0}. {1}".f(i.ToString(), task.Name));
+                Console.WriteLine("{0}. {1}".F(i.ToString(), task.Name));
             }
-            Console.WriteLine("{0}. {1}.".f((_tasks.Count + 1).ToString(), "Все"));
-            Console.WriteLine("{0}.".f("Для выхода наберите x"));
+            Console.WriteLine("{0}. {1}.".F((_tasks.Count + 1).ToString(), "Все"));
+            Console.WriteLine("{0}.".F("Для выхода наберите x"));
             string inc;
             do
             {
                 Console.Write("Номер задачи: ");
                 int value;
                 inc = Console.ReadLine();
+                Console.WriteLine();
                 if (int.TryParse(inc, out value) && value != default(int))
                 {
                     value--;
@@ -142,8 +115,23 @@ namespace Support
                         ExecuteTask(value);
                     }
                 }
-            }
-            while (inc != null && inc.ToLower() != "x");
+                Console.WriteLine();
+            } while (inc != null && inc.ToLower() != "x");
         }
+
+        #region Nested type: _Task
+
+        private class _Task
+        {
+            internal string Name { get; set; }
+            internal ITask Task { private get; set; }
+
+            internal void Process(DbContext context)
+            {
+                Task.Process(context);
+            }
+        }
+
+        #endregion
     }
 }

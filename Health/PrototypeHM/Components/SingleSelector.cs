@@ -1,49 +1,71 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Windows.Forms;
+using PrototypeHM.DI;
 
 namespace PrototypeHM.Components
 {
-    public partial class SingleSelector<T> : UserControl
-        where T : class, new()
+    public partial class SingleSelector : UserControl, IDIInjected
     {
-        public Func<IList<T>> LoadData { get; set; }
-
-        public Action<T> ValueChange { get; set; }
-
-        public string SourceProperty { get; set; }
-
+        private readonly DbContext _dbContext;
+        private readonly Type _etype;
+        private IList _data;
         private bool _expand;
+        private object _selectedData;
 
-        private IList<T> _data;
+        #region Implementation of IDIInjected
 
-        public SingleSelector()
+        public IDIKernel DIKernel { get; private set; }
+
+        #endregion
+
+        public SingleSelector(IDIKernel diKernel, Type etype)
         {
-            _expand = false;
             InitializeComponent();
+            DIKernel = diKernel;
+            _etype = etype;
+            _dbContext = DIKernel.Get<DbContext>();
+            _expand = false;
+            InitializeData();
             Width = 275;
             ydgvCollection.Visible = false;
             ydgvCollection.RowHeadersVisible = false;
         }
 
+        public object SelectedData
+        {
+            get { return _selectedData; }
+            set
+            {
+                if (value != null)
+                {
+                    if (!_etype.IsAssignableFrom(value.GetType()))
+                        throw new Exception(string.Format("Value type must be {0}, but get {1}.", _etype.FullName,
+                                                          value.GetType().FullName));
+                    _selectedData = value;
+                    txbSelectedValue.Text = value.ToString();
+                }
+            }
+        }
+
+        public string PropertyName { get; set; }
+        public Action<object> ValueChange { get; set; }
+
         public void InitializeData()
         {
-            if (LoadData != null)
-            {
-                _data = LoadData();
-                ydgvCollection.DataSource = _data;
-            }
+            _data = ((IEnumerable<object>) _dbContext.Set(_etype)).ToList(_etype);
+            ydgvCollection.BindingSource = new BindingSource {DataSource = _data};
         }
 
         private void YdgvCollectionCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (_data != null && !string.IsNullOrEmpty(SourceProperty))
+            if (_data != null)
             {
-                var value =
-                    _data[e.RowIndex].GetType().GetProperty(SourceProperty).GetValue(_data[e.RowIndex], null) as string;
-                txbSelectedValue.Text = value;
+                SelectedData = _data[e.RowIndex];
                 ExpandTop();
-                if (ValueChange != null) ValueChange(_data[e.RowIndex]);
+                if (ValueChange != null) ValueChange(SelectedData);
             }
         }
 
@@ -60,7 +82,7 @@ namespace PrototypeHM.Components
             _expand = true;
             ydgvCollection.Visible = true;
             Width = 400;
-            if (ydgvCollection.RowCount < 10)
+            if (0 < ydgvCollection.RowCount && ydgvCollection.RowCount < 10)
             {
                 ydgvCollection.Height = ydgvCollection.Rows[0].Height*ydgvCollection.RowCount +
                                         ydgvCollection.ColumnHeadersHeight + 1;
@@ -68,7 +90,7 @@ namespace PrototypeHM.Components
             }
             else
             {
-                Height = 400;   
+                Height = 400;
             }
         }
 

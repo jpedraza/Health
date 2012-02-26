@@ -1,28 +1,40 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
-using PrototypeHM.DB.DI;
-using PrototypeHM.Diagnosis;
-using PrototypeHM.Doctor;
-using PrototypeHM.Specialty;
-using PrototypeHM.User;
-using PrototypeHM.Parameter;
-using PrototypeHM.DB;
+using EFCFModel;
+using PrototypeHM.DI;
 
 namespace PrototypeHM.Forms
 {
     public partial class DIMainForm : DIForm
     {
-        public DIMainForm()
-        {
-            InitializeComponent();
-        }
+        private readonly SchemaManager _schemaManager;
 
         public DIMainForm(IDIKernel diKernel) : base(diKernel)
         {
             InitializeComponent();
-            
+            _schemaManager = Get<SchemaManager>();
+            InitializeMenu();
+        }
+
+        private void InitializeMenu()
+        {
+            IList<Type> allScaffoldEntities = _schemaManager.GetAllScaffoldEntities();
+            var menuItem = new ToolStripMenuItem("Àäìèíèñòðèðîâàíèå");
+            var dropDownMenu = new ToolStripDropDownMenu {Text = @"Àäìèíèñòðèðîâàíèå"};
+            foreach (Type scaffoldEntity in allScaffoldEntities)
+            {
+                Type entity = scaffoldEntity;
+                var but = new ToolStripButton(entity.GetDisplayName());
+                but.Click += (sender, e) =>
+                                 {
+                                     var form = new ListForm(DIKernel, entity) {MdiParent = this};
+                                     form.Show();
+                                 };
+                dropDownMenu.Items.Add(but);
+            }
+            menuItem.DropDown = dropDownMenu;
+            menuStrip.Items.Add(menuItem);
         }
 
         private void CascadeToolStripMenuItemClick(object sender, EventArgs e)
@@ -48,86 +60,13 @@ namespace PrototypeHM.Forms
         private void CloseAllToolStripMenuItemClick(object sender, EventArgs e)
         {
             foreach (Form childForm in MdiChildren)
-            {
                 childForm.Close();
-            }
         }
 
-        private void TsmiDoctorsClick(object sender, EventArgs e)
+        private void EnterParametersToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var listForm = DIKernel.Get<ListForm<DoctorFullData>>();
-            listForm.MdiParent = this;
-            /*listForm.LoadData = DIKernel.Get<DoctorRepository>().GetAll;
-            listForm.DetailData = DIKernel.Get<DoctorRepository>().Detail;
-            listForm.DeleteData = DIKernel.Get<DoctorRepository>().Delete;*/
-            listForm.InitializeOperations();
-            listForm.Show();
-            listForm.Activate();
-        }
-
-        private void TsmiUserClick(object sender, EventArgs e)
-        {
-            var listForm = DIKernel.Get<ListForm<UserFullData>>();
-            listForm.MdiParent = this;
-            listForm.LoadData = DIKernel.Get<UserRepository>().GetAll;
-            listForm.InitializeOperations();
-            listForm.Show();
-            listForm.Activate();
-        }
-
-        private void TsmiDiagnosisClick(object sender, EventArgs e)
-        {
-            var listForm = DIKernel.Get<ListForm<DiagnosisFullData>>();
-            listForm.MdiParent = this;
-            listForm.LoadData = DIKernel.Get<DiagnosisRepository>().GetAll;
-            listForm.InitializeOperations();
-            listForm.Show();
-            listForm.Activate();
-        }
-
-        private void ñîçäàíèåToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = new AddForm<DoctorDetail>(DIKernel) { MdiParent = this };
-            form.InitializeForm();
+            var form = new Patient.EnterParameterForm(DIKernel, 4);
             form.Show();
-        }
-
-        private void ñïèñèêèToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ïàðàìåòðûÇäîðîâüÿToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void ïðîñìîòðToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var listForm = new ListForm<ParameterDetail>(DIKernel);
-            listForm.MdiParent = this;
-            listForm.LoadData = DIKernel.Get<ParameterRepository>().GetAll;
-            listForm.InitializeOperations();
-            listForm.Show();
-            listForm.Activate();
-        }
-
-        private void íîâûéToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var editForm = new AddForm<ParameterDetail>(DIKernel, -1) { MdiParent = this };
-            
-            editForm.InitializeForm();
-            editForm.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            multiSelector1.SetData(DIKernel.Get<SpecialtyRepository>().GetAll(), new List<Specialty.Specialty>());
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            multiSelector2.SetData(multiSelector1.RightSource, new List<Specialty.Specialty>());
         }
     }
 }

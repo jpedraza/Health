@@ -1,6 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Metadata.Edm;
+using System.Data.Objects;
+using System.Linq;
+using System.Reflection;
 
 namespace PrototypeHM
 {
@@ -34,7 +39,7 @@ namespace PrototypeHM
             {
                 listObjs.Add(obj);
             }
-            return listObjs; 
+            return listObjs;
         }
 
         internal static void AddRange(this IBindingList list, IBindingList objs)
@@ -51,6 +56,80 @@ namespace PrototypeHM
             {
                 list.Remove(obj);
             }
+        }
+    }
+
+    internal static class ExEnumerable
+    {
+        internal static IList ToList(this IEnumerable<object> obj, Type entityType)
+        {
+            var list = Activator.CreateInstance(typeof (List<>).MakeGenericType(entityType)) as IList;
+            if (obj != null && list != null)
+            {
+                foreach (object o in obj)
+                    list.Add(o);
+            }
+            return list;
+        }
+
+        internal static IList ToListOfObjects(this IEnumerable<object> obj, Type entityType)
+        {
+            return
+                (IList)
+                typeof (Enumerable).GetMethod("ToList").MakeGenericMethod(entityType).Invoke(typeof (Enumerable),
+                                                                                             new[] {obj});
+        }
+    }
+
+    internal static class ExObjectContext
+    {
+        internal static object CreateObjectSet(this ObjectContext context, Type entityType)
+        {
+            MethodInfo loadMethod = context.GetType().GetMethod("CreateObjectSet", new Type[0]);
+            loadMethod = loadMethod.MakeGenericMethod(entityType);
+            return loadMethod.Invoke(context, null);
+        }
+    }
+
+    internal static class ExEdm
+    {
+        internal static EdmType ParentType(this EntityType entityType)
+        {
+            EdmType parentType = entityType;
+            while (parentType.BaseType != null)
+                parentType = entityType.BaseType;
+            return parentType;
+        }
+    }
+
+    internal static class ExLinq
+    {
+        internal static IEnumerable OfType(this IEnumerable set, Type t)
+        {
+            return
+                (IEnumerable)
+                typeof (Enumerable).GetMethod("OfType").MakeGenericMethod(t).Invoke(typeof (Enumerable), new[] {set});
+        }
+
+        internal static int Count(this IEnumerable set, Type t)
+        {
+            return
+                (int)
+                typeof (Enumerable).GetMethod("Count").MakeGenericMethod(t).Invoke(typeof (Enumerable), new[] {set});
+        }
+
+        internal static object FirstOrDefault(this IEnumerable set, Type t, Func<object, bool> where)
+        {
+            return ((IEnumerable<object>) set).FirstOrDefault(where);
+        }
+    }
+
+    internal static class ExType
+    {
+        internal static string GetDisplayName(this Type t)
+        {
+            var att = t.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute) as DisplayNameAttribute;
+            return att == null ? t.Name : att.DisplayName;
         }
     }
 }

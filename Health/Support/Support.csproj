@@ -49,8 +49,14 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.4.3.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,16 +65,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SupportManager.cs" />
-    <Compile Include="ExcelParser\ICDParser.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="ITask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\CreateDatabaseTask.cs" />
+    <Compile Include="Tasks\DeleteDatabaseTask.cs" />
     <Compile Include="Tasks\ExecuteFileScriptTask.cs" />
+    <Compile Include="Tasks\ICDParserTask.cs" />
+    <Compile Include="Tasks\RecreateDatabaseTask.cs" />
+    <Compile Include="Tasks\TestDataTask.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Scripts\ClearDatabase.sql" />
+    <ProjectReference Include="..\EFCFModel\EFCFModel.csproj">
+      <Project>{E7D07113-1BB1-4EA3-9E24-4421F585C04C}</Project>
+      <Name>EFCFModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

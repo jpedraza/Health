@@ -36,24 +36,10 @@ namespace PrototypeHM.Forms
             this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrangeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ñïèñèêèToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDoctors = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiUser = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDiagnosis = new System.Windows.Forms.ToolStripMenuItem();
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ïğîñìîòğToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.íîâûéToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.òåñòûÓäàëèòüToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ñîçäàíèåToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ïàöèåíòóToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ââîäÏàğàìåòğîâToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.multiSelector1 = new PrototypeHM.Components.MultiSelector();
-            this.button1 = new System.Windows.Forms.Button();
-            this.multiSelector2 = new PrototypeHM.Components.MultiSelector();
-            this.button2 = new System.Windows.Forms.Button();
+            this.enterParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -62,9 +48,7 @@ namespace PrototypeHM.Forms
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.windowsMenu,
-            this.ñïèñèêèToolStripMenuItem,
-            this.òåñòûÓäàëèòüToolStripMenuItem,
-            this.ïàöèåíòóToolStripMenuItem});
+            this.enterParametersToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -119,92 +103,6 @@ namespace PrototypeHM.Forms
             this.arrangeIconsToolStripMenuItem.Text = "&Óïîğÿäî÷èòü çíà÷êè";
             this.arrangeIconsToolStripMenuItem.Click += new System.EventHandler(this.ArrangeIconsToolStripMenuItemClick);
             // 
-            // ñïèñèêèToolStripMenuItem
-            // 
-            this.ñïèñèêèToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiDoctors,
-            this.tsmiUser,
-            this.tsmiDiagnosis,
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem});
-            this.ñïèñèêèToolStripMenuItem.Name = "ñïèñèêèToolStripMenuItem";
-            this.ñïèñèêèToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
-            this.ñïèñèêèToolStripMenuItem.Text = "Àäìèíèñòğàòîğó";
-            this.ñïèñèêèToolStripMenuItem.Click += new System.EventHandler(this.ñïèñèêèToolStripMenuItem_Click);
-            // 
-            // tsmiDoctors
-            // 
-            this.tsmiDoctors.Name = "tsmiDoctors";
-            this.tsmiDoctors.Size = new System.Drawing.Size(191, 22);
-            this.tsmiDoctors.Text = "Äîêòîğà";
-            this.tsmiDoctors.Click += new System.EventHandler(this.TsmiDoctorsClick);
-            // 
-            // tsmiUser
-            // 
-            this.tsmiUser.Name = "tsmiUser";
-            this.tsmiUser.Size = new System.Drawing.Size(191, 22);
-            this.tsmiUser.Text = "Ïîëüçîâàòåëè";
-            this.tsmiUser.Click += new System.EventHandler(this.TsmiUserClick);
-            // 
-            // tsmiDiagnosis
-            // 
-            this.tsmiDiagnosis.Name = "tsmiDiagnosis";
-            this.tsmiDiagnosis.Size = new System.Drawing.Size(191, 22);
-            this.tsmiDiagnosis.Text = "Äèàãíîçû";
-            this.tsmiDiagnosis.Click += new System.EventHandler(this.TsmiDiagnosisClick);
-            // 
-            // ïàğàìåòğûÇäîğîâüÿToolStripMenuItem
-            // 
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ïğîñìîòğToolStripMenuItem,
-            this.íîâûéToolStripMenuItem});
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.Name = "ïàğàìåòğûÇäîğîâüÿToolStripMenuItem";
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.Text = "Ïàğàìåòğû çäîğîâüÿ";
-            this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem.Click += new System.EventHandler(this.ïàğàìåòğûÇäîğîâüÿToolStripMenuItem_Click);
-            // 
-            // ïğîñìîòğToolStripMenuItem
-            // 
-            this.ïğîñìîòğToolStripMenuItem.Name = "ïğîñìîòğToolStripMenuItem";
-            this.ïğîñìîòğToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.ïğîñìîòğToolStripMenuItem.Text = "Ïğîñìîòğ";
-            this.ïğîñìîòğToolStripMenuItem.Click += new System.EventHandler(this.ïğîñìîòğToolStripMenuItem_Click);
-            // 
-            // íîâûéToolStripMenuItem
-            // 
-            this.íîâûéToolStripMenuItem.Name = "íîâûéToolStripMenuItem";
-            this.íîâûéToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.íîâûéToolStripMenuItem.Text = "Íîâûé";
-            this.íîâûéToolStripMenuItem.Click += new System.EventHandler(this.íîâûéToolStripMenuItem_Click);
-            // 
-            // òåñòûÓäàëèòüToolStripMenuItem
-            // 
-            this.òåñòûÓäàëèòüToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ñîçäàíèåToolStripMenuItem});
-            this.òåñòûÓäàëèòüToolStripMenuItem.Name = "òåñòûÓäàëèòüToolStripMenuItem";
-            this.òåñòûÓäàëèòüToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
-            this.òåñòûÓäàëèòüToolStripMenuItem.Text = "Òåñòû (Óäàëèòü)";
-            // 
-            // ñîçäàíèåToolStripMenuItem
-            // 
-            this.ñîçäàíèåToolStripMenuItem.Name = "ñîçäàíèåToolStripMenuItem";
-            this.ñîçäàíèåToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.ñîçäàíèåToolStripMenuItem.Text = "Ñîçäàíèå";
-            this.ñîçäàíèåToolStripMenuItem.Click += new System.EventHandler(this.ñîçäàíèåToolStripMenuItem_Click);
-            // 
-            // ïàöèåíòóToolStripMenuItem
-            // 
-            this.ïàöèåíòóToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ââîäÏàğàìåòğîâToolStripMenuItem});
-            this.ïàöèåíòóToolStripMenuItem.Name = "ïàöèåíòóToolStripMenuItem";
-            this.ïàöèåíòóToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.ïàöèåíòóToolStripMenuItem.Text = "Ïàöèåíòó";
-            // 
-            // ââîäÏàğàìåòğîâToolStripMenuItem
-            // 
-            this.ââîäÏàğàìåòğîâToolStripMenuItem.Name = "ââîäÏàğàìåòğîâToolStripMenuItem";
-            this.ââîäÏàğàìåòğîâToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.ââîäÏàğàìåòğîâToolStripMenuItem.Text = "Ââîä ïàğàìåòğîâ";
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -221,53 +119,18 @@ namespace PrototypeHM.Forms
             this.toolStripStatusLabel.Size = new System.Drawing.Size(66, 17);
             this.toolStripStatusLabel.Text = "Ñîñòîÿíèå";
             // 
-            // multiSelector1
+            // enterParametersToolStripMenuItem
             // 
-            this.multiSelector1.EditMode = false;
-            this.multiSelector1.Location = new System.Drawing.Point(45, 204);
-            this.multiSelector1.MinimumSize = new System.Drawing.Size(255, 400);
-            this.multiSelector1.Name = "multiSelector1";
-            this.multiSelector1.Size = new System.Drawing.Size(445, 400);
-            this.multiSelector1.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(45, 175);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // multiSelector2
-            // 
-            this.multiSelector2.EditMode = false;
-            this.multiSelector2.Location = new System.Drawing.Point(516, 204);
-            this.multiSelector2.MinimumSize = new System.Drawing.Size(400, 400);
-            this.multiSelector2.Name = "multiSelector2";
-            this.multiSelector2.Size = new System.Drawing.Size(400, 400);
-            this.multiSelector2.TabIndex = 7;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(516, 175);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.enterParametersToolStripMenuItem.Name = "enterParametersToolStripMenuItem";
+            this.enterParametersToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
+            this.enterParametersToolStripMenuItem.Text = "EnterParameters";
+            this.enterParametersToolStripMenuItem.Click += new System.EventHandler(this.EnterParametersToolStripMenuItemClick);
             // 
             // DIMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1072, 727);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.multiSelector2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.multiSelector1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
@@ -295,21 +158,7 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem arrangeIconsToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.ToolStripMenuItem ñïèñèêèToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDoctors;
-        private System.Windows.Forms.ToolStripMenuItem tsmiUser;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDiagnosis;
-        private System.Windows.Forms.ToolStripMenuItem òåñòûÓäàëèòüToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ñîçäàíèåToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ïàğàìåòğûÇäîğîâüÿToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ïàöèåíòóToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ââîäÏàğàìåòğîâToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ïğîñìîòğToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem íîâûéToolStripMenuItem;
-        private Components.MultiSelector multiSelector1;
-        private System.Windows.Forms.Button button1;
-        private Components.MultiSelector multiSelector2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolStripMenuItem enterParametersToolStripMenuItem;
     }
 }
 
