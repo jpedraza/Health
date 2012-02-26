@@ -46,6 +46,8 @@ namespace PrototypeHM.Forms
             this.типыМетаданныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пациентуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вводПараметровToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.докторуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -58,7 +60,8 @@ namespace PrototypeHM.Forms
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.windowsMenu,
             this.списикиToolStripMenuItem,
-            this.пациентуToolStripMenuItem});
+            this.пациентуToolStripMenuItem,
+            this.докторуToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -191,6 +194,21 @@ namespace PrototypeHM.Forms
             this.вводПараметровToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.вводПараметровToolStripMenuItem.Text = "Ввод параметров";
             // 
+            // докторуToolStripMenuItem
+            // 
+            this.докторуToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem});
+            this.докторуToolStripMenuItem.Name = "докторуToolStripMenuItem";
+            this.докторуToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.докторуToolStripMenuItem.Text = "Доктору";
+            // 
+            // параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem
+            // 
+            this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem.Name = "параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem";
+            this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem.Size = new System.Drawing.Size(317, 22);
+            this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem.Text = "Параметры здоровья и диагнозы пациентов";
+            this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem.Click += new System.EventHandler(this.параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem_Click);
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -249,6 +267,8 @@ namespace PrototypeHM.Forms
         private System.Windows.Forms.ToolStripMenuItem параметрыЗдоровьяToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem метаданныеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem типыМетаданныхToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem докторуToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem параметрыЗдоровьяИДиагнозыПациентовToolStripMenuItem;
     }
 }
 

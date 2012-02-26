@@ -2420,6 +2420,7 @@ RETURN 0]]></Value>
 		   u.ThirdName,
 		   p.Card,
 		   p.Policy,
+		   p.Mother as Mother,
 		   @status as Status, @statusMessage as StatusMessage
 		   from Users as u
 		   join Patients as p on u.UserId = p.PatientId
@@ -2492,6 +2493,9 @@ RETURN 0]]></Value>
 					<References Name="[dbo].[Patients].[Policy]" />
 				</Entry>
 				<Entry>
+					<References Name="[dbo].[Patients].[Mother]" />
+				</Entry>
+				<Entry>
 					<References Name="[dbo].[PatientsToDoctors].[DoctorId]" />
 				</Entry>
 			</Relationship>
@@ -2521,7 +2525,7 @@ RETURN 0]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="907" />
+				<Property Name="Length" Value="933" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[GetAllPatientsForDoctor]&#xD;&#xA;&#x9;@doctorId int = 0&#xD;&#xA;AS" />
@@ -3857,6 +3861,86 @@ RETURN 0]]></Value>
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[NewValueTypes]&#xD;&#xA;&#x9;@name nvarchar(MAX)&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="ISql100Procedure" Name="[dbo].[ParameterForPatientByPatientId]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	declare @status int = 1
+	declare @statusMessage nvarchar(MAX) = dbo.GSM(0000001)
+	if not(exists(select * from Patients where PatientId = @patientId))
+	begin
+		set @statusMessage = dbo.GSM(3001002)
+		select @status as Status, @statusMessage as StatusMessage
+		return
+	end
+	select p.PatientId,
+		   @status as Status, @statusMessage as StatusMessage		   	   
+		   from Patients as p
+		   JOIN ParametersForPatients as pfp ON pfp.PatientId=@patientId
+		   where p.PatientId = @patientId
+RETURN 0]]></Value>
+			</Property>
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[GSM]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParameterForPatientByPatientId].[@patientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParametersForPatients]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[ParametersForPatients].[PatientId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Patients].[PatientId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Owner">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="ISql100SubroutineParameter" Name="[dbo].[ParameterForPatientByPatientId].[@patientId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="ISql90TypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="584" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[ParameterForPatientByPatientId]&#xD;&#xA;&#x9;@patientId int&#xD;&#xA;AS" />
 			</Annotation>
 		</Element>
 		<Element Type="ISql100Table" Name="[dbo].[ParameterMetadata]">

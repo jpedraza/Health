@@ -40,4 +40,13 @@ namespace PrototypeHM.Patient
         [DisplayName(@"Роль")]
         public string Role { get; set; }
     }
+
+    public class ParameterForPatient:QueryStatus
+    {
+        public int PatientId { get; set; }
+
+        public int ParameterId { get; set; }
+
+        public string ParameterName { get; set; }
+    }
 }

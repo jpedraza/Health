@@ -37,6 +37,9 @@ namespace PrototypeHM.Doctor
         public string FullName { get { return string.Format("{0} {1} {2}", LastName, FirstName, ThirdName); }
             
         }
+
+        public string Mother { get; set; }
+
         [DisplayName(@"Карта")]
         public string Card { get; set; }
         [DisplayName(@"Полюс")]

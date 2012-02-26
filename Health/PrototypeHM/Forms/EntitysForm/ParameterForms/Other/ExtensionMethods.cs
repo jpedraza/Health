@@ -41,6 +41,7 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.Other
                                 AutoSize = true
                             };
             panel.Controls.Add(label);
+            form.Height += panel.Height;
             form.Controls.Add(panel);
         }
 
@@ -234,6 +235,12 @@ namespace PrototypeHM.Forms.EntitysForm.ParameterForms.Other
             };
 
 
+        }
+
+        public static string GetFirstLetterInString(this ICommonFormsFunctions iFormsFunctions, string @string)
+        {
+            if (@string == null) throw new ArgumentNullException("string");
+            return @string.Substring(0, 1);
         }
     }
 }

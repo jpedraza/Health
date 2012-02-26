@@ -21,6 +21,7 @@ AS
 		   u.ThirdName,
 		   p.Card,
 		   p.Policy,
+		   p.Mother as Mother,
 		   @status as Status, @statusMessage as StatusMessage
 		   from Users as u
 		   join Patients as p on u.UserId = p.PatientId

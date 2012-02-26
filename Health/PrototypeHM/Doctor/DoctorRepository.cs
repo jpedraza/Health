@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using PrototypeHM.DB;
 using PrototypeHM.DB.DI;
 using PrototypeHM.DB.Mappers;
+using PrototypeHM.Parameter;
 
 namespace PrototypeHM.Doctor
 {
@@ -56,6 +58,19 @@ namespace PrototypeHM.Doctor
                                      Patients = patients
                                  };
             return detailData;
+        }
+
+        internal DoctorFullData GetDoctorFullData(int doctorId)
+        {
+            var c = CreateQuery("[dbo].[GetDoctorShowData] @doctorId");
+            c.Parameters.Add("ParameterId", SqlDbType.Int);
+            c.Parameters[0].Value = doctorId;
+
+            var reader = c.ExecuteReader();
+
+            var qS = Get<PropertyToColumnMapper<DoctorFullData>>().Map(reader)[0];
+            reader.Close();
+            return qS;
         }
 
         internal QueryStatus Save(DoctorDetail data)

@@ -194,5 +194,13 @@ namespace PrototypeHM.Forms
                 YMessageBox.Error(exp.Message);
             }
         }
+
+      
+        private void параметры«доровь€»ƒиагнозыѕациентовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var listForm = new EntitysForm.AdminForms.PatientListForm(DIKernel, 12) { MdiParent = this };
+            listForm.Show();
+            listForm = null;
+        }
     }
 }

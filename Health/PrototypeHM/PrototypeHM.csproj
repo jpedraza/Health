@@ -131,6 +131,12 @@
     <Compile Include="Forms\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EntitysForm\AdminForms\PatientListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitysForm\AdminForms\PatientListForm.Designer.cs">
+      <DependentUpon>PatientListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitysForm\AdminForms\PatientListForm.resx">
+      <DependentUpon>PatientListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EntitysForm\ParameterForms\MetaData\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>

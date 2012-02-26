@@ -82,7 +82,11 @@ namespace PrototypeHM
                                                                    {
                                                                        Load = _kernel.Get<SpecialtyRepository>().GetAll
                                                                    });
-            
+
+            _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<Doctor.PatientForDoctor>
+            {
+                Load = _kernel.Get<PatientRepository>().GetAllPatients
+            });
             _kernel.Get<OperationsRepository>().Operations.Add(new OperationsContext<MetadataForParameter>
             {
                 Save = _kernel.Get<ParameterRepository>().SaveMetadata,
