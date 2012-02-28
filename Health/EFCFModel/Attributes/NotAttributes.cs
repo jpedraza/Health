@@ -5,7 +5,7 @@ namespace EFCFModel.Attributes
     /// <summary>
     /// ќзначает что свойство не будет маппитс€.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class NotMapAttribute : Attribute, IMapAttribute
     {
     }

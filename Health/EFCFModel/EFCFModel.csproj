@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ByteTypeAttributes.cs" />
     <Compile Include="Attributes\DisplayAttributes.cs" />
     <Compile Include="Attributes\IDisplayAttribute.cs" />
     <Compile Include="Attributes\IMapAttribute.cs" />

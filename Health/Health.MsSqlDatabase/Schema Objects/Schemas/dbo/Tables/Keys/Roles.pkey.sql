@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[Roles]
-	ADD CONSTRAINT [RolesPK]
-	PRIMARY KEY (RoleId)

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data.Metadata.Edm;
 using System.Data.Objects;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace PrototypeHM
@@ -130,6 +131,19 @@ namespace PrototypeHM
         {
             var att = t.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute) as DisplayNameAttribute;
             return att == null ? t.Name : att.DisplayName;
+        }
+    }
+
+    internal static class ExQueryable
+    {
+        internal static Expression<Func<object, bool>> WhereProperty(Type t, string propertyName, object value)
+        {
+            ParameterExpression parameter = Expression.Parameter(typeof(object), "o");
+            Expression<Func<object, bool>> where =
+                Expression.Lambda<Func<object, bool>>(
+                    Expression.Equal(Expression.Property(Expression.Convert(parameter, t), propertyName),
+                                     Expression.Constant(value)), parameter);
+            return where;
         }
     }
 }

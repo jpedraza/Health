@@ -13,6 +13,9 @@ namespace EFCFModel.Entities
             Patients = new List<Patient>();
         }
 
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
+        public int Id { get; set; }
+
         [Required, DisplayName("Имя")]
         public string Name { get; set; }
 
@@ -24,12 +27,5 @@ namespace EFCFModel.Entities
 
         [NotDisplay, DisplayName("Пациенты с таким диагнозом")]
         public virtual ICollection<Patient> Patients { get; set; }
-
-        #region IIdentity Members
-
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
-        public int Id { get; set; }
-
-        #endregion
     }
 }

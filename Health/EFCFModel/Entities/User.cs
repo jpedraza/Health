@@ -8,6 +8,9 @@ namespace EFCFModel.Entities
     [Table("Users"), ScaffoldTable(true), DisplayName("Пользователь")]
     public class User : IIdentity
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
+        public int Id { get; set; }
+
         [Required, DisplayName("Имя")]
         public string FirstName { get; set; }
 
@@ -26,17 +29,7 @@ namespace EFCFModel.Entities
         [Required, DisplayName("День рождения")]
         public DateTime Birthday { get; set; }
 
-        [Required, DisplayName("Токен")]
-        public string Token { get; set; }
-
         [NotDisplay, DisplayName("Роль")]
         public virtual Role Role { get; set; }
-
-        #region IIdentity Members
-
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
-        public int Id { get; set; }
-
-        #endregion
     }
 }

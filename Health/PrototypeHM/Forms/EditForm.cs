@@ -4,8 +4,11 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using EFCFModel;
+using EFCFModel.Attributes;
+using EFCFModel.Entities;
 using PrototypeHM.Components;
 using PrototypeHM.DI;
 
@@ -40,11 +43,9 @@ namespace PrototypeHM.Forms
         {
             if (_schemaManager.HasKey(_etype))
             {
-                //TODO: переписать через IQueryable.
-                Func<object, bool> where =
-                    o => Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) == _key;
                 _data = _key != -1
-                            ? _dbContext.Set(_etype).FirstOrDefault(_etype, where)
+                            ? ((IQueryable<object>) _dbContext.Set(_etype)).
+                                  FirstOrDefault(ExQueryable.WhereProperty(_etype, _schemaManager.Key(_etype).Name, _key))
                             : _dbContext.Set(_etype).Create();
             }
         }
@@ -62,44 +63,126 @@ namespace PrototypeHM.Forms
             PropertyInfo[] properties = _etype.GetProperties();
             foreach (PropertyInfo property in properties)
             {
-                if (property.Name == _schemaManager.Key(_etype).Name) continue;
-                Type propertyType = property.PropertyType;
-                Control c = null;
+                PropertyInfo prop = property;
+                var propertyValue = prop.GetValue(_data, null);
+                if (prop.Name == _schemaManager.Key(_etype).Name) continue;
+                Type propertyType = prop.PropertyType;
+                Control control = null;
                 if (propertyType == typeof (int))
                 {
-                    c = new NumericUpDown {Name = string.Format("nupd{0}", property.Name)};
-                    c.DataBindings.Add("Value", _data, property.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    control = new NumericUpDown { Name = string.Format("nupd{0}", prop.Name) };
+                    control.DataBindings.Add("Value", _data, prop.Name, false, DataSourceUpdateMode.OnPropertyChanged);
                 }
                 if (propertyType == typeof (double))
                 {
-                    c = new NumericUpDown
+                    control = new NumericUpDown
                             {
-                                Name = string.Format("nupd{0}", property.Name),
+                                Name = string.Format("nupd{0}", prop.Name),
                                 DecimalPlaces = 2,
                                 Increment = (decimal) 0.5
                             };
-                    c.DataBindings.Add("Value", _data, property.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    control.DataBindings.Add("Value", _data, prop.Name, false, DataSourceUpdateMode.OnPropertyChanged);
                 }
                 if (propertyType == typeof (string))
                 {
-                    c = new TextBox {Name = string.Format("txb{0}", property.Name)};
-                    c.DataBindings.Add("Text", _data, property.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    var c = new TextBox
+                                  {
+                                      Name = string.Format("txb{0}", prop.Name),
+                                      Text = prop.GetValue(_data, null) as string
+                                  };
+                    c.TextChanged += (sender, e) => prop.SetValue(_data, c.Text, null);
+                    control = c;
                 }
                 if (propertyType == typeof (DateTime))
                 {
-                    c = new DateTimePicker
-                            {Name = string.Format("dtp{0}", property.Name)};
-                    c.DataBindings.Add("Value", _data, property.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    var value = propertyValue == null || (DateTime) propertyValue == default(DateTime)
+                                    ? DateTime.Now
+                                    : (DateTime) propertyValue;
+                    var c = new DateTimePicker { Name = string.Format("dtp{0}", prop.Name), Value = value };
+                    c.ValueChanged += (sender, e) => prop.SetValue(_data, c.Value, null);
+                    prop.SetValue(_data, value, null);
+                    control = c;
                 }
-                if (c != null)
+                if (propertyType == typeof (byte[]))
                 {
-                    c.Top = _top;
-                    _top += c.Height;
-                    _form.Add(c);
+                    var byteTypeAttribute =
+                        prop.GetCustomAttributes(true).FirstOrDefault(att => att is ByteTypeAttribute) as ByteTypeAttribute;
+                    if (byteTypeAttribute != null)
+                    {
+                        var propertyByteValue = (byte[]) propertyValue;
+                        Type byteType = byteTypeAttribute.GetByteType(_data);
+                        if (byteType == typeof(bool))
+                        {
+                            bool value = propertyValue != null
+                                             ? BitConverter.ToBoolean(propertyByteValue, 0)
+                                             : default(bool);
+                            var c = new CheckBox { Name = string.Format("chb{0}", prop.Name), Checked = value };
+                            c.CheckedChanged +=
+                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(c.Checked), null);
+                            control = c;
+                        }
+                        if (byteType == typeof (int))
+                        {
+                            var c = new NumericUpDown { Name = string.Format("nupd{0}", prop.Name) };
+                            var value = propertyValue != null
+                                            ? BitConverter.ToInt32(propertyByteValue, 0)
+                                            : c.Minimum;
+                            c.Value = value;
+                            c.ValueChanged +=
+                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(Convert.ToInt32(c.Value)), null);
+                            control = c;
+                        }
+                        if (byteType == typeof (double))
+                        {
+                            var c = new NumericUpDown
+                                    {
+                                        Name = string.Format("nupd{0}", prop.Name),
+                                        DecimalPlaces = 2,
+                                        Increment = (decimal) 0.5
+                                    };
+                            var value = propertyValue != null
+                                            ? (decimal) BitConverter.ToDouble(propertyByteValue, 0)
+                                            : c.Minimum;
+                            c.Value = value;
+                            c.ValueChanged +=
+                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(Convert.ToDouble(c.Value)), null);
+                            control = c;
+                        }
+                        if (byteType == typeof (string))
+                        {
+                            string text = propertyValue == null
+                                              ? string.Empty
+                                              : Encoding.UTF8.GetString((byte[]) prop.GetValue(_data, null));
+                            var c = new TextBox
+                                    {
+                                        Name = string.Format("txb{0}", prop.Name),
+                                        Text = text
+                                    };
+                            c.TextChanged +=
+                                (sender, e) => prop.SetValue(_data, Encoding.UTF8.GetBytes(c.Text), null);
+                            control = c;
+                        }
+                        if (byteType == typeof (DateTime))
+                        {
+                            var value = propertyValue != null
+                                            ? DateTime.FromBinary(BitConverter.ToInt64(propertyByteValue, 0))
+                                            : DateTime.Now;
+                            var c = new DateTimePicker { Name = string.Format("dtp{0}", prop.Name), Value = value };
+                            c.ValueChanged +=
+                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(c.Value.ToBinary()), null);
+                            control = c;
+                        }
+                    }
+                }
+                if (control != null)
+                {
+                    control.Top = _top;
+                    _top += control.Height;
+                    _form.Add(control);
                     var att =
-                        property.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute)
+                        prop.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute)
                         as DisplayNameAttribute;
-                    _labels.Add(att == null ? property.Name : att.DisplayName);
+                    _labels.Add(att == null ? prop.Name : att.DisplayName);
                 }
             }
         }

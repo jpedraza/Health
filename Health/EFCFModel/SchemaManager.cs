@@ -154,7 +154,8 @@ namespace EFCFModel
         public IList<Type> GetAllScaffoldEntities()
         {
             return
-                GetAllEntities().Where(t => t.GetCustomAttributes(true).Any(a => a is ScaffoldTableAttribute)).ToList();
+                GetAllEntities().Where(
+                    t => !t.IsAbstract && t.GetCustomAttributes(true).Any(a => a is ScaffoldTableAttribute)).ToList();
         }
     }
 }

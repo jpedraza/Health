@@ -65,8 +65,7 @@ namespace PrototypeHM.Forms
 
         private void EnterParametersToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var form = new Patient.EnterParameterForm(DIKernel, 4);
-            form.Show();
+            new Patient.EnterParameterForm(DIKernel, 4) {MdiParent = this}.Show();
         }
     }
 }

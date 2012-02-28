@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Text;
 using EFCFModel;
 using EFCFModel.Entities;
 
@@ -25,17 +26,14 @@ namespace Support.Tasks
                              ThirdName = "Валентинович",
                              Login = "anton",
                              Password = "anton",
-                             Token = "fjdsfklnsdklfns",
                              Birthday = DateTime.Now.AddYears(-27),
                              Role = ra
                          };
             context.Set<User>().Add(u1);
             context.SaveChanges();
-            var s1 = new Specialty
-                         {
-                             Name = "Pediator"
-                         };
-            context.Set<Specialty>().Add(s1);
+            var s1 = new Specialty {Name = "Педиатор"};
+            var s2 = new Specialty {Name = "Кардиолог"};
+            context.Set<Specialty>().AddRange(s1, s2);
             context.SaveChanges();
             var d1 = new Doctor
                          {
@@ -44,7 +42,6 @@ namespace Support.Tasks
                              ThirdName = "Валентинович",
                              Login = "makar",
                              Password = "makar",
-                             Token = "fjdsfklnsdklfns",
                              Birthday = DateTime.Now.AddYears(-38),
                              Role = rd,
                              Specialty = s1
@@ -56,13 +53,25 @@ namespace Support.Tasks
                              ThirdName = "Валентинович",
                              Login = "anton",
                              Password = "anton",
-                             Token = "fjdsfklnsdklfns",
                              Birthday = DateTime.Now.AddYears(-38),
                              Role = rd,
-                             Specialty = s1
+                             Specialty = s2
                          };
             context.Set<Doctor>().AddRange(d1, d2);
             context.SaveChanges();
+            var parameter1 = new DoubleParameter
+                                 {
+                                     Name = "Пульс",
+                                     DefaultValue = BitConverter.GetBytes(60),
+                                     MinValue = 15,
+                                     MaxValue = 250
+                                 };
+            var parameter2 = new StringParameter
+                                 {
+                                     Name = "Давление",
+                                     DefaultValue = Encoding.UTF8.GetBytes("120x80")
+                                 };
+            context.Set<Parameter>().AddRange(parameter1, parameter2);
             var p1 = new Patient
                          {
                              FirstName = "Илья",
@@ -70,14 +79,15 @@ namespace Support.Tasks
                              ThirdName = "Валентинович",
                              Login = "ilja",
                              Password = "ilja",
-                             Token = "fjdsfklnsdklfns",
                              Birthday = DateTime.Now.AddYears(-12),
                              Role = rp,
-                             Card = "dsdasdas",
+                             Card = "9A5CD8E5",
                              Mother = "Анна Анатольевна",
                              StartDateOfObservation = DateTime.Now.AddYears(-2),
                              Doctor = d1
                          };
+            p1.Parameters.Add(parameter1);
+            p1.Parameters.Add(parameter2);
             context.Set<Patient>().Add(p1);
             context.SaveChanges();
             var a1 = new Appointment
@@ -91,19 +101,21 @@ namespace Support.Tasks
             var dsc = new DiagnosisClass
                           {
                               Name = "Сердечные",
-                              Code = "454445"
+                              Code = "D1A56E05"
                           };
             context.Set<DiagnosisClass>().Add(dsc);
             context.SaveChanges();
             var ds = new Diagnosis
                          {
                              Name = "Сердечная недостаточность",
-                             Code = "45568687",
+                             Code = "5984C8BE",
                              DiagnosisClass = dsc
                          };
             ds.Patients.Add(p1);
             context.Set<Diagnosis>().Add(ds);
             context.SaveChanges();
+            context.Configuration.AutoDetectChangesEnabled = true;
+            context.Configuration.ValidateOnSaveEnabled = true;
         }
 
         #endregion

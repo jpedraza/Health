@@ -16,14 +16,19 @@ namespace EFCFModel.Entities
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
+
         [Required, DisplayName("Имя")]
         public string Name { get; set; }
+
         [Required, DisplayName("Код")]
         public string Code { get; set; }
+
         [DisplayName("Диагнозы"), NotDisplay]
         public virtual ICollection<Diagnosis> Diagnosis { get; set; }
+
         [DisplayName("Дочерние классы диагнозов"), NotDisplay]
         public virtual ICollection<DiagnosisClass> ChildDiagnosisClasses { get; set; }
+
         [DisplayName("Родительский класс диагноза"), NotDisplay]
         public virtual DiagnosisClass ParentDiagnosisClass { get; set; }
 

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
@@ -7,9 +9,9 @@ using EFCFModel.Attributes;
 namespace EFCFModel.Entities
 {
     [Table("Parameters"), DisplayName("Параметр")]
-    public class Parameter : IIdentity
+    public abstract class Parameter : IIdentity
     {
-        public Parameter()
+        protected Parameter()
         {
             Patients = new List<Patient>();
         }
@@ -20,7 +22,7 @@ namespace EFCFModel.Entities
         [Required, DisplayName("Имя")]
         public string Name { get; set; }
 
-        [NotDisplay, DisplayName("Значение по-умолчанию")]
+        [NotDisplay, DisplayName("Значение по-умолчанию"), ByteType("ValueType")]
         public byte[] DefaultValue { get; set; }
 
         [NotDisplay, DisplayName("Пациенты")]
@@ -28,6 +30,9 @@ namespace EFCFModel.Entities
 
         [NotDisplay, DisplayName("Заполненные параметры")]
         public virtual ICollection<ParameterStorage> ParametersStorages { get; set; }
+
+        [NotMapped, NotDisplay]
+        public abstract Type ValueType { get; }
 
         public override string ToString()
         {
@@ -38,7 +43,8 @@ namespace EFCFModel.Entities
     [ScaffoldTable(true), DisplayName("Булевый параметр")]
     public class BoolParameter : Parameter
     {
-        public readonly Type ValueType = typeof(bool);
+        [NotDisplay]
+        public override Type ValueType { get { return typeof (bool); } }
     }
 
     [ScaffoldTable(true), DisplayName("Целый параметр")]
@@ -49,7 +55,8 @@ namespace EFCFModel.Entities
         [DisplayName("Максимальное значение"), Required]
         public int MaxValue { get; set; }
 
-        public readonly Type ValueType = typeof(int);
+        [NotDisplay]
+        public override Type ValueType { get { return typeof (int); } }
     }
 
     [ScaffoldTable(true), DisplayName("Дробный параметр")]
@@ -60,7 +67,8 @@ namespace EFCFModel.Entities
         [DisplayName("Максимальное значение"), Required]
         public double MaxValue { get; set; }
 
-        public readonly Type ValueType = typeof(double);
+        [NotDisplay]
+        public override Type ValueType { get { return typeof (double); } }
     }
 
     [ScaffoldTable(true), DisplayName("Строковый параметр")]
@@ -70,9 +78,42 @@ namespace EFCFModel.Entities
         public int MaxLength { get; set; }
         [DisplayName("Минимальная длина"), Required]
         public int MinLength { get; set; }
-        [DisplayName("Regex паттерн")]
-        public string Pattern { get; set; }
 
-        public readonly Type ValueType = typeof(string);
+        [NotDisplay]
+        public override Type ValueType { get { return typeof (string); } }
+    }
+
+    [ScaffoldTable(true), DisplayName("Параметр-дата")]
+    public class DateTimeParameter : Parameter
+    {
+        [DisplayName("Минимальная дата"), Required]
+        public DateTime MinDate { get; set; }
+        [DisplayName("Максимальная дата"), Required]
+        public DateTime MaxDate { get; set; }
+
+        [NotDisplay]
+        public override Type ValueType { get { return typeof(DateTime); } }
+    }
+
+    public class ListParameter : Parameter
+    {
+        private readonly ObservableCollection<string> _collection;
+
+        public ListParameter()
+        {
+            _collection = new ObservableCollection<string>();
+            _collection.CollectionChanged += CllectionChanged;
+        }
+
+        private void CllectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            
+        }
+
+        #region Overrides of Parameter
+
+        public override Type ValueType { get { return typeof (ObservableCollection<string>); } }
+
+        #endregion
     }
 }

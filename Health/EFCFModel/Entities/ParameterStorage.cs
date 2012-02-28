@@ -5,7 +5,7 @@ using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [ScaffoldTable(true), DisplayName("Хранилище параметров"), Table("ParametersStorage")]
+    [DisplayName("Хранилище параметров"), Table("ParametersStorage")]
     public class ParameterStorage : IIdentity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
@@ -20,7 +20,7 @@ namespace EFCFModel.Entities
         [Required, DisplayName("Дата")]
         public DateTime Date { get; set; }
 
-        [DisplayName("Значение"), NotDisplay]
+        [DisplayName("Значение"), NotDisplay, ByteType("Parameter.ValueType")]
         public byte[] Value { get; set; }
     }
 }

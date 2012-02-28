@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Objects;
+using System.Reflection;
 using EFCFModel;
 using EFCFModel.Entities;
 
@@ -30,6 +32,7 @@ namespace EFCFTest
             {
                 Console.WriteLine(user.GetType().BaseType);
             }
+            Console.WriteLine(Assembly.GetAssembly(typeof(System.Data.Entity.DbContext)).GetName().FullName);
             Console.ReadLine();
             /*context.Dispose();*/
         }

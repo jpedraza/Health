@@ -1,4 +1,6 @@
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Objects;
 using EFCFModel.Entities;
 
 namespace EFCFModel
@@ -21,5 +23,7 @@ namespace EFCFModel
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ParameterStorage> ParameterStorages { get; set; }
+
+        public ObjectContext ObjectContext { get { return ((IObjectContextAdapter) this).ObjectContext; } }
     }
 }

@@ -13,18 +13,14 @@ namespace EFCFModel.Entities
             Users = new List<User>();
         }
 
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
+        public int Id { get; set; }
+
         [StringLength(255), DisplayName("Имя")]
         public string Name { get; set; }
 
         [NotDisplay, DisplayName("Пользователи")]
         public virtual ICollection<User> Users { get; set; }
-
-        #region IIdentity Members
-
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
-        public int Id { get; set; }
-
-        #endregion
 
         public override string ToString()
         {

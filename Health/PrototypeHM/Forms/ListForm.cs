@@ -61,9 +61,7 @@ namespace PrototypeHM.Forms
             try
             {
                 object obj = _data.FirstOrDefault(_etype,
-                                                  o =>
-                                                  Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) ==
-                                                  key);
+                                                  o => Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) == key);
                 _dbContext.Entry(obj).State = EntityState.Deleted;
                 _dbContext.SaveChanges();
                 YMessageBox.Information("Удалено.");
