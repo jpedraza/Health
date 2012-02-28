@@ -24,5 +24,10 @@ namespace EFCFModel.Entities
 
         [DisplayName("Пациенты")]
         public virtual ICollection<Patient> Patients { get; set; }
+
+        public override string ToString()
+        {
+            return Code;
+        }
     }
 }

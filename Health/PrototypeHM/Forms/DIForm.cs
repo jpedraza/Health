@@ -20,6 +20,12 @@ namespace PrototypeHM.Forms
             return DIKernel.Get<T>();
         }
 
+        protected T Get<T>(params ConstructorArgument[] arguments)
+            where T : class 
+        {
+            return DIKernel.Get(typeof (T), arguments) as T;
+        }
+
         #region Implementation of IDIInjected
 
         private readonly IDIKernel _diKernel;

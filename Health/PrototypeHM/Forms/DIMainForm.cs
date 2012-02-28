@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using EFCFModel;
 using PrototypeHM.DI;
+using PrototypeHM.Forms.Patient;
 
 namespace PrototypeHM.Forms
 {
@@ -28,7 +29,8 @@ namespace PrototypeHM.Forms
                 var but = new ToolStripButton(entity.GetDisplayName());
                 but.Click += (sender, e) =>
                                  {
-                                     var form = new ListForm(DIKernel, entity) {MdiParent = this};
+                                     var form = Get<ListForm>(new ConstructorArgument {Name = "etype", Value = entity});
+                                     form.MdiParent = this;
                                      form.Show();
                                  };
                 dropDownMenu.Items.Add(but);
@@ -65,7 +67,9 @@ namespace PrototypeHM.Forms
 
         private void EnterParametersToolStripMenuItemClick(object sender, EventArgs e)
         {
-            new Patient.EnterParameterForm(DIKernel, 4) {MdiParent = this}.Show();
+            var form = Get<EnterParameterForm>(new ConstructorArgument {Name = "id", Value = 4});
+            form.MdiParent = this;
+            form.Show();
         }
     }
 }

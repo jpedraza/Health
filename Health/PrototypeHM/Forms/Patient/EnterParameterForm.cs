@@ -12,15 +12,15 @@ namespace PrototypeHM.Forms.Patient
 {
     public partial class EnterParameterForm : DIForm
     {
-        private readonly int _patientId;
+        private readonly int _id;
         private readonly DbContext _dbContext;
         private ParameterStorage[] _storages;
         private readonly IList<Control> _form;
         private readonly IList<string> _labels; 
 
-        public EnterParameterForm(IDIKernel diKernel, int patientId) : base(diKernel)
+        public EnterParameterForm(IDIKernel diKernel, int id) : base(diKernel)
         {
-            _patientId = patientId;
+            _id = id;
             _form = new BindingList<Control>();
             _labels = new BindingList<string>();
             _dbContext = Get<DbContext>();
@@ -53,9 +53,9 @@ namespace PrototypeHM.Forms.Patient
         private void LoadParameters()
         {
             EFCFModel.Entities.Patient patient =
-                _dbContext.Set<EFCFModel.Entities.Patient>().FirstOrDefault(pa => pa.Id == _patientId);
+                _dbContext.Set<EFCFModel.Entities.Patient>().FirstOrDefault(pa => pa.Id == _id);
             IList<Parameter> parameters =
-                _dbContext.Set<Parameter>().Where(p => p.Patients.Any(pa => pa.Id == _patientId)).ToList();
+                _dbContext.Set<Parameter>().Where(p => p.Patients.Any(pa => pa.Id == _id)).ToList();
             _storages = new ParameterStorage[parameters.Count()];
             for (int i = 0; i < parameters.Count(); i++)
             {
