@@ -64,6 +64,7 @@
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Specialty.cs" />
     <Compile Include="Entities\Survey.cs" />
+    <Compile Include="Entities\SurveyStorage.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Doctor.cs" />
     <Compile Include="Entities\Patient.cs" />

@@ -10,7 +10,7 @@ namespace EFCFModel.Entities
     {
         public Survey()
         {
-            Patients = new List<Patient>();
+            SurveysStorages = new List<SurveyStorage>();
         }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
@@ -22,7 +22,12 @@ namespace EFCFModel.Entities
         [Required, DisplayName("Описание")]
         public string Description { get; set; }
 
-        [NotDisplay, DisplayName("Пациенты")]
-        public virtual ICollection<Patient> Patients { get; set; }
+        [NotDisplay, DisplayName("Хранилище операций")]
+        public virtual ICollection<SurveyStorage> SurveysStorages { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

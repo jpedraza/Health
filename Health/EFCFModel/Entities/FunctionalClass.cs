@@ -22,7 +22,7 @@ namespace EFCFModel.Entities
         [Required, DisplayName("Описание")]
         public string Description { get; set; }
 
-        [DisplayName("Пациенты")]
+        [DisplayName("Пациенты"), NotDisplay]
         public virtual ICollection<Patient> Patients { get; set; }
 
         public override string ToString()

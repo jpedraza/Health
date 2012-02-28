@@ -133,9 +133,21 @@ namespace Support.Tasks
             patient1.Parameters.Add(parameter1);
             patient1.Parameters.Add(parameter2);
             patient1.FunctionalClass = functionalClass2;
-            patient1.Surveys.Add(survey2);
-            patient1.Surveys.Add(survey3);
             context.Set<Patient>().Add(patient1);
+            context.SaveChanges();
+            var surveyStorage1 = new SurveyStorage
+                                     {
+                                         Patient = patient1,
+                                         Survey = survey2,
+                                         Date = DateTime.Now.AddDays(-5)
+                                     };
+            var surveyStorage2 = new SurveyStorage
+                                     {
+                                         Patient = patient1,
+                                         Survey = survey3,
+                                         Date = DateTime.Now.AddDays(-1)
+                                     };
+            context.Set<SurveyStorage>().AddRange(surveyStorage1, surveyStorage2);
             context.SaveChanges();
             var appointment1 = new Appointment
                          {

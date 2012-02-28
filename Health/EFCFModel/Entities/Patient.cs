@@ -15,7 +15,7 @@ namespace EFCFModel.Entities
             FunctionalAbnormalities = new List<FunctionalAbnormality>();
             Parameters = new List<Parameter>();
             Diagnosis = new List<Diagnosis>();
-            Surveys = new List<Survey>();
+            SurveysStorage = new List<SurveyStorage>();
         }
 
         [Required, DisplayName("Полюс")]
@@ -55,7 +55,7 @@ namespace EFCFModel.Entities
         public virtual ICollection<Diagnosis> Diagnosis { get; set; }
 
         [NotDisplay, DisplayName("Хирургические операции")]
-        public virtual ICollection<Survey> Surveys { get; set; }
+        public virtual ICollection<SurveyStorage> SurveysStorage { get; set; }
 
         [NotDisplay, DisplayName("Заполненные параметры")]
         public virtual ICollection<ParameterStorage> ParametersStorages { get; set; }
