@@ -39,14 +39,14 @@ namespace PrototypeHM.Forms
         private void InitializeButtons()
         {
             var addButton = new ToolStripButton("Новый");
-            addButton.Click += (sender, e) => new EditForm(DIKernel, _etype, -1) { MdiParent = MdiParent }.Show();
+            addButton.Click += (sender, e) => new EditForm(DIKernel, _etype, -1) {MdiParent = MdiParent}.Show();
             var refreshButton = new ToolStripButton("Обновить");
             refreshButton.Click += (sender, e) =>
                                        {
                                            InitializeData();
                                            InitializeColumns();
                                        };
-            toolPanel.Items.AddRange(new[] { addButton, refreshButton });
+            toolPanel.Items.AddRange(new[] {addButton, refreshButton});
         }
 
         private void InitializeActions()
@@ -61,7 +61,9 @@ namespace PrototypeHM.Forms
             try
             {
                 object obj = _data.FirstOrDefault(_etype,
-                                                  o => Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) == key);
+                                                  o =>
+                                                  Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) ==
+                                                  key);
                 _dbContext.Entry(obj).State = EntityState.Deleted;
                 _dbContext.SaveChanges();
                 YMessageBox.Information("Удалено.");
@@ -100,11 +102,19 @@ namespace PrototypeHM.Forms
                     }
                 case "ActionDelete":
                     {
-                        if (MessageBox.Show(@"Точно хотите удалить?", @"Подтверждение", MessageBoxButtons.YesNo,
-                                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                        if (!Get<DIMainForm>().MdiChildren.Any(f => f is DIForm && (f as DIForm).UID == _etype.FullName + key))
                         {
-                            _delete(key);
-                            ydgvList.Rows.RemoveAt(e.RowIndex);
+                            if (MessageBox.Show(@"Точно хотите удалить?", @"Подтверждение", MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                            {
+                                _delete(key);
+                                ydgvList.Rows.RemoveAt(e.RowIndex);
+                            }
+                        }
+                        else
+                        {
+                            YMessageBox.Information(
+                                "Имеются открытые формы для редактирования. Закройте их перед удаление записи.");
                         }
                         break;
                     }
@@ -146,7 +156,7 @@ namespace PrototypeHM.Forms
                                            Text = @"Удалить",
                                            UseColumnTextForButtonValue = true
                                        };
-                ydgvList.Columns.AddRange(new[] { detailColumn, editColumn, deleteColumn });
+                ydgvList.Columns.AddRange(new[] {detailColumn, editColumn, deleteColumn});
                 _hasEditColumn = true;
             }
         }

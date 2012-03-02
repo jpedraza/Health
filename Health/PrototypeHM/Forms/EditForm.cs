@@ -26,7 +26,7 @@ namespace PrototypeHM.Forms
 
         public EditForm(IDIKernel diKernel, Type etype, int key) : base(diKernel)
         {
-            UID = _etype.FullName + key;
+            UID = etype.FullName + key;
             InitializeComponent();
             Text = string.Format("Редактирование {0}", etype.GetDisplayName());
             _etype = etype;
@@ -45,7 +45,7 @@ namespace PrototypeHM.Forms
             {
                 _data = _key != -1
                             ? ((IQueryable<object>) _dbContext.Set(_etype)).
-                                  FirstOrDefault(ExQueryable.WhereProperty(_etype, _schemaManager.Key(_etype).Name, _key))
+                                  FirstOrDefault(ExQueryable.PropertyFilter(_etype, _schemaManager.Key(_etype).Name, _key))
                             : _dbContext.Set(_etype).Create();
             }
         }
@@ -209,8 +209,9 @@ namespace PrototypeHM.Forms
                 {
                     c = new MultiSelector(DIKernel);
                     object left = rel.FromProperty.GetValue(_data, null);
-                    object right = ((IQueryable<object>)_dbContext.Set(rel.ToType)).
-                        Where(e => !((IQueryable<object>)left).Contains(e)).ToList(rel.ToType);
+                    //TODO: переписать через IQueryable.
+                    object right = ((IEnumerable<object>) _dbContext.Set(rel.ToType)).
+                        Where(e => !((IEnumerable<object>)left).Contains(e)).IterateToList(relation.ToType);
                     (c as MultiSelector).SetData(left, right);
                 }
                 if (c != null)

@@ -34,6 +34,15 @@ namespace PrototypeHM
         {
             return (IList) typeof (Enumerable).GetMethod("ToList").MakeGenericMethod(entityType).Invoke(typeof (Enumerable), new[] {obj});
         }
+
+        internal static IList IterateToList(this IEnumerable<object> obj, Type entityType)
+        {
+            var list = Activator.CreateInstance(typeof(List<>).MakeGenericType(entityType)) as IList;
+            if (obj != null && list != null)
+                foreach (object o in obj)
+                    list.Add(o);
+            return list;
+        }
     }
 
     internal static class ExObjectContext
@@ -65,14 +74,14 @@ namespace PrototypeHM
 
     internal static class ExQueryable
     {
-        internal static Expression<Func<object, bool>> WhereProperty(Type t, string propertyName, object value)
+        internal static Expression<Func<object, bool>> PropertyFilter(Type t, string propertyName, object value)
         {
             ParameterExpression parameter = Expression.Parameter(typeof(object), "o");
             Expression<Func<object, bool>> where =
                 Expression.Lambda<Func<object, bool>>(
                     Expression.Equal(Expression.Property(Expression.Convert(parameter, t), propertyName),
                                      Expression.Constant(value)), parameter);
-            return @where;
+            return where;
         }
     }
 }
