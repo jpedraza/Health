@@ -19,5 +19,8 @@ namespace EFCFModel.Entities
 
         [DisplayName("Дата операции")]
         public DateTime Date { get; set; }
+
+        [DisplayName("Описание"), NotDisplay, EditMode(EditMode.Multiline)]
+        public string Description { get; set; }
     }
 }

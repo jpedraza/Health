@@ -6,9 +6,13 @@ namespace PrototypeHM.Forms
 {
     public class DIForm : Form, IDIInjected
     {
-        public DIForm()
-        {
-        }
+        public string UID { get; set; }
+
+        private readonly IDIKernel _diKernel;
+        [Browsable(false)]
+        public IDIKernel DIKernel { get { return _diKernel; } }
+
+        public DIForm() { }
 
         public DIForm(IDIKernel diKernel) : this()
         {
@@ -25,17 +29,5 @@ namespace PrototypeHM.Forms
         {
             return DIKernel.Get(typeof (T), arguments) as T;
         }
-
-        #region Implementation of IDIInjected
-
-        private readonly IDIKernel _diKernel;
-
-        [Browsable(false)]
-        public IDIKernel DIKernel
-        {
-            get { return _diKernel; }
-        }
-
-        #endregion
     }
 }

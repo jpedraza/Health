@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using EFCFModel.Entities;
 
 namespace EFCFModel
 {
@@ -146,9 +147,7 @@ namespace EFCFModel
         public IList<Type> GetAllEntities()
         {
             return Assembly.GetExecutingAssembly().GetTypes().Where(
-                t =>
-                t.Namespace == Assembly.GetExecutingAssembly().GetName().Name + ".Entities" && t.IsClass && t.IsPublic).
-                ToList();
+                t => t.Namespace == typeof(IIdentity).Namespace && t.IsClass && t.IsPublic).ToList();
         }
 
         public IList<Type> GetAllScaffoldEntities()

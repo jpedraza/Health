@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Metadata.Edm;
 using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,37 +11,6 @@ namespace PrototypeHM
 {
     internal static class ExtensionMethods
     {
-        internal static IList<object> ToListOfObjects<T>(this IList<T> list)
-            where T : class
-        {
-            var listObjs = new List<object>();
-            foreach (T obj in list)
-            {
-                listObjs.Add(obj);
-            }
-            return listObjs;
-        }
-
-        internal static IList<object> ToListOfObjects(this IList list)
-        {
-            var listObjs = new List<object>();
-            foreach (object obj in list)
-            {
-                listObjs.Add(obj);
-            }
-            return listObjs;
-        }
-
-        internal static IBindingList ToBindingList<T>(this IList<T> list)
-        {
-            var listObjs = new BindingList<T>();
-            foreach (T obj in list)
-            {
-                listObjs.Add(obj);
-            }
-            return listObjs;
-        }
-
         internal static void AddRange(this IBindingList list, IBindingList objs)
         {
             foreach (object obj in objs)
@@ -64,21 +32,7 @@ namespace PrototypeHM
     {
         internal static IList ToList(this IEnumerable<object> obj, Type entityType)
         {
-            var list = Activator.CreateInstance(typeof (List<>).MakeGenericType(entityType)) as IList;
-            if (obj != null && list != null)
-            {
-                foreach (object o in obj)
-                    list.Add(o);
-            }
-            return list;
-        }
-
-        internal static IList ToListOfObjects(this IEnumerable<object> obj, Type entityType)
-        {
-            return
-                (IList)
-                typeof (Enumerable).GetMethod("ToList").MakeGenericMethod(entityType).Invoke(typeof (Enumerable),
-                                                                                             new[] {obj});
+            return (IList) typeof (Enumerable).GetMethod("ToList").MakeGenericMethod(entityType).Invoke(typeof (Enumerable), new[] {obj});
         }
     }
 
@@ -92,33 +46,8 @@ namespace PrototypeHM
         }
     }
 
-    internal static class ExEdm
-    {
-        internal static EdmType ParentType(this EntityType entityType)
-        {
-            EdmType parentType = entityType;
-            while (parentType.BaseType != null)
-                parentType = entityType.BaseType;
-            return parentType;
-        }
-    }
-
     internal static class ExLinq
     {
-        internal static IEnumerable OfType(this IEnumerable set, Type t)
-        {
-            return
-                (IEnumerable)
-                typeof (Enumerable).GetMethod("OfType").MakeGenericMethod(t).Invoke(typeof (Enumerable), new[] {set});
-        }
-
-        internal static int Count(this IEnumerable set, Type t)
-        {
-            return
-                (int)
-                typeof (Enumerable).GetMethod("Count").MakeGenericMethod(t).Invoke(typeof (Enumerable), new[] {set});
-        }
-
         internal static object FirstOrDefault(this IEnumerable set, Type t, Func<object, bool> where)
         {
             return ((IEnumerable<object>) set).FirstOrDefault(where);
@@ -143,7 +72,7 @@ namespace PrototypeHM
                 Expression.Lambda<Func<object, bool>>(
                     Expression.Equal(Expression.Property(Expression.Convert(parameter, t), propertyName),
                                      Expression.Constant(value)), parameter);
-            return where;
+            return @where;
         }
     }
 }

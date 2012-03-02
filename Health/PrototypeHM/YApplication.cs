@@ -35,6 +35,8 @@ namespace PrototypeHM
             _kernel.Bind<IDIKernel>().To<DIKernel>();
             _kernel.Bind<DbContext>().To<EFHealthContext>().InThreadScope();
             _kernel.Bind<SchemaManager>().To<SchemaManager>().InThreadScope();
+            _kernel.Bind<ByteConverter>().ToSelf().InThreadScope();
+            _kernel.Bind<DIMainForm>().ToSelf().InThreadScope();
         }
     }
 }

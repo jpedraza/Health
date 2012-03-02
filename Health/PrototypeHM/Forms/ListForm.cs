@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows.Forms;
 using EFCFModel;
 using PrototypeHM.DI;
@@ -113,7 +113,7 @@ namespace PrototypeHM.Forms
 
         private void InitializeData()
         {
-            _data = ((IEnumerable<object>) _dbContext.Set(_etype)).ToListOfObjects(_etype);
+            _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype);
             _count = _data.Count;
             ydgvList.BindingSource = new BindingSource {DataSource = _data};
         }

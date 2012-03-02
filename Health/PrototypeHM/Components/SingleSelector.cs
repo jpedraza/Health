@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows.Forms;
 using PrototypeHM.DI;
 
@@ -55,7 +55,7 @@ namespace PrototypeHM.Components
 
         public void InitializeData()
         {
-            _data = ((IEnumerable<object>) _dbContext.Set(_etype)).ToList(_etype);
+            _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype);
             ydgvCollection.BindingSource = new BindingSource {DataSource = _data};
         }
 

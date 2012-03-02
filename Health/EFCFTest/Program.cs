@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Objects;
 using System.Reflection;
+using System.Runtime.Caching;
 using EFCFModel;
 using EFCFModel.Entities;
 

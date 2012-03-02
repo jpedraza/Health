@@ -14,6 +14,9 @@ namespace EFCFModel.Entities
         [DisplayName("Дата приема")]
         public DateTime Date { get; set; }
 
+        [DisplayName("Описание"), NotDisplay, EditMode(EditMode.Multiline)]
+        public string Description { get; set; }
+
         [DisplayName("Доктор")]
         public virtual Doctor Doctor { get; set; }
 

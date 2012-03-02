@@ -19,7 +19,7 @@ namespace EFCFModel.Entities
         [Required, DisplayName("Код")]
         public string Code { get; set; }
 
-        [Required, DisplayName("Описание")]
+        [Required, DisplayName("Описание"), EditMode(EditMode.Multiline)]
         public string Description { get; set; }
 
         [DisplayName("Пациенты"), NotDisplay]

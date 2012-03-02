@@ -4,13 +4,12 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using EFCFModel;
 using EFCFModel.Attributes;
-using EFCFModel.Entities;
 using PrototypeHM.Components;
 using PrototypeHM.DI;
+using ByteConverter = EFCFModel.ByteConverter;
 
 namespace PrototypeHM.Forms
 {
@@ -27,6 +26,7 @@ namespace PrototypeHM.Forms
 
         public EditForm(IDIKernel diKernel, Type etype, int key) : base(diKernel)
         {
+            UID = _etype.FullName + key;
             InitializeComponent();
             Text = string.Format("Редактирование {0}", etype.GetDisplayName());
             _etype = etype;
@@ -90,6 +90,14 @@ namespace PrototypeHM.Forms
                                       Name = string.Format("txb{0}", prop.Name),
                                       Text = prop.GetValue(_data, null) as string
                                   };
+                    var att = prop.GetCustomAttributes(true).FirstOrDefault(a => a is EditModeAttribute) as EditModeAttribute;
+                    if (att != null && att.GetEditMode() == EditMode.Multiline)
+                    {
+                        c.Multiline = true;
+                        c.Height = c.Height*4;
+                        c.Width = c.Width*3;
+                        c.ScrollBars = ScrollBars.Vertical;
+                    }
                     c.TextChanged += (sender, e) => prop.SetValue(_data, c.Text, null);
                     control = c;
                 }
@@ -114,22 +122,20 @@ namespace PrototypeHM.Forms
                         if (byteType == typeof(bool))
                         {
                             bool value = propertyValue != null
-                                             ? BitConverter.ToBoolean(propertyByteValue, 0)
+                                             ? Get<ByteConverter>().To<bool>(propertyByteValue)
                                              : default(bool);
                             var c = new CheckBox { Name = string.Format("chb{0}", prop.Name), Checked = value };
-                            c.CheckedChanged +=
-                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(c.Checked), null);
+                            c.CheckedChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(c.Checked), null);
                             control = c;
                         }
                         if (byteType == typeof (int))
                         {
                             var c = new NumericUpDown { Name = string.Format("nupd{0}", prop.Name) };
                             var value = propertyValue != null
-                                            ? BitConverter.ToInt32(propertyByteValue, 0)
+                                            ? Get<ByteConverter>().To<int>(propertyByteValue)
                                             : c.Minimum;
                             c.Value = value;
-                            c.ValueChanged +=
-                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(Convert.ToInt32(c.Value)), null);
+                            c.ValueChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(Convert.ToInt32(c.Value)), null);
                             control = c;
                         }
                         if (byteType == typeof (double))
@@ -141,35 +147,32 @@ namespace PrototypeHM.Forms
                                         Increment = (decimal) 0.5
                                     };
                             var value = propertyValue != null
-                                            ? (decimal) BitConverter.ToDouble(propertyByteValue, 0)
+                                            ? (decimal) Get<ByteConverter>().To<double>(propertyByteValue)
                                             : c.Minimum;
                             c.Value = value;
-                            c.ValueChanged +=
-                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(Convert.ToDouble(c.Value)), null);
+                            c.ValueChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(Convert.ToDouble(c.Value)), null);
                             control = c;
                         }
                         if (byteType == typeof (string))
                         {
                             string text = propertyValue == null
                                               ? string.Empty
-                                              : Encoding.UTF8.GetString((byte[]) prop.GetValue(_data, null));
+                                              : Get<ByteConverter>().To<string>(propertyByteValue);
                             var c = new TextBox
                                     {
                                         Name = string.Format("txb{0}", prop.Name),
                                         Text = text
                                     };
-                            c.TextChanged +=
-                                (sender, e) => prop.SetValue(_data, Encoding.UTF8.GetBytes(c.Text), null);
+                            c.TextChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(c.Text), null);
                             control = c;
                         }
                         if (byteType == typeof (DateTime))
                         {
                             var value = propertyValue != null
-                                            ? DateTime.FromBinary(BitConverter.ToInt64(propertyByteValue, 0))
+                                            ? Get<ByteConverter>().To<DateTime>(propertyByteValue)
                                             : DateTime.Now;
                             var c = new DateTimePicker { Name = string.Format("dtp{0}", prop.Name), Value = value };
-                            c.ValueChanged +=
-                                (sender, e) => prop.SetValue(_data, BitConverter.GetBytes(c.Value.ToBinary()), null);
+                            c.ValueChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(c.Value), null);
                             control = c;
                         }
                     }
@@ -194,29 +197,29 @@ namespace PrototypeHM.Forms
             {
                 Control c = null;
                 Relation rel = relation;
-                if (relation.RelationType == RelationType.ManyToOne)
+                if (rel.RelationType == RelationType.ManyToOne)
                 {
-                    c = new SingleSelector(DIKernel, relation.FromProperty.PropertyType)
+                    c = new SingleSelector(DIKernel, rel.FromProperty.PropertyType)
                             {
-                                SelectedData = relation.FromProperty.GetValue(_data, null),
+                                SelectedData = rel.FromProperty.GetValue(_data, null),
                                 ValueChange = o => rel.FromProperty.SetValue(_data, o, null)
                             };
                 }
-                if (relation.RelationType == RelationType.ManyToMany)
+                if (rel.RelationType == RelationType.ManyToMany)
                 {
                     c = new MultiSelector(DIKernel);
-                    object left = relation.FromProperty.GetValue(_data, null);
-                    object right = ((IEnumerable<object>) _dbContext.Set(relation.ToType)).
-                        Where(e => !((IEnumerable<object>) left).Contains(e)).ToList(relation.ToType);
+                    object left = rel.FromProperty.GetValue(_data, null);
+                    object right = ((IQueryable<object>)_dbContext.Set(rel.ToType)).
+                        Where(e => !((IQueryable<object>)left).Contains(e)).ToList(rel.ToType);
                     (c as MultiSelector).SetData(left, right);
                 }
                 if (c != null)
                 {
                     _form.Add(c);
                     var att =
-                        relation.FromProperty.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute)
+                        rel.FromProperty.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute)
                         as DisplayNameAttribute;
-                    _labels.Add(att == null ? relation.FromProperty.Name : att.DisplayName);
+                    _labels.Add(att == null ? rel.FromProperty.Name : att.DisplayName);
                 }
             }
         }
@@ -245,7 +248,11 @@ namespace PrototypeHM.Forms
             {
                 if (_key == -1) _dbContext.Set(_etype).Add(_data);
                 _dbContext.SaveChanges();
-                if (_key == -1) _key = Convert.ToInt32(_schemaManager.Key(_etype).GetValue(_data, null));
+                if (_key == -1)
+                {
+                    _key = Convert.ToInt32(_schemaManager.Key(_etype).GetValue(_data, null));
+                    UID = _etype.FullName + _key;
+                }
                 YMessageBox.Information("Сохранено.");
             }
             catch (Exception exp)

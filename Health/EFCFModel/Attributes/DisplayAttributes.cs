@@ -6,7 +6,7 @@ namespace EFCFModel.Attributes
     /// Возможные форматы свойств при редактировании.
     /// </summary>
     [Flags]
-    public enum EditModeEnum
+    public enum EditMode
     {
         Multiline = 1
     }
@@ -20,50 +20,16 @@ namespace EFCFModel.Attributes
         /// <summary>
         /// Формат свойства при редактировании.
         /// </summary>
-        public EditModeEnum Mode { get; set; }
-    }
+        private readonly EditMode _mode;
 
-    /// <summary>
-    /// Определяет значение с возможностью одиночного выбора.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class SingleSelectEditModeAttribute : Attribute, IDisplayAttribute
-    {
-        /// <summary>
-        /// Тип контекста опреации.
-        /// </summary>
-        public Type OperationContext;
-
-        /// <summary>
-        /// Свойство источник значения при бинбинге.
-        /// </summary>
-        public string SourceProperty;
-
-        public SingleSelectEditModeAttribute(Type operationContext, string sourceProperty)
+        public EditModeAttribute(EditMode mode)
         {
-            OperationContext = operationContext;
-            SourceProperty = sourceProperty;
-        }
-    }
-
-    /// <summary>
-    /// Определяет значение-коллекцию с динамическим иземенением содержащихся в ней элементов
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class DinamicCollectionModelAttribute : Attribute, IDisplayAttribute
-    {
-        /// <summary>
-        /// тип данных элементов коллекции
-        /// </summary>
-        public Type TypeOfCollectionElement;
-
-        public DinamicCollectionModelAttribute()
-        {
+            _mode = mode;
         }
 
-        public DinamicCollectionModelAttribute(Type typeOfCollectionElement)
+        public EditMode GetEditMode()
         {
-            TypeOfCollectionElement = typeOfCollectionElement;
+            return _mode;
         }
     }
 }
