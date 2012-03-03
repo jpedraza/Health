@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -8,7 +8,7 @@ using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [Table("Parameters"), DisplayName("Параметр")]
+    [Table("Parameters"), DisplayName("РџР°СЂР°РјРµС‚СЂ")]
     public abstract class Parameter : IIdentity
     {
         protected Parameter()
@@ -19,16 +19,17 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("Имя")]
+        [DisplayName("РРјСЏ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РёРјСЏ.")]
         public string Name { get; set; }
 
-        [NotDisplay, DisplayName("Значение по-умолчанию"), ByteType("ValueType")]
+        [NotDisplay, DisplayName("Р—РЅР°С‡РµРЅРёРµ РїРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ"), ByteType("ValueType")]
         public byte[] DefaultValue { get; set; }
 
-        [NotDisplay, DisplayName("Пациенты")]
+        [NotDisplay, DisplayName("РџР°С†РёРµРЅС‚С‹")]
         public virtual ICollection<Patient> Patients { get; set; }
 
-        [NotDisplay, DisplayName("Заполненные параметры")]
+        [NotDisplay, DisplayName("Р—Р°РїРѕР»РЅРµРЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹")]
         public virtual ICollection<ParameterStorage> ParametersStorages { get; set; }
 
         [NotMapped, NotDisplay]
@@ -40,55 +41,55 @@ namespace EFCFModel.Entities
         }
     }
 
-    [ScaffoldTable(true), DisplayName("Булевый параметр")]
+    [ScaffoldTable(true), DisplayName("Р‘СѓР»РµРІС‹Р№ РїР°СЂР°РјРµС‚СЂ")]
     public class BoolParameter : Parameter
     {
         [NotDisplay]
         public override Type ValueType { get { return typeof (bool); } }
     }
 
-    [ScaffoldTable(true), DisplayName("Целый параметр")]
+    [ScaffoldTable(true), DisplayName("Р¦РµР»С‹Р№ РїР°СЂР°РјРµС‚СЂ")]
     public class IntegerParameter : Parameter
     {
-        [DisplayName("Минимальное значение"), Required]
+        [DisplayName("РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ"), Required]
         public int MinValue { get; set; }
-        [DisplayName("Максимальное значение"), Required]
+        [DisplayName("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ"), Required]
         public int MaxValue { get; set; }
 
         [NotDisplay]
         public override Type ValueType { get { return typeof (int); } }
     }
 
-    [ScaffoldTable(true), DisplayName("Дробный параметр")]
+    [ScaffoldTable(true), DisplayName("Р”СЂРѕР±РЅС‹Р№ РїР°СЂР°РјРµС‚СЂ")]
     public class DoubleParameter : Parameter
     {
-        [DisplayName("Минимальное значение"), Required]
+        [DisplayName("РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ"), Required]
         public double MinValue { get; set; }
-        [DisplayName("Максимальное значение"), Required]
+        [DisplayName("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ"), Required]
         public double MaxValue { get; set; }
 
         [NotDisplay]
         public override Type ValueType { get { return typeof (double); } }
     }
 
-    [ScaffoldTable(true), DisplayName("Строковый параметр")]
+    [ScaffoldTable(true), DisplayName("РЎС‚СЂРѕРєРѕРІС‹Р№ РїР°СЂР°РјРµС‚СЂ")]
     public class StringParameter : Parameter
     {
-        [DisplayName("Максимальная длина"), Required]
+        [DisplayName("РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР°"), Required]
         public int MaxLength { get; set; }
-        [DisplayName("Минимальная длина"), Required]
+        [DisplayName("РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР°"), Required]
         public int MinLength { get; set; }
 
         [NotDisplay]
         public override Type ValueType { get { return typeof (string); } }
     }
 
-    [ScaffoldTable(true), DisplayName("Параметр-дата")]
+    [ScaffoldTable(true), DisplayName("РџР°СЂР°РјРµС‚СЂ-РґР°С‚Р°")]
     public class DateTimeParameter : Parameter
     {
-        [DisplayName("Минимальная дата"), Required]
+        [DisplayName("РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР°С‚Р°"), Required]
         public DateTime MinDate { get; set; }
-        [DisplayName("Максимальная дата"), Required]
+        [DisplayName("РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР°С‚Р°"), Required]
         public DateTime MaxDate { get; set; }
 
         [NotDisplay]

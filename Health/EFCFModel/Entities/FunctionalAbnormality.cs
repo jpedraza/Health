@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [Table("FunctionalAbnormalities"), ScaffoldTable(true), DisplayName("Функциональное нарушение")]
+    [Table("FunctionalAbnormalities"), ScaffoldTable(true), DisplayName("Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅРѕРµ РЅР°СЂСѓС€РµРЅРёРµ")]
     public class FunctionalAbnormality : IIdentity
     {
         public FunctionalAbnormality()
@@ -17,16 +17,17 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("Имя")]
+        [DisplayName("РРјСЏ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РёРјСЏ.")]
         public string Name { get; set; }
 
-        [NotDisplay, DisplayName("Дочерние функциональные нарушения")]
+        [NotDisplay, DisplayName("Р”РѕС‡РµСЂРЅРёРµ С„СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Рµ РЅР°СЂСѓС€РµРЅРёСЏ")]
         public virtual ICollection<FunctionalAbnormality> ChildFunctionalAbnormalities { get; set; }
 
-        [NotDisplay, DisplayName("Родительское функциональное нарушение")]
+        [NotDisplay, DisplayName("Р РѕРґРёС‚РµР»СЊСЃРєРѕРµ С„СѓРЅРєС†РёРѕРЅР°Р»СЊРЅРѕРµ РЅР°СЂСѓС€РµРЅРёРµ")]
         public virtual FunctionalAbnormality ParentFunctionalAbnormality { get; set; }
 
-        [NotDisplay, DisplayName("Пациенты")]
+        [NotDisplay, DisplayName("РџР°С†РёРµРЅС‚С‹")]
         public virtual ICollection<Patient> Patients { get; set; }
     }
 }

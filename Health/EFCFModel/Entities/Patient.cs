@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [ScaffoldTable(true), DisplayName("Пациент")]
+    [ScaffoldTable(true), DisplayName("РџР°С†РёРµРЅС‚")]
     public class Patient : User
     {
         public Patient()
@@ -18,46 +18,52 @@ namespace EFCFModel.Entities
             SurveysStorage = new List<SurveyStorage>();
         }
 
-        [Required, DisplayName("Полюс")]
+        [DisplayName("РџРѕР»СЋСЃ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РЅРѕРјРµСЂ РїРѕР»СЋСЃР°.")]
         public string Policy { get; set; }
 
-        [Required, DisplayName("Номер карты")]
+        [DisplayName("РќРѕРјРµСЂ РєР°СЂС‚С‹")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РЅРѕРјРµСЂ РєР°СЂС‚С‹.")]
         public string Card { get; set; }
 
-        [Required, DisplayName("Мама"), NotDisplay]
+        [DisplayName("РњР°РјР°"), NotDisplay]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ Р¤РРћ РјР°РјС‹.")]
         public string Mother { get; set; }
 
-        [Required, DisplayName("Дата начала обследования")]
+        [DisplayName("Р”Р°С‚Р° РЅР°С‡Р°Р»Р° РѕР±СЃР»РµРґРѕРІР°РЅРёСЏ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РґР°С‚Сѓ РЅР°С‡Р°Р»Р° РѕР±СЃР»РµРґРѕРІР°РЅРёСЏ")]
         public DateTime StartDateOfObservation { get; set; }
 
-        [Required, DisplayName("Домашний телефон")]
-        public string Phone1 { get; set; }
+        [DisplayName("Р”РѕРјР°С€РЅРёР№ С‚РµР»РµС„РѕРЅ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РЅРѕРјРµСЂ РґРѕРјР°С€РЅРµРіРѕ С‚РµР»РµС„РѕРЅР°.")]
+        public string HomePhone { get; set; }
 
-        [NotDisplay, DisplayName("Рабочий телефон")]
-        public string Phone2 { get; set; }
+        [NotDisplay, DisplayName("Р Р°Р±РѕС‡РёР№ С‚РµР»РµС„РѕРЅ")]
+        public string WorkPhone { get; set; }
 
-        [Required, NotDisplay, DisplayName("Доктор")]
+        [NotDisplay, DisplayName("Р”РѕРєС‚РѕСЂ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ РІС‹Р±СЂР°С‚СЊ Р»РµС‡Р°С‰РµРіРѕ РІСЂР°С‡Р°.")]
         public Doctor Doctor { get; set; }
 
-        [NotDisplay, DisplayName("Приемы у врача")]
+        [NotDisplay, DisplayName("РџСЂРёРµРјС‹ Сѓ РІСЂР°С‡Р°")]
         public virtual ICollection<Appointment> Appointments { get; set; }
 
-        [NotDisplay, DisplayName("Функциональный класс")]
+        [NotDisplay, DisplayName("Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Р№ РєР»Р°СЃСЃ")]
         public virtual FunctionalClass FunctionalClass { get; set; }
 
-        [NotDisplay, DisplayName("Функциональные нарушения")]
+        [NotDisplay, DisplayName("Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Рµ РЅР°СЂСѓС€РµРЅРёСЏ")]
         public virtual ICollection<FunctionalAbnormality> FunctionalAbnormalities { get; set; }
 
-        [NotDisplay, DisplayName("Параметры")]
+        [NotDisplay, DisplayName("РџР°СЂР°РјРµС‚СЂС‹")]
         public virtual ICollection<Parameter> Parameters { get; set; }
 
-        [NotDisplay, DisplayName("Диагнозы")]
+        [NotDisplay, DisplayName("Р”РёР°РіРЅРѕР·С‹")]
         public virtual ICollection<Diagnosis> Diagnosis { get; set; }
 
-        [NotDisplay, DisplayName("Хирургические операции")]
+        [NotDisplay, DisplayName("РҐРёСЂСѓСЂРіРёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё")]
         public virtual ICollection<SurveyStorage> SurveysStorage { get; set; }
 
-        [NotDisplay, DisplayName("Заполненные параметры")]
+        [NotDisplay, DisplayName("Р—Р°РїРѕР»РЅРµРЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹")]
         public virtual ICollection<ParameterStorage> ParametersStorages { get; set; }
 
         public override string ToString()

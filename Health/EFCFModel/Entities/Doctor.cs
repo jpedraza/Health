@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [ScaffoldTable(true), DisplayName("Доктор")]
+    [ScaffoldTable(true), DisplayName("Р”РѕРєС‚РѕСЂ")]
     public class Doctor : User
     {
         public Doctor()
@@ -13,13 +13,14 @@ namespace EFCFModel.Entities
             Appointments = new List<Appointment>();
         }
 
-        [NotDisplay, DisplayName("Приемы у врача")]
+        [NotDisplay, DisplayName("РџСЂРёРµРјС‹ Сѓ РІСЂР°С‡Р°")]
         public virtual ICollection<Appointment> Appointments { get; set; }
 
-        [NotDisplay, DisplayName("Пациенты")]
+        [NotDisplay, DisplayName("РџР°С†РёРµРЅС‚С‹")]
         public virtual ICollection<Patient> Patients { get; set; }
 
-        [Required, DisplayName("Специальность"), NotDisplay]
+        [DisplayName("РЎРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ"), NotDisplay]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ СЃРїРµС†РёР°Р»СЊРЅРѕСЃС‚СЊ")]
         public Specialty Specialty { get; set; }
 
         public override string ToString()

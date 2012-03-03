@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [Table("DiagnosisClasses"), ScaffoldTable(true), DisplayName("Класс диагноза")]
+    [Table("DiagnosisClasses"), ScaffoldTable(true), DisplayName("РљР»Р°СЃСЃ РґРёР°РіРЅРѕР·Р°")]
     public class DiagnosisClass : IIdentity
     {
         public DiagnosisClass()
@@ -17,19 +17,21 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("Имя")]
+        [DisplayName("РРјСЏ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РёРјСЏ РєР»Р°СЃСЃР°.")]
         public string Name { get; set; }
 
-        [Required, DisplayName("Код")]
+        [DisplayName("РљРѕРґ")]
+        [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РєРѕРґ РєР»Р°СЃСЃР°.")]
         public string Code { get; set; }
 
-        [DisplayName("Диагнозы"), NotDisplay]
+        [DisplayName("Р”РёР°РіРЅРѕР·С‹"), NotDisplay]
         public virtual ICollection<Diagnosis> Diagnosis { get; set; }
 
-        [DisplayName("Дочерние классы диагнозов"), NotDisplay]
+        [DisplayName("Р”РѕС‡РµСЂРЅРёРµ РєР»Р°СЃСЃС‹ РґРёР°РіРЅРѕР·РѕРІ"), NotDisplay]
         public virtual ICollection<DiagnosisClass> ChildDiagnosisClasses { get; set; }
 
-        [DisplayName("Родительский класс диагноза"), NotDisplay]
+        [DisplayName("Р РѕРґРёС‚РµР»СЊСЃРєРёР№ РєР»Р°СЃСЃ РґРёР°РіРЅРѕР·Р°"), NotDisplay]
         public virtual DiagnosisClass ParentDiagnosisClass { get; set; }
 
         public override string ToString()

@@ -11,13 +11,16 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("Пациент")]
+        [DisplayName("Пациент")]
+        [Required(ErrorMessage = "Необходимо выбрать пациента.")]
         public virtual Patient Patient { get; set; }
 
-        [Required, DisplayName("Параметр")]
+        [DisplayName("Параметр")]
+        [Required(ErrorMessage = "Необходимо выбрать параметр.")]
         public virtual Parameter Parameter { get; set; }
 
-        [Required, DisplayName("Дата")]
+        [DisplayName("Дата")]
+        [Required(ErrorMessage = "Необходимо указать дату.")]
         public DateTime Date { get; set; }
 
         [DisplayName("Значение"), NotDisplay, ByteType("Parameter.ValueType")]

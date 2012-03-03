@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [Table("Specialities"), ScaffoldTable(true), DisplayName("�������������")]
+    [Table("Specialities"), ScaffoldTable(true), DisplayName("Специальность")]
     public class Specialty : IIdentity
     {
         public Specialty()
@@ -16,10 +16,11 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [StringLength(255), DisplayName("���")]
+        [DisplayName("Имя")]
+        [Required(ErrorMessage = "Необходимо указать имя специальности.")]
         public string Name { get; set; }
 
-        [DisplayName("�������"), NotDisplay]
+        [DisplayName("Доктора"), NotDisplay]
         public virtual ICollection<Doctor> Doctors { get; set; }
 
         public override string ToString()

@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [Table("Surveys"), ScaffoldTable(true), DisplayName("������������� ��������")]
+    [Table("Surveys"), ScaffoldTable(true), DisplayName("Хирургическая операция")]
     public class Survey : IIdentity
     {
         public Survey()
@@ -16,13 +16,15 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("���")]
+        [DisplayName("Имя")]
+        [Required(ErrorMessage = "Необходимо указать название операции.")]
         public string Name { get; set; }
 
-        [Required, DisplayName("��������"), EditMode(EditMode.Multiline)]
+        [DisplayName("Описание"), EditMode(EditMode.Multiline)]
+        [Required(ErrorMessage = "Необходимо описание операции.")]
         public string Description { get; set; }
 
-        [NotDisplay, DisplayName("��������� ��������")]
+        [NotDisplay, DisplayName("Хранилище операций")]
         public virtual ICollection<SurveyStorage> SurveysStorages { get; set; }
 
         public override string ToString()

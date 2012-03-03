@@ -1,35 +1,35 @@
-using System;
+п»їusing System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
 {
-    [Table("Users"), ScaffoldTable(true), DisplayName("Пользователь")]
+    [Table("Users"), ScaffoldTable(true), DisplayName("РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ")]
     public class User : IIdentity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("Имя")]
+        [Required, DisplayName("РРјСЏ")]
         public string FirstName { get; set; }
 
-        [Required, DisplayName("Фамилия")]
+        [Required, DisplayName("Р¤Р°РјРёР»РёСЏ")]
         public string LastName { get; set; }
 
-        [DisplayName("Отчество")]
+        [DisplayName("РћС‚С‡РµСЃС‚РІРѕ")]
         public string ThirdName { get; set; }
 
-        [Required, DisplayName("Логин")]
+        [Required, DisplayName("Р›РѕРіРёРЅ")]
         public string Login { get; set; }
 
-        [Required, DisplayName("Пароль")]
+        [Required, DisplayName("РџР°СЂРѕР»СЊ")]
         public string Password { get; set; }
 
-        [Required, DisplayName("День рождения")]
+        [Required, DisplayName("Р”РµРЅСЊ СЂРѕР¶РґРµРЅРёСЏ")]
         public DateTime Birthday { get; set; }
 
-        [NotDisplay, DisplayName("Роль")]
+        [NotDisplay, DisplayName("Р РѕР»СЊ")]
         public virtual Role Role { get; set; }
     }
 }

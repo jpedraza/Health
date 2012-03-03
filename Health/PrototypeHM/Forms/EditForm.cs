@@ -10,6 +10,8 @@ using EFCFModel.Attributes;
 using PrototypeHM.Components;
 using PrototypeHM.DI;
 using ByteConverter = EFCFModel.ByteConverter;
+using ValidationResult = EFCFModel.ValidationResult;
+using Validator = EFCFModel.Validator;
 
 namespace PrototypeHM.Forms
 {
@@ -20,6 +22,7 @@ namespace PrototypeHM.Forms
         private readonly IList<Control> _form;
         private readonly IList<string> _labels;
         private readonly SchemaManager _schemaManager;
+        private readonly Validator _validator;
         private object _data;
         private int _key;
         private int _top;
@@ -33,6 +36,7 @@ namespace PrototypeHM.Forms
             _key = key;
             _dbContext = Get<DbContext>();
             _schemaManager = Get<SchemaManager>();
+            _validator = new Validator();
             _form = new List<Control>();
             _labels = new List<string>();
             InitializeData();
@@ -57,8 +61,38 @@ namespace PrototypeHM.Forms
             InitializeControls();
         }
 
+        private string ComponentNameForProperty(PropertyInfo propertyInfo)
+        {
+            return string.Format("componentFor{0}", propertyInfo.Name);
+        }
+
+        private Control ControlForProperty(PropertyInfo propertyInfo)
+        {
+            return layoutPanel.Controls[ComponentNameForProperty(propertyInfo)];
+        }
+
+        private void ValidateProperty(PropertyInfo propertyInfo)
+        {
+            ValidationResult result = _validator.ValidateProperty(_data, propertyInfo);
+            if (result != null) 
+                errorProvider.SetError(ControlForProperty(propertyInfo), result.ErrorMessage);
+        }
+
+        private bool ValidateObject()
+        {
+            bool isValid = _validator.IsValid(_data);
+            if (!isValid)
+            {
+                foreach (ValidationResult error in _validator.Errors)
+                    errorProvider.SetError(ControlForProperty(error.PropertyInfo), error.ErrorMessage);
+                statusPanel.Text = @"Исправте ошибки.";
+            }
+            return isValid;
+        }
+
         private void InitializeProperties()
         {
+            //TODO: с этим надо что-то делать.
             _top = 0;
             PropertyInfo[] properties = _etype.GetProperties();
             foreach (PropertyInfo property in properties)
@@ -70,24 +104,28 @@ namespace PrototypeHM.Forms
                 Control control = null;
                 if (propertyType == typeof (int))
                 {
-                    control = new NumericUpDown { Name = string.Format("nupd{0}", prop.Name) };
-                    control.DataBindings.Add("Value", _data, prop.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    var c = new NumericUpDown { Name = ComponentNameForProperty(prop) };
+                    c.DataBindings.Add("Value", _data, prop.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    c.ValueChanged += (sender, e) => ValidateProperty(prop);
+                    control = c;
                 }
                 if (propertyType == typeof (double))
                 {
-                    control = new NumericUpDown
+                    var c = new NumericUpDown
                             {
-                                Name = string.Format("nupd{0}", prop.Name),
+                                Name = ComponentNameForProperty(prop),
                                 DecimalPlaces = 2,
                                 Increment = (decimal) 0.5
                             };
-                    control.DataBindings.Add("Value", _data, prop.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    c.DataBindings.Add("Value", _data, prop.Name, false, DataSourceUpdateMode.OnPropertyChanged);
+                    c.ValueChanged += (sender, e) => ValidateProperty(prop);
+                    control = c;
                 }
                 if (propertyType == typeof (string))
                 {
                     var c = new TextBox
                                   {
-                                      Name = string.Format("txb{0}", prop.Name),
+                                      Name = ComponentNameForProperty(prop),
                                       Text = prop.GetValue(_data, null) as string
                                   };
                     var att = prop.GetCustomAttributes(true).FirstOrDefault(a => a is EditModeAttribute) as EditModeAttribute;
@@ -99,6 +137,7 @@ namespace PrototypeHM.Forms
                         c.ScrollBars = ScrollBars.Vertical;
                     }
                     c.TextChanged += (sender, e) => prop.SetValue(_data, c.Text, null);
+                    c.TextChanged += (sender, e) => ValidateProperty(prop);
                     control = c;
                 }
                 if (propertyType == typeof (DateTime))
@@ -106,8 +145,9 @@ namespace PrototypeHM.Forms
                     var value = propertyValue == null || (DateTime) propertyValue == default(DateTime)
                                     ? DateTime.Now
                                     : (DateTime) propertyValue;
-                    var c = new DateTimePicker { Name = string.Format("dtp{0}", prop.Name), Value = value };
+                    var c = new DateTimePicker { Name = ComponentNameForProperty(prop), Value = value };
                     c.ValueChanged += (sender, e) => prop.SetValue(_data, c.Value, null);
+                    c.ValueChanged += (sender, e) => ValidateProperty(prop);
                     prop.SetValue(_data, value, null);
                     control = c;
                 }
@@ -124,25 +164,27 @@ namespace PrototypeHM.Forms
                             bool value = propertyValue != null
                                              ? Get<ByteConverter>().To<bool>(propertyByteValue)
                                              : default(bool);
-                            var c = new CheckBox { Name = string.Format("chb{0}", prop.Name), Checked = value };
+                            var c = new CheckBox { Name = ComponentNameForProperty(prop), Checked = value };
                             c.CheckedChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(c.Checked), null);
+                            c.CheckedChanged+= (sender, e) => ValidateProperty(prop);
                             control = c;
                         }
                         if (byteType == typeof (int))
                         {
-                            var c = new NumericUpDown { Name = string.Format("nupd{0}", prop.Name) };
+                            var c = new NumericUpDown { Name = ComponentNameForProperty(prop) };
                             var value = propertyValue != null
                                             ? Get<ByteConverter>().To<int>(propertyByteValue)
                                             : c.Minimum;
                             c.Value = value;
                             c.ValueChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(Convert.ToInt32(c.Value)), null);
+                            c.ValueChanged += (sender, e) => ValidateProperty(prop);
                             control = c;
                         }
                         if (byteType == typeof (double))
                         {
                             var c = new NumericUpDown
                                     {
-                                        Name = string.Format("nupd{0}", prop.Name),
+                                        Name = ComponentNameForProperty(prop),
                                         DecimalPlaces = 2,
                                         Increment = (decimal) 0.5
                                     };
@@ -151,6 +193,7 @@ namespace PrototypeHM.Forms
                                             : c.Minimum;
                             c.Value = value;
                             c.ValueChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(Convert.ToDouble(c.Value)), null);
+                            c.ValueChanged += (sender, e) => ValidateProperty(prop);
                             control = c;
                         }
                         if (byteType == typeof (string))
@@ -160,10 +203,11 @@ namespace PrototypeHM.Forms
                                               : Get<ByteConverter>().To<string>(propertyByteValue);
                             var c = new TextBox
                                     {
-                                        Name = string.Format("txb{0}", prop.Name),
+                                        Name = ComponentNameForProperty(prop),
                                         Text = text
                                     };
                             c.TextChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(c.Text), null);
+                            c.TextChanged += (sender, e) => ValidateProperty(prop);
                             control = c;
                         }
                         if (byteType == typeof (DateTime))
@@ -171,14 +215,16 @@ namespace PrototypeHM.Forms
                             var value = propertyValue != null
                                             ? Get<ByteConverter>().To<DateTime>(propertyByteValue)
                                             : DateTime.Now;
-                            var c = new DateTimePicker { Name = string.Format("dtp{0}", prop.Name), Value = value };
+                            var c = new DateTimePicker { Name = ComponentNameForProperty(prop), Value = value };
                             c.ValueChanged += (sender, e) => prop.SetValue(_data, Get<ByteConverter>().Get(c.Value), null);
+                            c.ValueChanged += (sender, e) => ValidateProperty(prop);
                             control = c;
                         }
                     }
                 }
                 if (control != null)
                 {
+                    control.Leave += (sender, e) => ValidateProperty(prop);
                     control.Top = _top;
                     _top += control.Height;
                     _form.Add(control);
@@ -216,6 +262,7 @@ namespace PrototypeHM.Forms
                 }
                 if (c != null)
                 {
+                    c.Name = ComponentNameForProperty(relation.FromProperty);
                     _form.Add(c);
                     var att =
                         rel.FromProperty.GetCustomAttributes(true).FirstOrDefault(a => a is DisplayNameAttribute)
@@ -238,23 +285,26 @@ namespace PrototypeHM.Forms
                     layoutPanel.Controls.Add(_form[r], c + 1, r);
                 }
             }
-            var but = new ToolStripButton("Сохранить");
-            but.Click += ButClick;
-            toolPanel.Items.Add(but);
+            var saveButton = new ToolStripButton("Сохранить");
+            saveButton.Click += SaveButtonClick;
+            toolPanel.Items.Add(saveButton);
         }
 
-        private void ButClick(object sender, EventArgs e)
+        private void SaveButtonClick(object sender, EventArgs e)
         {
             try
             {
-                if (_key == -1) _dbContext.Set(_etype).Add(_data);
-                _dbContext.SaveChanges();
-                if (_key == -1)
+                if (ValidateObject())
                 {
-                    _key = Convert.ToInt32(_schemaManager.Key(_etype).GetValue(_data, null));
-                    UID = _etype.FullName + _key;
-                }
-                YMessageBox.Information("Сохранено.");
+                    if (_key == -1) _dbContext.Set(_etype).Add(_data);
+                    _dbContext.SaveChanges();
+                    if (_key == -1)
+                    {
+                        _key = Convert.ToInt32(_schemaManager.Key(_etype).GetValue(_data, null));
+                        UID = _etype.FullName + _key;
+                    }
+                    statusPanel.Text = string.Format("Сохранено {0}.", DateTime.Now);
+                }  
             }
             catch (Exception exp)
             {

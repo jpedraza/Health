@@ -12,12 +12,15 @@ namespace EFCFModel.Entities
         public int Id { get; set; }
 
         [DisplayName("Пациент")]
+        [Required(ErrorMessage = "Необходимо выбрать пациента.")]
         public virtual Patient Patient { get; set; }
 
         [DisplayName("Операция")]
+        [Required(ErrorMessage = "Необходимо выбрать операцю.")]
         public virtual Survey Survey { get; set; }
 
         [DisplayName("Дата операции")]
+        [Required(ErrorMessage = "Необходимо указать дату операции.")]
         public DateTime Date { get; set; }
 
         [DisplayName("Описание"), NotDisplay, EditMode(EditMode.Multiline)]

@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.toolPanel = new System.Windows.Forms.ToolStrip();
             this.statusPanel = new System.Windows.Forms.StatusStrip();
             this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // toolPanel
@@ -63,6 +66,11 @@
             this.layoutPanel.Size = new System.Drawing.Size(598, 499);
             this.layoutPanel.TabIndex = 2;
             // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
             // EditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,6 +82,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "EditForm";
             this.Text = "EditForm";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,5 +93,6 @@
         private System.Windows.Forms.ToolStrip toolPanel;
         private System.Windows.Forms.StatusStrip statusPanel;
         private System.Windows.Forms.TableLayoutPanel layoutPanel;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }
