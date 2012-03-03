@@ -12,8 +12,6 @@ namespace Support.Tasks
 
         public void Process(DbContext context)
         {
-            context.Configuration.AutoDetectChangesEnabled = false;
-            context.Configuration.ValidateOnSaveEnabled = false;
             var functionalClass1 = new FunctionalClass
                                      {
                                          Code = "Функциональный класс I",
@@ -200,8 +198,6 @@ namespace Support.Tasks
             diagnosis4.Patients.Add(patient1);
             context.Set<Diagnosis>().AddRange(diagnosis1, diagnosis2, diagnosis3, diagnosis4);
             context.SaveChanges();
-            context.Configuration.AutoDetectChangesEnabled = true;
-            context.Configuration.ValidateOnSaveEnabled = true;
         }
 
         #endregion

@@ -18,9 +18,6 @@ namespace Support
 
             sp.AddTask("Вставка диагнозов", new ICDParserTask("ICD10RUS.xls"));
             sp.AddTask("Вставка тестовых данных", new TestDataTask());
-            sp.AddTask("Создание базы данных", new CreateDatabaseTask());
-            sp.AddTask("Удаление базы данных", new DeleteDatabaseTask());
-            sp.AddTask("Пересоздание базы данных", new RecreateDatabaseTask());
             sp.ProcessAvailableTasks();
         }
     }

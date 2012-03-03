@@ -25,5 +25,11 @@ namespace EFCFModel
         public DbSet<ParameterStorage> ParameterStorages { get; set; }
 
         public ObjectContext ObjectContext { get { return ((IObjectContextAdapter) this).ObjectContext; } }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
+        }
     }
 }

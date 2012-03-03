@@ -11,25 +11,34 @@ namespace EFCFModel.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Hide]
         public int Id { get; set; }
 
-        [Required, DisplayName("Имя")]
+        [DisplayName("Имя")]
+        [Required(ErrorMessage = "Необходимо указать имя.")]
         public string FirstName { get; set; }
 
-        [Required, DisplayName("Фамилия")]
+        [DisplayName("Фамилия")]
+        [Required(ErrorMessage = "Необходимо указать фамилию.")]
         public string LastName { get; set; }
 
         [DisplayName("Отчество")]
         public string ThirdName { get; set; }
 
-        [Required, DisplayName("Логин")]
+        [DisplayName("Логин")]
+        [Required(ErrorMessage = "Необходимо указать логин.")]
         public string Login { get; set; }
 
-        [Required, DisplayName("Пароль")]
+        [DisplayName("Пароль")]
+        [Required(ErrorMessage = "Необходимо указать пароль.")]
         public string Password { get; set; }
 
-        [Required, DisplayName("День рождения")]
+        [DisplayName("День рождения")]
+        [Required(ErrorMessage = "Необходимо указать день рождения пользователя.")]
         public DateTime Birthday { get; set; }
 
+        [NotMap]
+        public int Age { get { return DateTime.Now.Year - Birthday.Year; } }
+
         [NotDisplay, DisplayName("Роль")]
+        [Required(ErrorMessage = "Необходимо выбрать роль пользователя.")]
         public virtual Role Role { get; set; }
     }
 }

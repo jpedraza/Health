@@ -42,8 +42,8 @@ namespace EFCFModel.Entities
         public string WorkPhone { get; set; }
 
         [NotDisplay, DisplayName("Доктор")]
-        [Required(ErrorMessage = "Необходимо выбрать лечащего врача.")]
-        public Doctor Doctor { get; set; }
+        [Required(ErrorMessage = "Необходимо указать лечащего врача.")]
+        public virtual Doctor Doctor { get; set; }
 
         [NotDisplay, DisplayName("Приемы у врача")]
         public virtual ICollection<Appointment> Appointments { get; set; }

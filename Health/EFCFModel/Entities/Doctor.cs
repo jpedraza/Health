@@ -20,7 +20,7 @@ namespace EFCFModel.Entities
         public virtual ICollection<Patient> Patients { get; set; }
 
         [DisplayName("Специальность"), NotDisplay]
-        [Required(ErrorMessage = "Необходимо указать специальность")]
+        [Required(ErrorMessage = "Необходимо указать специальность.")]
         public Specialty Specialty { get; set; }
 
         public override string ToString()

@@ -19,11 +19,11 @@ namespace EFCFModel.Entities
         public string Description { get; set; }
 
         [DisplayName("Доктор")]
-        [Required(ErrorMessage = "Необходимо выбрать доктора.")]
+        [Required(ErrorMessage = "Необходимо указать доктора.")]
         public virtual Doctor Doctor { get; set; }
 
         [DisplayName("Пациент")]
-        [Required(ErrorMessage = "Необходимо выбрать пациента.")]
+        [Required(ErrorMessage = "Необходимо указать пациента.")]
         public virtual Patient Patient { get; set; }
 
         public override string ToString()

@@ -12,11 +12,11 @@ namespace EFCFModel.Entities
         public int Id { get; set; }
 
         [DisplayName("Пациент")]
-        [Required(ErrorMessage = "Необходимо выбрать пациента.")]
+        [Required(ErrorMessage = "Необходимо указать пациента.")]
         public virtual Patient Patient { get; set; }
 
         [DisplayName("Параметр")]
-        [Required(ErrorMessage = "Необходимо выбрать параметр.")]
+        [Required(ErrorMessage = "Необходимо указать параметр.")]
         public virtual Parameter Parameter { get; set; }
 
         [DisplayName("Дата")]

@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using EFCFModel.Attributes;
 
 namespace EFCFModel
 {
     public class ValidationResult : System.ComponentModel.DataAnnotations.ValidationResult
     {
-        public PropertyInfo PropertyInfo { get; private set; }
+        public PropertyDescriptor Descriptor { get; private set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/>, используя указанное сообщение об ошибке.
@@ -22,11 +25,11 @@ namespace EFCFModel
         /// Инициализирует новый экземпляр класса <see cref="T:EFCFModel.ValidationResult"/> с использованием указанного сообщения об ошибке и информацией о свойстве, непрошедшем проверку.
         /// </summary>
         /// <param name="errorMessage">Сообщение об ошибке.</param>
-        /// <param name="propertyInfo">Свойство, непрошедшее проверку.</param>
-        public ValidationResult(string errorMessage, PropertyInfo propertyInfo)
-            : base(errorMessage, new[] { propertyInfo.Name })
+        /// <param name="descriptor">Свойство, непрошедшее проверку.</param>
+        public ValidationResult(string errorMessage, PropertyDescriptor descriptor)
+            : base(errorMessage, new[] { descriptor.Name })
         {
-            PropertyInfo = propertyInfo;
+            Descriptor = descriptor;
         }
 
         /// <summary>
@@ -53,30 +56,30 @@ namespace EFCFModel
 
         public IEnumerable<ValidationResult> Validate(object component)
         {
-            IEnumerable<PropertyInfo> properties =
-                component.GetType().GetProperties();
-            foreach (PropertyInfo property in properties)
+            IEnumerable<PropertyDescriptor> properties = TypeDescriptor.GetProperties(component).Cast<PropertyDescriptor>();
+            foreach (PropertyDescriptor property in properties)
             {
-                IEnumerable<ValidationAttribute> attributes = property.GetCustomAttributes(true).OfType<ValidationAttribute>();
+                IEnumerable<ValidationAttribute> attributes = property.Attributes.OfType<ValidationAttribute>();
                 foreach (ValidationAttribute attribute in attributes)
                 {
-                    if (!attribute.IsValid(property.GetValue(component, null)))
-                        yield return
-                            new ValidationResult( 
-                                attribute.ErrorMessage ?? string.Format(CultureInfo.CurrentUICulture, "{0} validation failed.", attribute.GetType().Name), property);
+                    if (!attribute.IsValid(property.GetValue(component)))
+                        yield return new ValidationResult(
+                            attribute.ErrorMessage ??
+                            string.Format(CultureInfo.CurrentUICulture, "{0} validation failed.",
+                                          attribute.GetType().Name), property);
                 }
             }
         }
 
-        public ValidationResult ValidateProperty(object component, PropertyInfo propertyInfo)
+        public ValidationResult ValidateProperty(object component, PropertyDescriptor descriptor)
         {
-            IEnumerable<ValidationAttribute> attributes = propertyInfo.GetCustomAttributes(true).OfType<ValidationAttribute>();
+            IEnumerable<ValidationAttribute> attributes = descriptor.Attributes.OfType<ValidationAttribute>();
             foreach (ValidationAttribute attribute in attributes)
             {
-                if (!attribute.IsValid(propertyInfo.GetValue(component, null)))
+                if (!attribute.IsValid(descriptor.GetValue(component)))
                     return
                         new ValidationResult(
-                            attribute.ErrorMessage ?? string.Format(CultureInfo.CurrentUICulture, "{0} validation failed.", attribute.GetType().Name), propertyInfo);
+                            attribute.ErrorMessage ?? string.Format(CultureInfo.CurrentUICulture, "{0} validation failed.", attribute.GetType().Name), descriptor);
             }
             return null;
         }
