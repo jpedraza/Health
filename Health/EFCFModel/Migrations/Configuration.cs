@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Data.Entity.Migrations;
 using System.Text;
 using EFCFModel.Entities;
@@ -16,47 +16,47 @@ namespace EFCFModel.Migrations
         {
             var functionalClass1 = new FunctionalClass
                                        {
-                                           Code = "Функциональный класс I",
+                                           Code = "Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Р№ РєР»Р°СЃСЃ I",
                                            Description =
-                                               "Пациенты с заболеванием сердца, у которых обычные физические нагрузки не вызывают одышки, утомления или сердцебиения."
+                                               "РџР°С†РёРµРЅС‚С‹ СЃ Р·Р°Р±РѕР»РµРІР°РЅРёРµРј СЃРµСЂРґС†Р°, Сѓ РєРѕС‚РѕСЂС‹С… РѕР±С‹С‡РЅС‹Рµ С„РёР·РёС‡РµСЃРєРёРµ РЅР°РіСЂСѓР·РєРё РЅРµ РІС‹Р·С‹РІР°СЋС‚ РѕРґС‹С€РєРё, СѓС‚РѕРјР»РµРЅРёСЏ РёР»Рё СЃРµСЂРґС†РµР±РёРµРЅРёСЏ."
                                        };
             var functionalClass2 = new FunctionalClass
                                        {
-                                           Code = "Функциональный класс II",
+                                           Code = "Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Р№ РєР»Р°СЃСЃ II",
                                            Description =
-                                               "Пациенты с заболеванием сердца и умеренным ограничением физической активности. При обычных физических нагрузках наблюдаются одышка, усталость и сердцебиение."
+                                               "РџР°С†РёРµРЅС‚С‹ СЃ Р·Р°Р±РѕР»РµРІР°РЅРёРµРј СЃРµСЂРґС†Р° Рё СѓРјРµСЂРµРЅРЅС‹Рј РѕРіСЂР°РЅРёС‡РµРЅРёРµРј С„РёР·РёС‡РµСЃРєРѕР№ Р°РєС‚РёРІРЅРѕСЃС‚Рё. РџСЂРё РѕР±С‹С‡РЅС‹С… С„РёР·РёС‡РµСЃРєРёС… РЅР°РіСЂСѓР·РєР°С… РЅР°Р±Р»СЋРґР°СЋС‚СЃСЏ РѕРґС‹С€РєР°, СѓСЃС‚Р°Р»РѕСЃС‚СЊ Рё СЃРµСЂРґС†РµР±РёРµРЅРёРµ."
                                        };
             var functionalClass3 = new FunctionalClass
                                        {
-                                           Code = "Функциональный класс III",
+                                           Code = "Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Р№ РєР»Р°СЃСЃ III",
                                            Description =
-                                               "Пациенты с заболеванием сердца и выраженным ограничением физической активности. В состоянии покоя жалобы отсутствуют, но даже при незначительных физических нагрузках появляются одышка, усталость и сердцебиение."
+                                               "РџР°С†РёРµРЅС‚С‹ СЃ Р·Р°Р±РѕР»РµРІР°РЅРёРµРј СЃРµСЂРґС†Р° Рё РІС‹СЂР°Р¶РµРЅРЅС‹Рј РѕРіСЂР°РЅРёС‡РµРЅРёРµРј С„РёР·РёС‡РµСЃРєРѕР№ Р°РєС‚РёРІРЅРѕСЃС‚Рё. Р’ СЃРѕСЃС‚РѕСЏРЅРёРё РїРѕРєРѕСЏ Р¶Р°Р»РѕР±С‹ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚, РЅРѕ РґР°Р¶Рµ РїСЂРё РЅРµР·РЅР°С‡РёС‚РµР»СЊРЅС‹С… С„РёР·РёС‡РµСЃРєРёС… РЅР°РіСЂСѓР·РєР°С… РїРѕСЏРІР»СЏСЋС‚СЃСЏ РѕРґС‹С€РєР°, СѓСЃС‚Р°Р»РѕСЃС‚СЊ Рё СЃРµСЂРґС†РµР±РёРµРЅРёРµ."
                                        };
             var functionalClass4 = new FunctionalClass
                                        {
-                                           Code = "Функциональный класс IV",
+                                           Code = "Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Р№ РєР»Р°СЃСЃ IV",
                                            Description =
-                                               "Пациенты с заболеванием сердца, у которых любой уровень физической активности вызывает указанные выше субъективные симптомы. Последние возникают и в состоянии покоя."
+                                               "РџР°С†РёРµРЅС‚С‹ СЃ Р·Р°Р±РѕР»РµРІР°РЅРёРµРј СЃРµСЂРґС†Р°, Сѓ РєРѕС‚РѕСЂС‹С… Р»СЋР±РѕР№ СѓСЂРѕРІРµРЅСЊ С„РёР·РёС‡РµСЃРєРѕР№ Р°РєС‚РёРІРЅРѕСЃС‚Рё РІС‹Р·С‹РІР°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Рµ РІС‹С€Рµ СЃСѓР±СЉРµРєС‚РёРІРЅС‹Рµ СЃРёРјРїС‚РѕРјС‹. РџРѕСЃР»РµРґРЅРёРµ РІРѕР·РЅРёРєР°СЋС‚ Рё РІ СЃРѕСЃС‚РѕСЏРЅРёРё РїРѕРєРѕСЏ."
                                        };
-            context.FunctionalClasses.AddOrUpdate(functionalClass1, 
-                                                  functionalClass2, 
+            context.FunctionalClasses.AddOrUpdate(functionalClass1,
+                                                  functionalClass2,
                                                   functionalClass3,
                                                   functionalClass4);
             var survey1 = new Survey
                               {
-                                  Name = "Пластика ДМЖП по методике двойной заплаты в условиях ИК.",
-                                  Description = "Пластика ДМЖП по методике двойной заплаты в условиях ИК."
+                                  Name = "РџР»Р°СЃС‚РёРєР° Р”РњР–Рџ РїРѕ РјРµС‚РѕРґРёРєРµ РґРІРѕР№РЅРѕР№ Р·Р°РїР»Р°С‚С‹ РІ СѓСЃР»РѕРІРёСЏС… РРљ.",
+                                  Description = "РџР»Р°СЃС‚РёРєР° Р”РњР–Рџ РїРѕ РјРµС‚РѕРґРёРєРµ РґРІРѕР№РЅРѕР№ Р·Р°РїР»Р°С‚С‹ РІ СѓСЃР»РѕРІРёСЏС… РРљ."
                               };
             var survey2 = new Survey
                               {
-                                  Name = "Пластика ДМПП,ДМЖП,ИСЛА,аномалия Эбштейна,радик.коррекц. тетрады Фалло.",
+                                  Name = "РџР»Р°СЃС‚РёРєР° Р”РњРџРџ,Р”РњР–Рџ,РРЎР›Рђ,Р°РЅРѕРјР°Р»РёСЏ Р­Р±С€С‚РµР№РЅР°,СЂР°РґРёРє.РєРѕСЂСЂРµРєС†. С‚РµС‚СЂР°РґС‹ Р¤Р°Р»Р»Рѕ.",
                                   Description =
-                                      "Пластика ДМПП,ДМЖП,ИСЛА,аномалия Эбштейна,радик.коррекц. тетрады Фалло."
+                                      "РџР»Р°СЃС‚РёРєР° Р”РњРџРџ,Р”РњР–Рџ,РРЎР›Рђ,Р°РЅРѕРјР°Р»РёСЏ Р­Р±С€С‚РµР№РЅР°,СЂР°РґРёРє.РєРѕСЂСЂРµРєС†. С‚РµС‚СЂР°РґС‹ Р¤Р°Р»Р»Рѕ."
                               };
             var survey3 = new Survey
                               {
-                                  Name = "Реконструкции пути оттока от ПЖ.",
-                                  Description = "Реконструкции пути оттока от ПЖ."
+                                  Name = "Р РµРєРѕРЅСЃС‚СЂСѓРєС†РёРё РїСѓС‚Рё РѕС‚С‚РѕРєР° РѕС‚ РџР–.",
+                                  Description = "Р РµРєРѕРЅСЃС‚СЂСѓРєС†РёРё РїСѓС‚Рё РѕС‚С‚РѕРєР° РѕС‚ РџР–."
                               };
             context.Set<Survey>().AddOrUpdate(survey1, survey2, survey3);
             var roleAdmin = new Role {Name = "Admin"};
@@ -65,23 +65,23 @@ namespace EFCFModel.Migrations
             context.Set<Role>().AddOrUpdate(roleAdmin, roleDoctor, rolePatient);
             var u1 = new User
                          {
-                             FirstName = "Антон",
-                             LastName = "Петров",
-                             ThirdName = "Валентинович",
+                             FirstName = "РђРЅС‚РѕРЅ",
+                             LastName = "РџРµС‚СЂРѕРІ",
+                             ThirdName = "Р’Р°Р»РµРЅС‚РёРЅРѕРІРёС‡",
                              Login = "anton",
                              Password = "anton",
                              Birthday = DateTime.Now.AddYears(-27),
                              Role = roleAdmin
                          };
             context.Set<User>().AddOrUpdate(u1);
-            var specialty1 = new Specialty {Name = "Педиатор"};
-            var specialty2 = new Specialty {Name = "Кардиолог"};
+            var specialty1 = new Specialty {Name = "РџРµРґРёР°С‚РѕСЂ"};
+            var specialty2 = new Specialty {Name = "РљР°СЂРґРёРѕР»РѕРі"};
             context.Set<Specialty>().AddOrUpdate(specialty1, specialty2);
             var doctor1 = new Doctor
                               {
-                                  FirstName = "Макар",
-                                  LastName = "Солнышкин",
-                                  ThirdName = "Валентинович",
+                                  FirstName = "РњР°РєР°СЂ",
+                                  LastName = "РЎРѕР»РЅС‹С€РєРёРЅ",
+                                  ThirdName = "Р’Р°Р»РµРЅС‚РёРЅРѕРІРёС‡",
                                   Login = "makar",
                                   Password = "makar",
                                   Birthday = DateTime.Now.AddYears(-38),
@@ -90,9 +90,9 @@ namespace EFCFModel.Migrations
                               };
             var doctor2 = new Doctor
                               {
-                                  FirstName = "Антон",
-                                  LastName = "Солнышкин",
-                                  ThirdName = "Валентинович",
+                                  FirstName = "РђРЅС‚РѕРЅ",
+                                  LastName = "РЎРѕР»РЅС‹С€РєРёРЅ",
+                                  ThirdName = "Р’Р°Р»РµРЅС‚РёРЅРѕРІРёС‡",
                                   Login = "anton",
                                   Password = "anton",
                                   Birthday = DateTime.Now.AddYears(-38),
@@ -102,28 +102,28 @@ namespace EFCFModel.Migrations
             context.Set<Doctor>().AddOrUpdate(doctor1, doctor2);
             var parameter1 = new DoubleParameter
                                  {
-                                     Name = "Пульс",
+                                     Name = "РџСѓР»СЊСЃ",
                                      DefaultValue = BitConverter.GetBytes(60.0),
                                      MinValue = 15,
                                      MaxValue = 250
                                  };
             var parameter2 = new StringParameter
                                  {
-                                     Name = "Давление",
+                                     Name = "Р”Р°РІР»РµРЅРёРµ",
                                      DefaultValue = Encoding.UTF8.GetBytes("120x80")
                                  };
             context.Set<Parameter>().AddOrUpdate(parameter1, parameter2);
             var patient1 = new Patient
                                {
-                                   FirstName = "Илья",
-                                   LastName = "Колбаскин",
-                                   ThirdName = "Валентинович",
+                                   FirstName = "РР»СЊСЏ",
+                                   LastName = "РљРѕР»Р±Р°СЃРєРёРЅ",
+                                   ThirdName = "Р’Р°Р»РµРЅС‚РёРЅРѕРІРёС‡",
                                    Login = "ilja",
                                    Password = "ilja",
                                    Birthday = DateTime.Now.AddYears(-12),
                                    Role = rolePatient,
                                    Card = "9A5CD8E5",
-                                   Mother = "Анна Анатольевна",
+                                   Mother = "РђРЅРЅР° РђРЅР°С‚РѕР»СЊРµРІРЅР°",
                                    StartDateOfObservation = DateTime.Now.AddYears(-2),
                                    Doctor = doctor1,
                                    Policy = "9A5CD8E5",
@@ -155,38 +155,38 @@ namespace EFCFModel.Migrations
             context.Set<Appointment>().AddOrUpdate(appointment1);
             var diagnosisClass1 = new DiagnosisClass
                                       {
-                                          Name = "Болезни системы кровообращения",
+                                          Name = "Р‘РѕР»РµР·РЅРё СЃРёСЃС‚РµРјС‹ РєСЂРѕРІРѕРѕР±СЂР°С‰РµРЅРёСЏ",
                                           Code = "IX"
                                       };
             var diagnosisClass2 = new DiagnosisClass
                                       {
                                           Name =
-                                              "Врожденные аномалии [пороки крови], деформации и хромосомные нарушения",
+                                              "Р’СЂРѕР¶РґРµРЅРЅС‹Рµ Р°РЅРѕРјР°Р»РёРё [РїРѕСЂРѕРєРё РєСЂРѕРІРё], РґРµС„РѕСЂРјР°С†РёРё Рё С…СЂРѕРјРѕСЃРѕРјРЅС‹Рµ РЅР°СЂСѓС€РµРЅРёСЏ",
                                           Code = "XVII"
                                       };
             context.Set<DiagnosisClass>().AddOrUpdate(diagnosisClass1, diagnosisClass2);
             var diagnosis1 = new Diagnosis
                                  {
-                                     Name = "Другие функциональные нарушения после операций на сердце",
+                                     Name = "Р”СЂСѓРіРёРµ С„СѓРЅРєС†РёРѕРЅР°Р»СЊРЅС‹Рµ РЅР°СЂСѓС€РµРЅРёСЏ РїРѕСЃР»Рµ РѕРїРµСЂР°С†РёР№ РЅР° СЃРµСЂРґС†Рµ",
                                      Code = "I97.1",
                                      DiagnosisClass = diagnosisClass1
                                  };
             var diagnosis2 = new Diagnosis
                                  {
                                      Name =
-                                         "Другие нарушения системы кровообращения после медицинских процедур, не классифицированные в других рубриках",
+                                         "Р”СЂСѓРіРёРµ РЅР°СЂСѓС€РµРЅРёСЏ СЃРёСЃС‚РµРјС‹ РєСЂРѕРІРѕРѕР±СЂР°С‰РµРЅРёСЏ РїРѕСЃР»Рµ РјРµРґРёС†РёРЅСЃРєРёС… РїСЂРѕС†РµРґСѓСЂ, РЅРµ РєР»Р°СЃСЃРёС„РёС†РёСЂРѕРІР°РЅРЅС‹Рµ РІ РґСЂСѓРіРёС… СЂСѓР±СЂРёРєР°С…",
                                      Code = "I97.8",
                                      DiagnosisClass = diagnosisClass1
                                  };
             var diagnosis3 = new Diagnosis
                                  {
-                                     Name = "Дефект предсердной перегородки",
+                                     Name = "Р”РµС„РµРєС‚ РїСЂРµРґСЃРµСЂРґРЅРѕР№ РїРµСЂРµРіРѕСЂРѕРґРєРё",
                                      Code = "Q21.1",
                                      DiagnosisClass = diagnosisClass2
                                  };
             var diagnosis4 = new Diagnosis
                                  {
-                                     Name = "Врожденный порок сердца неуточненный",
+                                     Name = "Р’СЂРѕР¶РґРµРЅРЅС‹Р№ РїРѕСЂРѕРє СЃРµСЂРґС†Р° РЅРµСѓС‚РѕС‡РЅРµРЅРЅС‹Р№",
                                      Code = "Q24.9",
                                      DiagnosisClass = diagnosisClass2
                                  };
