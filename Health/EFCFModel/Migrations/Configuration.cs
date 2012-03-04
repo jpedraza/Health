@@ -38,10 +38,8 @@ namespace EFCFModel.Migrations
                                            Description =
                                                "Пациенты с заболеванием сердца, у которых любой уровень физической активности вызывает указанные выше субъективные симптомы. Последние возникают и в состоянии покоя."
                                        };
-            context.FunctionalClasses.AddOrUpdate(functionalClass1,
-                                                  functionalClass2,
-                                                  functionalClass3,
-                                                  functionalClass4);
+            context.Set<FunctionalClass>().AddOrUpdate(functionalClass1, functionalClass2, functionalClass3,
+                                                       functionalClass4);
             var survey1 = new Survey
                               {
                                   Name = "Пластика ДМЖП по методике двойной заплаты в условиях ИК.",
@@ -127,7 +125,7 @@ namespace EFCFModel.Migrations
                                    StartDateOfObservation = DateTime.Now.AddYears(-2),
                                    Doctor = doctor1,
                                    Policy = "9A5CD8E5",
-                                   HomePhone = "89751452367"
+                                   HomePhone = "89451274535"
                                };
             patient1.Parameters.Add(parameter1);
             patient1.Parameters.Add(parameter2);
