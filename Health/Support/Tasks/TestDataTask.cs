@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Text;
 using EFCFModel;
 using EFCFModel.Entities;
@@ -36,7 +37,7 @@ namespace Support.Tasks
                                            Description =
                                                "Пациенты с заболеванием сердца, у которых любой уровень физической активности вызывает указанные выше субъективные симптомы. Последние возникают и в состоянии покоя."
                                        };
-            context.Set<FunctionalClass>().AddRange(functionalClass1, functionalClass2, functionalClass3, functionalClass4);
+            context.Set<FunctionalClass>().AddOrUpdate(functionalClass1, functionalClass2, functionalClass3, functionalClass4);
             context.SaveChanges();
             var survey1 = new Survey
                               {
@@ -54,12 +55,12 @@ namespace Support.Tasks
                                   Name = "Реконструкции пути оттока от ПЖ.",
                                   Description = "Реконструкции пути оттока от ПЖ."
                               };
-            context.Set<Survey>().AddRange(survey1, survey2, survey3);
+            context.Set<Survey>().AddOrUpdate(survey1, survey2, survey3);
             context.SaveChanges();
             var roleAdmin = new Role {Name = "Admin"};
             var roleDoctor = new Role {Name = "Doctor"};
             var rolePatient = new Role {Name = "Patient"};
-            context.Set<Role>().AddRange(roleAdmin, roleDoctor, rolePatient);
+            context.Set<Role>().AddOrUpdate(roleAdmin, roleDoctor, rolePatient);
             context.SaveChanges();
             var u1 = new User
                          {
@@ -75,7 +76,7 @@ namespace Support.Tasks
             context.SaveChanges();
             var specialty1 = new Specialty {Name = "Педиатор"};
             var specialty2 = new Specialty {Name = "Кардиолог"};
-            context.Set<Specialty>().AddRange(specialty1, specialty2);
+            context.Set<Specialty>().AddOrUpdate(specialty1, specialty2);
             context.SaveChanges();
             var doctor1 = new Doctor
                          {
@@ -99,7 +100,7 @@ namespace Support.Tasks
                              Role = roleDoctor,
                              Specialty = specialty2
                          };
-            context.Set<Doctor>().AddRange(doctor1, doctor2);
+            context.Set<Doctor>().AddOrUpdate(doctor1, doctor2);
             context.SaveChanges();
             var parameter1 = new DoubleParameter
                                  {
@@ -113,7 +114,7 @@ namespace Support.Tasks
                                      Name = "Давление",
                                      DefaultValue = Encoding.UTF8.GetBytes("120x80")
                                  };
-            context.Set<Parameter>().AddRange(parameter1, parameter2);
+            context.Set<Parameter>().AddOrUpdate(parameter1, parameter2);
             var patient1 = new Patient
                          {
                              FirstName = "Илья",
@@ -145,7 +146,7 @@ namespace Support.Tasks
                                          Survey = survey3,
                                          Date = DateTime.Now.AddDays(-1)
                                      };
-            context.Set<SurveyStorage>().AddRange(surveyStorage1, surveyStorage2);
+            context.Set<SurveyStorage>().AddOrUpdate(surveyStorage1, surveyStorage2);
             context.SaveChanges();
             var appointment1 = new Appointment
                          {
@@ -166,7 +167,7 @@ namespace Support.Tasks
                                               "Врожденные аномалии [пороки крови], деформации и хромосомные нарушения",
                                           Code = "XVII"
                                       };
-            context.Set<DiagnosisClass>().AddRange(diagnosisClass1, diagnosisClass2);
+            context.Set<DiagnosisClass>().AddOrUpdate(diagnosisClass1, diagnosisClass2);
             context.SaveChanges();
             var diagnosis1 = new Diagnosis
                                  {
@@ -196,7 +197,7 @@ namespace Support.Tasks
             diagnosis1.Patients.Add(patient1);
             diagnosis2.Patients.Add(patient1);
             diagnosis4.Patients.Add(patient1);
-            context.Set<Diagnosis>().AddRange(diagnosis1, diagnosis2, diagnosis3, diagnosis4);
+            context.Set<Diagnosis>().AddOrUpdate(diagnosis1, diagnosis2, diagnosis3, diagnosis4);
             context.SaveChanges();
         }
 

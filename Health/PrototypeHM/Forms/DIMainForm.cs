@@ -9,18 +9,18 @@ namespace PrototypeHM.Forms
 {
     public partial class DIMainForm : DIForm
     {
-        private readonly SchemaManager _schemaManager;
+        private readonly ISchemaManager _schemaManager;
 
         public DIMainForm(IDIKernel diKernel) : base(diKernel)
         {
             InitializeComponent();
-            _schemaManager = Get<SchemaManager>();
+            _schemaManager = Get<ISchemaManager>();
             InitializeMenu();
         }
 
         private void InitializeMenu()
         {
-            IList<Type> allScaffoldEntities = _schemaManager.GetAllScaffoldEntities();
+            IEnumerable<Type> allScaffoldEntities = _schemaManager.GetAllScaffoldEntities();
             var menuItem = new ToolStripMenuItem("Администрирование");
             var dropDownMenu = new ToolStripDropDownMenu {Text = @"Администрирование"};
             foreach (Type scaffoldEntity in allScaffoldEntities)

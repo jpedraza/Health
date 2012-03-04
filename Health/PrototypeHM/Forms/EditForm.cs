@@ -21,7 +21,7 @@ namespace PrototypeHM.Forms
         private readonly Type _etype;
         private readonly IList<Control> _form;
         private readonly IList<string> _labels;
-        private readonly SchemaManager _schemaManager;
+        private readonly ISchemaManager _schemaManager;
         private readonly Validator _validator;
         private object _data;
         private int _key;
@@ -35,7 +35,7 @@ namespace PrototypeHM.Forms
             _etype = etype;
             _key = key;
             _dbContext = Get<DbContext>();
-            _schemaManager = Get<SchemaManager>();
+            _schemaManager = Get<ISchemaManager>();
             _validator = new Validator();
             _form = new List<Control>();
             _labels = new List<string>();

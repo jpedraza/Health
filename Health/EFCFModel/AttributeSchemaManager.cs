@@ -7,32 +7,7 @@ using EFCFModel.Entities;
 
 namespace EFCFModel
 {
-    public enum RelationType
-    {
-        OneToMany,
-        ManyToMany,
-        ManyToOne
-    }
-
-    public class Relation
-    {
-        /// <summary>
-        /// Для генерик-типов вернет тип первого генерик аргумента.
-        /// </summary>
-        public Type FromType { get; set; }
-
-        public PropertyInfo FromProperty { get; set; }
-
-        /// <summary>
-        /// Для генерик-типов вернет тип первого генерик аргумента.
-        /// </summary>
-        public Type ToType { get; set; }
-
-        public PropertyInfo ToProperty { get; set; }
-        public RelationType RelationType { get; set; }
-    }
-
-    public class SchemaManager
+    public class AttributeSchemaManager : ISchemaManager
     {
         public bool HasBaseType(Type t)
         {
@@ -45,14 +20,6 @@ namespace EFCFModel
             while (baseType.BaseType != null && baseType.BaseType != typeof (object))
                 baseType = baseType.BaseType;
             return baseType;
-        }
-
-        public string GetTableName(Type t)
-        {
-            var att =
-                t.GetCustomAttributes(true).FirstOrDefault(a => a.GetType() == typeof (TableAttribute)) as
-                TableAttribute;
-            return att == null ? t.Name : att.Name;
         }
 
         public bool HasKey(Type t)
@@ -144,13 +111,13 @@ namespace EFCFModel
             return relations;
         }
 
-        public IList<Type> GetAllEntities()
+        public IEnumerable<Type> GetAllEntities()
         {
             return Assembly.GetExecutingAssembly().GetTypes().Where(
                 t => t.Namespace == typeof(IIdentity).Namespace && t.IsClass && t.IsPublic).ToList();
         }
 
-        public IList<Type> GetAllScaffoldEntities()
+        public IEnumerable<Type> GetAllScaffoldEntities()
         {
             return
                 GetAllEntities().Where(

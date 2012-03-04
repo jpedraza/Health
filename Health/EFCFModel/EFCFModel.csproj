@@ -69,10 +69,15 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Doctor.cs" />
     <Compile Include="Entities\Patient.cs" />
+    <Compile Include="Exceptions\EntityTypeNotFoundException.cs" />
+    <Compile Include="Exceptions\GuidException.cs" />
     <Compile Include="ExtensionsMethods.cs" />
+    <Compile Include="ISchemaManager.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ObjectContextSchemaManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchemaManager.cs" />
+    <Compile Include="AttributeSchemaManager.cs" />
+    <Compile Include="Relation.cs" />
     <Compile Include="Validator.cs" />
   </ItemGroup>
   <ItemGroup>

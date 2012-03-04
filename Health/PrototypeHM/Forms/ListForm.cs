@@ -13,7 +13,7 @@ namespace PrototypeHM.Forms
     {
         private readonly DbContext _dbContext;
         private readonly Type _etype;
-        private readonly SchemaManager _schemaManager;
+        private readonly ISchemaManager _schemaManager;
         private int _count;
         private IList _data;
         private Action<int> _delete;
@@ -26,7 +26,7 @@ namespace PrototypeHM.Forms
             ydgvList.RowHeadersVisible = false;
             _etype = etype;
             _dbContext = Get<DbContext>();
-            _schemaManager = Get<SchemaManager>();
+            _schemaManager = Get<ISchemaManager>();
             Text = etype.GetDisplayName();
             _hasEditColumn = false;
             InitializeData();

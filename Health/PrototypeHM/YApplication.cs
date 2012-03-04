@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Windows.Forms;
 using EFCFModel;
@@ -34,7 +35,8 @@ namespace PrototypeHM
             // General
             _kernel.Bind<IDIKernel>().To<DIKernel>();
             _kernel.Bind<DbContext>().To<EFHealthContext>().InThreadScope();
-            _kernel.Bind<SchemaManager>().To<SchemaManager>().InThreadScope();
+            _kernel.Bind<ISchemaManager>().To<ObjectContextSchemaManager>().InThreadScope()
+                .WithConstructorArgument("context", ((IObjectContextAdapter) _kernel.Get<DbContext>()).ObjectContext);
             _kernel.Bind<ByteConverter>().ToSelf().InThreadScope();
             _kernel.Bind<DIMainForm>().ToSelf().InThreadScope();
         }
