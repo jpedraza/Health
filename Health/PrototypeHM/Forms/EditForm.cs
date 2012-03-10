@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFCFModel;
 using EFCFModel.Attributes;
@@ -23,6 +25,8 @@ namespace PrototypeHM.Forms
         private readonly IList<string> _labels;
         private readonly ISchemaManager _schemaManager;
         private readonly Validator _validator;
+        private readonly CancellationTokenSource _loadCancellationTokenSource;
+        private Task<object> _loadTask;
         private object _data;
         private int _key;
         private int _top;
@@ -30,6 +34,7 @@ namespace PrototypeHM.Forms
         public EditForm(IDIKernel diKernel, Type etype, int key) : base(diKernel)
         {
             UID = etype.FullName + key;
+            _loadCancellationTokenSource = new CancellationTokenSource();
             InitializeComponent();
             Text = string.Format("Редактирование {0}", etype.GetDisplayName());
             _etype = etype;
@@ -39,18 +44,29 @@ namespace PrototypeHM.Forms
             _validator = new Validator();
             _form = new List<Control>();
             _labels = new List<string>();
+            loadControl.Show();
             InitializeData();
-            InitializeForm();
         }
 
         private void InitializeData()
         {
             if (_schemaManager.HasKey(_etype))
             {
-                _data = _key != -1
-                            ? ((IQueryable<object>) _dbContext.Set(_etype)).
-                                  FirstOrDefault(ExQueryable.PropertyFilter(_etype, _schemaManager.Key(_etype).Name, _key))
-                            : _dbContext.Set(_etype).Create();
+                _loadTask = new Task<object>(() =>
+                                             _data = _key != -1
+                                                         ? ((IQueryable<object>) _dbContext.Set(_etype)).
+                                                               FirstOrDefault(ExQueryable.PropertyFilter(_etype, _schemaManager.Key(_etype).Name, _key))
+                                                         : _dbContext.Set(_etype).Create()
+                                             , _loadCancellationTokenSource.Token);
+                _loadTask.ContinueWith(task =>
+                                           {
+                                               if (!_loadCancellationTokenSource.IsCancellationRequested)
+                                               {
+                                                   Invoke(new MethodInvoker(InitializeForm));
+                                                   loadControl.Invoke(new MethodInvoker(() => loadControl.Hide()));
+                                               }
+                                           });
+                _loadTask.Start();
             }
         }
 

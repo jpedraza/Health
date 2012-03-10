@@ -13,7 +13,7 @@ namespace Support
             Console.BufferHeight = Console.BufferHeight*2;
             Console.BufferWidth = Console.BufferWidth*2;
             SupportManager sp = SupportManager.Instance(new EFHealthContext());
-            sp.AddIncludePath(@"\..\..\..\..\..\Materials\");
+            sp.AddIncludePath(@"\..\..\..\..\Materials\");
             sp.AddIncludePath(@"\..\..\..\..\Health\Support\Scripts\");
 
             sp.AddTask("Вставка диагнозов", new ICDParserTask("ICD10RUS.xls"));

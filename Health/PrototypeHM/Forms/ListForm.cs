@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFCFModel;
-using PrototypeHM.Components;
 using PrototypeHM.DI;
 
 namespace PrototypeHM.Forms
@@ -36,7 +35,6 @@ namespace PrototypeHM.Forms
             Text = etype.GetDisplayName();
             _hasEditColumn = false;
             InitializeData();
-            InitializeColumns();
             InitializeButtons();
             InitializeActions();
             ydgvList.CellClick += YdgvListCellClick;
@@ -66,10 +64,8 @@ namespace PrototypeHM.Forms
         {
             try
             {
-                object obj = _data.FirstOrDefault(_etype,
-                                                  o =>
-                                                  Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) ==
-                                                  key);
+                object obj = _data.FirstOrDefault(_etype, o =>
+                                                  Convert.ToInt32(_schemaManager.Key(_etype).GetValue(o, null)) == key);
                 _dbContext.Entry(obj).State = EntityState.Deleted;
                 _dbContext.SaveChanges();
                 YMessageBox.Information("Удалено.");
@@ -132,16 +128,18 @@ namespace PrototypeHM.Forms
             loadControl.Show();
             _loadTask =
                 new Task<IList>(
-                    () => 
-                        _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype), _taskCancellationTokenSource.Token);
+                    () => _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype), _taskCancellationTokenSource.Token);
             _loadTask.ContinueWith(t =>
                                   {
                                       if (!_taskCancellationTokenSource.IsCancellationRequested)
                                       {
                                           _count = t.Result.Count;
-                                          ydgvList.Invoke(new MethodInvoker(() =>
-                                                  ydgvList.BindingSource = new BindingSource {DataSource = t.Result}));
-                                          loadControl.Invoke(new MethodInvoker(() => loadControl.Hide()));
+                                          Invoke(new MethodInvoker(() =>
+                                                                       {
+                                                                           ydgvList.BindingSource = new BindingSource { DataSource = t.Result };
+                                                                           InitializeColumns();
+                                                                           loadControl.Hide();
+                                                                       }));
                                       }
                                   });
             _loadTask.Start();
