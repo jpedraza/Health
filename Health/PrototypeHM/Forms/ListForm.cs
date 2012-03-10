@@ -3,8 +3,11 @@ using System.Collections;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFCFModel;
+using PrototypeHM.Components;
 using PrototypeHM.DI;
 
 namespace PrototypeHM.Forms
@@ -19,10 +22,13 @@ namespace PrototypeHM.Forms
         private Action<int> _delete;
         private Action<int> _detail, _edit;
         private bool _hasEditColumn;
+        private Task<IList> _loadTask;
+        private readonly CancellationTokenSource _taskCancellationTokenSource;
 
         public ListForm(IDIKernel diKernel, Type etype) : base(diKernel)
         {
             InitializeComponent();
+            _taskCancellationTokenSource = new CancellationTokenSource();
             ydgvList.RowHeadersVisible = false;
             _etype = etype;
             _dbContext = Get<DbContext>();
@@ -123,9 +129,22 @@ namespace PrototypeHM.Forms
 
         private void InitializeData()
         {
-            _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype);
-            _count = _data.Count;
-            ydgvList.BindingSource = new BindingSource {DataSource = _data};
+            loadControl.Show();
+            _loadTask =
+                new Task<IList>(
+                    () => 
+                        _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype), _taskCancellationTokenSource.Token);
+            _loadTask.ContinueWith(t =>
+                                  {
+                                      if (!_taskCancellationTokenSource.IsCancellationRequested)
+                                      {
+                                          _count = t.Result.Count;
+                                          ydgvList.Invoke(new MethodInvoker(() =>
+                                                  ydgvList.BindingSource = new BindingSource {DataSource = t.Result}));
+                                          loadControl.Invoke(new MethodInvoker(() => loadControl.Hide()));
+                                      }
+                                  });
+            _loadTask.Start();
         }
 
         private void InitializeColumns()
@@ -159,6 +178,12 @@ namespace PrototypeHM.Forms
                 ydgvList.Columns.AddRange(new[] {detailColumn, editColumn, deleteColumn});
                 _hasEditColumn = true;
             }
+        }
+
+        private void ListFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_loadTask.Status == TaskStatus.Running && _taskCancellationTokenSource.Token.CanBeCanceled)
+                _taskCancellationTokenSource.Cancel();
         }
     }
 }

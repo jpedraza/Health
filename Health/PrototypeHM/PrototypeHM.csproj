@@ -96,6 +96,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\LoadControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\LoadControl.Designer.cs">
+      <DependentUpon>LoadControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\MultiSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -146,6 +152,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YApplication.cs" />
     <Compile Include="YMessageBox.cs" />
+    <EmbeddedResource Include="Components\LoadControl.resx">
+      <DependentUpon>LoadControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\MultiSelector.resx">
       <DependentUpon>MultiSelector.cs</DependentUpon>
     </EmbeddedResource>

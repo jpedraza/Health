@@ -31,6 +31,7 @@
             this.ydgvList = new PrototypeHM.Components.YDataGridView();
             this.toolPanel = new System.Windows.Forms.ToolStrip();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.loadControl = new PrototypeHM.Components.LoadControl();
             ((System.ComponentModel.ISupportInitialize)(this.ydgvList)).BeginInit();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -68,6 +69,7 @@
             // 
             // toolStripContainer1.ContentPanel
             // 
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.loadControl);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.ydgvList);
             this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(942, 575);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -81,6 +83,15 @@
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolPanel);
             // 
+            // loadControl
+            // 
+            this.loadControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loadControl.Location = new System.Drawing.Point(0, 0);
+            this.loadControl.Name = "loadControl";
+            this.loadControl.Size = new System.Drawing.Size(942, 575);
+            this.loadControl.TabIndex = 1;
+            this.loadControl.Visible = false;
+            // 
             // ListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -90,6 +101,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ListForm";
             this.Text = "ListForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.ydgvList)).EndInit();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
@@ -105,5 +117,6 @@
         private Components.YDataGridView ydgvList;
         private System.Windows.Forms.ToolStrip toolPanel;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private Components.LoadControl loadControl;
     }
 }
