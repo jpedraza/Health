@@ -47,7 +47,15 @@ namespace EFCFModel
         }
     }
 
-    public class Validator
+    public interface IValidator
+    {
+        IEnumerable<ValidationResult> Errors { get; }
+        IEnumerable<ValidationResult> Validate(object component);
+        ValidationResult ValidateProperty(object component, PropertyDescriptor descriptor);
+        bool IsValid(object component);
+    }
+
+    public class Validator : IValidator
     {
         public IEnumerable<ValidationResult> Errors { get; private set; }
 

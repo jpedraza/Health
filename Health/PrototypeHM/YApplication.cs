@@ -39,6 +39,7 @@ namespace PrototypeHM
                 .WithConstructorArgument("context", ((IObjectContextAdapter) _kernel.Get<DbContext>()).ObjectContext);
             _kernel.Bind<ByteConverter>().ToSelf().InThreadScope();
             _kernel.Bind<DIMainForm>().ToSelf().InThreadScope();
+            _kernel.Bind<IValidator>().To<Validator>().InThreadScope();
         }
     }
 }

@@ -98,8 +98,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(942, 600);
             this.Controls.Add(this.toolStripContainer1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ListForm";
+            this.ShowIcon = false;
             this.Text = "ListForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.ydgvList)).EndInit();

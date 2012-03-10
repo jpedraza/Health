@@ -90,8 +90,8 @@
             this.Controls.Add(this.layoutPanel);
             this.Controls.Add(this.statusPanel);
             this.Controls.Add(this.toolPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "EditForm";
+            this.ShowIcon = false;
             this.Text = "EditForm";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);

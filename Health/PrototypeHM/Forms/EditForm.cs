@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,7 +12,6 @@ using PrototypeHM.Components;
 using PrototypeHM.DI;
 using ByteConverter = EFCFModel.ByteConverter;
 using ValidationResult = EFCFModel.ValidationResult;
-using Validator = EFCFModel.Validator;
 
 namespace PrototypeHM.Forms
 {
@@ -24,7 +22,7 @@ namespace PrototypeHM.Forms
         private readonly IList<Control> _form;
         private readonly IList<string> _labels;
         private readonly ISchemaManager _schemaManager;
-        private readonly Validator _validator;
+        private readonly IValidator _validator;
         private readonly CancellationTokenSource _loadCancellationTokenSource;
         private Task<object> _loadTask;
         private object _data;
@@ -41,7 +39,7 @@ namespace PrototypeHM.Forms
             _key = key;
             _dbContext = Get<DbContext>();
             _schemaManager = Get<ISchemaManager>();
-            _validator = new Validator();
+            _validator = Get<IValidator>();
             _form = new List<Control>();
             _labels = new List<string>();
             loadControl.Show();
