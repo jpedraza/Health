@@ -21,7 +21,7 @@ namespace EFCFModel.Entities
 
         [DisplayName("Специальность"), NotDisplay]
         [Required(ErrorMessage = "Необходимо указать специальность.")]
-        public Specialty Specialty { get; set; }
+        public virtual Specialty Specialty { get; set; }
 
         public override string ToString()
         {

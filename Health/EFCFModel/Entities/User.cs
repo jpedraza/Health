@@ -34,7 +34,7 @@ namespace EFCFModel.Entities
         [Required(ErrorMessage = "Необходимо указать день рождения пользователя.")]
         public DateTime Birthday { get; set; }
 
-        [NotMap]
+        [NotMap, NotEdit]
         public int Age { get { return DateTime.Now.Year - Birthday.Year; } }
 
         [NotDisplay, DisplayName("Роль")]

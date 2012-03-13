@@ -29,20 +29,21 @@
         private void InitializeComponent()
         {
             this.btnToRight = new System.Windows.Forms.Button();
-            this.btnSwap = new System.Windows.Forms.Button();
             this.btnToLeft = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.controlPanel = new System.Windows.Forms.Panel();
             this.btnDisplayMode = new System.Windows.Forms.Button();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.controlPanel = new System.Windows.Forms.Panel();
+            this.leftLoadControl = new PrototypeHM.Components.LoadControl();
             this.ydgvLeft = new PrototypeHM.Components.YDataGridView();
+            this.rightLoadControl = new PrototypeHM.Components.LoadControl();
             this.ydgvRight = new PrototypeHM.Components.YDataGridView();
-            this.panel1.SuspendLayout();
+            this.mainPanel.SuspendLayout();
+            this.controlPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            this.controlPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ydgvLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ydgvRight)).BeginInit();
             this.SuspendLayout();
@@ -50,53 +51,54 @@
             // btnToRight
             // 
             this.btnToRight.Enabled = false;
-            this.btnToRight.Location = new System.Drawing.Point(24, 2);
+            this.btnToRight.Location = new System.Drawing.Point(111, 2);
             this.btnToRight.Name = "btnToRight";
-            this.btnToRight.Size = new System.Drawing.Size(50, 25);
+            this.btnToRight.Size = new System.Drawing.Size(100, 25);
             this.btnToRight.TabIndex = 2;
             this.btnToRight.Text = ">";
             this.btnToRight.UseVisualStyleBackColor = true;
             this.btnToRight.Click += new System.EventHandler(this.BtnToRightClick);
             // 
-            // btnSwap
-            // 
-            this.btnSwap.Enabled = false;
-            this.btnSwap.Location = new System.Drawing.Point(80, 2);
-            this.btnSwap.Name = "btnSwap";
-            this.btnSwap.Size = new System.Drawing.Size(50, 25);
-            this.btnSwap.TabIndex = 3;
-            this.btnSwap.Text = "<>";
-            this.btnSwap.UseVisualStyleBackColor = true;
-            // 
             // btnToLeft
             // 
             this.btnToLeft.Enabled = false;
-            this.btnToLeft.Location = new System.Drawing.Point(136, 2);
+            this.btnToLeft.Location = new System.Drawing.Point(3, 2);
             this.btnToLeft.Name = "btnToLeft";
-            this.btnToLeft.Size = new System.Drawing.Size(50, 25);
+            this.btnToLeft.Size = new System.Drawing.Size(102, 25);
             this.btnToLeft.TabIndex = 4;
             this.btnToLeft.Text = "<";
             this.btnToLeft.UseVisualStyleBackColor = true;
             this.btnToLeft.Click += new System.EventHandler(this.BtnToLeftClick);
             // 
-            // panel1
+            // mainPanel
             // 
-            this.panel1.Controls.Add(this.controlPanel);
-            this.panel1.Controls.Add(this.btnDisplayMode);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(400, 36);
-            this.panel1.TabIndex = 5;
+            this.mainPanel.Controls.Add(this.controlPanel);
+            this.mainPanel.Controls.Add(this.btnDisplayMode);
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(656, 36);
+            this.mainPanel.TabIndex = 5;
+            // 
+            // controlPanel
+            // 
+            this.controlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlPanel.Controls.Add(this.btnToRight);
+            this.controlPanel.Controls.Add(this.btnToLeft);
+            this.controlPanel.Location = new System.Drawing.Point(439, 4);
+            this.controlPanel.Name = "controlPanel";
+            this.controlPanel.Size = new System.Drawing.Size(214, 29);
+            this.controlPanel.TabIndex = 7;
+            this.controlPanel.Visible = false;
             // 
             // btnDisplayMode
             // 
             this.btnDisplayMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDisplayMode.Location = new System.Drawing.Point(3, 6);
             this.btnDisplayMode.Name = "btnDisplayMode";
-            this.btnDisplayMode.Size = new System.Drawing.Size(80, 25);
+            this.btnDisplayMode.Size = new System.Drawing.Size(116, 25);
             this.btnDisplayMode.TabIndex = 6;
-            this.btnDisplayMode.Text = "Show/Hide";
+            this.btnDisplayMode.Text = "Выбрать/Скрыть";
             this.btnDisplayMode.UseVisualStyleBackColor = true;
             this.btnDisplayMode.Click += new System.EventHandler(this.BtnDisplayModeClick);
             // 
@@ -112,29 +114,29 @@
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.leftLoadControl);
             this.splitContainer.Panel1.Controls.Add(this.ydgvLeft);
             this.splitContainer.Panel1MinSize = 0;
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.rightLoadControl);
             this.splitContainer.Panel2.Controls.Add(this.ydgvRight);
             this.splitContainer.Panel2Collapsed = true;
             this.splitContainer.Panel2MinSize = 0;
-            this.splitContainer.Size = new System.Drawing.Size(397, 360);
-            this.splitContainer.SplitterDistance = 493;
+            this.splitContainer.Size = new System.Drawing.Size(653, 540);
+            this.splitContainer.SplitterDistance = 372;
             this.splitContainer.TabIndex = 6;
             // 
-            // controlPanel
+            // leftLoadControl
             // 
-            this.controlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.controlPanel.Controls.Add(this.btnSwap);
-            this.controlPanel.Controls.Add(this.btnToRight);
-            this.controlPanel.Controls.Add(this.btnToLeft);
-            this.controlPanel.Location = new System.Drawing.Point(183, 4);
-            this.controlPanel.Name = "controlPanel";
-            this.controlPanel.Size = new System.Drawing.Size(214, 29);
-            this.controlPanel.TabIndex = 7;
-            this.controlPanel.Visible = false;
+            this.leftLoadControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftLoadControl.Location = new System.Drawing.Point(0, 0);
+            this.leftLoadControl.Margin = new System.Windows.Forms.Padding(6);
+            this.leftLoadControl.Name = "leftLoadControl";
+            this.leftLoadControl.Size = new System.Drawing.Size(653, 540);
+            this.leftLoadControl.TabIndex = 1;
+            this.leftLoadControl.Visible = false;
             // 
             // ydgvLeft
             // 
@@ -142,17 +144,26 @@
             this.ydgvLeft.AllowUserToDeleteRows = false;
             this.ydgvLeft.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ydgvLeft.BackgroundColor = System.Drawing.Color.White;
+            this.ydgvLeft.BindingSource = null;
             this.ydgvLeft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ydgvLeft.Delete = null;
-            this.ydgvLeft.Detail = null;
             this.ydgvLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ydgvLeft.Location = new System.Drawing.Point(0, 0);
             this.ydgvLeft.MinimumSize = new System.Drawing.Size(200, 200);
             this.ydgvLeft.Name = "ydgvLeft";
             this.ydgvLeft.ReadOnly = true;
             this.ydgvLeft.RowHeadersVisible = false;
-            this.ydgvLeft.Size = new System.Drawing.Size(397, 360);
+            this.ydgvLeft.Size = new System.Drawing.Size(653, 540);
             this.ydgvLeft.TabIndex = 0;
+            // 
+            // rightLoadControl
+            // 
+            this.rightLoadControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightLoadControl.Location = new System.Drawing.Point(0, 0);
+            this.rightLoadControl.Margin = new System.Windows.Forms.Padding(6);
+            this.rightLoadControl.Name = "rightLoadControl";
+            this.rightLoadControl.Size = new System.Drawing.Size(96, 100);
+            this.rightLoadControl.TabIndex = 2;
+            this.rightLoadControl.Visible = false;
             // 
             // ydgvRight
             // 
@@ -160,33 +171,32 @@
             this.ydgvRight.AllowUserToDeleteRows = false;
             this.ydgvRight.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ydgvRight.BackgroundColor = System.Drawing.Color.White;
+            this.ydgvRight.BindingSource = null;
             this.ydgvRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ydgvRight.Delete = null;
-            this.ydgvRight.Detail = null;
             this.ydgvRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ydgvRight.Location = new System.Drawing.Point(0, 0);
             this.ydgvRight.MinimumSize = new System.Drawing.Size(200, 200);
             this.ydgvRight.Name = "ydgvRight";
             this.ydgvRight.ReadOnly = true;
             this.ydgvRight.RowHeadersVisible = false;
-            this.ydgvRight.Size = new System.Drawing.Size(505, 546);
+            this.ydgvRight.Size = new System.Drawing.Size(200, 200);
             this.ydgvRight.TabIndex = 1;
             // 
             // MultiSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.splitContainer);
-            this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "MultiSelector";
-            this.Size = new System.Drawing.Size(400, 400);
-            this.panel1.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(656, 580);
+            this.mainPanel.ResumeLayout(false);
+            this.controlPanel.ResumeLayout(false);
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            this.controlPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ydgvLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ydgvRight)).EndInit();
             this.ResumeLayout(false);
@@ -198,11 +208,12 @@
         private YDataGridView ydgvLeft;
         private YDataGridView ydgvRight;
         private System.Windows.Forms.Button btnToRight;
-        private System.Windows.Forms.Button btnSwap;
         private System.Windows.Forms.Button btnToLeft;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Button btnDisplayMode;
         private System.Windows.Forms.Panel controlPanel;
         private System.Windows.Forms.SplitContainer splitContainer;
+        private LoadControl leftLoadControl;
+        private LoadControl rightLoadControl;
     }
 }

@@ -23,10 +23,12 @@ namespace PrototypeHM.Forms
         private bool _hasEditColumn;
         private Task<IList> _loadTask;
         private readonly CancellationTokenSource _taskCancellationTokenSource;
+        private readonly SynchronizationContext _synchronizationContext;
 
         public ListForm(IDIKernel diKernel, Type etype) : base(diKernel)
         {
             InitializeComponent();
+            _synchronizationContext = SynchronizationContext.Current;
             _taskCancellationTokenSource = new CancellationTokenSource();
             ydgvList.RowHeadersVisible = false;
             _etype = etype;
@@ -89,6 +91,7 @@ namespace PrototypeHM.Forms
 
         private void YdgvListCellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
             int key = Convert.ToInt32(_schemaManager.Key(_etype).GetValue(_data[e.RowIndex], null));
             switch (ydgvList.Columns[e.ColumnIndex].Name)
             {
@@ -106,7 +109,7 @@ namespace PrototypeHM.Forms
                     {
                         if (!Get<DIMainForm>().MdiChildren.Any(f => f is DIForm && (f as DIForm).UID == _etype.FullName + key))
                         {
-                            if (MessageBox.Show(@"Точно хотите удалить?", @"Подтверждение", MessageBoxButtons.YesNo,
+                            if (MessageBox.Show("Точно хотите удалить?", "Подтверждение", MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                             {
                                 _delete(key);
@@ -130,18 +133,15 @@ namespace PrototypeHM.Forms
                 new Task<IList>(
                     () => _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype), _taskCancellationTokenSource.Token);
             _loadTask.ContinueWith(t =>
-                                  {
-                                      if (!_taskCancellationTokenSource.IsCancellationRequested)
-                                      {
-                                          _count = t.Result.Count;
-                                          Invoke(new MethodInvoker(() =>
-                                                                       {
-                                                                           ydgvList.BindingSource = new BindingSource { DataSource = t.Result };
-                                                                           InitializeColumns();
-                                                                           loadControl.Hide();
-                                                                       }));
-                                      }
-                                  });
+                                       {
+                                           _count = t.Result.Count;
+                                           _synchronizationContext.Post(c =>
+                                                                            {
+                                                                                ydgvList.BindingSource = new BindingSource {DataSource = t.Result};
+                                                                                InitializeColumns();
+                                                                                loadControl.Hide();
+                                                                            }, null);
+                                       }, TaskContinuationOptions.OnlyOnRanToCompletion);
             _loadTask.Start();
         }
 
@@ -152,7 +152,7 @@ namespace PrototypeHM.Forms
                 var detailColumn = new DataGridViewButtonColumn
                                        {
                                            AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader,
-                                           HeaderText = @"Детали",
+                                           HeaderText = "Детали",
                                            Name = @"ActionDetail",
                                            Text = @"Детали",
                                            UseColumnTextForButtonValue = true
@@ -160,20 +160,20 @@ namespace PrototypeHM.Forms
                 var editColumn = new DataGridViewButtonColumn
                                      {
                                          AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader,
-                                         HeaderText = @"Ред.",
-                                         Name = @"ActionEdit",
-                                         Text = @"Ред.",
+                                         HeaderText = "Ред.",
+                                         Name = "ActionEdit",
+                                         Text = "Ред.",
                                          UseColumnTextForButtonValue = true
                                      };
                 var deleteColumn = new DataGridViewButtonColumn
                                        {
                                            AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader,
-                                           HeaderText = @"Удалить",
-                                           Name = @"ActionDelete",
-                                           Text = @"Удалить",
+                                           HeaderText = "Удалить",
+                                           Name = "ActionDelete",
+                                           Text = "Удалить",
                                            UseColumnTextForButtonValue = true
                                        };
-                ydgvList.Columns.AddRange(new[] {detailColumn, editColumn, deleteColumn});
+                ydgvList.Columns.AddRange(new DataGridViewColumn[] {detailColumn, editColumn, deleteColumn});
                 _hasEditColumn = true;
             }
         }

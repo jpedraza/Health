@@ -69,6 +69,7 @@
     <Compile Include="ITask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\DropDatabaseTask.cs" />
     <Compile Include="Tasks\ExecuteFileScriptTask.cs" />
     <Compile Include="Tasks\ICDParserTask.cs" />
     <Compile Include="Tasks\TestDataTask.cs" />

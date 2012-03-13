@@ -93,6 +93,7 @@
             this.Name = "EditForm";
             this.ShowIcon = false;
             this.Text = "EditForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

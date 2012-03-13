@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PrototypeHM.DI;
 
@@ -14,24 +16,27 @@ namespace PrototypeHM.Components
         private IList _data;
         private bool _expand;
         private object _selectedData;
-
-        #region Implementation of IDIInjected
+        private Task<IList> _loadTask;
+        private readonly CancellationTokenSource _loadCancellationTokenSource;
 
         public IDIKernel DIKernel { get; private set; }
 
-        #endregion
-
         public SingleSelector(IDIKernel diKernel, Type etype)
         {
+            Disposed += SingleSelectorDisposed;
             InitializeComponent();
             DIKernel = diKernel;
+            _loadCancellationTokenSource = new CancellationTokenSource();
             _etype = etype;
             _dbContext = DIKernel.Get<DbContext>();
-            _expand = false;
-            InitializeData();
-            Width = 275;
-            ydgvCollection.Visible = false;
             ydgvCollection.RowHeadersVisible = false;
+            ExpandTop();
+        }
+
+        private void SingleSelectorDisposed(object sender, EventArgs e)
+        {
+            if (_loadCancellationTokenSource.Token.CanBeCanceled)
+                _loadCancellationTokenSource.Cancel();
         }
 
         public object SelectedData
@@ -41,7 +46,7 @@ namespace PrototypeHM.Components
             {
                 if (value != null)
                 {
-                    if (!_etype.IsAssignableFrom(value.GetType()))
+                    if (!_etype.IsInstanceOfType(value))
                         throw new Exception(string.Format("Value type must be {0}, but get {1}.", _etype.FullName,
                                                           value.GetType().FullName));
                     _selectedData = value;
@@ -50,13 +55,21 @@ namespace PrototypeHM.Components
             }
         }
 
-        public string PropertyName { get; set; }
         public Action<object> ValueChange { get; set; }
 
-        public void InitializeData()
+        private void InitializeData()
         {
-            _data = ((IQueryable<object>) _dbContext.Set(_etype)).ToList(_etype);
-            ydgvCollection.BindingSource = new BindingSource {DataSource = _data};
+            loadControl.Show();
+            _loadTask = new Task<IList>(() => _data = ((IQueryable<object>)_dbContext.Set(_etype)).ToList(_etype));
+            _loadTask.ContinueWith(task =>
+                                       {
+                                           Invoke((Action) (() =>
+                                                                {
+                                                                    ydgvCollection.BindingSource = new BindingSource {DataSource = _data};
+                                                                    loadControl.Hide();
+                                                                }));
+                                       }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            _loadTask.Start();
         }
 
         private void YdgvCollectionCellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -71,37 +84,28 @@ namespace PrototypeHM.Components
 
         private void ExpandTop()
         {
+            Height = Convert.ToInt32(tableLayoutPanel.RowStyles[0].Height);
             _expand = false;
-            ydgvCollection.Visible = false;
-            Width = 275;
-            Height = 20;
+            panel.Visible = false;
         }
 
         private void ExpandBottom()
         {
+            Height = 400;
             _expand = true;
-            ydgvCollection.Visible = true;
-            Width = 400;
-            if (0 < ydgvCollection.RowCount && ydgvCollection.RowCount < 10)
-            {
-                ydgvCollection.Height = ydgvCollection.Rows[0].Height*ydgvCollection.RowCount +
-                                        ydgvCollection.ColumnHeadersHeight + 1;
-                Height = ydgvCollection.Height + txbSelectedValue.Height + 1;
-            }
-            else
-            {
-                Height = 400;
-            }
+            panel.Visible = true;
         }
 
-        private void BtnSelectClick(object sender, EventArgs e)
+        private void ExpandClick(object sender, EventArgs e)
         {
             if (_expand)
             {
+                SingleSelectorDisposed(sender, e);
                 ExpandTop();
             }
             else
             {
+                InitializeData();
                 ExpandBottom();
             }
         }

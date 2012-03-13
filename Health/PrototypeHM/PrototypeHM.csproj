@@ -11,7 +11,8 @@
     <RootNamespace>PrototypeHM</RootNamespace>
     <AssemblyName>PrototypeHM</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -154,6 +155,7 @@
     <Compile Include="YMessageBox.cs" />
     <EmbeddedResource Include="Components\LoadControl.resx">
       <DependentUpon>LoadControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\MultiSelector.resx">
       <DependentUpon>MultiSelector.cs</DependentUpon>
@@ -181,6 +183,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
     <None Include="packages.config" />

@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PrototypeHM.DI;
 
 namespace PrototypeHM.Components
 {
+    public enum LoadMode
+    {
+        Sync,
+        Async
+    }
+
     /// <summary>
     /// Компонент обеспечивает миграцию однотипных объектов между двумя источниками данных.
     /// </summary>
     public partial class MultiSelector : UserControl, IDIInjected
     {
-        #region Delegates
-
         /// <summary>
         /// Делегат события при перемещении элементов.
         /// </summary>
@@ -20,37 +26,22 @@ namespace PrototypeHM.Components
         /// <returns>Разрешить перемещение или нет?</returns>
         public delegate bool EventMove(IBindingList objs);
 
-        #endregion
+        public EventMove OnBeforeMoveToRight { get; set; }
 
-        /// <summary>
-        /// Событие возникате перед перемещением элемента из правого источника данных в левый.
-        /// </summary>
-        public EventMove OnBeforeMoveToLeft;
-
-        /// <summary>
-        /// Событие возникате перед перемещением элемента из левого источника данных в правый.
-        /// </summary>
-        public EventMove OnBeforeMoveToRight;
+        public EventMove OnBeforeMoveToLeft { get; set; }
 
         private bool _editMode;
 
-        public MultiSelector(IDIKernel diKernel)
-        {
-            DIKernel = diKernel;
-            InitializeComponent();
-            EditMode = false;
-        }
+        public BindingSource LeftSource { get; private set; }
 
-        #region Implementation of IDIInjected
+        public BindingSource RightSource { get; private set; }
 
         public IDIKernel DIKernel { get; private set; }
-
-        #endregion
 
         /// <summary>
         /// Задать или узнать включен ли режим редактирования.
         /// </summary>
-        public bool EditMode
+        private bool EditMode
         {
             get { return _editMode; }
             set
@@ -60,26 +51,70 @@ namespace PrototypeHM.Components
                 splitContainer.Panel2Collapsed = !_editMode;
                 if (_editMode)
                 {
-                    splitContainer.Panel1MinSize = splitContainer.Width/2 - 5;
-                    splitContainer.Panel2MinSize = splitContainer.Width/2 - 5;
-                    splitContainer.SplitterDistance = splitContainer.Width/2 - 3;
+                    splitContainer.Panel1MinSize = splitContainer.Width / 2 - 5;
+                    splitContainer.Panel2MinSize = splitContainer.Width / 2 - 5;
+                    splitContainer.SplitterDistance = splitContainer.Width / 2 - 5;
                 }
             }
         }
 
-        /// <summary>
-        /// Левый источник данных.
-        /// </summary>
-        public BindingSource LeftSource { get; private set; }
+        public Func<BindingSource> LeftLoad { get; set; }
 
-        /// <summary>
-        /// Правый источник данных.
-        /// </summary>
-        public BindingSource RightSource { get; private set; }
+        public Func<BindingSource> RightLoad { get; set; }
+
+        private Task _loadTask;
+        private readonly CancellationTokenSource _tokenSource;
+
+        public MultiSelector(IDIKernel diKernel)
+        {
+            _tokenSource = new CancellationTokenSource();
+            Disposed += MultiSelectorDisposed;
+            DIKernel = diKernel;
+            InitializeComponent();
+            EditMode = false;
+        }
+
+        private void MultiSelectorDisposed(object sender, EventArgs e)
+        {
+            if (_loadTask != null && _loadTask.Status == TaskStatus.Running && _tokenSource.Token.CanBeCanceled)
+                _tokenSource.Cancel();
+        }
 
         private void BtnDisplayModeClick(object sender, EventArgs e)
         {
             EditMode = !EditMode;
+        }
+
+        public void LoadData(LoadMode loadMode)
+        {
+            HandleCreated += (sender, e) => M(loadMode);
+        }
+
+        private void M(LoadMode loadMode)
+        {
+            if (LeftLoad == null)
+                throw new NullReferenceException("Метод для загрузки левых данных не указан.");
+
+            if (RightLoad == null)
+                throw new NullReferenceException("Метод для загрузки правых данных не указан.");
+
+            if (loadMode == LoadMode.Sync)
+            {
+                BindingSource left = LeftLoad();
+                BindingSource right = RightLoad();
+                SetData(left, right);
+            }
+            else if (loadMode == LoadMode.Async)
+            {
+                leftLoadControl.Show();
+                rightLoadControl.Show();
+                _loadTask = new Task(() => {
+                    BindingSource left = LeftLoad();
+                    BindingSource right = RightLoad();
+                    Invoke((Action)(() => SetData(left, right)));
+                }, _tokenSource.Token);
+                _loadTask.Start();
+            }
         }
 
         /// <summary>
@@ -90,7 +125,7 @@ namespace PrototypeHM.Components
         /// </summary>
         /// <param name="left">Левый.</param>
         /// <param name="right">Правый.</param>
-        public void SetData(object left, object right)
+        private void SetData(BindingSource left, BindingSource right)
         {
             if (left == null)
                 throw new ArgumentNullException("left");
@@ -98,28 +133,18 @@ namespace PrototypeHM.Components
             if (right == null)
                 throw new ArgumentNullException("right");
 
-            BindingSource leftBindingSource = left.GetType().IsAssignableFrom((typeof (BindingSource)))
-                                                  ? (BindingSource) left
-                                                  : new BindingSource {DataSource = left};
-            BindingSource rightBindingSource = right.GetType().IsAssignableFrom(typeof (BindingSource))
-                                                   ? (BindingSource) right
-                                                   : new BindingSource {DataSource = right};
-
-            if (leftBindingSource.DataSource.GetType() != rightBindingSource.DataSource.GetType())
+            if (left.DataSource.GetType() != right.DataSource.GetType())
                 throw new Exception("Источники данных должны быть одного типа.");
 
-#if Release
-            if (leftBindingSource.Count == 0 && rightBindingSource.Count == 0)
-                throw new Exception("Число элементов хотя бы в одной из коллекций должно быть больше 0.");  
-#endif
+            btnToLeft.Enabled = left.Count > 0;
+            btnToRight.Enabled = right.Count > 0;
 
-            btnToLeft.Enabled = rightBindingSource.Count > 0;
-            btnToRight.Enabled = leftBindingSource.Count > 0;
-
-            LeftSource = leftBindingSource;
-            RightSource = rightBindingSource;
+            LeftSource = left;
+            RightSource = right;
             ydgvLeft.BindingSource = LeftSource;
+            leftLoadControl.Hide();
             ydgvRight.BindingSource = RightSource;
+            rightLoadControl.Hide();
 
             LeftSource.ListChanged += LeftSourceListChanged;
             RightSource.ListChanged += RightSourceListChanged;

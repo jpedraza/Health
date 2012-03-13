@@ -5,20 +5,44 @@ using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFCFModel.Attributes;
 
 namespace PrototypeHM.Components
 {
+    public enum XLoadMode
+    {
+        Synchronize,
+        Asynchronize
+    }
+
     public class YDataGridView : DataGridView
     {
         private bool _convertEmptyStringToNull;
+        private readonly SynchronizationContext _synchronizationContext;
+        private readonly Task _loadTask;
+        private readonly CancellationTokenSource _tokenSource;
 
         public YDataGridView()
         {
+            _synchronizationContext = SynchronizationContext.Current;
+            _tokenSource = new CancellationTokenSource();
+            _loadTask = new Task(() =>
+                                     {
+                                         BindingSource source = LoadDataAction();
+                                         _synchronizationContext.Post(c => BindingSource = source, null);
+                                     }, _tokenSource.Token);
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             BackgroundColor = Color.White;
-            CellClick += CellClickEvent;
+            Disposed += YDataGridViewDisposed;
+        }
+
+        private void YDataGridViewDisposed(object sender, EventArgs e)
+        {
+            if (_loadTask.Status == TaskStatus.Running && _tokenSource.Token.CanBeCanceled)
+                _tokenSource.Cancel();
         }
 
         public BindingSource BindingSource
@@ -27,50 +51,24 @@ namespace PrototypeHM.Components
             set { DataSource = value; }
         }
 
-        public Action<int> Detail { get; set; }
+        public XLoadMode LoadMode { get; set; }
 
-        public Action<int> Delete { get; set; }
+        public Func<BindingSource> LoadDataAction { get; set; }
 
-        public void SetDataSource(BindingSource dataSource)
+        public void LoadData()
         {
-            BindingSource = dataSource;
-        }
-
-        private void CellClickEvent(object sender, DataGridViewCellEventArgs e)
-        {
-            if (Detail != null && Columns[e.ColumnIndex].Name == @"Детали")
+            switch (LoadMode)
             {
-                Detail(e.RowIndex);
-                return;
-            }
-            if (Delete != null && Columns[e.ColumnIndex].Name == @"Удалить")
-            {
-                Delete(e.RowIndex);
-                return;
-            }
-        }
-
-        public void InitializeOperations()
-        {
-            if (Detail != null)
-            {
-                var column = new DataGridViewButtonColumn
-                                 {
-                                     Text = @"Детали",
-                                     Name = @"Детали",
-                                     UseColumnTextForButtonValue = true
-                                 };
-                Columns.Add(column);
-            }
-            if (Delete != null)
-            {
-                var column = new DataGridViewButtonColumn
-                                 {
-                                     Text = @"Удалить",
-                                     Name = @"Удалить",
-                                     UseColumnTextForButtonValue = true
-                                 };
-                Columns.Add(column);
+                case XLoadMode.Asynchronize:
+                    {
+                        _loadTask.Start();
+                        break;
+                    }
+                    case XLoadMode.Synchronize:
+                    {
+                        BindingSource = LoadDataAction();
+                        break;
+                    }
             }
         }
 
@@ -103,7 +101,6 @@ namespace PrototypeHM.Components
                                 : BindingSource;
             if (source != null && source.GetType().IsGenericType && source.GetType().GetGenericArguments().Any())
             {
-                Type st = source.GetType();
                 Type[] genericArguments = source.GetType().GetGenericArguments();
                 Type objType = genericArguments[0];
                 var metadataTypeAttribute =
@@ -149,7 +146,6 @@ namespace PrototypeHM.Components
                             _convertEmptyStringToNull = (att as DisplayFormatAttribute).ConvertEmptyStringToNull;
                             column.DefaultCellStyle.Format = (att as DisplayFormatAttribute).DataFormatString;
                             column.DefaultCellStyle.NullValue = (att as DisplayFormatAttribute).NullDisplayText;
-                            continue;
                         }
                     }
                 }

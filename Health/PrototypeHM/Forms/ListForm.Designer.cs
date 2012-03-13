@@ -46,9 +46,8 @@
             this.ydgvList.BackgroundColor = System.Drawing.Color.White;
             this.ydgvList.BindingSource = null;
             this.ydgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ydgvList.Delete = null;
-            this.ydgvList.Detail = null;
             this.ydgvList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ydgvList.LoadMode = PrototypeHM.Components.XLoadMode.Synchronize;
             this.ydgvList.Location = new System.Drawing.Point(0, 0);
             this.ydgvList.Name = "ydgvList";
             this.ydgvList.ReadOnly = true;

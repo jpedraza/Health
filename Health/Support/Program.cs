@@ -4,7 +4,7 @@ using Support.Tasks;
 
 namespace Support
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
@@ -18,6 +18,7 @@ namespace Support
 
             sp.AddTask("Вставка диагнозов", new ICDParserTask("ICD10RUS.xls"));
             sp.AddTask("Вставка тестовых данных", new TestDataTask());
+            sp.AddTask("Удалить базу данных", new DropDatabaseTask());
             sp.ProcessAvailableTasks();
         }
     }
