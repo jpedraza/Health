@@ -110,7 +110,10 @@ namespace EFCFModel.Migrations
                                      Name = "Давление",
                                      DefaultValue = Encoding.UTF8.GetBytes("120x80")
                                  };
-            context.Set<Parameter>().AddOrUpdate(parameter1, parameter2);
+            var parameter3 = new ListParameter {Name = "Пол"};
+            parameter3.Elements.Add("Мужской");
+            parameter3.Elements.Add("Женский");
+            context.Set<Parameter>().AddOrUpdate(parameter1, parameter2, parameter3);
             var patient1 = new Patient
                                {
                                    FirstName = "Илья",

@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
@@ -96,25 +99,49 @@ namespace EFCFModel.Entities
         public override Type ValueType { get { return typeof(DateTime); } }
     }
 
+    [ScaffoldTable(true), DisplayName("Параметр-список")]
     public class ListParameter : Parameter
     {
-        private readonly ObservableCollection<string> _collection;
+        private readonly MemoryStream _memoryStream;
+        private readonly BinaryFormatter _binaryFormatter;
 
         public ListParameter()
         {
             _collection = new ObservableCollection<string>();
+            _memoryStream = new MemoryStream();
+            _binaryFormatter = new BinaryFormatter();
             _collection.CollectionChanged += CllectionChanged;
         }
 
         private void CllectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            
+            _binaryFormatter.Serialize(_memoryStream, Elements);
+            ElementsSource = _memoryStream.ToArray();
         }
 
-        #region Overrides of Parameter
+        private ObservableCollection<string> _collection;
+        [NotMap]
+        public ICollection<string> Elements
+        {
+            get { return _collection; }
+            private set
+            {
+                _collection = new ObservableCollection<string>(value);
+            }
+        }
 
-        public override Type ValueType { get { return typeof (ObservableCollection<string>); } }
+        private byte[] _elementsSource;
+        public byte[] ElementsSource
+        {
+            get { return _elementsSource; }
+            private set 
+            { 
+                _elementsSource = value;
+                var m = new MemoryStream(value);
+                Elements = (ICollection<string>)_binaryFormatter.Deserialize(m);
+            }
+        }
 
-        #endregion
+        public override Type ValueType { get { return typeof(ICollection<string>); } }
     }
 }
