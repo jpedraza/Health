@@ -32,7 +32,7 @@ namespace PrototypeHM
         {
             foreach (Exception exception in e.Exception.Flatten().InnerExceptions)
             {
-                YMessageBox.Error(e.Exception.Message);
+                YMessageBox.Error(exception.Message);
             }
             e.SetObserved();
         }
@@ -46,12 +46,12 @@ namespace PrototypeHM
         {
             // General
             _kernel.Bind<IDIKernel>().To<DIKernel>();
-            _kernel.Bind<DbContext>().To<EFHealthContext>().InThreadScope();
-            _kernel.Bind<ISchemaManager>().To<ObjectContextSchemaManager>().InThreadScope()
+            _kernel.Bind<DbContext>().To<EFHealthContext>().InTransientScope();
+            _kernel.Bind<ISchemaManager>().To<ObjectContextSchemaManager>().InTransientScope()
                 .WithConstructorArgument("context", ((IObjectContextAdapter) _kernel.Get<DbContext>()).ObjectContext);
-            _kernel.Bind<ByteConverter>().ToSelf().InThreadScope();
-            _kernel.Bind<DIMainForm>().ToSelf().InThreadScope();
-            _kernel.Bind<IValidator>().To<Validator>().InThreadScope();
+            _kernel.Bind<ByteConverter>().ToSelf().InTransientScope();
+            _kernel.Bind<DIMainForm>().ToSelf().InTransientScope();
+            _kernel.Bind<IValidator>().To<Validator>().InTransientScope();
         }
     }
 }

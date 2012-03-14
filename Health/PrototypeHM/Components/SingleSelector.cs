@@ -18,6 +18,7 @@ namespace PrototypeHM.Components
         private object _selectedData;
         private Task<IList> _loadTask;
         private readonly CancellationTokenSource _loadCancellationTokenSource;
+        private readonly SynchronizationContext _synchronizationContext;
 
         public IDIKernel DIKernel { get; private set; }
 
@@ -27,6 +28,7 @@ namespace PrototypeHM.Components
             InitializeComponent();
             DIKernel = diKernel;
             _loadCancellationTokenSource = new CancellationTokenSource();
+            _synchronizationContext = SynchronizationContext.Current;
             _etype = etype;
             _dbContext = DIKernel.Get<DbContext>();
             ydgvCollection.RowHeadersVisible = false;
@@ -61,20 +63,19 @@ namespace PrototypeHM.Components
         {
             loadControl.Show();
             _loadTask = new Task<IList>(() => _data = ((IQueryable<object>)_dbContext.Set(_etype)).ToList(_etype));
-            _loadTask.ContinueWith(task =>
-                                       {
-                                           Invoke((Action) (() =>
-                                                                {
-                                                                    ydgvCollection.BindingSource = new BindingSource {DataSource = _data};
-                                                                    loadControl.Hide();
-                                                                }));
-                                       }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            _loadTask.ContinueWith(task => _synchronizationContext.Post(c =>
+                                                                            {
+                                                                                ydgvCollection.BindingSource =
+                                                                                    new BindingSource
+                                                                                        {DataSource = _data};
+                                                                                loadControl.Hide();
+                                                                            }, null), TaskContinuationOptions.OnlyOnRanToCompletion);
             _loadTask.Start();
         }
 
         private void YdgvCollectionCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (_data != null)
+            if (_data != null && e.RowIndex >= 0)
             {
                 SelectedData = _data[e.RowIndex];
                 ExpandTop();
