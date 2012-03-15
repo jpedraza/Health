@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading.Tasks;
 using EFCFModel.Attributes;
 
 namespace EFCFModel.Entities
@@ -115,12 +114,12 @@ namespace EFCFModel.Entities
 
         private void CllectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            _binaryFormatter.Serialize(_memoryStream, Elements);
+            _binaryFormatter.Serialize(_memoryStream, (ICollection<string>) Elements);
             ElementsSource = _memoryStream.ToArray();
         }
 
         private ObservableCollection<string> _collection;
-        [NotMap]
+        [NotMap, NotDisplay]
         public ICollection<string> Elements
         {
             get { return _collection; }
@@ -131,6 +130,7 @@ namespace EFCFModel.Entities
         }
 
         private byte[] _elementsSource;
+        [NotDisplay, NotEdit]
         public byte[] ElementsSource
         {
             get { return _elementsSource; }
@@ -142,6 +142,7 @@ namespace EFCFModel.Entities
             }
         }
 
+        [NotDisplay]
         public override Type ValueType { get { return typeof(ICollection<string>); } }
     }
 }
