@@ -24,6 +24,9 @@ namespace EFCFModel.Entities
         [Required(ErrorMessage = "Необходимо указать код.")]
         public string Code { get; set; }
 
+        /// <summary>
+        /// хранит класс диагноза (согласно международной классификации)
+        /// </summary>
         [NotDisplay, DisplayName("Класс диагноза")]
         [Required(ErrorMessage = "Необходимо указать класс диагноза.")]
         public virtual DiagnosisClass DiagnosisClass { get; set; }
