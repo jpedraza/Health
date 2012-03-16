@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PrototypeHM.Components.LoadControl" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\LoadControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Components.MultiSelector" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCAAIAABBCE2BIAAAACAEBAKEAAAAQQAKIACAAICBQQ=</HashCode>
+      <FileName>Components\MultiSelector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PrototypeHM.Components.SingleSelector" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EEABAAAABCgiAAQEAASAAAAiBEAgAAgAIAggAQAEAYA=</HashCode>
+      <FileName>Components\SingleSelector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PrototypeHM.Components.YDataGridView" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAGAAAACAAAQAAAEAIAIAAAAAAAAAQAAAAghAAAAAQA=</HashCode>
+      <FileName>Components\YDataGridView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.DI.ConstructorArgument" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>DI\DIKernel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.DI.DIKernel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABACAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>DI\DIKernel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PrototypeHM.ExtensionMethods" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAEAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.ExEnumerable" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.ExObjectContext" Collapsed="true">
+    <Position X="7.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.ExLinq" Collapsed="true">
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.ExType" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.ExQueryable" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Program" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.YApplication" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAACAEAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>YApplication.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.YMessageBox" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAQAAAAAAABAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>YMessageBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Forms.DIForm" Collapsed="true">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAABAAAAAAAAAAAAAAAAQAAAAAAAAEAA=</HashCode>
+      <FileName>Forms\DIForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PrototypeHM.Forms.DIMainForm" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAIAAACAAAACACACAQMCCBAAAAAgAgEAgAAAARAE=</HashCode>
+      <FileName>Forms\DIMainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Forms.EditForm" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQBAAAABC5SAAAAAQCAIAACAAMAgAgIgAgQAAFAJQA=</HashCode>
+      <FileName>Forms\EditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Forms.ListForm" Collapsed="true">
+    <Position X="5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADQAAABCAiAQQIAASAAoACAAACAggBgAiABBBAQQA=</HashCode>
+      <FileName>Forms\ListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Forms.Patient.EnterParameterForm" Collapsed="true">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAAACAQAAAAAADAQAACBAIAAAAAAAAAAABAlAA=</HashCode>
+      <FileName>Forms\Patient\EnterParameterForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Properties.Resources" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrototypeHM.Properties.Settings" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="PrototypeHM.DI.IDIInjected" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DI\IDIInjected.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PrototypeHM.DI.IDIKernel" Collapsed="true">
+    <Position X="2.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DI\IDIKernel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="PrototypeHM.Components.LoadMode" Collapsed="true">
+    <Position X="0.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\MultiSelector.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PrototypeHM.Components.XLoadMode" Collapsed="true">
+    <Position X="2.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Components\YDataGridView.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

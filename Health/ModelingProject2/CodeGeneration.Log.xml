@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/Users/Alex Stein/AppData/Local/Microsoft/VisualStudio/10.0/Extensions/Microsoft/Visualization and Modeling Feature Pack/1.0/Logging/CodeGenLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log">
+  <Message Timestamp="2012-03-16T17:18:04" Importance="High" Text="Code generation or text transformation started." />
+  <Error Timestamp="2012-03-16T17:18:04" Importance="High" Text="No templates were found to process.  Configure templates by choosing 'Configure Default Code Generation Settings...' from the 'Architecture' menu, or change the selection for which code generation is launched." />
+  <Message Timestamp="2012-03-16T17:18:04" Importance="Diagnostic" Text="The selection included 1 elements which were not bound to a template." />
+  <Warning Timestamp="2012-03-16T17:18:04" Importance="Medium" Text="'ModelingProject2::EFCFModel::Entities::User' -  (Class): no bound template." />
+  <Message Timestamp="2012-03-16T17:18:04" Importance="High" Text="Code generation complete. Errors: 1. Warnings: 1." />
+</Log>
