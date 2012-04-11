@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PrototypeHM.DI
+namespace Prototype.DI
 {
     /// <summary>
     /// Интерфейс доступа к DI ядру.

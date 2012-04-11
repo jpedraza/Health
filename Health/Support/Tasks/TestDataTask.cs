@@ -2,8 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Text;
-using EFCFModel;
-using EFCFModel.Entities;
+using Model.Entities;
 
 namespace Support.Tasks
 {

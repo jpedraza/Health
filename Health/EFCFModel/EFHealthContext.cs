@@ -1,9 +1,9 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Objects;
-using EFCFModel.Entities;
+using Model.Entities;
 
-namespace EFCFModel
+namespace Model
 {
     public class EFHealthContext : DbContext
     {

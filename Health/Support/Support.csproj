@@ -75,9 +75,9 @@
     <Compile Include="Tasks\TestDataTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EFCFModel\EFCFModel.csproj">
+    <ProjectReference Include="..\EFCFModel\Model.csproj">
       <Project>{E7D07113-1BB1-4EA3-9E24-4421F585C04C}</Project>
-      <Name>EFCFModel</Name>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

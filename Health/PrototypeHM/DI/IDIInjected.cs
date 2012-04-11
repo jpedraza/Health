@@ -1,4 +1,4 @@
-namespace PrototypeHM.DI
+namespace Prototype.DI
 {
     /// <summary>
     /// Маркер для объектов в которых присутствует DI-ядро.

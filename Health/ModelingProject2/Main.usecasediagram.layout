@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Patient">
+  <useCaseModelRootMoniker Id="bbcff05c-12b5-411a-90fa-348040bb2e14" />
+  <nestedChildShapes>
+    <actorShape Id="cfbef9ec-c7ee-496a-94de-8594b48ec0af" absoluteBounds="0.5, 4, 0.5, 0.5" isReference="false" heightOffset="0">
+      <actorMoniker Id="0afad68a-d6a8-46ee-8fde-8b6836cf3f58" LastKnownName="Пациент" />
+      <relativeChildShapes />
+    </actorShape>
+    <artifactShape Id="62466a7f-2328-4224-b8f0-ddb09a22eda8" absoluteBounds="3.5, 0.875, 2.125, 0.75" customColor="161, 199, 231">
+      <artifactMoniker Id="9973c89a-788c-4804-a7b2-6b96e98cbd6c" LastKnownName="Заявка на регистрацию" />
+    </artifactShape>
+    <useCaseShape Id="94839792-97fe-4eb2-935e-346a029f8eb0" absoluteBounds="3.5, 2.125, 2.25, 1.125" customColor="238, 237, 131" heightOffset="0">
+      <useCaseMoniker Id="02576d21-aa69-4343-8e4f-440c9671b451" LastKnownName="Регистрация в системе" />
+      <relativeChildShapes />
+    </useCaseShape>
+    <useCaseAssociationConnector edgePoints="[(4.57880434782609 : 1.625); (4.60054925516463 : 2.12513286878655)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="7ed2f1a6-f48b-4d38-939a-6084200e0ad5" />
+      <relativeChildShapes />
+      <nodes>
+        <artifactShapeMoniker Id="62466a7f-2328-4224-b8f0-ddb09a22eda8" />
+        <useCaseShapeMoniker Id="94839792-97fe-4eb2-935e-346a029f8eb0" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <useCaseAssociationConnector edgePoints="[(1 : 4.1491935483871); (3.74928533059025 : 3.04061075379425)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="95704dd9-d9c3-4ad4-ad36-09511cf7a39b" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cfbef9ec-c7ee-496a-94de-8594b48ec0af" />
+        <useCaseShapeMoniker Id="94839792-97fe-4eb2-935e-346a029f8eb0" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <useCaseShape Id="5abcc535-668b-4e04-9118-56db4764ea79" absoluteBounds="3.5, 3.5, 2.25, 1.125" customColor="238, 237, 131" heightOffset="0">
+      <useCaseMoniker Id="4165af3f-241e-46bb-940d-98bb782e2297" LastKnownName="Ввод данных о состоянии здоровья" />
+      <relativeChildShapes />
+    </useCaseShape>
+    <useCaseAssociationConnector edgePoints="[(1 : 4.23790322580645); (3.50523123475029 : 4.11668235960886)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="cd0c0e52-e388-48e1-9b6b-58d4b7b4fde7" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cfbef9ec-c7ee-496a-94de-8594b48ec0af" />
+        <useCaseShapeMoniker Id="5abcc535-668b-4e04-9118-56db4764ea79" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <useCaseShape Id="c3f548ec-4262-4654-9c08-52ff8e4a2809" absoluteBounds="4.625, 5.25, 2.25, 1.125" customColor="238, 237, 131" heightOffset="0">
+      <useCaseMoniker Id="3d009063-e475-441a-80d1-36671d2e46f3" LastKnownName="Получение рекомендаций, советов (интернет-прием)" />
+      <relativeChildShapes />
+    </useCaseShape>
+    <useCaseAssociationConnector edgePoints="[(1 : 4.328125); (4.79600190799428 : 5.51437559624821)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="f7422267-d8dc-41dd-a331-9f46a2b8a676" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cfbef9ec-c7ee-496a-94de-8594b48ec0af" />
+        <useCaseShapeMoniker Id="c3f548ec-4262-4654-9c08-52ff8e4a2809" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <actorShape Id="cf512c28-fe6d-4afe-b7af-83b76841d6d2" absoluteBounds="10.125, 3.875, 0.5, 0.5" isReference="false" heightOffset="0">
+      <actorMoniker Id="83320fea-c921-4ab9-be95-75d37658472c" LastKnownName="Врач" />
+      <relativeChildShapes />
+    </actorShape>
+    <useCaseAssociationConnector edgePoints="[(10.125 : 4.21621621621622); (6.65876481634161 : 5.48092364809157)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="6d597069-415c-4f5d-a255-7536b89ba02e" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cf512c28-fe6d-4afe-b7af-83b76841d6d2" />
+        <useCaseShapeMoniker Id="c3f548ec-4262-4654-9c08-52ff8e4a2809" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <useCaseShape Id="d877c447-ca67-4f91-93c9-ece26d14afd5" absoluteBounds="6.875, 2.125, 2.125, 1.125" customColor="238, 237, 131" heightOffset="0">
+      <useCaseMoniker Id="4ca6d684-b81c-4d4b-b81c-91234e0db4a8" LastKnownName="Ведение персональной медицинской карты" />
+      <relativeChildShapes />
+    </useCaseShape>
+    <useCaseAssociationConnector edgePoints="[(10.125 : 3.9775641025641); (8.64726897038056 : 3.10608170048084)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="81959374-8c1e-4f0b-a70c-9daddfb27cd4" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cf512c28-fe6d-4afe-b7af-83b76841d6d2" />
+        <useCaseShapeMoniker Id="d877c447-ca67-4f91-93c9-ece26d14afd5" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <artifactShape Id="7a8c1968-e0aa-48de-bd0a-dff64eea3b2d" absoluteBounds="6.625, 0.875, 2.625, 0.75" customColor="161, 199, 231">
+      <artifactMoniker Id="61ea4761-6d44-4f5c-85f3-6c7cb4298767" LastKnownName="Персональная медицинская карта" />
+    </artifactShape>
+    <useCaseAssociationConnector edgePoints="[(7.9375 : 1.625); (7.9375 : 2.125)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="7ac258d2-f754-44cb-b024-bdfa5c88ed73" />
+      <relativeChildShapes />
+      <nodes>
+        <artifactShapeMoniker Id="7a8c1968-e0aa-48de-bd0a-dff64eea3b2d" />
+        <useCaseShapeMoniker Id="d877c447-ca67-4f91-93c9-ece26d14afd5" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <useCaseShape Id="66281296-97e1-4e51-b90b-cd8a81ef5d80" absoluteBounds="6.5, 3.5, 2.75, 1.125" customColor="238, 237, 131" heightOffset="0">
+      <useCaseMoniker Id="7a9182bf-18f6-424c-8288-2494650d78ee" LastKnownName="Получение оперативных данных о состоянии здоровья пациента" />
+      <relativeChildShapes />
+    </useCaseShape>
+    <useCaseAssociationConnector edgePoints="[(10.125 : 4.11875); (9.24743965368063 : 4.09681099134202)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="de6f7d7d-1bac-4f4d-aec2-fc7daa460a53" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cf512c28-fe6d-4afe-b7af-83b76841d6d2" />
+        <useCaseShapeMoniker Id="66281296-97e1-4e51-b90b-cd8a81ef5d80" />
+      </nodes>
+    </useCaseAssociationConnector>
+    <useCaseShape Id="8e6a27ec-3555-41fd-b207-a2b68fd91e4d" absoluteBounds="4.5, 7.125, 2.5, 1" customColor="238, 237, 131" heightOffset="0">
+      <useCaseMoniker Id="b89f6b54-cd0b-48d7-ae39-9c0e2a7f1b87" LastKnownName="Электронная запись на прием" />
+      <relativeChildShapes />
+    </useCaseShape>
+    <useCaseAssociationConnector edgePoints="[(1 : 4.41875); (5.11274701212283 : 7.19485423318291)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" sourceMultiplicity="*" targetMultiplicity="1">
+      <associationMoniker Id="a78574f8-2d32-49d7-857e-e2576d1345b4" />
+      <relativeChildShapes />
+      <nodes>
+        <actorShapeMoniker Id="cfbef9ec-c7ee-496a-94de-8594b48ec0af" />
+        <useCaseShapeMoniker Id="8e6a27ec-3555-41fd-b207-a2b68fd91e4d" />
+      </nodes>
+    </useCaseAssociationConnector>
+  </nestedChildShapes>
+</useCaseDiagram>

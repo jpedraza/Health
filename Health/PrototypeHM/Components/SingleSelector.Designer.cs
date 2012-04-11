@@ -1,4 +1,4 @@
-namespace PrototypeHM.Components
+namespace Prototype.Components
 {
     partial class SingleSelector
     {
@@ -30,8 +30,8 @@ namespace PrototypeHM.Components
         {
             this.txbSelectedValue = new System.Windows.Forms.TextBox();
             this.btnSelect = new System.Windows.Forms.Button();
-            this.loadControl = new PrototypeHM.Components.LoadControl();
-            this.ydgvCollection = new PrototypeHM.Components.YDataGridView();
+            this.loadControl = new LoadControl();
+            this.ydgvCollection = new YDataGridView();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.ydgvCollection)).BeginInit();

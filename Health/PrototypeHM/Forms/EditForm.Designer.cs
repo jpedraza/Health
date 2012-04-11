@@ -1,4 +1,6 @@
-﻿namespace PrototypeHM.Forms
+﻿using Prototype.Components;
+
+namespace Prototype.Forms
 {
     partial class EditForm
     {
@@ -33,7 +35,7 @@
             this.statusPanel = new System.Windows.Forms.StatusStrip();
             this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.loadControl = new PrototypeHM.Components.LoadControl();
+            this.loadControl = new LoadControl();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 

@@ -8,8 +8,8 @@
     <ProjectGuid>{E7D07113-1BB1-4EA3-9E24-4421F585C04C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EFCFModel</RootNamespace>
-    <AssemblyName>EFCFModel</AssemblyName>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace EFCFModel
+namespace Model
 {
     public interface ISchemaManager
     {

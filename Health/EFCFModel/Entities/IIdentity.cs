@@ -1,4 +1,4 @@
-﻿namespace EFCFModel.Entities
+﻿namespace Model.Entities
 {
     public interface IIdentity
     {

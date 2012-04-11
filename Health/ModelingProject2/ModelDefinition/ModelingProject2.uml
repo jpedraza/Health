@@ -1,8 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm13="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner"
   dslVersion="1.0.0.0"
   Id="8652eccf-ef23-488f-b446-e5f69deca31c"
-  name="ModelingProject2" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  name="ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <appliedStereotypesInternal>
+    <stereotypeInstance
+      Id="e382a294-5eeb-4106-aa63-0cd984cacef2"
+      name="namespace"
+      profile="CSharpProfile">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="0059158e-6389-45de-a6e2-333698a6ae08">
+          <propertyInstance
+            Id="83283320-c326-4867-bb83-1e7794fd4bf7"
+            name="BaseName" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="eda86a61-62ee-40e1-a4f1-07506f82be04">
+          <propertyInstance
+            Id="a339d8db-d1d4-4f04-83ba-d2a8e25ae05e"
+            name="ClrAttributes" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="04bec59e-4e48-4e2e-b43a-e1cfb2f54b6d">
+          <propertyInstance
+            Id="f58a3057-37ba-44aa-8361-0071e4ff873e"
+            name="Usings" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance
+      Id="2cea9827-ba2d-4fa0-939f-2f65da88cbaf"
+      name="TextTemplateBindings"
+      profile="TextTemplateBindings">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="d0a60faf-a4b8-4136-81cd-111361ae11c7">
+          <propertyInstance
+            Id="ec329ce8-9e04-4bb8-8a87-37e0024d7135"
+            name="Alias"
+            value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="59e8fc41-1f26-4f0a-a3ec-d6d8d5cf05f8">
+          <propertyInstance
+            Id="08ee6300-1f6b-44ef-b509-3289ce5f9c34"
+            name="TemplateFilePath"
+            value="ClassTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\StructTemplate.t4" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="97ffe8ea-1f33-42e5-aafc-c69cd2ca4764">
+          <propertyInstance
+            Id="e6652883-79a5-4216-bc29-79367fc5b0ff"
+            name="ProjectPath"
+            value="ClassTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj|EnumTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj|InterfaceTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj|StructTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="11ed6c03-2104-4b2f-82c4-1deb472f392c">
+          <propertyInstance
+            Id="afd8bed7-6893-4757-8fd0-cc39d48e3e7f"
+            name="TargetDirectory"
+            value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="5f69fb81-e679-4322-8e8e-f51432a0f06e">
+          <propertyInstance
+            Id="28729645-bcb8-4478-bb8f-f7b052dffb78"
+            name="TargetName"
+            value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="5a19f581-2110-4f17-9384-3b5dd3c68b41">
+          <propertyInstance
+            Id="2949b6a9-64ee-46f7-be32-659b42bd087f"
+            name="Overwrite"
+            value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="6a98f154-cf91-41d8-89a4-9fc87bb32155">
+          <propertyInstance
+            Id="1aa99132-c94d-4b7e-b739-d8bf51efde79"
+            name="Parameters" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
   <profileInstances>
     <packageHasProfileInstances
       Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
@@ -31,137 +113,6 @@
   </profileInstances>
   <packagedElements>
     <packageHasNamedElement>
-      <class
-        Id="6816fc10-2cbc-4ca4-88c6-40e52f4660fa"
-        name="Appointment"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <ownedAttributesInternal>
-          <property
-            Id="e5f3877f-d63e-4a94-a8e1-58cd55b21967"
-            name="Id (идентификатор)"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <description>идентификатор</description>
-          </property>
-          <property
-            Id="ed3c6a72-75dc-46c4-8aa3-f05bbc130e55"
-            name="Date"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-          <property
-            Id="a25273c1-0498-4762-a74c-a8fb1e1da70f"
-            name="Attribute1"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-        </ownedAttributesInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="3026169a-6a2a-46b7-a86d-51299188ed9b"
-        name="User (пользователь)"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <ownedAttributesInternal>
-          <property
-            Id="fb73847b-5d2c-4f39-b550-874b23b464fd"
-            name="Age (возраст)"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-        </ownedAttributesInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="fd28a7ed-21aa-4f6f-a08b-510a89651415"
-        name="Patient (пациент)"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <generalsInternal>
-          <generalization
-            Id="9b41c91c-ee79-4fb3-9bb9-6649740b0720"
-            isSubstitutable="false">
-            <classMoniker
-              Id="3026169a-6a2a-46b7-a86d-51299188ed9b"
-              LastKnownName="User (пользователь)"
-              LastKnownLocation="ModelingProject2.uml" />
-          </generalization>
-        </generalsInternal>
-        <ownedAttributesInternal>
-          <property
-            Id="31eb7f05-12c0-4fcf-9ad5-f56a8f87027f"
-            name="Appointments (приемы у врача)"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-        </ownedAttributesInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="1902997b-0bf1-4825-9068-c2578a91a281"
-        name="Doctor (врач)"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <generalsInternal>
-          <generalization
-            Id="f75c7322-efc3-443d-a81f-02061cc84ee9"
-            isSubstitutable="false">
-            <classMoniker
-              Id="3026169a-6a2a-46b7-a86d-51299188ed9b"
-              LastKnownName="User (пользователь)"
-              LastKnownLocation="ModelingProject2.uml" />
-          </generalization>
-        </generalsInternal>
-        <ownedAttributesInternal>
-          <property
-            Id="c4687058-b4be-4b59-acf3-af1ab239f196"
-            name="Appointments (приемы пациентов)"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-        </ownedAttributesInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <packageMoniker
         Id="5e12f09b-8c7a-4353-aa14-4b8415262e4a"
         LastKnownName="EFCFModel"
@@ -174,9 +125,566 @@
         LastKnownLocation="Package2_1714.uml" />
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <undefinedType
-        Id="2662c14e-6abd-4a62-ad80-5ebb9acd51d6"
-        name="(Пациенты)" />
+      <actor
+        Id="0566a433-126f-4a76-aa12-0220ef55ba2c"
+        name="Пациент"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="fc1ddb77-7924-4e51-ad4c-f23c886252bc"
+            isDerived="false"
+            sourceEndRoleName="Пациент"
+            targetEndRoleName="Регистрация в системе"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="8d737742-cbfe-4e30-8969-a2d2ab36a2e1"
+              LastKnownName="Регистрация в системе"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="78a3171b-5ebe-4264-93e7-e0af7a4d7d20"
+                  name="Пациент"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d9d530da-df68-4ee4-994b-ce312be48037"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="f3b12d74-6d8f-4d0d-83e3-657503552561"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d5ba2d40-a069-4d9c-92b9-f06336f145a8"
+                  name="Регистрация в системе"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d890caa9-5578-44aa-a5a2-374ca2841f85"
+            isDerived="false"
+            sourceEndRoleName="Пациент"
+            targetEndRoleName="Ввод данных о состоянии здоровья"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="03eb79bf-60f7-42f2-aea5-d38d64cf4fc2"
+              LastKnownName="Ввод данных о состоянии здоровья"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9b9e862b-8153-40e4-84c4-6a30bcea37a4"
+                  name="Пациент"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="2cde1622-012b-4df1-b2a5-f84d694cb96d"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="472c1d75-8e67-43ce-8e1c-80cd52ef80f9"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1c21199e-09e4-4b26-8709-6ff3baafa100"
+                  name="Ввод данных о состоянии здоровья"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="c482e556-f1cd-46b0-b9f9-f4345fad28ce"
+            isDerived="false"
+            sourceEndRoleName="Пациент"
+            targetEndRoleName="Получение рекомендаций, советов"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="5548d86e-3a4f-4f31-8579-4e1802f52a31"
+              LastKnownName="Получение рекомендаций, советов (интернет-прием)"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6f6661f5-2334-4e7d-a2ff-9ef8c1e90a6a"
+                  name="Пациент"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="24ab2266-3932-44e4-a9e7-e20cf55e41cd"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="80e076f2-5b82-4d33-ad7f-8ffec41f9ca8"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6a7e33da-5c89-495e-828e-2066dad9d95c"
+                  name="Получение рекомендаций, советов"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="395d6392-27e6-4f1e-a9de-d4a6baaa63e7"
+            isDerived="false"
+            sourceEndRoleName="Пациент"
+            targetEndRoleName="Электронная запись на прием"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="7e42306f-ab38-4212-a8ec-5c7bba909b69"
+              LastKnownName="Электронная запись на прием"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="61ce6b12-0c31-4eb5-896d-5a3908237ee8"
+                  name="Пациент"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ea21bde3-81dd-4de4-bc9f-78fb11fac190"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="54a63bdd-c0e6-428e-bf21-613e682f0666"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3c9199f2-c285-456e-9c8a-a37d33735eaa"
+                  name="Электронная запись на прием"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <artifact
+        Id="1b05b98d-2f26-439e-9d08-f6a60d8fc84b"
+        name="Заявка на регистрацию"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="11dd5521-770f-401d-87ed-c4ea9f2fa33e"
+            name="document"
+            profile="StandardProfileL2" />
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="e0bf1854-1d9d-411f-a1c3-c3d7cf42af64"
+            isDerived="false"
+            sourceEndRoleName="Заявка на регистрацию"
+            targetEndRoleName="Регистрация в системе"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="8d737742-cbfe-4e30-8969-a2d2ab36a2e1"
+              LastKnownName="Регистрация в системе"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d709625b-2a71-4142-9e4c-a5ef9b798341"
+                  name="Заявка на регистрацию"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="f622c389-689b-4056-9632-3f5d57a28020"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="5aa0acf3-3921-4251-ad97-c97baa09ccb7"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2c575ccf-27c8-4049-a2c0-719055709c98"
+                  name="Регистрация в системе"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </artifact>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="8d737742-cbfe-4e30-8969-a2d2ab36a2e1"
+        name="Регистрация в системе"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="03eb79bf-60f7-42f2-aea5-d38d64cf4fc2"
+        name="Ввод данных о состоянии здоровья"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="5548d86e-3a4f-4f31-8579-4e1802f52a31"
+        name="Получение рекомендаций, советов (интернет-прием)"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="38afc85c-8e80-412c-84b4-72843ead8ff9"
+        name="Врач"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="97b99544-7d51-4f7d-932c-f3edd58d7bd9"
+            isDerived="false"
+            sourceEndRoleName="Врач"
+            targetEndRoleName="Ведение персональной медицинской карты"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="17f51d5e-42ba-42d4-8ba7-33543f0947cf"
+              LastKnownName="Ведение персональной медицинской карты"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="67818b9d-9855-4110-b3d1-c64b0baf61af"
+                  name="Врач"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="87ad27fa-cf7e-4b3b-ae64-afee1b47d0e4"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="021187c5-bea9-4807-a856-a965c44496ea"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b8aac95a-424e-4a36-a8d5-4fd96c379756"
+                  name="Ведение персональной медицинской карты"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a5aca4b8-c014-4878-ab71-542ad5d11a7e"
+            isDerived="false"
+            sourceEndRoleName="Врач"
+            targetEndRoleName="Получение рекомендаций, советов (интернет-прием)"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="5548d86e-3a4f-4f31-8579-4e1802f52a31"
+              LastKnownName="Получение рекомендаций, советов (интернет-прием)"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="847387b0-9f47-4318-8a52-0bf1ba34c3f7"
+                  name="Врач"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="58fdc444-2bbf-4e78-aa53-b1a3353eea68"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="4f8f71c0-8937-4690-ae5d-74a42925934a"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1755eda6-cfd2-47cc-9983-e71f99a57efb"
+                  name="Получение рекомендаций, советов (интернет-прием)"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d034c1a1-807b-4d0e-9f14-ebc54f18bb85"
+            isDerived="false"
+            sourceEndRoleName="Врач"
+            targetEndRoleName="Получение оперативных данных о состоянии здоровья пациента"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="dd221e9b-4b20-416d-bd30-1a380f2537d4"
+              LastKnownName="Получение оперативных данных о состоянии здоровья пациента"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="eccc4fd4-0b04-41bc-a87e-17fe2362e06a"
+                  name="Врач"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="c833f5bf-f455-4cf4-9dfa-2ae587573ce3"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="c455c5d8-3904-4038-a8db-2bebd0b859cd"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9298c037-078a-40c6-b886-2ab561c1371b"
+                  name="Получение оперативных данных о состоянии здоровья пациента"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="17f51d5e-42ba-42d4-8ba7-33543f0947cf"
+        name="Ведение персональной медицинской карты"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <artifact
+        Id="bbf33e90-353a-42a4-a343-9c8a62a86a98"
+        name="Персональная медицинская карта"
+        isAbstract="false"
+        isLeaf="false">
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="c130ee38-e5a8-4038-9de9-e43ee6ee908a"
+            name="document"
+            profile="StandardProfileL2" />
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="0ba86bbc-dda7-4087-b78c-219667638946"
+            isDerived="false"
+            sourceEndRoleName="Персональная медицинская карта"
+            targetEndRoleName="Ведение персональной медицинской карты"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="17f51d5e-42ba-42d4-8ba7-33543f0947cf"
+              LastKnownName="Ведение персональной медицинской карты"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d93151ac-9b7d-4f31-a502-d88f52e0772c"
+                  name="Персональная медицинская карта"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="1d632fc9-44ff-4ee5-a239-34b829c95a0f"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="9785cb63-ae6c-4ea7-9936-ad32b21bb973"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="48bbb343-1fb4-4bf8-86f8-23415bef1799"
+                  name="Ведение персональной медицинской карты"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </artifact>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="dd221e9b-4b20-416d-bd30-1a380f2537d4"
+        name="Получение оперативных данных о состоянии здоровья пациента"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="7e42306f-ab38-4212-a8ec-5c7bba909b69"
+        name="Электронная запись на прием"
+        isAbstract="false"
+        isLeaf="false" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

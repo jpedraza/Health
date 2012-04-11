@@ -1,6 +1,6 @@
 using System;
 
-namespace EFCFModel.Attributes
+namespace Model.Attributes
 {
     /// <summary>
     /// ќзначает что свойство не будет маппитс€.

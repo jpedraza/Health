@@ -1,4 +1,4 @@
-namespace EFCFModel.Attributes
+namespace Model.Attributes
 {
     /// <summary>
     /// »нтерфейс дл€ аттрибутов, вли€ющих на процесс маппинга свойств на результаты выборки данных из базы данных.

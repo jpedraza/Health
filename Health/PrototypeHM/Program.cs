@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace PrototypeHM
+namespace Prototype
 {
     internal static class Program
     {

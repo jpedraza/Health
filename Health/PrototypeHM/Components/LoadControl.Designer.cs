@@ -1,4 +1,4 @@
-﻿namespace PrototypeHM.Components
+﻿namespace Prototype.Components
 {
     partial class LoadControl
     {

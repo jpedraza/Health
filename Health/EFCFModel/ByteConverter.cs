@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace EFCFModel
+namespace Model
 {
     public class ByteConverter
     {

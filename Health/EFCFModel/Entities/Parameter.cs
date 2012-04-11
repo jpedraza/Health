@@ -6,9 +6,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using EFCFModel.Attributes;
+using Model.Attributes;
 
-namespace EFCFModel.Entities
+namespace Model.Entities
 {
     [Table("Parameters"), DisplayName("Параметр")]
     public abstract class Parameter : IIdentity

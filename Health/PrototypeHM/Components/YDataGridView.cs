@@ -8,9 +8,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EFCFModel.Attributes;
+using Model.Attributes;
 
-namespace PrototypeHM.Components
+namespace Prototype.Components
 {
     public enum XLoadMode
     {

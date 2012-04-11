@@ -5,10 +5,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using EFCFModel.Entities;
-using PrototypeHM.DI;
+using Model.Entities;
+using Prototype.DI;
 
-namespace PrototypeHM.Forms.Patient
+namespace Prototype.Forms.Patient
 {
     public partial class EnterParameterForm : DIForm
     {
@@ -52,8 +52,8 @@ namespace PrototypeHM.Forms.Patient
 
         private void LoadParameters()
         {
-            EFCFModel.Entities.Patient patient =
-                _dbContext.Set<EFCFModel.Entities.Patient>().FirstOrDefault(pa => pa.Id == _id);
+            Model.Entities.Patient patient =
+                _dbContext.Set<Model.Entities.Patient>().FirstOrDefault(pa => pa.Id == _id);
             IList<Parameter> parameters =
                 _dbContext.Set<Parameter>().Where(p => p.Patients.Any(pa => pa.Id == _id)).ToList();
             _storages = new ParameterStorage[parameters.Count()];

@@ -7,13 +7,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EFCFModel;
-using EFCFModel.Attributes;
-using PrototypeHM.Components;
-using PrototypeHM.DI;
-using ByteConverter = EFCFModel.ByteConverter;
+using Model;
+using Model.Attributes;
+using Prototype.Components;
+using Prototype.DI;
+using ByteConverter = Model.ByteConverter;
 
-namespace PrototypeHM.Forms
+namespace Prototype.Forms
 {
     public partial class EditForm : DIForm
     {

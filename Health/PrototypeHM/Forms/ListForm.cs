@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EFCFModel;
-using PrototypeHM.DI;
+using Model;
+using Prototype.DI;
 
-namespace PrototypeHM.Forms
+namespace Prototype.Forms
 {
     public partial class ListForm : DIForm
     {

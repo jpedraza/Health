@@ -5,9 +5,9 @@ using System.Data.Metadata.Edm;
 using System.Data.Objects;
 using System.Linq;
 using System.Reflection;
-using EFCFModel.Exceptions;
+using Model.Exceptions;
 
-namespace EFCFModel
+namespace Model
 {
     public class ObjectContextSchemaManager : ISchemaManager
     {

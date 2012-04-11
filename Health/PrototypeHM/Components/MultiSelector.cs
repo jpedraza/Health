@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PrototypeHM.DI;
+using Prototype.DI;
 
-namespace PrototypeHM.Components
+namespace Prototype.Components
 {
     public enum LoadMode
     {

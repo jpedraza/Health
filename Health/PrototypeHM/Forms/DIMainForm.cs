@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using EFCFModel;
-using PrototypeHM.DI;
-using PrototypeHM.Forms.Patient;
+using Model;
+using Prototype.DI;
+using Prototype.Forms.Patient;
 
-namespace PrototypeHM.Forms
+namespace Prototype.Forms
 {
     public partial class DIMainForm : DIForm
     {

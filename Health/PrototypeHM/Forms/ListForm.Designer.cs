@@ -1,4 +1,6 @@
-﻿namespace PrototypeHM.Forms
+﻿using Prototype.Components;
+
+namespace Prototype.Forms
 {
     partial class ListForm
     {
@@ -28,10 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ydgvList = new PrototypeHM.Components.YDataGridView();
+            this.ydgvList = new YDataGridView();
             this.toolPanel = new System.Windows.Forms.ToolStrip();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.loadControl = new PrototypeHM.Components.LoadControl();
+            this.loadControl = new LoadControl();
             ((System.ComponentModel.ISupportInitialize)(this.ydgvList)).BeginInit();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -47,7 +49,7 @@
             this.ydgvList.BindingSource = null;
             this.ydgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ydgvList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ydgvList.LoadMode = PrototypeHM.Components.XLoadMode.Synchronize;
+            this.ydgvList.LoadMode = XLoadMode.Synchronize;
             this.ydgvList.Location = new System.Drawing.Point(0, 0);
             this.ydgvList.Name = "ydgvList";
             this.ydgvList.ReadOnly = true;

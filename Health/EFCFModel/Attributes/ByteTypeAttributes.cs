@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace EFCFModel.Attributes
+namespace Model.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class ByteTypeAttribute : Attribute

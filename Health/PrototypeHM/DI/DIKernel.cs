@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ninject;
 
-namespace PrototypeHM.DI
+namespace Prototype.DI
 {
     public class ConstructorArgument
     {

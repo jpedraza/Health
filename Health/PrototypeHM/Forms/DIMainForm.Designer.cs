@@ -1,4 +1,4 @@
-namespace PrototypeHM.Forms
+namespace Prototype.Forms
 {
     partial class DIMainForm
     {

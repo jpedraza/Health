@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EFCFModel.Exceptions
+namespace Model.Exceptions
 {
     public abstract class GuidException : Exception
     {

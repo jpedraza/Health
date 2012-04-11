@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PrototypeHM
+namespace Prototype
 {
     internal static class ExtensionMethods
     {

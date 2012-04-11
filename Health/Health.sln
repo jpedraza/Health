@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototypeHM", "PrototypeHM\PrototypeHM.csproj", "{E41B1B52-35E8-44D9-A8B2-5DF8CC56C82C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype", "PrototypeHM\Prototype.csproj", "{E41B1B52-35E8-44D9-A8B2-5DF8CC56C82C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCFModel", "EFCFModel\EFCFModel.csproj", "{E7D07113-1BB1-4EA3-9E24-4421F585C04C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "EFCFModel\Model.csproj", "{E7D07113-1BB1-4EA3-9E24-4421F585C04C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCFTest", "EFCFTest\EFCFTest.csproj", "{F19F0742-0C22-4A3F-B453-388F1AB0F3BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.Test", "EFCFTest\Model.Test.csproj", "{F19F0742-0C22-4A3F-B453-388F1AB0F3BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Support", "Support\Support.csproj", "{2B5EC90D-A81B-4299-86EC-B45DBE8439E6}"
 EndProject
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README = ..\README
 	EndProjectSection
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Health - Uml", "ModelingProject2\Health - Uml.modelproj", "{8CC6DCEA-95CD-4FC0-B9E8-ADA33EC01A9E}"
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Uml", "ModelingProject2\Uml.modelproj", "{8CC6DCEA-95CD-4FC0-B9E8-ADA33EC01A9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,8 +8,8 @@
     <ProjectGuid>{E41B1B52-35E8-44D9-A8B2-5DF8CC56C82C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrototypeHM</RootNamespace>
-    <AssemblyName>PrototypeHM</AssemblyName>
+    <RootNamespace>Prototype</RootNamespace>
+    <AssemblyName>Prototype</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -198,9 +198,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EFCFModel\EFCFModel.csproj">
+    <ProjectReference Include="..\EFCFModel\Model.csproj">
       <Project>{E7D07113-1BB1-4EA3-9E24-4421F585C04C}</Project>
-      <Name>EFCFModel</Name>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

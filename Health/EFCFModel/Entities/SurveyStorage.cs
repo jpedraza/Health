@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using EFCFModel.Attributes;
+using Model.Attributes;
 
-namespace EFCFModel.Entities
+namespace Model.Entities
 {
     [Table("SurveysStorage"), ScaffoldTable(true), DisplayName("Хранилище операций")]
     public class SurveyStorage : IIdentity

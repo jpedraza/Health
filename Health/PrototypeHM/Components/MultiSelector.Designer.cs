@@ -1,4 +1,4 @@
-﻿namespace PrototypeHM.Components
+﻿namespace Prototype.Components
 {
     partial class MultiSelector
     {
@@ -34,10 +34,10 @@
             this.controlPanel = new System.Windows.Forms.Panel();
             this.btnDisplayMode = new System.Windows.Forms.Button();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.leftLoadControl = new PrototypeHM.Components.LoadControl();
-            this.ydgvLeft = new PrototypeHM.Components.YDataGridView();
-            this.rightLoadControl = new PrototypeHM.Components.LoadControl();
-            this.ydgvRight = new PrototypeHM.Components.YDataGridView();
+            this.leftLoadControl = new LoadControl();
+            this.ydgvLeft = new YDataGridView();
+            this.rightLoadControl = new LoadControl();
+            this.ydgvRight = new YDataGridView();
             this.mainPanel.SuspendLayout();
             this.controlPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();

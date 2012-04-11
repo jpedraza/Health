@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data.Entity.Migrations;
 using System.Text;
-using EFCFModel.Entities;
+using Model.Entities;
 
-namespace EFCFModel.Migrations
+namespace Model.Migrations
 {
     internal sealed class Configuration : DbMigrationsConfiguration<EFHealthContext>
     {

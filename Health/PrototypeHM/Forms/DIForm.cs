@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Forms;
-using PrototypeHM.DI;
+using Prototype.DI;
 
-namespace PrototypeHM.Forms
+namespace Prototype.Forms
 {
     public class DIForm : Form, IDIInjected
     {

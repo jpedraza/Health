@@ -1,4 +1,4 @@
-﻿namespace PrototypeHM.Forms.Patient
+﻿namespace Prototype.Forms.Patient
 {
     partial class EnterParameterForm
     {

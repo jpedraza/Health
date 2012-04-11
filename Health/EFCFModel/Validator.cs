@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 
-namespace EFCFModel
+namespace Model
 {
     public class ValidationResult : System.ComponentModel.DataAnnotations.ValidationResult
     {
@@ -19,7 +19,7 @@ namespace EFCFModel
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="T:EFCFModel.ValidationResult"/> с использованием указанного сообщения об ошибке и информацией о свойстве, непрошедшем проверку.
+        /// Инициализирует новый экземпляр класса <see cref="T:Model.ValidationResult"/> с использованием указанного сообщения об ошибке и информацией о свойстве, непрошедшем проверку.
         /// </summary>
         /// <param name="errorMessage">Сообщение об ошибке.</param>
         /// <param name="descriptor">Свойство, непрошедшее проверку.</param>

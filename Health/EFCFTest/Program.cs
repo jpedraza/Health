@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Metadata.Edm;
-using System.Data.Objects;
-using System.Reflection;
-using System.Runtime.Caching;
-using EFCFModel;
-using EFCFModel.Entities;
+using Model.Entities;
 
-namespace EFCFTest
+namespace Model.Test
 {
     internal class Program
     {

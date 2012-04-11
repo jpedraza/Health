@@ -6,7 +6,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8cc6dcea-95cd-4fc0-b9e8-ada33ec01a9e}</ProjectGuid>
     <ArchitectureToolsVersion>1.0.0.0</ArchitectureToolsVersion>
-    <Name>Health - Uml</Name>
+    <Name>Uml</Name>
     <RootNamespace>ModelingProject2</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -45,9 +45,43 @@
     <Content Include="ModelDefinition\Package_1727.uml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Main.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Main.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Main.usecasediagram</DependentUpon>
+    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\ModelingProject2.uml">
       <SubType>Content</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Validate Include="Main.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="Main.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Main.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="Main.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>Main.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EFCFModel\Model.csproj">
+      <Name>Model</Name>
+      <Project>{e7d07113-1bb1-4ea3-9e24-4421f585c04c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PrototypeHM\Prototype.csproj">
+      <Name>Prototype</Name>
+      <Project>{e41b1b52-35e8-44d9-a8b2-5df8cc56c82c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Support\Support.csproj">
+      <Name>Support</Name>
+      <Project>{2b5ec90d-a81b-4299-86ec-b45dbe8439e6}</Project>
+    </ProjectReference>
   </ItemGroup>
 </Project>

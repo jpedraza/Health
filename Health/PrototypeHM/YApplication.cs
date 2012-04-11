@@ -4,12 +4,12 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EFCFModel;
+using Model;
 using Ninject;
-using PrototypeHM.DI;
-using PrototypeHM.Forms;
+using Prototype.DI;
+using Prototype.Forms;
 
-namespace PrototypeHM
+namespace Prototype
 {
     internal class YApplication : ApplicationContext
     {

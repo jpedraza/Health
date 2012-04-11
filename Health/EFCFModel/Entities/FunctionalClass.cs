@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using EFCFModel.Attributes;
+using Model.Attributes;
 
-namespace EFCFModel.Entities
+namespace Model.Entities
 {
     [Table("FunctionalClasses"), ScaffoldTable(true), DisplayName("Функциональный класс")]
     public class FunctionalClass : IIdentity

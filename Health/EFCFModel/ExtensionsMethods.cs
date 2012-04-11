@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace EFCFModel
+namespace Model
 {
     public static class ExDbSet
     {
