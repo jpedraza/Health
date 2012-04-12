@@ -98,7 +98,7 @@ namespace Model.Entities
         public override Type ValueType { get { return typeof(DateTime); } }
     }
 
-    [ScaffoldTable(true), DisplayName("Параметр-список")]
+    //[ScaffoldTable(true), DisplayName("Параметр-список")]
     public class ListParameter : Parameter
     {
         private readonly MemoryStream _memoryStream;

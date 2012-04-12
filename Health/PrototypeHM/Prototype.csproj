@@ -149,6 +149,13 @@
     <Compile Include="Forms\Patient\EnterParameterForm.Designer.cs">
       <DependentUpon>EnterParameterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parameters\BoolRenderer.cs" />
+    <Compile Include="Parameters\DateTimeRenderer.cs" />
+    <Compile Include="Parameters\DoubleRenderer.cs" />
+    <Compile Include="Parameters\IntegerRenderer.cs" />
+    <Compile Include="Parameters\IRenderer.cs" />
+    <Compile Include="Parameters\RenderFactory.cs" />
+    <Compile Include="Parameters\StringRenderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YApplication.cs" />

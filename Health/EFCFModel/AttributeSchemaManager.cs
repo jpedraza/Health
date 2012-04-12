@@ -22,6 +22,11 @@ namespace Model
             return baseType;
         }
 
+        public bool HasInherited(Type t)
+        {
+            return Assembly.GetAssembly(t).GetTypes().Any(tt => tt.IsSubclassOf(t));
+        }
+
         public bool HasKey(Type t)
         {
             PropertyInfo[] propertyInfos = t.GetProperties();

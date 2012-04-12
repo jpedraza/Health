@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Model.Entities;
 using Prototype.DI;
+using Prototype.Parameters;
 
 namespace Prototype.Forms.Patient
 {
@@ -16,7 +16,8 @@ namespace Prototype.Forms.Patient
         private readonly DbContext _dbContext;
         private ParameterStorage[] _storages;
         private readonly IList<Control> _form;
-        private readonly IList<string> _labels; 
+        private readonly IList<string> _labels;
+        private readonly RenderFactory _renderFactory;
 
         public EnterParameterForm(IDIKernel diKernel, int id) : base(diKernel)
         {
@@ -24,6 +25,7 @@ namespace Prototype.Forms.Patient
             _form = new BindingList<Control>();
             _labels = new BindingList<string>();
             _dbContext = Get<DbContext>();
+            _renderFactory = Get<RenderFactory>();
             InitializeComponent();
             LoadParameters();
             InitializeMenu();
@@ -62,83 +64,23 @@ namespace Prototype.Forms.Patient
                 int index = i;
                 Parameter parameter = parameters[i];
                 _storages[index] = new ParameterStorage
-                                  {
-                                      Date = DateTime.Now,
-                                      Parameter = parameter,
-                                      Patient = patient
-                                  };
-                Control control = null;
-                if (parameter is StringParameter)
+                                       {
+                                           Date = DateTime.Now,
+                                           Parameter = parameter,
+                                           Patient = patient
+                                       };
+
+                try
                 {
-                    string text = parameter.DefaultValue != null
-                                      ? Encoding.UTF8.GetString(parameter.DefaultValue)
-                                      : string.Empty;
-                    var c = new TextBox {Name = string.Format("txb{0}", parameter.Name)};
-                    c.TextChanged += (sender, e) => _storages[index].Value = Encoding.UTF8.GetBytes(c.Text);
-                    c.Text = text;
-                    control = c;
-                }
-                if (parameter is BoolParameter)
-                {
-                    bool check = parameter.DefaultValue != null
-                                     ? BitConverter.ToBoolean(parameter.DefaultValue, 0)
-                                     : default(bool);
-                    var c = new CheckBox {Name = string.Format("chbx{0}", parameter.Name)};
-                    c.CheckedChanged += (sender, e) => _storages[index].Value = BitConverter.GetBytes(c.Checked);
-                    c.Checked = check;
-                    control = c;
-                }
-                if (parameter is IntegerParameter)
-                {
-                    decimal value = parameter.DefaultValue != null
-                                        ? BitConverter.ToInt32(parameter.DefaultValue, 0)
-                                        : default(decimal);
-                    var c = new NumericUpDown
-                                {
-                                    Name = string.Format("nupd{0}", parameter.Name),
-                                    Minimum = (parameter as IntegerParameter).MinValue,
-                                    Maximum = (parameter as IntegerParameter).MaxValue
-                                };
-                    c.ValueChanged += (sender, e) => _storages[index].Value = BitConverter.GetBytes((double) c.Value);
-                    c.Value = value;
-                    control = c;
-                }
-                if (parameter is DoubleParameter)
-                {
-                    decimal value = parameter.DefaultValue != null
-                                        ? (decimal) BitConverter.ToDouble(parameter.DefaultValue, 0)
-                                        : default(decimal);
-                    var c = new NumericUpDown
-                                {
-                                    Name = string.Format("nupd{0}", parameter.Name),
-                                    DecimalPlaces = 2,
-                                    Increment = (decimal) 0.5,
-                                    Minimum = (decimal) (parameter as DoubleParameter).MinValue,
-                                    Maximum = (decimal) (parameter as DoubleParameter).MaxValue
-                                };
-                    c.ValueChanged += (sender, e) => _storages[index].Value = BitConverter.GetBytes((double)c.Value);
-                    c.Value = value;
-                    control = c;
-                }
-                if (parameter is DateTimeParameter)
-                {
-                    var value = parameter.DefaultValue != null
-                                            ? DateTime.FromBinary(BitConverter.ToInt64(parameter.DefaultValue, 0))
-                                            : DateTime.Now;
-                    var c = new DateTimePicker
-                                {
-                                    Name = string.Format("dtp{0}", parameter.Name),
-                                    /*MaxDate = (parameter as DateTimeParameter).MaxDate,
-                                    MinDate = (parameter as DateTimeParameter).MinDate*/
-                                };
-                    c.ValueChanged += (sender, e) => _storages[index].Value = BitConverter.GetBytes(c.Value.ToBinary());
-                    c.Value = value;
-                    control = c;
-                }
-                if (control != null)
-                {
+                    IRenderer renderer = _renderFactory.Renderer(parameter.GetType().BaseType);
+                    Control control = renderer.Render(parameter);
+                    renderer.Changed(_storages[index]);
                     _labels.Add(parameter.Name);
                     _form.Add(control);
+                }
+                catch (Exception e)
+                {
+                    YMessageBox.Error(e.Message);
                 }
             }
             layoutPanel.ColumnCount = 2;
@@ -147,7 +89,7 @@ namespace Prototype.Forms.Patient
             {
                 for (int c = 0; c < layoutPanel.ColumnCount; c += 2)
                 {
-                    var label = new Label { Text = _labels[r], Top = 5 };
+                    var label = new Label {Text = _labels[r], Top = 5};
                     layoutPanel.Controls.Add(label, c, r);
                     layoutPanel.Controls.Add(_form[r], c + 1, r);
                 }

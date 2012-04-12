@@ -44,6 +44,11 @@ namespace Model
             return Type.GetType(baseType.FullName);
         }
 
+        public bool HasInherited(Type t)
+        {
+            return Assembly.GetAssembly(t).GetTypes().Any(tt => tt.IsSubclassOf(t));
+        }
+
         public bool HasKey(Type t)
         {
             EntityType entityType = GetEntityType(t);

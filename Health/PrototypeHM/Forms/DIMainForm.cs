@@ -21,19 +21,44 @@ namespace Prototype.Forms
         private void InitializeMenu()
         {
             IEnumerable<Type> allScaffoldEntities = _schemaManager.GetAllScaffoldEntities();
-            var menuItem = new ToolStripMenuItem("Администрирование");
-            var dropDownMenu = new ToolStripDropDownMenu {Text = @"Администрирование"};
+            var menuItem = new ToolStripMenuItem("Администрирование") {Name = "MainMenuItem"};
+            var dropDownMenu = new ToolStripDropDownMenu {Text = @"Администрирование", Name = "MainMenuDropDownMenu"};
             foreach (Type scaffoldEntity in allScaffoldEntities)
             {
                 Type entity = scaffoldEntity;
                 var but = new ToolStripButton(entity.GetDisplayName());
                 but.Click += (sender, e) =>
-                                 {
-                                     var form = Get<ListForm>(new ConstructorArgument {Name = "etype", Value = entity});
-                                     form.MdiParent = this;
-                                     form.Show();
-                                 };
-                dropDownMenu.Items.Add(but);
+                                    {
+                                        var form =
+                                            Get<ListForm>(new ConstructorArgument {Name = "etype", Value = entity});
+                                        form.MdiParent = this;
+                                        form.Show();
+                                    };
+                if (_schemaManager.HasBaseType(scaffoldEntity))
+                {
+                    Type baseType = _schemaManager.GetBaseType(scaffoldEntity);
+                    var subMenuItem = dropDownMenu.Items[string.Format("SubMenuItem{0}", baseType.Name)] as ToolStripMenuItem;
+                    if (subMenuItem == null)
+                    {
+                        subMenuItem = new ToolStripMenuItem
+                                          {
+                                              Text = baseType.GetDisplayName(),
+                                              Name = string.Format("SubMenuItem{0}", baseType.Name),
+                                              DropDown = new ToolStripDropDownMenu
+                                                             {
+                                                                 Text = baseType.GetDisplayName(),
+                                                                 Name =
+                                                                     string.Format("SubMenuDropDown{0}", baseType.Name)
+                                                             }
+                                          };
+                        dropDownMenu.Items.Add(subMenuItem);
+                    }
+                    subMenuItem.DropDown.Items.Add(but);
+                }
+                else
+                {
+                    dropDownMenu.Items.Add(but);   
+                }
             }
             menuItem.DropDown = dropDownMenu;
             menuStrip.Items.Add(menuItem);

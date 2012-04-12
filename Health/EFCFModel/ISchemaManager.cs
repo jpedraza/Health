@@ -8,6 +8,7 @@ namespace Model
     {
         bool HasBaseType(Type t);
         Type GetBaseType(Type t);
+        bool HasInherited(Type t);
         bool HasKey(Type t);
         PropertyInfo Key(Type t);
 

@@ -5,9 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Model;
+using Model.Entities;
 using Ninject;
 using Prototype.DI;
 using Prototype.Forms;
+using Prototype.Parameters;
 
 namespace Prototype
 {
@@ -24,6 +26,7 @@ namespace Prototype
             TaskScheduler.UnobservedTaskException += TaskSchedulerUnobservedTaskException;
             _kernel = new StandardKernel();
             Bind();
+            BindRenderer();
             MainForm = _kernel.Get<DIMainForm>();
             MainForm.Show();
         }
@@ -52,6 +55,28 @@ namespace Prototype
             _kernel.Bind<ByteConverter>().ToSelf().InTransientScope();
             _kernel.Bind<DIMainForm>().ToSelf().InTransientScope();
             _kernel.Bind<IValidator>().To<Validator>().InTransientScope();
+
+            #region Renderers
+
+            _kernel.Bind<RenderFactory>().ToSelf().InThreadScope();
+
+            _kernel.Bind<BoolRenderer>().ToSelf().InTransientScope();
+            _kernel.Bind<DateTimeRenderer>().ToSelf().InTransientScope();
+            _kernel.Bind<DoubleRenderer>().ToSelf().InTransientScope();
+            _kernel.Bind<IntegerRenderer>().ToSelf().InTransientScope();
+            _kernel.Bind<StringRenderer>().ToSelf().InTransientScope();
+
+            #endregion
+        }
+
+        private void BindRenderer()
+        {
+            var factory = _kernel.Get<RenderFactory>();
+            factory.Bind<BoolParameter, BoolRenderer>();
+            factory.Bind<DateTimeParameter, DateTimeRenderer>();
+            factory.Bind<DoubleParameter, DoubleRenderer>();
+            factory.Bind<IntegerParameter, IntegerRenderer>();
+            factory.Bind<StringParameter, StringRenderer>();
         }
     }
 }
