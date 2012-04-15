@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="3f8eeec0-e190-4d6c-8f2e-048e72cd2313" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="cc09b1f6-bfe2-4596-bc1e-6d01366aeed5" name="Model">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="d351dc29-e833-49fd-9b57-0a1c9a829e10" direction="Forward">
+          <layerMoniker Id="078860e2-ef17-469c-b3ac-920a877cf800" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="01540b99-c1b6-4541-85ed-879642e6214c" name="Support">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="d8d5b29e-0c19-4e44-bc31-8d3c1397eb6c" direction="Forward">
+          <layerMoniker Id="cc09b1f6-bfe2-4596-bc1e-6d01366aeed5" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="1e544fdd-feed-43db-9ea9-a7a9e0df6892" name="Service">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="1cdb5010-11c1-421b-8b97-39c8a9935ca6" direction="Forward">
+          <layerMoniker Id="cc09b1f6-bfe2-4596-bc1e-6d01366aeed5" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="b2ea8dc9-a142-4579-be0d-ee93b8e80ca4" name="Web Client">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="479b949f-ee8c-4dd0-a285-78e00ac2ec75" direction="Forward">
+          <layerMoniker Id="1e544fdd-feed-43db-9ea9-a7a9e0df6892" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="e6ffcb41-38a0-4d6b-b6fd-c1e14efc3466" name="Desktop Client">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="bb592d93-8b65-46c5-a32b-d3a551a490e6" direction="Forward">
+          <layerMoniker Id="1e544fdd-feed-43db-9ea9-a7a9e0df6892" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="2ddceba5-0180-4ec7-b15a-f47df3520929" name="Desktop">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="e1c845ea-b2f1-4634-ba96-e6eb1471e5bc" direction="Forward">
+          <layerMoniker Id="b2ea8dc9-a142-4579-be0d-ee93b8e80ca4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="3a2b45c8-74e9-42ae-a33e-1e889a5e4de2" name="Mobile">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="f7814f4e-233c-46ce-a2d0-35e0507035c1" direction="Forward">
+          <layerMoniker Id="b2ea8dc9-a142-4579-be0d-ee93b8e80ca4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="078860e2-ef17-469c-b3ac-920a877cf800" name="Database" />
+  </layers>
+</layerModel>

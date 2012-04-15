@@ -2,11 +2,11 @@
 <layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="66fc7d54-818c-4762-8796-2d0f617c8077" name="Main layer" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
   <layers>
     <layer Id="f5468d65-e4d3-4864-b6ca-db19f2f07a89" name="Model">
-      <comments>
-        <comment Id="03763431-5434-485f-9a29-31e25dba7df1" name="Comment1">
-          <body>Доменная модель предметной области</body>
-        </comment>
-      </comments>
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="1724fea2-7788-4a97-a59e-b12a450fdd44" direction="Forward">
+          <layerMoniker Id="b21489b3-40ef-4f38-80e7-7e8917ad47bc" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
       <references>
         <reference Id="ca4d0f4a-d9b8-4193-b1c3-71b61fe860be" name="Model">
           <ArtifactNode Label="Model" Category="CodeSchema_Project" Id="(Assembly=../EFCFModel/Model.csproj)">
@@ -20,12 +20,6 @@
       </references>
     </layer>
     <layer Id="5786e432-6032-4486-8f31-329beb40ed32" name="Prototype">
-      <comments>
-        <comment Id="8a7b5dbc-fd4d-4cca-a50b-392389a081a9" name="Comment1">
-          <body>Прототип системы
-</body>
-        </comment>
-      </comments>
       <dependencyToLayers>
         <dependencyFromLayerToLayer Id="a1919f45-a06a-49c7-a303-bf1dc96bc55f" direction="Forward">
           <layerMoniker Id="f5468d65-e4d3-4864-b6ca-db19f2f07a89" />
@@ -44,12 +38,6 @@
       </references>
     </layer>
     <layer Id="1aad6a81-bb24-4e6c-b7ed-99509e7a4a69" name="Support">
-      <comments>
-        <comment Id="60b03066-e4f1-4006-ae01-0df50543b9c1" name="Comment1">
-          <body>Поддержка системы
-</body>
-        </comment>
-      </comments>
       <dependencyToLayers>
         <dependencyFromLayerToLayer Id="d8d18c01-e78d-439d-869c-4823f8dcfea6" direction="Forward">
           <layerMoniker Id="f5468d65-e4d3-4864-b6ca-db19f2f07a89" />
@@ -67,5 +55,6 @@
         </reference>
       </references>
     </layer>
+    <layer Id="b21489b3-40ef-4f38-80e7-7e8917ad47bc" name="Database" />
   </layers>
 </layerModel>

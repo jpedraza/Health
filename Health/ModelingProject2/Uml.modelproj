@@ -58,16 +58,27 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Validate Include="Main.layerdiagram">
+    <Validate Include="AsIsArchitecture.layerdiagram">
       <SubType>Content</SubType>
     </Validate>
-    <Validate Include="Main.layerdiagram.layout">
+    <Validate Include="AsIsArchitecture.layerdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Main.layerdiagram</DependentUpon>
+      <DependentUpon>AsIsArchitecture.layerdiagram</DependentUpon>
     </Validate>
-    <Validate Include="Main.layerdiagram.suppressions">
+    <Validate Include="AsIsArchitecture.layerdiagram.suppressions">
       <SubType>Content</SubType>
-      <DependentUpon>Main.layerdiagram</DependentUpon>
+      <DependentUpon>AsIsArchitecture.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="ToBeArchitecture.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="ToBeArchitecture.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ToBeArchitecture.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="ToBeArchitecture.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>ToBeArchitecture.layerdiagram</DependentUpon>
     </Validate>
   </ItemGroup>
   <ItemGroup>
