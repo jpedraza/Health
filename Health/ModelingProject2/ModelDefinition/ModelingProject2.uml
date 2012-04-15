@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm13="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="8652eccf-ef23-488f-b446-e5f69deca31c"
   name="ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -407,6 +407,45 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="68df35fe-9b00-4f83-9fdf-e11700250c13"
+            isDerived="false"
+            sourceEndRoleName="Заявка на регистрацию"
+            targetEndRoleName="Рассмотрение заявок на регистрацию"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="e0493cbb-9ec7-4ca2-b284-a4ad7085e681"
+              LastKnownName="Рассмотрение заявок на регистрацию"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1cf45c8b-dfa4-4403-ac4b-31c6ac549d49"
+                  name="Заявка на регистрацию"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1ff4e4dc-303d-4452-8fee-3b5898f7b632"
+                  name="Рассмотрение заявок на регистрацию"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
       </artifact>
     </packageHasNamedElement>
@@ -594,6 +633,84 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="da6c887d-cd01-4d2a-b710-472eb1af02ec"
+            isDerived="false"
+            sourceEndRoleName="Врач"
+            targetEndRoleName="Изменение электронной очереди на прием"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ad9f6af7-a88f-46de-aa29-f86971b6c85a"
+              LastKnownName="Изменение электронной очереди на прием"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2ea48475-97c2-4e06-ac63-153c75944998"
+                  name="Врач"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="57f84ee7-7670-43b0-aa80-4220591dd3af"
+                  name="Изменение электронной очереди на прием"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="0b38567e-0e34-46c5-ab06-160e14a7674c"
+            isDerived="false"
+            sourceEndRoleName="Врач"
+            targetEndRoleName="Просмотр профайла пациента"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="b254e921-2620-4f0e-8aab-696ba4529d0b"
+              LastKnownName="Просмотр профайла пациента"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="655d16a2-cd66-40a8-8286-2296e65b1573"
+                  name="Врач"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c19ea441-344b-4e7d-bc1b-3fcb3b087e54"
+                  name="Просмотр профайла пациента"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
       </actor>
     </packageHasNamedElement>
@@ -669,6 +786,45 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="d533f6a5-dc7f-4e3d-89b3-258283962ea9"
+            isDerived="false"
+            sourceEndRoleName="Персональная медицинская карта"
+            targetEndRoleName="Просмотр профайла пациента"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="b254e921-2620-4f0e-8aab-696ba4529d0b"
+              LastKnownName="Просмотр профайла пациента"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5645c187-a38f-44db-a783-45101930a71b"
+                  name="Персональная медицинская карта"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4ae0d284-b1bf-4d65-b7d0-c937fec68c70"
+                  name="Просмотр профайла пациента"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
       </artifact>
     </packageHasNamedElement>
@@ -683,6 +839,256 @@
       <useCase
         Id="7e42306f-ab38-4212-a8ec-5c7bba909b69"
         name="Электронная запись на прием"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="b4cd2e74-2377-4bbf-b175-126502270caa"
+        name="Администратор"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="ff775b9f-01e2-4592-91e2-9bda000dcf08"
+            isDerived="false"
+            sourceEndRoleName="Администратор"
+            targetEndRoleName="Оперативное управление ИС"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ed3efa60-12e6-4887-a90a-4cb7552c63d4"
+              LastKnownName="Оперативное управление ИС"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="80955aca-dcd1-4ead-b827-76ba5c6c4b13"
+                  name="Администратор"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9b021a5c-d502-479c-88be-44bb487e13bc"
+                  name="Оперативное управление ИС"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="eb726c1f-0628-473c-8671-6cb2fae21107"
+            isDerived="false"
+            sourceEndRoleName="Администратор"
+            targetEndRoleName="Изменение профайла пациента"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="2af04e7c-f256-48df-8035-5bad28f32f42"
+              LastKnownName="Изменение профайла пациента"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d8457e8e-4f8c-4da6-aab5-687fac162206"
+                  name="Администратор"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="b784e262-dc37-4a1a-8d0e-a54ac9bf89fb"
+                  name="Изменение профайла пациента"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="30fcff55-d865-4c0a-aa90-150d68e703da"
+            isDerived="false"
+            sourceEndRoleName="Администратор"
+            targetEndRoleName="Изменение электронной очереди на прием"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ad9f6af7-a88f-46de-aa29-f86971b6c85a"
+              LastKnownName="Изменение электронной очереди на прием"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ed535790-959b-4d1a-8a55-ea5cc0af61d2"
+                  name="Администратор"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="cddef150-b1e4-4977-98e9-59ef07b01f28"
+                  name="Изменение электронной очереди на прием"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="4ad65490-9dff-465b-991a-a3a52b5e3715"
+            isDerived="false"
+            sourceEndRoleName="Администратор"
+            targetEndRoleName="Просмотр профайла пациента"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="b254e921-2620-4f0e-8aab-696ba4529d0b"
+              LastKnownName="Просмотр профайла пациента"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e09e6416-d6e9-4047-ae01-c7fca04694af"
+                  name="Администратор"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3ffc6eab-6398-4161-987d-7a19990fab0e"
+                  name="Просмотр профайла пациента"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="296fc3a9-4d93-4882-ba5f-87ef3e356a82"
+            isDerived="false"
+            sourceEndRoleName="Администратор"
+            targetEndRoleName="Рассмотрение заявок на регистрацию"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="e0493cbb-9ec7-4ca2-b284-a4ad7085e681"
+              LastKnownName="Рассмотрение заявок на регистрацию"
+              LastKnownLocation="ModelingProject2.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="10247adb-4040-4f33-86bb-a537f3040a5e"
+                  name="Администратор"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e10adbd2-e6d9-434e-b59f-ee41494512f7"
+                  name="Рассмотрение заявок на регистрацию"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="e0493cbb-9ec7-4ca2-b284-a4ad7085e681"
+        name="Рассмотрение заявок на регистрацию"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ed3efa60-12e6-4887-a90a-4cb7552c63d4"
+        name="Оперативное управление ИС"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="2af04e7c-f256-48df-8035-5bad28f32f42"
+        name="Изменение профайла пациента"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="05af4247-535f-49df-b260-1aa3c8f34646">
+            <useCaseMoniker
+              Id="b254e921-2620-4f0e-8aab-696ba4529d0b"
+              LastKnownName="Просмотр профайла пациента"
+              LastKnownLocation="ModelingProject2.uml" />
+          </extend>
+        </extendedCases>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ad9f6af7-a88f-46de-aa29-f86971b6c85a"
+        name="Изменение электронной очереди на прием"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="b254e921-2620-4f0e-8aab-696ba4529d0b"
+        name="Просмотр профайла пациента"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
