@@ -19,10 +19,8 @@ namespace Prototype
 
         internal YApplication()
         {
-#if Release
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += ApplicationThreadException;
-#endif
             TaskScheduler.UnobservedTaskException += TaskSchedulerUnobservedTaskException;
             _kernel = new StandardKernel();
             Bind();
@@ -49,7 +47,7 @@ namespace Prototype
         {
             // General
             _kernel.Bind<IDIKernel>().To<DIKernel>();
-            _kernel.Bind<DbContext>().To<EFHealthContext>().InTransientScope();
+            _kernel.Bind<DbContext>().To<EFHealthContext>().InSingletonScope();
             _kernel.Bind<ISchemaManager>().To<ObjectContextSchemaManager>().InTransientScope()
                 .WithConstructorArgument("context", ((IObjectContextAdapter) _kernel.Get<DbContext>()).ObjectContext);
             _kernel.Bind<ByteConverter>().ToSelf().InTransientScope();

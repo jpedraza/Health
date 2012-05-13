@@ -63,13 +63,13 @@ namespace Prototype.Components
         {
             loadControl.Show();
             _loadTask = new Task<IList>(() => _data = ((IQueryable<object>)_dbContext.Set(_etype)).ToList(_etype));
-            _loadTask.ContinueWith(task => _synchronizationContext.Post(c =>
+            _loadTask.ContinueWith(task => Invoke((Action)(() =>
                                                                             {
                                                                                 ydgvCollection.BindingSource =
                                                                                     new BindingSource
                                                                                         {DataSource = _data};
                                                                                 loadControl.Hide();
-                                                                            }, null), TaskContinuationOptions.OnlyOnRanToCompletion);
+                                                                            })), TaskContinuationOptions.OnlyOnRanToCompletion);
             _loadTask.Start();
         }
 
