@@ -1,120 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="03d9db3e-a132-4a67-8f8f-794618f17f5e" name="EFCFModel - UML-Diagramm" linkedPackageId="b7badd3d-e9db-4283-b847-702c4489eef2" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="e266498b-8027-455a-8cb0-70f20be4b241">
-      <profileInstance Id="1ff65148-d178-4b12-83a7-849fd3a71dba" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="b025b3d1-7592-42d9-b7af-b07e5af67297">
-      <profileInstance Id="5692b400-0008-401e-8255-253cdd6da028" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="00ee9108-4032-4de3-9b60-44945e54ec72">
-      <profileInstance Id="38c84a78-9c1e-4d03-aafe-182a5c2eaee7" name="CSharpProfile">
-        <elementDefinition Id="d272b046-7de7-4c74-8c23-39950e8d32c3" />
-      </profileInstance>
-      <elementDefinition Id="af5f3be6-de2d-4cc8-ace7-e6720030afe5" />
-    </packageHasProfileInstances>
-  </profileInstances>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="03d9db3e-a132-4a67-8f8f-794618f17f5e" name="EFCFModel - UML-Diagramm" linkedPackageId="b7badd3d-e9db-4283-b847-702c4489eef2" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <appliedStereotypesInternal>
+    <stereotypeInstance Id="af2cfbc2-d15f-4687-9902-6b7f1e821d16" name="namespace" profile="CSharpProfile">
+      <elementDefinition Id="e382a294-5eeb-4106-aa63-0cd984cacef2" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="e0afd4ae-186e-45ca-a0a0-225c85acbf1e">
+          <propertyInstance Id="c754ad3b-cd7f-41ce-b74c-a7b32d330e7f" name="BaseName">
+            <elementDefinition Id="83283320-c326-4867-bb83-1e7794fd4bf7" />
+          </propertyInstance>
+          <elementDefinition Id="0059158e-6389-45de-a6e2-333698a6ae08" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="61285eb6-4cff-4055-b48a-b723d4f1738c">
+          <propertyInstance Id="a6985f94-f144-462a-93ca-191a81c2f0a1" name="ClrAttributes">
+            <elementDefinition Id="a339d8db-d1d4-4f04-83ba-d2a8e25ae05e" />
+          </propertyInstance>
+          <elementDefinition Id="eda86a61-62ee-40e1-a4f1-07506f82be04" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="3a2011f5-8bce-440c-a4e0-e4ca0cbfdc7b">
+          <propertyInstance Id="1dbba59f-ec85-4683-9956-4e83477b7a91" name="Usings">
+            <elementDefinition Id="f58a3057-37ba-44aa-8361-0071e4ff873e" />
+          </propertyInstance>
+          <elementDefinition Id="04bec59e-4e48-4e2e-b43a-e1cfb2f54b6d" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance Id="33c06be7-3eec-45fb-8f01-e75feafcde06" name="TextTemplateBindings" profile="TextTemplateBindings">
+      <elementDefinition Id="2cea9827-ba2d-4fa0-939f-2f65da88cbaf" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="87806a7b-df82-4c16-a29f-17bbba32b4e9">
+          <propertyInstance Id="bd7adbc0-2b94-4d7c-88a9-372d1fd237f1" name="Alias" value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate">
+            <elementDefinition Id="ec329ce8-9e04-4bb8-8a87-37e0024d7135" />
+          </propertyInstance>
+          <elementDefinition Id="d0a60faf-a4b8-4136-81cd-111361ae11c7" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="2f604ed4-4e67-429c-9aa3-647988f15318">
+          <propertyInstance Id="e21df0ea-c831-46eb-a647-52c74dbf1d72" name="TemplateFilePath" value="ClassTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Extensions\Microsoft\Visualization and Modeling Feature Pack\2.0\Templates\Text\StructTemplate.t4">
+            <elementDefinition Id="08ee6300-1f6b-44ef-b509-3289ce5f9c34" />
+          </propertyInstance>
+          <elementDefinition Id="59e8fc41-1f26-4f0a-a3ec-d6d8d5cf05f8" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="51d8b547-fa4a-4f28-b02c-46aa772a495a">
+          <propertyInstance Id="d5640f37-3801-4c75-bd05-aa4384bdb3b2" name="ProjectPath" value="ClassTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj|EnumTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj|InterfaceTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj|StructTemplate=..\ModelingProjectLib\ModelingProjectLib.csproj">
+            <elementDefinition Id="e6652883-79a5-4216-bc29-79367fc5b0ff" />
+          </propertyInstance>
+          <elementDefinition Id="97ffe8ea-1f33-42e5-aafc-c69cd2ca4764" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="3012b011-8b9e-49de-bc64-8df50148b8c0">
+          <propertyInstance Id="493b6f1c-f5e1-41bc-bf99-d159092542fc" name="TargetDirectory" value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}">
+            <elementDefinition Id="afd8bed7-6893-4757-8fd0-cc39d48e3e7f" />
+          </propertyInstance>
+          <elementDefinition Id="11ed6c03-2104-4b2f-82c4-1deb472f392c" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="422ed8f4-c59d-4bfa-b4cc-b12dc0471d1a">
+          <propertyInstance Id="89a2feda-78f4-4e46-870b-21bea23e91c1" name="TargetName" value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}">
+            <elementDefinition Id="28729645-bcb8-4478-bb8f-f7b052dffb78" />
+          </propertyInstance>
+          <elementDefinition Id="5f69fb81-e679-4322-8e8e-f51432a0f06e" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="cfbcaf59-5704-466b-9386-ad5f7052d514">
+          <propertyInstance Id="75f8d021-be2a-41e1-9a81-3ae99979fdb9" name="Overwrite" value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True">
+            <elementDefinition Id="2949b6a9-64ee-46f7-be32-659b42bd087f" />
+          </propertyInstance>
+          <elementDefinition Id="5a19f581-2110-4f17-9384-3b5dd3c68b41" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="08d734c6-dc28-4e62-be0b-fd2794fd14f3">
+          <propertyInstance Id="7fd62c9f-a7bf-49d5-b751-744f73aca866" name="Parameters">
+            <elementDefinition Id="1aa99132-c94d-4b7e-b739-d8bf51efde79" />
+          </propertyInstance>
+          <elementDefinition Id="6a98f154-cf91-41d8-89a4-9fc87bb32155" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
   <packagedElements>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="7e657959-f73d-49e8-a1ee-913843b03286" name="IIdentity (задает Id всем сущностям)" isAbstract="false" isLeaf="false">
-        <referencesInternal>
-          <reference Id="abc342ca-0374-4714-90be-220e808220ef" handle="viewcode://./CodeSchema_Interface?Assembly=file:///C:/some_health/Health/Health/EFCFModel/bin/Debug/EFCFModel.dll Namespace=EFCFModel.Entities Type=IIdentity" tag="ViewCode">
-            <elementDefinition Id="15278fe8-6f6b-4595-939a-67d513119541" />
-          </reference>
-        </referencesInternal>
-        <appliedStereotypesInternal>
-          <stereotypeInstance Id="765fa5bd-1763-48b7-9566-2a96838043d3" name="interface" profile="CSharpProfile">
-            <elementDefinition Id="26082d88-ff0a-4947-a46f-65349f818284" />
-            <propertyInstances>
-              <stereotypeInstanceHasPropertyInstances Id="c7500a24-af94-494a-b329-1d71e944a31b">
-                <propertyInstance Id="d9fc4876-df52-47ec-915b-7c7ee79a9ade" name="ClrAttributes">
-                  <elementDefinition Id="473605c3-0ea0-4699-a73e-ee562651e2da" />
-                </propertyInstance>
-                <elementDefinition Id="bf1b8c34-d446-4de1-bfc1-38e3e5f1a645" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances Id="e29b89fb-afcd-42f3-9efd-0d53834becd6">
-                <propertyInstance Id="5017d4e6-2e8a-4052-9580-6f527ea390ef" name="IsPartial" value="false">
-                  <elementDefinition Id="73b66973-a3f5-47f8-818a-20db0145372a" />
-                </propertyInstance>
-                <elementDefinition Id="92e40cf7-68e5-4717-93df-4335974270b4" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances Id="f5fc6bdc-4327-447c-9590-02bb5420662d">
-                <propertyInstance Id="9a4ff677-adc5-4aee-9604-3e2d8335fc6d" name="IsUnsafe" value="false">
-                  <elementDefinition Id="4a034c05-7674-42ea-9add-5fcb929e0def" />
-                </propertyInstance>
-                <elementDefinition Id="89e0710e-a723-4e9f-ab2d-d9e3c1fb2924" />
-              </stereotypeInstanceHasPropertyInstances>
-              <stereotypeInstanceHasPropertyInstances Id="4d106ba4-692f-4031-a215-189574672254">
-                <propertyInstance Id="2b8150b1-1647-49c8-a041-d61bab67dec7" name="PackageVisibility" value="internal">
-                  <elementDefinition Id="766b9f29-7ec6-4dc5-804c-691823d7b615" />
-                </propertyInstance>
-                <elementDefinition Id="8387d973-839d-48bd-b9c1-54a212d815aa" />
-              </stereotypeInstanceHasPropertyInstances>
-            </propertyInstances>
-          </stereotypeInstance>
-        </appliedStereotypesInternal>
-        <elementDefinition Id="8021fcca-2cdc-4b94-a6ff-cd9091978e29" />
-        <ownedAttributes>
-          <property Id="0c56ab77-0b4d-4f5e-89de-4bfad7c970bc" name="Id (идентификатор сущности)" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <referencesInternal>
-              <reference Id="7b82b11f-1a1c-4414-a07c-276252246e0f" handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/some_health/Health/Health/EFCFModel/bin/Debug/EFCFModel.dll Namespace=EFCFModel.Entities Type=IIdentity Member=Id" tag="ViewCode">
-                <elementDefinition Id="b184d388-fbef-4e3d-9c56-5b9f12b0c8f5" />
-              </reference>
-            </referencesInternal>
-            <appliedStereotypesInternal>
-              <stereotypeInstance Id="798fd1ad-4c41-4c37-82d3-1c56a756beb8" name="property" profile="CSharpProfile">
-                <elementDefinition Id="00a46532-e643-4727-9408-793dba6e1a52" />
-                <propertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="d7d63d15-65dc-48c0-9d30-aa629b6730dc">
-                    <propertyInstance Id="7cd9fc8d-513f-4f1c-a6d4-e9ae58b7f571" name="ClrAttributes">
-                      <elementDefinition Id="35a8ee8a-793f-4295-bcf0-e3270becbfea" />
-                    </propertyInstance>
-                    <elementDefinition Id="ca28e28a-0f03-4922-9f15-dd832cf2174f" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="0defac52-9946-4c2a-8f08-dee6108471c9">
-                    <propertyInstance Id="7f354eb1-8e66-45c2-a131-9bf43f477f84" name="Get" value="public">
-                      <elementDefinition Id="fddf73f6-d82b-4a88-85af-381f1c4318f9" />
-                    </propertyInstance>
-                    <elementDefinition Id="7f22b807-7c3b-4cde-b952-7a3a19766bbf" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="4018aabe-50a3-4dc5-8718-611099513aca">
-                    <propertyInstance Id="004922e8-d1aa-47ba-9392-f0b9ac1da3f3" name="HasBody" value="false">
-                      <elementDefinition Id="5f67e9de-805f-4932-9d5a-571cca98c472" />
-                    </propertyInstance>
-                    <elementDefinition Id="a365d67b-c1aa-4003-b3d1-5fce6a6b3142" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="85132c9f-6d2b-48a7-8b18-a7bc2af9bef9">
-                    <propertyInstance Id="964bf87a-76ba-4817-b3f2-fa4c9b6b0525" name="IsUnsafe" value="false">
-                      <elementDefinition Id="60b945d5-a68d-45b2-91e8-6a67afad3645" />
-                    </propertyInstance>
-                    <elementDefinition Id="836003b5-1eb0-4d54-bdb8-b713d7c410f1" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="b9c5b093-906e-4752-aa4a-a17082d210cc">
-                    <propertyInstance Id="3d0351f9-255f-46b5-b5b3-b1cdb272be3f" name="PackageVisibility" value="internal">
-                      <elementDefinition Id="371117a6-688e-459b-bc88-1834184a0a5a" />
-                    </propertyInstance>
-                    <elementDefinition Id="b537d5f4-1b90-416a-ab5f-bd4574781aa2" />
-                  </stereotypeInstanceHasPropertyInstances>
-                  <stereotypeInstanceHasPropertyInstances Id="759dd421-e83b-4b78-87bc-5ee981ee496f">
-                    <propertyInstance Id="df292715-76be-4258-b851-0a0c62d12f5f" name="Set" value="public">
-                      <elementDefinition Id="4dc6f46d-81c4-47d8-a216-bf4c168734e4" />
-                    </propertyInstance>
-                    <elementDefinition Id="54a10524-204a-49f8-8a25-bca028c58946" />
-                  </stereotypeInstanceHasPropertyInstances>
-                </propertyInstances>
-              </stereotypeInstance>
-            </appliedStereotypesInternal>
-            <elementDefinition Id="863b2281-377f-4f9c-a51d-906f6d62bcde" />
-          </property>
-        </ownedAttributes>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
       <referencedType Id="82d479df-bd8b-46b0-9a6f-44ef44e9919d" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
         <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
@@ -165,12 +123,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="45cf200d-cf9a-4b2b-b24f-a09351698e09" />
-        <suppliersInternal>
-          <interfaceRealization Id="1a9338fc-d62d-403c-9ebd-f75b879097bc">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="b63b6890-d6af-4fe6-99b1-305a4fbe6c1b" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="b8fb209e-eeb3-415f-bc5e-d5ce11ddab70" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Role" isLeaf="false" isAbstract="false">
             <classMoniker Id="1fb38d99-5774-4cff-8321-a13231affe9c" LastKnownName="Role (Роль пользователя)" />
@@ -2156,12 +2108,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="8242a39d-a38c-4b02-a006-633e8b79a83c" />
-        <suppliersInternal>
-          <interfaceRealization Id="7c48a960-ef78-433f-a6cf-686bb4e9a09b">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="c3924d29-9656-4320-b788-2a03dfdf1c61" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="384bb3c5-c3ae-47c2-bd80-6515a10a387f" isDerived="false" sourceEndRoleName="Diagnosis" targetEndRoleName="DiagnosisClass" isLeaf="false" isAbstract="false">
             <classMoniker Id="e8e65a36-4ba2-49d5-a522-910fa95875c2" LastKnownName="DiagnosisClass (класс диагноза по международной классификации)" />
@@ -2555,12 +2501,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="c7979004-4ba5-4699-b161-d8154d47bdbc" />
-        <suppliersInternal>
-          <interfaceRealization Id="b28cce42-25b4-49ef-81db-025272fabab6">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="8e62ab4a-0c44-40c5-b1fe-c81b62ed0a39" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="5cd883eb-be2f-4239-b5f6-bd25a994f4fb" isDerived="false" sourceEndRoleName="DiagnosisClass" targetEndRoleName="ParentDiagnosisClass" isLeaf="false" isAbstract="false">
             <classMoniker Id="e8e65a36-4ba2-49d5-a522-910fa95875c2" LastKnownName="DiagnosisClass (класс диагноза по международной классификации)" />
@@ -3009,12 +2949,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="14c17f73-09e6-43ad-98e7-9278a3b6a8db" />
-        <suppliersInternal>
-          <interfaceRealization Id="a9823d4b-0657-491a-9b24-2afc57f9bf8c">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="b2aab89c-fc05-49c5-b20f-26890703fe18" />
-          </interfaceRealization>
-        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="382b1881-cea7-4538-9e8f-17a6d7dc289b" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <referencesInternal>
@@ -3370,12 +3304,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="a36d4e60-f6dd-4f42-8ebd-b2e17809b524" />
-        <suppliersInternal>
-          <interfaceRealization Id="54cf46cc-776e-4dd2-8459-26af2fadfcbf">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="39b47bd2-6349-4825-9fa5-8351157c97a2" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="81e22250-88b9-4cbc-acbf-7d93d27405f3" isDerived="false" sourceEndRoleName="Appointment" targetEndRoleName="Doctor" isLeaf="false" isAbstract="false">
             <classMoniker Id="16e2d449-b40f-44b7-9514-6446ef545227" LastKnownName="Doctor (врач)" />
@@ -3858,12 +3786,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="ab53c37d-a23b-4b41-a4c4-bde3a70d07bd" />
-        <suppliersInternal>
-          <interfaceRealization Id="96ecd25d-ad1c-4bff-8d95-2efd5f39b43e">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="4aede996-ddb5-411e-926e-1b305849a694" />
-          </interfaceRealization>
-        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="704e0666-2612-40f5-a4ab-29199dec3455" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <referencesInternal>
@@ -4168,12 +4090,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="ed8790a6-2837-4eb5-8ad7-cfb3e96bfcf8" />
-        <suppliersInternal>
-          <interfaceRealization Id="1f5eeeb0-c56c-4623-aa57-aa4ca51beb15">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="bb61d2a7-60d0-45a6-b3af-0ee5bb6a2edf" />
-          </interfaceRealization>
-        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="d2a0e027-1888-4bc3-8ecf-0c060af264f6" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <referencesInternal>
@@ -4478,12 +4394,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="549ab1c6-f9a5-448a-80b6-9f1c74531a0d" />
-        <suppliersInternal>
-          <interfaceRealization Id="4962fb4d-9f17-4da6-86e8-7e2cf2382575">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="138dd522-b909-48ce-a060-df58fe82673d" />
-          </interfaceRealization>
-        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="254f8994-82d3-406e-8e96-5b3a569c693f" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <referencesInternal>
@@ -4839,12 +4749,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="106c8a9d-d9bb-42ec-aff0-26068f79d3b3" />
-        <suppliersInternal>
-          <interfaceRealization Id="7727b1d2-8647-40e7-a803-b39fb4feddbc">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="3982edae-7eaa-47ab-b969-8263716d2098" />
-          </interfaceRealization>
-        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="04cce98a-6e3d-474a-82b0-611e95b13253" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <referencesInternal>
@@ -5340,12 +5244,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="7de6116a-1eb1-40ff-acf0-9bd2b04986b2" />
-        <suppliersInternal>
-          <interfaceRealization Id="1619bc9e-af28-4a67-9f58-8d9edaba16c7">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="369e2abd-5f28-478d-ac33-89f0c88c2976" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="3b00f141-5840-4ef9-b93a-87b280cda9ba" isDerived="false" sourceEndRoleName="ParameterStorage" targetEndRoleName="Patient" isLeaf="false" isAbstract="false">
             <classMoniker Id="00e7da6c-067e-4ba3-bbb1-5edc38f5ff54" LastKnownName="Patient (пациент)" />
@@ -5783,12 +5681,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="ffa7bb7b-9f61-4236-907a-ceed0f922ba0" />
-        <suppliersInternal>
-          <interfaceRealization Id="339a2481-b915-4a8d-8af1-1a424b7157fb">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="2d0f7760-396f-42d4-bc36-1f18e324325e" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="6baa978e-d319-46bf-821d-07959cc80560" isDerived="false" sourceEndRoleName="SurveyStorage" targetEndRoleName="Patient" isLeaf="false" isAbstract="false">
             <classMoniker Id="00e7da6c-067e-4ba3-bbb1-5edc38f5ff54" LastKnownName="Patient (пациент)" />
@@ -6216,12 +6108,6 @@
           </stereotypeInstance>
         </appliedStereotypesInternal>
         <elementDefinition Id="b90ebfff-5668-42de-92a4-2aa08b3e4d3b" />
-        <suppliersInternal>
-          <interfaceRealization Id="7bfda299-f557-4fe3-9a08-a4a86dc2e0a7">
-            <interfaceMoniker Id="7e657959-f73d-49e8-a1ee-913843b03286" LastKnownName="IIdentity (задает Id всем сущностям)" />
-            <elementDefinition Id="67e6cf66-f479-408d-8874-517ca3e05614" />
-          </interfaceRealization>
-        </suppliersInternal>
         <targetEnds>
           <association Id="3ffa37ba-9b03-4aff-b1bd-8fbc95ba1a3a" isDerived="false" sourceEndRoleName="FunctionalAbnormality" targetEndRoleName="ParentFunctionalAbnormality" isLeaf="false" isAbstract="false">
             <classMoniker Id="c76772da-68b3-4450-abeb-51f437bc22fb" LastKnownName="FunctionalAbnormality (Функциональные нарушения)" />
@@ -8027,7 +7913,7 @@
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
-  <package Id="b7badd3d-e9db-4283-b847-702c4489eef2" name="ModelingProject2">
+  <package Id="b7badd3d-e9db-4283-b847-702c4489eef2" name="ModelingProject">
     <elementDefinition Id="8652eccf-ef23-488f-b446-e5f69deca31c" />
     <profileInstances>
       <packageHasProfileInstances Id="8ec5308d-f44e-4c68-be4d-3379f6808d4e">
@@ -8035,6 +7921,24 @@
           <elementDefinition Id="34665579-04e4-4df6-a7b7-f63ea497584b" />
         </profileInstance>
         <elementDefinition Id="4447ce3e-8cda-4f8a-87ec-39c062bd7324" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="e266498b-8027-455a-8cb0-70f20be4b241">
+        <profileInstance Id="1ff65148-d178-4b12-83a7-849fd3a71dba" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="b025b3d1-7592-42d9-b7af-b07e5af67297">
+        <profileInstance Id="5692b400-0008-401e-8255-253cdd6da028" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="00ee9108-4032-4de3-9b60-44945e54ec72">
+        <profileInstance Id="38c84a78-9c1e-4d03-aafe-182a5c2eaee7" name="CSharpProfile">
+          <elementDefinition Id="d272b046-7de7-4c74-8c23-39950e8d32c3" />
+        </profileInstance>
+        <elementDefinition Id="af5f3be6-de2d-4cc8-ace7-e6720030afe5" />
       </packageHasProfileInstances>
     </profileInstances>
   </package>
